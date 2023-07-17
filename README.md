@@ -1,5 +1,7 @@
-# Pandoc-bootstrap template
+# PHYS 4430 Website Repository
 Bootstrap 4 template for Pandoc - Converts markdown files into Twitter Bootstrap styled HTML.
+
+Run the `mdtohtml.ps1` file to convert the markdown files into HTML.
 
 ```
 pandoc gb2.md --toc --filter pandoc-xnos --mathjax -N -s --include-in-header header.html --include-before-body navbar.html --include-after-body footer.html --template template.html -o gb2.html
