@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="generator" content="pandoc">
+      $if(author)$<meta name="author" content="$author$">$endif$
+      $if(description)$<meta name="description" content="$description$">$endif$
+      <title>PHYS 4430</title>
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      <!-- Font-awesome -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- Styles -->
+      <link rel="stylesheet" href="css/styles.css">
+      $for(header-includes)$
+      $header-includes$
+      $endfor$
+   </head>
+   <body>
+      $for(include-before)$
+      $include-before$
+      $endfor$
+      <div class="container" style="max-width: 900px;">
+         <style>
+            .eqnos { display: inline-block; position: relative; width: 100%; }
+            .eqnos br { display: none; }
+            .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
+         </style>
+
+
+         <h2 class="title">Report a Lab Issue</h2>
+         <div id="kl_custom_block_0" class="">
+            <p>Please submit the form below to report an issue with the lab to the technical staff. 
+               You may need to log in with your CU IdentiKey to access the form. 
+               If the form is not loading properly, you can access it directly at 
+               <a class="inline_disabled" href="https://forms.office.com/r/wdkTZqnDkQ" target="_blank" rel="noopener">this link</a>. <iframe style="border: none; max-width: 100%; max-height: 100vh;" src="https://forms.office.com/r/wdkTZqnDkQ?embed=true" width="100%" height="600px" allowfullscreen="allowfullscreen" webkitallowfullscreen="webkitallowfullscreen" mozallowfullscreen="mozallowfullscreen"></iframe></p>
+            </div>
+
+          $body$
+ 
+
+
+
+
+      </div>
+      $for(include-after)$
+      $include-after$
+      $endfor$
+      <!-- JS, Popper.js, and jQuery -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+      <!-- Mathjax -->
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script>
+         /* Bootstrap styles to tables */
+         function bootstrapStylePandocTables() {
+         $$('tr.header').parent('thead').parent('table').addClass('table table-condensed'); }
+         $$(document).ready(function () { bootstrapStylePandocTables(); });
+         /* Adjust the height when click the toc */
+         var shiftWindow = function() { scrollBy(0, -60) };
+         window.addEventListener("hashchange", shiftWindow);
+         function load() { if (window.location.hash) shiftWindow(); }
+      </script>
+   </body>
+</html>

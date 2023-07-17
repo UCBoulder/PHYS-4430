@@ -1,0 +1,1322 @@
+<!doctype html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="generator" content="pandoc">
+      <meta name="author" content="Department of Physics | University of
+Colorado Boulder">
+      <meta name="description" content="An introduction to Markdown">
+      <title>Gaussian Beams: Part 2</title>
+      <!-- Bootstrap -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+      <!-- Font-awesome -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!-- Styles -->
+      <link rel="stylesheet" href="https://ashki23.github.io/styles.css">
+            <!-- Add favicon here -->
+            <!-- Add site-verifications here -->
+         </head>
+   <body>
+            <!-- From https://getbootstrap.com/docs/4.5/components/navbar/ -->
+             <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+               <div class="container">
+                 <a class="navbar-brand" href="#">PHYS 4430</a>
+                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded="false" aria-label="Toggle navigation">
+                   <span class="navbar-toggler-icon"></span>
+                 </button>
+             
+                 <div class="collapse navbar-collapse" id="navbarsExample07">
+                   <ul class="navbar-nav mr-auto">
+                     <li class="nav-item active">
+                       <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                     </li>
+                     <li class="nav-item">
+                       <a class="nav-link" href="#">Link</a>
+                     </li>
+                     <li class="nav-item">
+                       <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                     </li>
+                     <li class="nav-item dropdown">
+                       <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                       <div class="dropdown-menu" aria-labelledby="dropdown07">
+                         <a class="dropdown-item" href="#">Action</a>
+                         <a class="dropdown-item" href="#">Another action</a>
+                         <a class="dropdown-item" href="#">Something else here</a>
+                       </div>
+                     </li>
+                   </ul>
+                   <span class="navbar-text">
+                     Navbar text with an inline element
+                   </span>
+                 </div>
+               </div>
+             </nav>
+            <div class="container" style="max-width: 900px;">
+         <style>
+            .eqnos { display: inline-block; position: relative; width: 100%; }
+            .eqnos br { display: none; }
+            .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
+         </style>
+         <h1 class="title">Gaussian Beams: Part 2</h1>
+                  <hr/>
+         <nav id="TOC">
+            <p>
+               <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  Contents
+                </button>
+             </p>
+             <div class="collapse" id="collapseExample">
+               <div class="card card-body">
+                  <ul>
+                  <li><a href="#goals" id="toc-goals"><span
+                  class="toc-section-number">1</span> Goals</a></li>
+                  <li><a href="#useful-readings"
+                  id="toc-useful-readings"><span
+                  class="toc-section-number">2</span> Useful
+                  Readings</a></li>
+                  <li><a href="#prelab" id="toc-prelab"><span
+                  class="toc-section-number">3</span> Prelab</a>
+                  <ul>
+                  <li><a href="#why-do-we-minimize-the-sum-of-squares"
+                  id="toc-why-do-we-minimize-the-sum-of-squares"><span
+                  class="toc-section-number">3.1</span> Why do we
+                  minimize the sum of squares?</a></li>
+                  <li><a href="#minimizing-chi2-graphically"
+                  id="toc-minimizing-chi2-graphically"><span
+                  class="toc-section-number">3.2</span> Minimizing <span
+                  class="math inline">\(\chi^2\)</span>
+                  graphically</a></li>
+                  <li><a href="#uncertainty-in-the-fit-parameters"
+                  id="toc-uncertainty-in-the-fit-parameters"><span
+                  class="toc-section-number">3.3</span> Uncertainty in
+                  the fit parameters</a></li>
+                  <li><a href="#estimating-the-uncertainty-in-the-data"
+                  id="toc-estimating-the-uncertainty-in-the-data"><span
+                  class="toc-section-number">3.4</span> Estimating the
+                  uncertainty in the data</a></li>
+                  <li><a href="#goodness-of-fit"
+                  id="toc-goodness-of-fit"><span
+                  class="toc-section-number">3.5</span> Goodness of
+                  fit</a>
+                  <ul>
+                  <li><a href="#plotting-the-fit-residuals"
+                  id="toc-plotting-the-fit-residuals"><span
+                  class="toc-section-number">3.5.1</span> Plotting the
+                  fit residuals</a></li>
+                  </ul></li>
+                  <li><a
+                  href="#chi-by-eye---eyeballing-the-goodness-of-fit"
+                  id="toc-chi-by-eye---eyeballing-the-goodness-of-fit"><span
+                  class="toc-section-number">3.6</span> “Chi by eye” -
+                  eyeballing the goodness of fit</a></li>
+                  <li><a
+                  href="#chi2-and-chi_red2-for-testing-the-goodness-of-fit"
+                  id="toc-chi2-and-chi_red2-for-testing-the-goodness-of-fit"><span
+                  class="toc-section-number">3.7</span> <span
+                  class="math inline">\(\chi^2\)</span> and <span
+                  class="math inline">\(\chi_{red}^2\)</span> for
+                  testing the “goodness” of fit</a></li>
+                  <li><a
+                  href="#choosing-a-strategy-to-estimate-the-uncertainty"
+                  id="toc-choosing-a-strategy-to-estimate-the-uncertainty"><span
+                  class="toc-section-number">3.8</span> Choosing a
+                  strategy to estimate the uncertainty</a></li>
+                  <li><a href="#weighted-best-fits-in-mathematica"
+                  id="toc-weighted-best-fits-in-mathematica"><span
+                  class="toc-section-number">3.9</span> Weighted best
+                  fits in Mathematica</a></li>
+                  <li><a
+                  href="#why-is-it-often-bad-to-overestimate-uncertainties"
+                  id="toc-why-is-it-often-bad-to-overestimate-uncertainties"><span
+                  class="toc-section-number">3.10</span> Why is it often
+                  bad to overestimate uncertainties?</a></li>
+                  </ul></li>
+                  <li><a href="#what-is-labview"
+                  id="toc-what-is-labview"><span
+                  class="toc-section-number">4</span> What is
+                  LabVIEW?</a></li>
+                  <li><a href="#definitions" id="toc-definitions"><span
+                  class="toc-section-number">5</span>
+                  Definitions</a></li>
+                  <li><a href="#labview-environment"
+                  id="toc-labview-environment"><span
+                  class="toc-section-number">6</span> LabView
+                  Environment</a>
+                  <ul>
+                  <li><a
+                  href="#create-a-vi-that-displays-constants-of-different-data-types"
+                  id="toc-create-a-vi-that-displays-constants-of-different-data-types"><span
+                  class="toc-section-number">6.1</span> Create a VI that
+                  displays constants of different data types</a></li>
+                  </ul></li>
+                  <li><a href="#graphical-programming"
+                  id="toc-graphical-programming"><span
+                  class="toc-section-number">7</span> Graphical
+                  Programming</a>
+                  <ul>
+                  <li><a
+                  href="#create-a-vi-that-will-display-the-energy-of-a-photon-when-the-user-enters-the-wavelength"
+                  id="toc-create-a-vi-that-will-display-the-energy-of-a-photon-when-the-user-enters-the-wavelength"><span
+                  class="toc-section-number">7.1</span> Create a VI that
+                  will display the energy of a photon when the user
+                  enters the wavelength</a></li>
+                  </ul></li>
+                  <li><a
+                  href="#programming-tools-using-the-tools-palette"
+                  id="toc-programming-tools-using-the-tools-palette"><span
+                  class="toc-section-number">8</span> Programming Tools
+                  – Using the Tools Palette</a>
+                  <ul>
+                  <li><a href="#modify-your-photon-energy-vi"
+                  id="toc-modify-your-photon-energy-vi"><span
+                  class="toc-section-number">8.1</span> Modify your
+                  photon energy VI</a></li>
+                  </ul></li>
+                  <li><a href="#debugging-and-handling-errors"
+                  id="toc-debugging-and-handling-errors"><span
+                  class="toc-section-number">9</span> Debugging and
+                  Handling Errors</a>
+                  <ul>
+                  <li><a
+                  href="#correct-errors-in-a-previously-created-vi"
+                  id="toc-correct-errors-in-a-previously-created-vi"><span
+                  class="toc-section-number">9.1</span> Correct errors
+                  in a previously created VI</a></li>
+                  </ul></li>
+                  <li><a href="#data-types-and-structures"
+                  id="toc-data-types-and-structures"><span
+                  class="toc-section-number">10</span> Data Types and
+                  Structures</a>
+                  <ul>
+                  <li><a
+                  href="#change-your-photon-energy-vi-to-include-arrays"
+                  id="toc-change-your-photon-energy-vi-to-include-arrays"><span
+                  class="toc-section-number">10.1</span> Change your
+                  photon energy VI to include arrays</a></li>
+                  <li><a href="#change-data-types"
+                  id="toc-change-data-types"><span
+                  class="toc-section-number">10.2</span> Change data
+                  types</a></li>
+                  </ul></li>
+                  <li><a href="#loops-and-case-structures"
+                  id="toc-loops-and-case-structures"><span
+                  class="toc-section-number">11</span> Loops and Case
+                  Structures</a>
+                  <ul>
+                  <li><a
+                  href="#add-a-while-loop-to-your-vi-to-continuously-loop-until-a-stop-button-is-pressed"
+                  id="toc-add-a-while-loop-to-your-vi-to-continuously-loop-until-a-stop-button-is-pressed"><span
+                  class="toc-section-number">11.1</span> Add a while
+                  loop to your VI to continuously loop until a stop
+                  button is pressed</a></li>
+                  <li><a href="#sec:photon" id="toc-sec:photon"><span
+                  class="toc-section-number">11.2</span> Change your VI
+                  to calculate the energy in units of either joules or
+                  eV using a case structure</a></li>
+                  </ul></li>
+                  <li><a href="#connecting-hardware"
+                  id="toc-connecting-hardware"><span
+                  class="toc-section-number">12</span> Connecting
+                  Hardware</a>
+                  <ul>
+                  <li><a
+                  href="#connect-the-usb-6009-to-the-computer-and-confirm-it-is-working-correctly"
+                  id="toc-connect-the-usb-6009-to-the-computer-and-confirm-it-is-working-correctly"><span
+                  class="toc-section-number">12.1</span> Connect the
+                  USB-6009 to the computer and confirm it is working
+                  correctly</a></li>
+                  </ul></li>
+                  <li><a href="#taking-a-measurement"
+                  id="toc-taking-a-measurement"><span
+                  class="toc-section-number">13</span> Taking a
+                  Measurement</a>
+                  <ul>
+                  <li><a href="#sec:analogmeas"
+                  id="toc-sec:analogmeas"><span
+                  class="toc-section-number">13.1</span> Use the DAQ
+                  Assistant to take an analog voltage
+                  measurement</a></li>
+                  </ul></li>
+                  <li><a href="#generating-a-signal-using-labview"
+                  id="toc-generating-a-signal-using-labview"><span
+                  class="toc-section-number">14</span> Generating a
+                  Signal Using LabView</a>
+                  <ul>
+                  <li><a
+                  href="#add-to-the-vi-created-in-section-secanalogmeas-to-include-an-adjustable-dc-analog-output-signal"
+                  id="toc-add-to-the-vi-created-in-section-secanalogmeas-to-include-an-adjustable-dc-analog-output-signal"><span
+                  class="toc-section-number">14.1</span> Add to the VI
+                  created in section 13.1 to include an adjustable DC
+                  analog output signal</a></li>
+                  </ul></li>
+                  <li><a href="#acquired-signal-processing-and-analysis"
+                  id="toc-acquired-signal-processing-and-analysis"><span
+                  class="toc-section-number">15</span> Acquired Signal
+                  Processing and Analysis</a>
+                  <ul>
+                  <li><a
+                  href="#create-a-vi-that-filters-the-acquired-signal-and-displays-a-power-spectrum."
+                  id="toc-create-a-vi-that-filters-the-acquired-signal-and-displays-a-power-spectrum."><span
+                  class="toc-section-number">15.1</span> Create a VI
+                  that filters the acquired signal and displays a power
+                  spectrum.</a></li>
+                  </ul></li>
+                  <li><a href="#logging-data-and-saving-it-to-a-file"
+                  id="toc-logging-data-and-saving-it-to-a-file"><span
+                  class="toc-section-number">16</span> Logging Data and
+                  Saving it to a File</a></li>
+                  <li><a
+                  href="#modify-the-take-measurement-vi-to-save-the-data-to-a-file"
+                  id="toc-modify-the-take-measurement-vi-to-save-the-data-to-a-file"><span
+                  class="toc-section-number">17</span> Modify the take
+                  measurement VI to save the data to a file</a></li>
+                  <li><a href="#creating-graphs-and-charts"
+                  id="toc-creating-graphs-and-charts"><span
+                  class="toc-section-number">18</span> Creating Graphs
+                  and Charts</a>
+                  <ul>
+                  <li><a
+                  href="#modify-the-take-measurement-vi-to-include-a-waveform-chart"
+                  id="toc-modify-the-take-measurement-vi-to-include-a-waveform-chart"><span
+                  class="toc-section-number">18.1</span> Modify the take
+                  measurement VI to include a waveform chart</a></li>
+                  </ul></li>
+                  <li><a
+                  href="#using-text-based-programming-within-the-labview-environment"
+                  id="toc-using-text-based-programming-within-the-labview-environment"><span
+                  class="toc-section-number">19</span> Using Text-Based
+                  Programming within the LabView Environment</a>
+                  <ul>
+                  <li><a
+                  href="#rewrite-your-photon-energy-vi-you-created-in-section-secphoton-to-include-two-formula-nodes"
+                  id="toc-rewrite-your-photon-energy-vi-you-created-in-section-secphoton-to-include-two-formula-nodes"><span
+                  class="toc-section-number">19.1</span> Rewrite your
+                  photon energy VI you created in section 11.2 to
+                  include two formula nodes</a></li>
+                  </ul></li>
+                  <li><a href="#getting-help-in-labview"
+                  id="toc-getting-help-in-labview"><span
+                  class="toc-section-number">20</span> Getting help in
+                  Labview</a>
+                  <ul>
+                  <li><a href="#explore-context-help"
+                  id="toc-explore-context-help"><span
+                  class="toc-section-number">20.1</span> Explore Context
+                  Help</a></li>
+                  </ul></li>
+                  </ul>
+               </div>
+             </div>
+            </nav>
+         <h1 data-number="1" id="goals"><span
+         class="header-section-number">1</span> Goals</h1>
+         <p>We will introduce LabVIEW. You will be…</p>
+         <p>In the first LabVIEW LSA, you learned the basic programing
+         environment. In this LSA, you begin to see the power of using
+         LabVIEW to interface with your lab experiment by acquiring data
+         through a standard National Instrument data acquisition device,
+         <a
+         href="http://sine.ni.com/nips/cds/view/p/lang/en/nid/201987">NI
+         USB-6009 .</a> This multifunction USB powered device has 4
+         (differential) analog inputs (14-bit, 48 kS/s), 2 analog
+         outputs (12-bit, 150 S/s), 12 digital I/O channels, and a
+         32-bit counter. National Instruments sells a large number of
+         data acquisition devices that meet the needs of many table-top
+         experiments. In addition, third party companies sell
+         specialized data acquisition devices that can use LabVIEW.</p>
+         <ol type="1">
+         <li><p>…able to create simple LabVIEW Virtual Instruments (VIs)
+         that include controls, indicators, simple math, arrays, and
+         loops.</p></li>
+         <li><p>…able to customize the user interface of a VI.</p></li>
+         <li><p>…able to use the Error List created by LabVIEW to find
+         and correct coding errors.</p></li>
+         <li><p>… able to use various types of data types and convert
+         between them.</p></li>
+         <li><p>…able to use context help to determine the function of a
+         subVI or a function and the inputs and outputs.</p></li>
+         <li><p>…able connect an USB DAQ-Device to a computer and
+         confirm the analog inputs are working correctly.</p></li>
+         <li><p>…able to configure the DAQ Assistant to take a series of
+         analog voltage measurements.</p></li>
+         <li><p>…able to generate an analog voltage signal using the
+         DAQ-Device.</p></li>
+         <li><p>…able to filter and perform spectral measurements on an
+         acquired signal using built-in Vis.</p></li>
+         <li><p>…able to use text-based programming to more easily code
+         simply mathematical formulas.</p></li>
+         <li><p>…able to save acquired data to a file.</p></li>
+         <li><p>…able to use charts and graph indicators for the
+         appropriate application.</p></li>
+         </ol>
+         <h1 data-number="2" id="useful-readings"><span
+         class="header-section-number">2</span> Useful Readings</h1>
+         <ol type="1">
+         <li>Taylor, J. R. (1997). <em>An Introduction to Error
+         Analysis: The Study of Uncertainties in Physical
+         Measurements</em> (p. 327). University Science Books. This is
+         the standard undergraduate text for measurement and
+         uncertainty.</li>
+         <li>Bevington, P. R., &amp; Robinson, K. D. (2003). <em>Data
+         Reduction and Error Analysis for the Physical Sciences</em>
+         Third Edition (3rd ed.). New York: McGraw-Hill. Great for
+         advanced undergrad error analysis. Professional physicists use
+         it too.</li>
+         </ol>
+         <h1 data-number="3" id="prelab"><span
+         class="header-section-number">3</span> Prelab</h1>
+         <p>This week’s prelab will be a continuation of the error
+         analysis exploration that concluded last week’s lab. This
+         activity is a “user’s guide” to least-squares fitting and to
+         determining the goodness of your fits. It doesn’t derive many
+         results. There are good textbooks listed in the references. At
+         the end of the activity you will be able to:</p>
+         <ol type="1">
+         <li>Explain why we minimize the sum of squares to get the best
+         fit</li>
+         <li>Carry out a least-squares minimization graphically</li>
+         <li>Plot residuals to visually inspect the goodness of a
+         fit</li>
+         <li>Be able to interpret the uncertainty in fit parameters that
+         Mathematica’s fit routines output</li>
+         <li>Be able to compute <span
+         class="math inline">\(\chi^2\)</span> for a fit and use it to
+         determine if a fit is “good”</li>
+         </ol>
+         <h2 data-number="3.1"
+         id="why-do-we-minimize-the-sum-of-squares"><span
+         class="header-section-number">3.1</span> Why do we minimize the
+         sum of squares?</h2>
+         <p><strong>Question:</strong> Why do we call it “least-squares”
+         fitting?</p>
+         <p><strong>Answer:</strong> Because the best fit is determined
+         by minimizing the weighted sum of squares of the deviation
+         between the data and the fit. Properly speaking this “sum of
+         squares” is called “chi-squared” and is given by</p>
+         <p><span id="eq:1" class="eqnos"><span
+         class="math display">\[\chi^2 = {\displaystyle
+         \sum_{i=1}^{N}}\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \ ... \
+         ))^2\]</span><span class="eqnos-number">(1)</span></span> </p>
+         <p>where there are where <span class="math inline">\(N\)</span>
+         data points <span class="math inline">\((x_i,y_i )\)</span>,
+         and the fit function is given by <span
+         class="math inline">\(y(x_i,a,b,c, \ … \ )\)</span> where <span
+         class="math inline">\(a, b,\)</span> etc. are the fit
+         parameters.</p>
+         <p><strong>Question:</strong> What assumptions are made for the
+         method to be valid?</p>
+         <p><strong>Answer:</strong> The two assumptions are:</p>
+         <ol type="1">
+         <li><strong>Gaussian distributed.</strong> The random
+         fluctuations in each data point <span
+         class="math inline">\(y_i\)</span> are Gaussian distributed
+         with standard deviation <span
+         class="math inline">\(\sigma_i\)</span>.</li>
+         <li><strong>Uncorrelated.</strong> The random fluctuations in
+         any one data point are uncorrelated with those in another data
+         point.</li>
+         </ol>
+         <p><strong>Question:</strong> Why does minimizing the sum of
+         squares give us the best fit?</p>
+         <p><strong>Answer:</strong> Given the two above assumptions,
+         the fit that minimizes the sum of squares is the
+         <em><strong>most likely*</strong> function to produce the
+         observed data. This can be proven using a little calculus and
+         probability. A more detailed explanation is found in Taylor’s
+         </em>Introduction to Error Analysis* Sec. 5.5 “Justification of
+         the Mean as Best Estimate” or Bevington and Robinson’s <em>Data
+         Reduction</em> Sec. 4.1 “Method of Least-Squares”.</p>
+         <h2 data-number="3.2" id="minimizing-chi2-graphically"><span
+         class="header-section-number">3.2</span> Minimizing <span
+         class="math inline">\(\chi^2\)</span> graphically</h2>
+         <p><em>You will rarely minimize <span
+         class="math inline">\(\chi^2\)</span> graphically in a lab.
+         However, this exercise will help you better understand what the
+         fitting routines in Mathematica actually do to find the best
+         fit.</em></p>
+         <ol type="1">
+         <li><p>Import and plot the data set from <a
+         href="https://physicscourses.colorado.edu/phys4430/phys4430_fa19/UsefulDocs/profile_data_without_errors_activity_2.csv">profile_data_without_errors_activity_2.csv</a>.
+         It was generated by inserting a razor blade into path of a
+         laser beam and measuring the photodetector voltage of the laser
+         light. The x column is the microcrometer (razor) position in
+         meters and the y column is the photodetector voltage in
+         volts.</p>
+         <p><code>Import["profile_data_without_errors_activity_2.csv",”CSV”]</code></p></li>
+         <li><p>Define the same fit function many of you used in the
+         Gaussian laser beams lab:</p>
+         <p><span class="math display">\[y(x,a,b,c,w) = a \
+         Erf\left(\frac{\sqrt{2}}{w}(x-b)\right)+c\]</span></p></li>
+         <li><p>Reduce the fit to two free parameters. This step is only
+         necessary because it is hard to visualize more than 3
+         dimensions. Assume <span
+         class="math inline">\(a_{fit}=(V_{max}-V_{min})/2 =
+         1.4375\)</span> and <span class="math inline">\(c_{fit}
+         =(V_{max}+V_{min})/2 = 1.45195\)</span>. These were determined
+         by averaging the first 6 data points to get <span
+         class="math inline">\(V_{min}\)</span> and the last 5 to get
+         <span class="math inline">\(V_{max}\)</span>.</p></li>
+         <li><p>Use Equation <a href="#eq:1">1</a> to write an
+         expression for <span class="math inline">\(\chi^2\)</span> in
+         terms of your <span class="math inline">\(w\)</span> and <span
+         class="math inline">\(c\)</span> parameters, and the <span
+         class="math inline">\(x\)</span> (position) data and <span
+         class="math inline">\(y\)</span> (voltage) data. Since you
+         don’t have any estimate for the uncertainties <span
+         class="math inline">\(\sigma_i\)</span>, do what Mathematica
+         does and assume they are all unity so <span
+         class="math inline">\(\sigma_i=1\)</span>.</p></li>
+         <li><p>Make a contour plot of <span
+         class="math inline">\(\chi^2(w,b)\)</span> and tweak the plot
+         range until you see the minimum. Just like with
+         <code>NonlinearModelFit</code>, it will help to have a good
+         initial guess for your fit parameters. You can iteratively
+         improve the plot range your plot to zoom in on the parameter
+         values that minimize <span
+         class="math inline">\(\chi^2\)</span>, you should get a plot
+         kind of like:</p></li>
+         </ol>
+         <div id="fig:contour" class="fignos">
+         <figure>
+         <img
+         src="https://raw.githubusercontent.com/UCBoulder/PHYS-3330/main/lab10fig/tmp.png"
+         alt="Figure 1: Contour plot example." />
+         <figcaption aria-hidden="true"><span>Figure 1:</span> Contour
+         plot example.</figcaption>
+         </figure>
+         </div>
+         <ol start="6" type="1">
+         <li>Graphically determine the best fit parameters to 3
+         significant digits.</li>
+         <li>Compare with the best fit result from
+         <code>NonlinearModelFit</code> (allow all 4 parameters to
+         vary). Do the fits agree for those three digits of
+         precision?</li>
+         </ol>
+         <h2 data-number="3.3"
+         id="uncertainty-in-the-fit-parameters"><span
+         class="header-section-number">3.3</span> Uncertainty in the fit
+         parameters</h2>
+         <p><strong>Question:</strong> Where does the uncertainty in the
+         fit parameters come from?</p>
+         <p><strong>Answer:</strong> The optimal fit parameters depend
+         on the data points <span
+         class="math inline">\((x_i,y_i)\)</span>. The uncertainty <span
+         class="math inline">\(\sigma_i\)</span> in the <span
+         class="math inline">\(y_i\)</span> means there is a propagated
+         uncertainty in the calculation of the fit parameters. The error
+         propagation calculation is explained in detail in the
+         references, especially Bevington and Robinson.</p>
+         <p><strong>Question:</strong> How does Mathematica calculate
+         the uncertainty in the fit parameters when no error estimate
+         for the <span class="math inline">\(\sigma_i\)</span> is
+         provided?</p>
+         <p><strong>Answer:</strong> Mathematica (and other programs)
+         estimate the uncertainty in the data <span
+         class="math inline">\(\sigma_y^2\)</span> using the “residuals”
+         of the best fit:</p>
+         <p><span id="eq:2" class="eqnos"><span
+         class="math display">\[\sigma_y^2 = \frac{1}{N-n}{\displaystyle
+         \sum_{i=1}^{N}}(y_i-y(x_i,a_0,b_0,c_0, \ ... \
+         ))^2\]</span><span class="eqnos-number">(2)</span></span> </p>
+         <p>where there are <span class="math inline">\(N\)</span> data
+         points <span class="math inline">\(y_i\)</span> and the best
+         fit value at each point is given by <span
+         class="math inline">\(y\)</span>, which depends on <span
+         class="math inline">\(x_i\)</span> and the <span
+         class="math inline">\(n\)</span> best fit parameters <span
+         class="math inline">\(a_0,b_0,c_0, \ ... \ \)</span>. It is
+         very similar to how you would estimate the standard deviation
+         of a repeated measurement, which for comparison’s sake is given
+         by</p>
+         <p><span id="eq:3" class="eqnos"><span
+         class="math display">\[\sigma_y^2 = \frac{1}{N-n}{\displaystyle
+         \sum_{i=1}^{N}}(y_i-\overline{y})^2\]</span><span class="eqnos-number">(3)</span></span>
+         </p>
+         <h2 data-number="3.4"
+         id="estimating-the-uncertainty-in-the-data"><span
+         class="header-section-number">3.4</span> Estimating the
+         uncertainty in the data</h2>
+         <ol type="1">
+         <li>Use Equation <a href="#eq:2">2</a> and your best fit
+         parameters to estimate <span
+         class="math inline">\(\sigma_y^2\)</span>, the random error of
+         each data point given by your data.</li>
+         <li>Compare your result with Mathematica’s
+         <code>NonlinearModelFit</code>, which can also output this
+         estimate of the random error. If <code>nlm</code> is the
+         <code>NonlinearModelFit</code> output, the estimate of <span
+         class="math inline">\(\sigma_y^2\)</span> is given by
+         <code>nlm[“EstimatedVariance”]</code>.</li>
+         <li>Do the estimates agree? Why or why not?</li>
+         </ol>
+         <h2 data-number="3.5" id="goodness-of-fit"><span
+         class="header-section-number">3.5</span> Goodness of fit</h2>
+         <p>This section covers two ways to analyze if a fit is
+         good.</p>
+         <ol type="1">
+         <li>Plotting the residuals.</li>
+         <li>Doing a <span class="math inline">\(\chi^2\)</span>
+         test.</li>
+         </ol>
+         <h3 data-number="3.5.1" id="plotting-the-fit-residuals"><span
+         class="header-section-number">3.5.1</span> Plotting the fit
+         residuals</h3>
+         <p>The first step is to look at the residuals. The residuals,
+         <span class="math inline">\(r_i\)</span>, are defined as the
+         difference between the data and the fit.</p>
+         <p><span class="math display">\[r_i=y_i-y(x_i,a,b,c, \ ... \
+         )\]</span></p>
+         <ol type="1">
+         <li>Make a <code>ListPlot</code> of the residuals. If
+         <code>nlm</code> is the <code>NonlinearModelFi</code>t output,
+         the list of residuals is given by
+         <code>nlm[“FitResiduals”]</code>.</li>
+         <li>Since we didn’t provide any estimates of the uncertainties,
+         Mathematica assumed the uncertainty of every point is the same.
+         Based on the plot of residuals, was this a good
+         assumption?</li>
+         <li>Do the residuals look randomly scattered about zero or do
+         you notice any systematic error sources?</li>
+         <li>Is the distribution of residuals scattered evenly around 0?
+         Or is there a particular range of <span
+         class="math inline">\(x\)</span> values where the residuals are
+         larger than others?</li>
+         <li>What is the most likely source of the large uncertainty as
+         the beam is cut near the center of the beam?</li>
+         </ol>
+         <h2 data-number="3.6"
+         id="chi-by-eye---eyeballing-the-goodness-of-fit"><span
+         class="header-section-number">3.6</span> “Chi by eye” -
+         eyeballing the goodness of fit</h2>
+         <p><strong>Question:</strong> If I have a good fit, should
+         every data point lie within an error bar?</p>
+         <p><strong>Answer:</strong> No. Most should, but we wouldn’t
+         expect every data point to lie within an error bar. If the
+         uncertainty is Gaussian distributed with a standard deviation
+         <span class="math inline">\(\sigma_i\)</span> for each data
+         point ,<span class="math inline">\(y_i\)</span> then we expect
+         roughly 68% of the data points to lie within their error bar.
+         This is because 68% of the probability in a Gaussian
+         distribution lies within one standard deviation of the
+         mean.</p>
+         <h2 data-number="3.7"
+         id="chi2-and-chi_red2-for-testing-the-goodness-of-fit"><span
+         class="header-section-number">3.7</span> <span
+         class="math inline">\(\chi^2\)</span> and <span
+         class="math inline">\(\chi_{red}^2\)</span> for testing the
+         “goodness” of fit</h2>
+         <p>This section answers the question “What should <span
+         class="math inline">\(\chi^2\)</span> be for a good fit?”</p>
+         <p>Suppose the only uncertainty in the data is statistical
+         (i.e., random) error, with a known standard deviation</p>
+         <p>Suppose the only uncertainty in the data is statistical
+         (i.e., random) error, with a known standard deviation <span
+         class="math inline">\(\sigma_i\)</span>, then on average each
+         term in the sum is</p>
+         <p><span id="eq:4" class="eqnos"><span
+         class="math display">\[\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \
+         ... \ ))^2 \approx
+         1\]</span><span class="eqnos-number">(4)</span></span> </p>
+         <p>and the full <span class="math inline">\(\chi^2\)</span> sum
+         of squares is approximately</p>
+         <p><span id="eq:5" class="eqnos"><span
+         class="math display">\[\chi^2 = {\displaystyle
+         \sum_{i=1}^{N}}\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \ ... \
+         ))^2\approx
+         N-n\]</span><span class="eqnos-number">(5)</span></span> </p>
+         <p>So a good fit has</p>
+         <p><span id="eq:6" class="eqnos"><span
+         class="math display">\[\chi_{red}^2 \equiv
+         \frac{\chi^2}{N-n}\approx
+         1\]</span><span class="eqnos-number">(6)</span></span> </p>
+         <p><strong>Fact: To find the goodness of fit test, you must
+         first estimate the uncertainties on the data points that you
+         are fitting.</strong> How would you explain the reason for this
+         in your own words?</p>
+         <h2 data-number="3.8"
+         id="choosing-a-strategy-to-estimate-the-uncertainty"><span
+         class="header-section-number">3.8</span> Choosing a strategy to
+         estimate the uncertainty</h2>
+         <p>Considering your answers to question 3, especially 3e, which
+         method would give you the best estimate of the uncertainty for
+         each data point?</p>
+         <ul>
+         <li>Eyeballing the fluctuations in each data point.</li>
+         <li>Taking <span class="math inline">\(N\)</span> measurements
+         at each razor position and then going to the next
+         position.</li>
+         <li>Taking the entire data set <span
+         class="math inline">\(N\)</span> times.</li>
+         </ul>
+         <h2 data-number="3.9"
+         id="weighted-best-fits-in-mathematica"><span
+         class="header-section-number">3.9</span> Weighted best fits in
+         Mathematica</h2>
+         <p>When you have estimated the uncertainty <span
+         class="math inline">\(\sigma_i\)</span> of each data point
+         <span class="math inline">\(y_i\)</span> you would like to use
+         this information when fitting to correctly evaluate the <span
+         class="math inline">\(\chi^2\)</span> expression in Equation <a
+         href="#eq:1">1</a>. The points with high uncertainty contribute
+         less information when choosing the best fit parameters. If you
+         have a list of uncertainties</p>
+         <p><code>sigmalist = { sigma1, sigma2, sigma3, ...}</code></p>
+         <p>then the weights for the fit are</p>
+         <p><code>weightslist = 1/ sigmalist^2 = {1/ sigma1^2, 1/ sigma2^2, ...}</code></p>
+         <p>Add the <code>Weights-&gt;weightslist</code> option to the
+         <code>LinearModelFit</code> or <code>NonlinearModelFit</code>.
+         For example,</p>
+         <p><code>NonlinearModelFit[data,fit[x,a,b,c],{a,b,c},x, Weights-&gt;weightslist]</code></p>
+         <ol type="1">
+         <li><p>Import the data set for a beam width measurement with
+         uncertainties from the profile_data_with_errors_activity_2.csv.
+         The first column is razor position in meters, the second column
+         is photodetector output voltage, and the third column is the
+         uncertainty on the photodetector output voltage.</p>
+         <p><code>Import["profile_data_with_errors_activity_2.csv",,”CSV”]</code></p></li>
+         <li><p>Do a weighted fit using the same fit function as in
+         <strong>question 1</strong>. Use the uncertainty estimates in
+         the third column to calculate the weights.</p></li>
+         <li><p>Calculate <span class="math inline">\(\chi^2\)</span>.
+         You can obtain <span class="math inline">\(\chi^2\)</span> from
+         the fit returned by Mathematica. Supposing the fit was called
+         <code>nlmError</code>, use <code>nlmError[“ANOVATable”]</code>.
+         For the curious, ANOVA stands for ANalysis Of
+         VAriance.</p></li>
+         </ol>
+         <div id="fig:anova" class="fignos">
+         <figure>
+         <img
+         src="https://raw.githubusercontent.com/UCBoulder/PHYS-3330/main/lab10fig/tmp.png"
+         alt="Figure 2: ANOVA table output" />
+         <figcaption aria-hidden="true"><span>Figure 2:</span> ANOVA
+         table output</figcaption>
+         </figure>
+         </div>
+         <ol start="4" type="1">
+         <li>How close is the reduced chi-squared to 1?</li>
+         <li><strong>The “chi-squared test”.</strong> This part helps us
+         understand if the value of <span
+         class="math inline">\(\chi^2\)</span> is statistically likely
+         or not. The following graph gives the probability of exceeding
+         a particular value of <span
+         class="math inline">\(\chi^2\)</span> for <span
+         class="math inline">\(\nu=𝑁−𝑛=22\)</span> degrees of freedom.
+         It can be calculated using the Cumulative Density Function
+         (CDF) for the chi-squared distribution. Use the graph to
+         estimate the likelihood this value of <span
+         class="math inline">\(\chi^2\)</span> occurred by chance.</li>
+         </ol>
+         <div id="fig:cdf" class="fignos">
+         <figure>
+         <img
+         src="https://raw.githubusercontent.com/UCBoulder/PHYS-3330/main/lab10fig/tmp.png"
+         alt="Figure 3: Cumulative Density Function (CDF) for the chi-squared distribution." />
+         <figcaption aria-hidden="true"><span>Figure 3:</span>
+         Cumulative Density Function (CDF) for the chi-squared
+         distribution.</figcaption>
+         </figure>
+         </div>
+         <h2 data-number="3.10"
+         id="why-is-it-often-bad-to-overestimate-uncertainties"><span
+         class="header-section-number">3.10</span> Why is it often bad
+         to overestimate uncertainties?</h2>
+         <p>Why can overestimating the uncertainty make your fit appear
+         good (i.e., <span
+         class="math inline">\(\frac{\chi^2}{N-n}\approx
+         1\)</span>)?</p>
+         <p>Overestimating the uncertainties makes the fit seem good
+         (according to a <span class="math inline">\(\chi^2\)</span>
+         test), even when it might be obviously a bad fit. It is best to
+         do the <span class="math inline">\(\chi^2\)</span> test using
+         an honest estimate of your uncertainties. If the <span
+         class="math inline">\(\chi^2\)</span> is larger than expected
+         <span class="math inline">\((\chi^2&gt;𝑁−𝑛)\)</span>, then you
+         should consider both the possibility of systematic error
+         sources and the quality of your estimates of the uncertainties.
+         On the other hand, if the <span
+         class="math inline">\(\chi^2\)</span> test is good <span
+         class="math inline">\((\chi^2\approx 𝑁−𝑛)\)</span>, then it
+         shows you have a good handle on the model of your system, and
+         your sources of uncertainty. Finally, if <span
+         class="math inline">\(\chi^2\)</span> is much <em>less</em>
+         than <span class="math inline">\((𝑁−𝑛)\)</span>, this likely
+         indicates overestimated uncertainties.</p>
+         <h1 data-number="4" id="what-is-labview"><span
+         class="header-section-number">4</span> What is LabVIEW?</h1>
+         <p>LabVIEW is a graphical programing language designed for
+         scientists and engineers for experimental control and data
+         acquisition. Most table-top research labs use LabVIEW to
+         communicate with their commercial equipment (e.g., frequency
+         synthesizers, oscilloscopes) and for acquiring data. It has
+         distinct advantages over basic languages such as C++. The
+         graphical environment is intuitive and easy to learn. Also,
+         since it is so widely used, almost all commercial test and
+         measurement equipment comes with LabVIEW drivers and example
+         programs.</p>
+         <p>You can choose to use LabVIEW on the lab laptops. You can
+         also install LabVIEW on your own laptop. The student edition of
+         LabVIEW can be obtained through the following link:
+         http://www.colorado.edu/oit/software-hardware/site-licenses/labview.
+         In addition, you will also eventually need to download the free
+         data acquisition drivers NI-DAQmx.</p>
+         <h1 data-number="5" id="definitions"><span
+         class="header-section-number">5</span> Definitions</h1>
+         <h1 data-number="6" id="labview-environment"><span
+         class="header-section-number">6</span> LabView Environment</h1>
+         <p><em>Check out the NI Apps YouTube channel playlist, <a
+         href="https://www.youtube.com/playlist?list=PLB968815D7BB78F9C">Getting
+         Started with LabVIEW</a>, for more helpful videos</em></p>
+         <p>Learn how to navigate LabVIEW and use the block diagram,
+         front panel, and Functions and Controls palettes. Watch the
+         LabVIEW Environment video: <a
+         href="https://www.youtube.com/watch?v=ZHNlKyYzrPE&amp;list=PLB968815D7BB78F9C&amp;index=2">Writing
+         Your First LabVIEW Program</a>.</p>
+         <h2 data-number="6.1"
+         id="create-a-vi-that-displays-constants-of-different-data-types"><span
+         class="header-section-number">6.1</span> Create a VI that
+         displays constants of different data types</h2>
+         <ol type="1">
+         <li>Open up a new blank VI (virtual instrument).</li>
+         <li>Create a VI that has three types of data indicators
+         (outputs) (i.e., string, Boolean (on/off), and numeric).</li>
+         <li>Create constants of the appropriate data type for each
+         indicator. Wire the terminals such that the indicators show the
+         constant values when the program is run.</li>
+         </ol>
+         <p>For additional information, you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/environment_explanation.pdf">NI
+         LabVIEW Environment: Detailed Explanation</a>.</p>
+         <h1 data-number="7" id="graphical-programming"><span
+         class="header-section-number">7</span> Graphical
+         Programming</h1>
+         <p>Examine the basics of graphical programming and how to
+         determine data flow and order of execution in the LabVIEW
+         environment. Watch the Graphical Programming video: <a
+         href="https://www.youtube.com/watch?v=PqxStfwjQoQ&amp;list=PLB968815D7BB78F9C&amp;index=2">Data
+         Flow Programming Basics</a>.</p>
+         <h2 data-number="7.1"
+         id="create-a-vi-that-will-display-the-energy-of-a-photon-when-the-user-enters-the-wavelength"><span
+         class="header-section-number">7.1</span> Create a VI that will
+         display the energy of a photon when the user enters the
+         wavelength</h2>
+         <ol type="1">
+         <li>Create a control to be able to enter the wavelength of
+         light.</li>
+         <li>Create an indicator to display the energy of the
+         photon.</li>
+         <li>Wire appropriate math operators and constants to convert
+         the entered wavelength to energy.</li>
+         <li>Run your program in “light bulb” mode to see the
+         intermediate values appear on the block diagram.</li>
+         <li>Confirm the VI correctly calculates and displays the energy
+         of a photon.</li>
+         </ol>
+         <p>For additional information, you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/gprogramming_explanation.pdf">Graphical
+         of Programming: Detailed Explanation</a>.</p>
+         <h1 data-number="8"
+         id="programming-tools-using-the-tools-palette"><span
+         class="header-section-number">8</span> Programming Tools –
+         Using the Tools Palette</h1>
+         <p>Discover how to use important tools in LabVIEW that can save
+         you time. Watch the Programming Tools video: <a
+         href="https://www.youtube.com/watch?v=p-6w7x45Cs0&amp;list=PLB968815D7BB78F9C&amp;index=7">Using
+         the Tools Palette</a>.</p>
+         <h2 data-number="8.1" id="modify-your-photon-energy-vi"><span
+         class="header-section-number">8.1</span> Modify your photon
+         energy VI</h2>
+         <ol type="1">
+         <li>Change the labels on the control and indicator to
+         “Wavelength (nm)” and “Energy (J)”</li>
+         <li>Reposition the control and indicator on the front panel and
+         increase their size.</li>
+         <li>Change the number of significant digits shown in the
+         “Energy indicator” to three by right clicking on the indicator
+         and choosing <code>Display Format</code>.</li>
+         <li>Bring up the <code>Tools Palette</code> and switch between
+         “automatic tool selection” and “manual tool selection.”
+         <ol type="1">
+         <li>Do you like to use the automatic tool selection or tab to
+         change tools?</li>
+         </ol></li>
+         </ol>
+         <p>For additional information, you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/programming_explanation.pdf">Programming
+         Tools: Detailed Explanation</a>.</p>
+         <h1 data-number="9" id="debugging-and-handling-errors"><span
+         class="header-section-number">9</span> Debugging and Handling
+         Errors</h1>
+         <p>Learn how to use key debugging and troubleshooting tools
+         that optimize code. Watch the Debugging and Handling Errors
+         video: <a
+         href="https://www.youtube.com/watch?v=1Rx6AXhF31I&amp;list=PLB968815D7BB78F9C&amp;index=6">Using
+         Debugging Tools in NI LabVIEW</a>.</p>
+         <h2 data-number="9.1"
+         id="correct-errors-in-a-previously-created-vi"><span
+         class="header-section-number">9.1</span> Correct errors in a
+         previously created VI</h2>
+         <ol type="1">
+         <li>Download the <a
+         href="https://physicscourses.colorado.edu/phys4430/phys4430_fa19/LabVIEW/Bad_photon.vi">Bad
+         Photon VI</a>.</li>
+         <li>Try to run the program.</li>
+         <li>Read the <code>Error List</code>.</li>
+         <li>Double click on an error to find the location in the
+         program.</li>
+         <li>Fix all errors.</li>
+         </ol>
+         <p>For additional information, you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/debugging_explanation.pdf">Debugging
+         and Handling Errors: Detailed Explanation</a>.</p>
+         <h1 data-number="10" id="data-types-and-structures"><span
+         class="header-section-number">10</span> Data Types and
+         Structures</h1>
+         <p>Explore the different data types (e.g., integer, Boolean,
+         string) and methods to organize and group data, controls, and
+         indicators in LabVIEW. Watch the Data Types and Structures
+         video: <a
+         href="https://www.youtube.com/watch?v=dvShgNdY_GE&amp;list=PLB968815D7BB78F9C&amp;index=3">LabVIEW
+         Data Types</a>.</p>
+         <h2 data-number="10.1"
+         id="change-your-photon-energy-vi-to-include-arrays"><span
+         class="header-section-number">10.1</span> Change your photon
+         energy VI to include arrays</h2>
+         <ol type="1">
+         <li>Right click on the front panel to display the
+         <code>Controls Palette</code>.</li>
+         <li>Expand the Palette by clicking on the double-down
+         arrow.</li>
+         <li>Pin the <code>Modern Controls Palette</code> to the
+         desktop.</li>
+         <li>Create an array control. (This creates an array with an
+         unspecified data type.)</li>
+         <li>Drag your wavelength control into the array on the front
+         panel. This sets the array data type to be the data type of the
+         wavelength control (i.e., double-precision floating
+         point).</li>
+         <li>Repeat the process to change the “Energy indicator” from a
+         single value to an array.</li>
+         <li>Go to the block diagram and fix any broken wires.</li>
+         <li>Run the VI and confirm correct operation.</li>
+         </ol>
+         <h2 data-number="10.2" id="change-data-types"><span
+         class="header-section-number">10.2</span> Change data
+         types</h2>
+         <ol type="1">
+         <li>Create a string indicator array.</li>
+         <li>In the block diagram, connect the wire entering the numeric
+         indicator array to the string indicator array.</li>
+         <li>Notice the broken wire due to incompatible data types.</li>
+         <li>Insert a function to convert from numeric to string type
+         data.
+         <ol type="1">
+         <li>Right click to display the
+         <code>Function Palette</code>.</li>
+         <li>Expand the Palette by clicking on the double-down
+         arrow.</li>
+         <li>Choose the
+         <code>Programming-&gt;String-&gt;String/Numeric Conversion Palette</code>.</li>
+         <li>Choose the function
+         <code>Number to Exponential String</code>.</li>
+         </ol></li>
+         <li>Wire the numeric data through the
+         <code>Number to Exponential String</code> function to the
+         string array.</li>
+         <li>Run the VI and confirm correct operation.</li>
+         </ol>
+         <p>For additional information, you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/datatypes_explanation.pdf">Data
+         Types and Structures: Detailed Explanation</a>.</p>
+         <h1 data-number="11" id="loops-and-case-structures"><span
+         class="header-section-number">11</span> Loops and Case
+         Structures</h1>
+         <p>See how to loop code and conditionally execute code in
+         LabVIEW using <em>For</em> Loops, <em>While</em> Loops, and
+         <em>Case</em> structures. Watch the <a
+         href="https://www.youtube.com/watch?v=hnx9WI2D9zU&amp;list=PLB968815D7BB78F9C&amp;index=10">Using
+         Loops in LabVIEW</a> and <a
+         href="https://www.youtube.com/watch?v=cgS3u0nupfs&amp;list=PLB968815D7BB78F9C&amp;index=9">Using
+         LabView Case Structures</a> videos.</p>
+         <h2 data-number="11.1"
+         id="add-a-while-loop-to-your-vi-to-continuously-loop-until-a-stop-button-is-pressed"><span
+         class="header-section-number">11.1</span> Add a while loop to
+         your VI to continuously loop until a stop button is
+         pressed</h2>
+         <p><strong>Goal:</strong> Include a while loop around the code,
+         so that the user can enter a new wavelength and not have to
+         press run to get the updated result.</p>
+         <ol type="1">
+         <li>Place a <code>While Loop</code> around your entire program
+         in the block diagram.</li>
+         <li>Test your VI to confirm correct operation of the loop.</li>
+         </ol>
+         <h2 data-number="11.2" id="sec:photon"><span
+         class="header-section-number">11.2</span> Change your VI to
+         calculate the energy in units of either joules or eV using a
+         case structure</h2>
+         <p><strong>Goal:</strong> Change your VI to calculate the
+         energy in units of either Joules or eV using a case structure.
+         Use the same Wavelength Control and Energy Indicator, but the
+         numerical calculation to either Joules or eV will reside in a
+         case structure. The case structure has two cases. In one case,
+         place the code to convert to Joules and the other to convert to
+         eV. A control (switch) on the front panel will determine which
+         case is executed.</p>
+         <p><strong>Here are a few questions to help you get
+         started.</strong></p>
+         <ul>
+         <li><p>Should your case structure be inside or outside the
+         <code>While Loop</code>?</p></li>
+         <li><p>Should the control and indicator be inside or outside
+         the case structure?</p></li>
+         <li><p>Where do you connect the Boolean switch to control which
+         case runs?</p></li>
+         </ul>
+         <ol type="1">
+         <li>Write the rest of the code to accomplish the goal outlined
+         above.</li>
+         <li>Test your VI to confirm you have achieved the goal.</li>
+         </ol>
+         <p>For additional information, you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/execstructures_explanation.pdf">Execution
+         Structures: Detailed Explanation</a>.</p>
+         <h1 data-number="12" id="connecting-hardware"><span
+         class="header-section-number">12</span> Connecting
+         Hardware</h1>
+         <p><strong>REWRITE</strong> Learn how to connect a USB DAQ
+         (data acquisition) device to your computer and test to see if
+         it is working properly using the NI-DAQmx driver and NI-MAX. <a
+         href="https://www.youtube.com/watch?v=IuiG1LNCrpI">This
+         screencast</a> might be of help.</p>
+         <h2 data-number="12.1"
+         id="connect-the-usb-6009-to-the-computer-and-confirm-it-is-working-correctly"><span
+         class="header-section-number">12.1</span> Connect the USB-6009
+         to the computer and confirm it is working correctly</h2>
+         <ol type="1">
+         <li>Download and install DAQmx drivers if you have not already
+         done so. (This should already be installed on the lab
+         computers).</li>
+         <li>Launch NI Measurement &amp; Automation Explorer program
+         (NI-MAX).</li>
+         <li>Confirm you have the DAQmx driver installed. It will appear
+         under <code>My System-&gt; Software</code>.</li>
+         <li>Connect the USB cable to your computer and the
+         DAQ-6009.</li>
+         <li>Confirm DAQ-6009 is recognized by Measurement &amp;
+         Automation Explorer program. It will appear below Devices and
+         Interfaces. (If you are using a lab computer, it may have
+         connected to many of these devices, so there may be multiple
+         boxes under Devices, but most will have an <span
+         style="color: red;"><strong>X</strong></span> and only one will
+         be connected.)</li>
+         <li>Self test the DAQ-6009 by right clicking on the device. If
+         the test fails, fix the connection before going on.</li>
+         <li>Open the <code>Test Panel</code> for the device to test the
+         analog input.</li>
+         <li>Connect the 5V power rail to the <code>AI0+</code> and
+         ground to the <code>AI0-</code>. You must connect both wires,
+         since the device measures a potential difference between the
+         two terminals.</li>
+         <li>Verify <code>AI0</code> is working.</li>
+         </ol>
+         <p>For additional information, you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/hardware_explanation.pdf">Connecting
+         Hardware: Detailed Explanation</a>.</p>
+         <h1 data-number="13" id="taking-a-measurement"><span
+         class="header-section-number">13</span> Taking a
+         Measurement</h1>
+         <p>This section covers how to take an analog voltage
+         measurement by creating a LabVIEW VI with DAQ Assistant sub-VI
+         and measuring the output of a function generator. Watch the <a
+         href="https://www.youtube.com/watch?v=ofzbA3keOYE">Taking a
+         Measurement with your Computer</a> video.</p>
+         <h2 data-number="13.1" id="sec:analogmeas"><span
+         class="header-section-number">13.1</span> Use the DAQ Assistant
+         to take an analog voltage measurement</h2>
+         <ol type="1">
+         <li>Open up a new blank VI.</li>
+         <li>Insert a DAQ assistant subVI. It is in the
+         <code>Functions Palette-&gt;Input</code>.</li>
+         <li>Set up the VI to take an analog voltage measurement on
+         channel <code>AI0</code>. You will need to set the
+         <code>Samples to Read</code> and <code>Sample Rate</code> in
+         the DAQ assistant. The following explains how these parameters
+         are determined.
+         <ul>
+         <li>You first have to define the number of periods and number
+         of samples per period to acquire. Then calculate
+         <code>Samples to Read</code>:</li>
+         <li>(Samples to Read) = (number of periods) x (number of
+         samples per period)
+         <ul>
+         <li>Example: 5 periods, 20 samples per period <span
+         class="math inline">\(\implies\)</span> 100 Samples to
+         Read</li>
+         </ul></li>
+         <li>To calculate the Sample Rate, you first must calculate the
+         total time of the acquisition as follows:</li>
+         <li>(Total time) = (number of periods) / (frequency of sine
+         wave)
+         <ul>
+         <li>Example: 5 periods, 1kHz frequency <span
+         class="math inline">\(\implies\)</span> 5ms total acquisition
+         time</li>
+         </ul></li>
+         <li>Now the sample rate can be calculated.
+         <ul>
+         <li>Example: 100 Samples to Read, 5 ms total acquisition time
+         <span class="math inline">\(\implies\)</span> 20 kHz Sample
+         Rate</li>
+         </ul></li>
+         </ul></li>
+         <li>Determine appropriate values for
+         <code>Samples to Read</code> and <code>Sample Rate</code> and
+         enter them. Use <code>N Samples</code> for the Acquisition
+         Mode.</li>
+         <li>Connect your waveform generator to both an oscilloscope and
+         your DAQ device. Choose the frequency to be compatible with
+         your calculation of <code>Samples to Read</code> and
+         <code>Sample Rate</code>.</li>
+         <li>Wire a graph indicator to the output of the DAQ Assistant
+         VI by right-clicking on “data” and selecting “Create” and
+         “Graph Indicator”.</li>
+         <li>Run the VI and compare the output with the oscilloscope
+         output. Are they compatible? If not, understand why and
+         adjust.</li>
+         <li>Double-click the DAQ assistant and change to
+         <code>Continuous Sampling</code>. When saving, accept the
+         option to create a loop. Check if this works.</li>
+         <li>Add to your notebook a printout of the LabVIEW diagram, the
+         LabVIEW output, oscilloscope output, and the waveform generator
+         settings. Explain how it all makes sense.</li>
+         </ol>
+         <p>For additional information, you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/measurement_steps.pdf">Taking
+         a Measurement: Step by Step Procedure</a>.</p>
+         <h1 data-number="14"
+         id="generating-a-signal-using-labview"><span
+         class="header-section-number">14</span> Generating a Signal
+         Using LabView</h1>
+         <p>This section covers how to create a VI to output a DC
+         voltage from your USB DAQ device. Watch the <a
+         href="https://www.youtube.com/watch?v=XcGABamVkME&amp;list=PLB968815D7BB78F9C&amp;index=20">Generating
+         a Signal with Your Computer</a> video.</p>
+         <p><em>Note: The DAQ-6009 does not have the ability to create a
+         waveform as depicted in the video. It can produce a waveform
+         with an update rate 150 samples/sec using the example program
+         you can find <a
+         href="http://www.ni.com/example/25646/en/">here</a>.</em></p>
+         <h2 data-number="14.1"
+         id="add-to-the-vi-created-in-section-secanalogmeas-to-include-an-adjustable-dc-analog-output-signal"><span
+         class="header-section-number">14.1</span> Add to the VI created
+         in section <a href="#sec:analogmeas">13.1</a> to include an
+         adjustable DC analog output signal</h2>
+         <ol type="1">
+         <li>Use the DAQ assistant with Generation Mode set to 1 Sample
+         (On Demand).</li>
+         <li>Add a control to the output generator DAQ assistant.</li>
+         <li>Adjust the DAQ-6009 so that <code>AI0</code> is reading
+         from <code>AO0</code> rather than from the function
+         generator.</li>
+         <li>Verify that everything works as expected. Print out your
+         results and add them to your lab notebook.</li>
+         </ol>
+         <p>You can create sub Vis. Here is a video on <a
+         href="https://www.youtube.com/watch?v=zr2qqv1F4kk&amp;list=PLB968815D7BB78F9C&amp;index=4">Creating
+         Sub VIs in NI LabVIEW</a>. Also, you may want to review this
+         page: <a
+         href="https://knowledge.ni.com/KnowledgeArticleDetails?id=kA03q000000YK4VCAW&amp;l=en-US">Create
+         and Configure a LabVIEW SubVI</a>.</p>
+         <p>For additional information, you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/generate_steps.pdf">Generating
+         a Signal: Step by Step Procedure</a>.</p>
+         <h1 data-number="15"
+         id="acquired-signal-processing-and-analysis"><span
+         class="header-section-number">15</span> Acquired Signal
+         Processing and Analysis</h1>
+         <p>This section covers how to create a VI to filter and analyze
+         the signal acquired by your USB DAQ device. Watch the <a
+         href="https://www.youtube.com/watch?v=xMWIATas_e0">Real-time
+         Signal Processing and Analysis on Measurement Data</a>
+         video.</p>
+         <h2 data-number="15.1"
+         id="create-a-vi-that-filters-the-acquired-signal-and-displays-a-power-spectrum."><span
+         class="header-section-number">15.1</span> Create a VI that
+         filters the acquired signal and displays a power spectrum.</h2>
+         <p><strong>Goal:</strong> Demonstrate the effect of a low-pass
+         filter. Acquire a sine wave voltage signal using the DAQ device
+         and put those data through a low pass filter. The Spectral
+         Measurements VI can then be used to create a power spectrum of
+         the filtered data. Display both the filtered data and power
+         spectrum as graphs. Vary the frequency of the signal from below
+         to above the cutoff frequency.</p>
+         <p><strong>Describe the qualitative behavior of the filtered
+         signal and the power spectrum as the frequency is
+         varied.</strong></p>
+         <p><strong>Here are a few questions to help you get
+         started.</strong></p>
+         <ol type="1">
+         <li>What should you set your Samples to Read and Rate values to
+         in the DAQ Assistant VI to get about enough cycles for the
+         power spectrum to look smooth at 500 Hz?</li>
+         <li>It is quicker to connect numeric controls to the DAQ
+         assistant for these quantities rather than opening up the VI
+         many times.</li>
+         <li>The Spectral Measurements VI performs a FFT (Fast Fourier
+         Transform).</li>
+         <li>What x-scale range should you use for the graph of the
+         Spectral Measurements?</li>
+         <li>Do you want to auto scale the y-axes on the graphs?</li>
+         </ol>
+         <p>For additional information, you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/Signal_Processing_Step_By_Step.pdf">Signal
+         Processing: Step-by-Step Procedure</a>.</p>
+         <h1 data-number="16"
+         id="logging-data-and-saving-it-to-a-file"><span
+         class="header-section-number">16</span> Logging Data and Saving
+         it to a File</h1>
+         <p>This section covers how create, save, and read a file
+         containing data acquired from your USB DAQ device. Watch the <a
+         href="https://www.youtube.com/watch?v=y0Ey6h0Tr64&amp;list=PLB968815D7BB78F9C&amp;index=14">Logging
+         Data with a USB Data Acquisition Device</a> video.</p>
+         <h1 data-number="17"
+         id="modify-the-take-measurement-vi-to-save-the-data-to-a-file"><span
+         class="header-section-number">17</span> Modify the take
+         measurement VI to save the data to a file</h1>
+         <p>Use the <code>Write to Measurement File VI</code> to save
+         the filtered signal data. Make sure to use
+         <code>Append to File</code> to avoid writing over your
+         previously saved data. The Text file format is the easiest to
+         read into Mathematica or other data processing program.</p>
+         <ol type="1">
+         <li>Run the VI to save some data and plot those data using
+         Mathematica.</li>
+         <li>Do you want to include the header information?</li>
+         <li>Remember the file you create is just a text file and can be
+         manipulated using any text editor.</li>
+         </ol>
+         <p>For additional information, you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/datalogging_steps.pdf">Adding
+         Data Logging: Step-by-Step Procedure</a>.</p>
+         <h1 data-number="18" id="creating-graphs-and-charts"><span
+         class="header-section-number">18</span> Creating Graphs and
+         Charts</h1>
+         <p>This section covers how to create and use various graphs and
+         charts. <a
+         href="https://zone.ni.com/reference/en-XX/help/371361R-01/lvhowto/graph_controls/">This
+         page</a> is very useful. Or you can watch the <a
+         href="https://www.youtube.com/watch?v=HtjgeoJc4zA&amp;list=PLB968815D7BB78F9C&amp;index=5">Using
+         Charts and Graphs in NI LabVIEW</a> video.</p>
+         <h2 data-number="18.1"
+         id="modify-the-take-measurement-vi-to-include-a-waveform-chart"><span
+         class="header-section-number">18.1</span> Modify the take
+         measurement VI to include a waveform chart</h2>
+         <ol type="1">
+         <li>Add a waveform chart to the front panel and connect the
+         filtered data to the terminal.</li>
+         <li>Run the VI.</li>
+         <li>Describe the difference between the chart and graph
+         displays.</li>
+         </ol>
+         <p>For additional information, you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/graphs_steps.pdf">Using
+         Graphs and Charts: Step by Step Procedure</a>.</p>
+         <h1 data-number="19"
+         id="using-text-based-programming-within-the-labview-environment"><span
+         class="header-section-number">19</span> Using Text-Based
+         Programming within the LabView Environment</h1>
+         <p>This section covers how to implement formulas using formula
+         and mathscript nodes, as well as incorporate MATLAB scripts
+         into LabVIEW. Watch the <a
+         href="https://www.youtube.com/watch?v=lyEPDSwf9dk">Integrating
+         MATLAB code</a> video on <a
+         href="https://www.youtube.com/watch?v=vcktyORArtM&amp;list=PL48D229C937DE5DD1&amp;index=24">text-based
+         Programming</a>.</p>
+         <h2 data-number="19.1"
+         id="rewrite-your-photon-energy-vi-you-created-in-section-secphoton-to-include-two-formula-nodes"><span
+         class="header-section-number">19.1</span> Rewrite your photon
+         energy VI you created in section <a href="#sec:photon">11.2</a>
+         to include two formula nodes</h2>
+         <p><strong>Goal:</strong> Instead of using individual functions
+         such as multiply, use a formula node to calculate the energy of
+         the photon in both Joules and eV.</p>
+         <ol type="1">
+         <li>Confirm the VI correctly calculates the photon energy in
+         both units.</li>
+         </ol>
+         <p>For additional information, you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/textbased_steps.pdf">Text-Based
+         Integration: Step by Step Procedure</a>.</p>
+         <h1 data-number="20" id="getting-help-in-labview"><span
+         class="header-section-number">20</span> Getting help in
+         Labview</h1>
+         <p>Check out the NI Apps Youtube channel playlist, <a
+         href="https://www.youtube.com/playlist?list=PLB968815D7BB78F9C">Getting
+         Started with LabVIEW</a>, for more helpful videos. LabVIEW has
+         built-in help resources that can assist in better understand
+         concepts and coding techniques.</p>
+         <h2 data-number="20.1" id="explore-context-help"><span
+         class="header-section-number">20.1</span> Explore Context
+         Help</h2>
+         <ol type="1">
+         <li>Turn on <code>Context Help</code> by clicking the yellow
+         question mark in the upper right hand corner of the block
+         diagram.</li>
+         <li>Place a new function on your block diagram,
+         <code>Array Subset</code>. It is located in
+         <code>Functions palette-&gt; Programming-&gt;Array</code>.</li>
+         <li>Move your cursor over the function.</li>
+         <li>Click on Detailed Help.</li>
+         </ol>
+         <p>For additional information you may want to review the <a
+         href="http://www.ni.com/pdf/labview101/us/help_explanation.pdf">Help
+         Within LabVIEW: Detailed Explanation</a>.</p>
+         
+
+
+
+
+
+
+
+
+      </div>
+            <!-- Add comment hosting service here -->
+            <!-- Footer -->
+            <footer class="footer text-muted">
+               <div align="center">
+                  <!-- Update licences -->
+                  Content is available under <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>
+                  &nbsp;|&nbsp;
+                  Sourcecode licensed under <a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank" rel="noopener">GPL-3.0</a>
+                  <br />
+                  <!-- Please keep the following line -->
+                  Built with <a href="https://www.pandoc.org" target="_blank" rel="noopener">Pandoc</a> 
+                  using <a href="https://github.com/ashki23/pandoc-bootstrap" target="_blank" rel="noopener">pandoc-bootstrap</a> theme
+                  <br />
+                  <!-- Update copyright -->
+                  Copyright, Author Name
+               </div>
+            </footer>
+            <!-- Add global site tag (gtag.js) and site analytics here -->
+            <!-- JS, Popper.js, and jQuery -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+      <!-- Mathjax -->
+      <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+      <script>
+         /* Bootstrap styles to tables */
+         function bootstrapStylePandocTables() {
+         $('tr.header').parent('thead').parent('table').addClass('table table-condensed'); }
+         $(document).ready(function () { bootstrapStylePandocTables(); });
+         /* Adjust the height when click the toc */
+         var shiftWindow = function() { scrollBy(0, -60) };
+         window.addEventListener("hashchange", shiftWindow);
+         function load() { if (window.location.hash) shiftWindow(); }
+      </script>
+   </body>
+</html>
