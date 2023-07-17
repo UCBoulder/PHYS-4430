@@ -1,12 +1,8 @@
-pandoc .\lab1.md --toc --filter pandoc-xnos --mathjax -N -s --template=canvasTemplate.html -o lab1.html
-pandoc .\lab2.md --toc --filter pandoc-xnos --mathjax -N -s --template=canvasTemplate.html -o lab2.html
-pandoc .\lab3.md --toc --filter pandoc-xnos --mathjax -N -s --template=canvasTemplate.html -o lab3.html
-pandoc .\lab4.md --toc --filter pandoc-xnos --mathjax -N -s --template=canvasTemplate.html -o lab4.html
-pandoc .\lab5.md --toc --filter pandoc-xnos --mathjax -N -s --template=canvasTemplate.html -o lab5.html
-pandoc .\lab6.md --toc --filter pandoc-xnos --mathjax -N -s --template=canvasTemplate.html -o lab6.html
-pandoc .\lab7.md --toc --filter pandoc-xnos --mathjax -N -s --template=canvasTemplate.html -o lab7.html
-pandoc .\lab8.md --toc --filter pandoc-xnos --mathjax -N -s --template=canvasTemplate.html -o lab8.html
-pandoc .\lab9.md --toc --filter pandoc-xnos --mathjax -N -s --template=canvasTemplate.html -o lab9.html
-pandoc .\lab10.md --toc --filter pandoc-xnos --mathjax -N -s --template=canvasTemplate.html -o lab10.html
-pandoc .\lsa1.md --toc --filter pandoc-xnos --mathjax -N -s --template=canvasTemplate.html -o lsa1.html
-pandoc .\lsa2.md --toc --filter pandoc-xnos --mathjax -N -s --template=canvasTemplate.html -o lsa2.html
+
+# Index/home page
+pandoc index.md --toc --filter pandoc-xnos --mathjax -s --include-in-header header.html --include-before-body navbar.html --include-after-body footer.html --template templates/home-template.html -o index.html
+
+# Lab issue page
+pandoc lab-issue.md --toc --filter pandoc-xnos --mathjax -s --include-in-header header.html --include-before-body navbar.html --include-after-body footer.html --template templates/lab-issue-template.html -o lab-issue.html
+
+# List of lab guides to generate
