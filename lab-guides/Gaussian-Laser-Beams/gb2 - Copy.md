@@ -1,23 +1,6 @@
 ---
-title: "Gaussian Beams: Part 2"
-subtitle: "Operational Amplifiers (OP-Amps) I"
-author: [Department of Physics | University of Colorado Boulder]
-description: "An introduction to Markdown"
-date: '2023-05-01'
-caption-justification: centering
-toc: true
-titlepage: true
-code-block-font-size: \scriptsize
-toc-own-page: true
-titlepage: true
-header-left: "\\thetitle"
-header-center: "Operational Amplifiers (OP-Amps) I"
-header-right: "PHYS 3330"
-footer-left: "\\thedate"
-footer-center: "\\copyright \\theauthor"
-footer-right: "Page \\thepage"
-listings-no-page-break: true
-code-block-font-size: \scriptsize
+title: "Gaussian Beams - Part 2"
+author: Department of Physics | University of Colorado Boulder
 ---
 
 # Goals

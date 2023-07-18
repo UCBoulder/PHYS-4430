@@ -1,6 +1,5 @@
 ---
 title: "Gaussian Beams - Part 1"
-subtitle: "Operational Amplifiers (OP-Amps) I"
 author: Department of Physics | University of Colorado Boulder
 ---
 

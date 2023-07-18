@@ -7,3 +7,4 @@ pandoc ..\markdown\lab-issue.md --toc --filter pandoc-xnos --mathjax -s --includ
 
 # List of lab guides to generate
 pandoc ..\lab-guides\Gaussian-Laser-Beams\gb1.md --toc --filter pandoc-xnos --mathjax -s -N --include-in-header header.html --include-before-body navbar.html --include-after-body footer.html --template ..\templates\lab-guide-template.html -o ..\gb1.html
+pandoc ..\markdown\lab6.md --toc --filter pandoc-xnos --mathjax -s -N --include-in-header header.html --include-before-body navbar.html --include-after-body footer.html --template ..\templates\lab-guide-template.html -o ..\lab6.html
