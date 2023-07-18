@@ -10,7 +10,7 @@ title: PHYS 4430
 email: your-email@domain.com
 description: > # this means to ignore newlines until "baseurl:"
   Website of the PHYS 4430.
-baseurl: ""
+baseurl: "/PHYS-4430/"
 url: ""
 
 include:
