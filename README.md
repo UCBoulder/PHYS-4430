@@ -1,13 +1,11 @@
-# PHYS 4430 Website Repository
-Bootstrap 4 template for Pandoc - Converts markdown files into Twitter Bootstrap styled HTML.
+# Allan Lab Website
 
-Run the `mdtohtml.ps1` file to convert the markdown files into HTML.
+This is the website of our academic research group at Leiden University.
 
-```
-pandoc gb2.md --toc --filter pandoc-xnos --mathjax -N -s --include-in-header header.html --include-before-body navbar.html --include-after-body footer.html --template template.html -o gb2.html
+This website is powered by Jekyll and some Bootstrap, Bootwatch. We tried to make it simple yet adaptable, so that it is easy for you to use it as a template. Plese feel free to copy and modify for your own purposes.  You don't have to link to us or mention us (but of course we appreciate it).
 
-pandoc lab-issue.md --toc --filter pandoc-xnos --mathjax -s --include-in-header header.html --include-before-body navbar.html --include-after-body footer.html --template lab-issue-template.html -o lab-issue.html
+Go to *aboutwebsite.md*  to learn how to copy and modidy this page for your purpose. 
 
-pandoc index.md --toc --filter pandoc-xnos --mathjax -s --include-in-header header.html --include-before-body navbar.html --include-after-body footer.html --template home-template.html -o index.html
 
-```
+Copyright Allan Lab. Code released under the MIT License.
+

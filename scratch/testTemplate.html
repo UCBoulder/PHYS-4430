@@ -1,0 +1,40 @@
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="generator" content="pandoc">
+      $if(author)$<meta name="author" content="$author$">$endif$
+      $if(description)$<meta name="description" content="$description$">$endif$
+      <title>PHYS 4430</title>
+
+      $for(header-includes)$
+      $header-includes$
+      $endfor$
+   </head>
+   <body>
+      $for(include-before)$
+      $include-before$
+      $endfor$
+      <div>
+         <style>
+            .eqnos { display: inline-block; position: relative; width: 100%; }
+            .eqnos br { display: none; }
+            .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
+         </style>
+         $if(title)$<h1 class="title">$title$</h1>$endif$
+         $if(toc)$
+         <h1 class="title">Contents</h1>
+        <nav id="$idprefix$TOC">
+            $table-of-contents$
+        </nav>
+        <hr/>
+         $body$
+         $else$$body$$endif$
+      </div>
+      $for(include-after)$
+      $include-after$
+      $endfor$
+      <!-- Mathjax -->
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+   </body>
+</html>
