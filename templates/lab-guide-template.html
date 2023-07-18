@@ -18,17 +18,18 @@
       $endfor$
    </head>
    <body>
+      $for(include-before)$
+      $include-before$
+      $endfor$
       <div class="container" style="max-width: 900px;">
          <style>
             .eqnos { display: inline-block; position: relative; width: 100%; }
             .eqnos br { display: none; }
             .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
          </style>
-      $for(include-before)$
-      $include-before$
-      $endfor$
          $if(title)$<h1 class="title">$title$</h1>$endif$
          $if(toc)$
+         <hr/>
          <nav id="$idprefix$TOC">
             <p>
                <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
