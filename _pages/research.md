@@ -1,5 +1,5 @@
 ---
-title: "Allan Lab - Research"
+title: "PHYS 4430 - Research"
 layout: textlay
 excerpt: "Allan Lab -- Research"
 sitemap: false

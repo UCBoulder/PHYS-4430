@@ -1,5 +1,5 @@
 ---
-title: "About the website"
+title: "PHYS 4430 - About the website"
 layout: textlay
 excerpt: "About the website."
 sitemap: false

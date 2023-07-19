@@ -1,5 +1,5 @@
 ---
-title: "Allan Lab - Publications"
+title: "PHYS 4430 - Publications"
 layout: gridlay
 excerpt: "Allan Lab -- Publications."
 sitemap: false
