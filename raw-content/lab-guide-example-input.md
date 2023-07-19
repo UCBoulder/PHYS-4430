@@ -25,6 +25,8 @@ $$\sigma_{\overline{y}}^2 = \frac{\sigma_y^2}{N}$$
 
 The goal of this section is to develop a measurement technique and analysis scheme to measure the width of a laser beam. The scheme will let you measure the width in one dimension. The technique is most useful for beams that have an approximately Gaussian intensity profile. You will improve and refine this technique in the upcoming weeks of this lab.
 
+![Image link test.](../images/test/diode-characteristics.png){width="15cm"}
+
 The basic scheme involves measuring the power in the laser beam as the beam is gradually blocked by a knife edge (razor blade) using a setup similar to Figure @fig:knife-assembley.
 
 ![Razor blade mounted on a translation stage.](https://raw.githubusercontent.com/UCBoulder/PHYS-3330/main/lab10fig/tmp.png){#fig:knife-assembley}
