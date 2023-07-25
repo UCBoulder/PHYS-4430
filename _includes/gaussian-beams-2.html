@@ -424,7 +424,8 @@
          column is the micrometer (razor) position in meters and the
          <span class="math inline">\(y\)</span> column is the
          photodetector voltage in volts.</p>
-         <p><code>Import["profile_data_without_errors",”CSV”]</code></p></li>
+         <p><code>Import</code>
+         <code>["profile_data_without_errors",”CSV”]</code></p></li>
          <li><p>Define the same fit function as:</p>
          <p><span class="math display">\[y(x,a,b,c,w) = a \
          Erf\left(\frac{\sqrt{2}}{w}(x-b)\right)+c\]</span></p></li>
@@ -498,7 +499,7 @@
          <p><span id="eq:2" class="eqnos"><span
          class="math display">\[\sigma_y^2 = \frac{1}{N-n}{\displaystyle
          \sum_{i=1}^{N}}(y_i-y(x_i,a_0,b_0,c_0, \ ... \
-         ))^2\text{,}\]</span><span class="eqnos-number">(2)</span></span>
+         ))^2\text{,}\quad\quad\]</span><span class="eqnos-number">(2)</span></span>
          </p>
          <p>where there are <span class="math inline">\(N\)</span> data
          points <span class="math inline">\(y_i\)</span> and the best
@@ -604,7 +605,7 @@
          class="math display">\[\chi^2 = {\displaystyle
          \sum_{i=1}^{N}}\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \ ... \
          ))^2\approx
-         N-n\text{.}\]</span><span class="eqnos-number">(5)</span></span>
+         N-n\text{.}\quad\quad\]</span><span class="eqnos-number">(5)</span></span>
          </p>
          <p>So a good fit has</p>
          <p><span id="eq:6" class="eqnos"><span
@@ -663,7 +664,8 @@
          The first column is razor position in meters, the second column
          is photodetector output voltage, and the third column is the
          uncertainty on the photodetector output voltage.</p>
-         <p><code>Import["profile_data_with_errors.csv",,”CSV”]</code></p></li>
+         <p><code>Import</code>
+         <code>["profile_data_with_errors.csv",,”CSV”]</code></p></li>
          <li><p>Do a weighted fit using the same fit function as in
          Section <a href="#sec:min-graph">2.3</a>. Use the uncertainty
          estimates in the third column to calculate the
