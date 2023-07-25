@@ -30,43 +30,38 @@
             <li><a href="#prelab" id="toc-prelab"><span
             class="toc-section-number">2</span> Prelab</a>
             <ul>
-            <li><a href="#references" id="toc-references"><span
-            class="toc-section-number">2.1</span> References</a></li>
-            <li><a href="#introduction" id="toc-introduction"><span
-            class="toc-section-number">2.2</span> Introduction</a></li>
-            <li><a href="#paraxial-wave-equation"
-            id="toc-paraxial-wave-equation"><span
-            class="toc-section-number">2.3</span> Paraxial wave
+            <li><a href="#sec:wave-eqn" id="toc-sec:wave-eqn"><span
+            class="toc-section-number">2.1</span> Paraxial wave
             equation</a></li>
             <li><a href="#trying-out-the-gaussian-beam-model"
             id="toc-trying-out-the-gaussian-beam-model"><span
-            class="toc-section-number">2.4</span> Trying out the
+            class="toc-section-number">2.2</span> Trying out the
             gaussian beam model</a></li>
             <li><a href="#error-propagation-in-mathematica"
             id="toc-error-propagation-in-mathematica"><span
-            class="toc-section-number">2.5</span> Error propagation in
+            class="toc-section-number">2.3</span> Error propagation in
             Mathematica</a></li>
             <li><a href="#error-bars" id="toc-error-bars"><span
-            class="toc-section-number">2.6</span> Error bars</a>
+            class="toc-section-number">2.4</span> Error bars</a>
             <ul>
             <li><a href="#example-gaussian-laser-beam-width-measurement"
             id="toc-example-gaussian-laser-beam-width-measurement"><span
-            class="toc-section-number">2.6.1</span> Example: Gaussian
+            class="toc-section-number">2.4.1</span> Example: Gaussian
             laser beam width measurement</a></li>
             </ul></li>
             </ul></li>
-            <li><a href="#automation-of-the-measurement-and-analysis"
-            id="toc-automation-of-the-measurement-and-analysis"><span
+            <li><a href="#automation-of-the-measurement"
+            id="toc-automation-of-the-measurement"><span
             class="toc-section-number">3</span> Automation of the
-            Measurement and Analysis</a></li>
+            Measurement</a></li>
             <li><a href="#the-experiment" id="toc-the-experiment"><span
             class="toc-section-number">4</span> The Experiment</a>
             <ul>
             <li><a
-            href="#measuring-the-beam-profile-of-your-hene-laser-without-any-lenses"
-            id="toc-measuring-the-beam-profile-of-your-hene-laser-without-any-lenses"><span
+            href="#measuring-the-beam-profile-of-your-he-ne-laser-without-any-lenses"
+            id="toc-measuring-the-beam-profile-of-your-he-ne-laser-without-any-lenses"><span
             class="toc-section-number">4.1</span> Measuring the beam
-            profile of your HeNe laser without any lenses</a></li>
+            profile of your He-Ne laser without any lenses</a></li>
             <li><a href="#how-does-a-lens-change-a-gaussian-beam"
             id="toc-how-does-a-lens-change-a-gaussian-beam"><span
             class="toc-section-number">4.2</span> How does a lens change
@@ -78,8 +73,8 @@
             </ul></li>
             <li><a href="#analysis" id="toc-analysis"><span
             class="toc-section-number">5</span> Analysis</a></li>
-            <li><a href="#appendix-labview-automation-guide"
-            id="toc-appendix-labview-automation-guide"><span
+            <li><a href="#sec:labview-automation"
+            id="toc-sec:labview-automation"><span
             class="toc-section-number">6</span> Appendix: LabVIEW
             Automation Guide</a>
             <ul>
@@ -92,11 +87,9 @@
             class="toc-section-number">6.2</span> LabVIEW VI
             implementation</a></li>
             </ul></li>
-            <li><a
-            href="#appendix-error-propagation-from-measured-to-derived-quantities"
-            id="toc-appendix-error-propagation-from-measured-to-derived-quantities"><span
+            <li><a href="#sec:err-prop" id="toc-sec:err-prop"><span
             class="toc-section-number">7</span> Appendix: Error
-            Propagation: from Measured to Derived Quantities</a></li>
+            Propagation - from Measured to Derived Quantities</a></li>
             </ul>
         </nav>
         <hr/>
@@ -104,56 +97,32 @@
          class="header-section-number">1</span> Goals</h1>
          <p>In week 1, we measured the profile of the laser and found it
          to be Gaussian to a good approximation. However, we don’t have
-         any model for how the profile changes as the beam propagates.
-         Also, we will apply automation to more rapidly take data. The
-         full set of learning goals includes:</p>
+         any model for how the profile changes as the beam propagates
+         and we will work to improve our model. Also, we will apply
+         automation to more rapidly take data. The full set of learning
+         goals includes:</p>
          <ol type="1">
-         <li>Automated data acquisition.</li>
-         </ol>
-         <ol type="a">
-         <li><p>LabVIEW</p></li>
-         <li><p>USB DAQ (NI USB-6009)</p></li>
-         </ol>
-         <ol start="2" type="1">
+         <li>Automated data acquisition.
+         <ul>
+         <li>LabVIEW</li>
+         <li>USB DAQ (NI USB-6009)</li>
+         </ul></li>
          <li>Fitting and analysis of data in Mathematica</li>
-         <li>Using a predictive model of Gaussian laser beams</li>
-         </ol>
-         <ol type="a">
+         <li>Using a predictive model of Gaussian laser beams
+         <ul>
          <li>Contrast Gaussian beams with geometric optics</li>
-         </ol>
-         <ol start="4" type="1">
+         </ul></li>
          <li>Measure profiles of a Gaussian beam, and extract the
          Gaussian beam parameters</li>
-         <li>Effect of a lens on Gaussian beams.</li>
-         </ol>
-         <ol type="a">
-         <li><p>Is it still Gaussian?</p></li>
-         <li><p>Does the thin lens equation apply to Gaussian
-         beams?</p></li>
-         <li><p>What limits the minimum achievable spot size?</p></li>
+         <li>Effect of a lens on Gaussian beams.
+         <ul>
+         <li>Is it still Gaussian?</li>
+         <li>Does the thin lens equation apply to Gaussian beams?</li>
+         <li>What limits the minimum achievable spot size?</li>
+         </ul></li>
          </ol>
          <h1 data-number="2" id="prelab"><span
          class="header-section-number">2</span> Prelab</h1>
-         <h2 data-number="2.1" id="references"><span
-         class="header-section-number">2.1</span> References</h2>
-         <ol type="1">
-         <li>http://people.seas.harvard.edu/~jones/ap216/lectures/ls_1/ls1_u3/ls1_unit_3.html
-         (Gaussian Beam theory)</li>
-         <li>http://en.wikipedia.org/wiki/Gaussian_beam</li>
-         </ol>
-         <h2 data-number="2.2" id="introduction"><span
-         class="header-section-number">2.2</span> Introduction</h2>
-         <p><strong>Answer these before reading ahead in the lab guide
-         based on your experience from the previous weeks</strong></p>
-         <ol type="1">
-         <li>Does the beam always stay a Gaussian as it propagates?</li>
-         <li>Does the beam stay Gaussian after it goes through a
-         lens?</li>
-         <li>Does the beam stay Gaussian after it reflects from a
-         mirror?</li>
-         <li>How small does the beam get when it is focused by a lens?
-         Does it focus to a point? Why or why not?</li>
-         </ol>
          <p>Light is a propagating oscillation of the electromagnetic
          field. The general principles which govern electromagnetic
          waves are Maxwell’s equations. From these general relations, a
@@ -161,23 +130,24 @@
          <p><span id="eq:1" class="eqnos"><span class="math display">\[
          \nabla^2\vec{E}=\mu_0\epsilon_0
          \frac{\partial^2\vec{E}}{\partial
-         t^2}\]</span><span class="eqnos-number">(1)</span></span> </p>
+         t^2}\text{.}\]</span><span class="eqnos-number">(1)</span></span>
+         </p>
          <p>One of the simplest solutions is that of a plane wave
          propagating in the <span class="math inline">\(\hat{z}\)</span>
-         direction.</p>
+         direction:</p>
          <p><span id="eq:2" class="eqnos"><span
          class="math display">\[\vec{E}(x,y,z,t)=E_x\hat{x}cos(kz-\omega
          t+\phi_x)+E_y\hat{y}cos(kz-\omega
-         t+\phi_y)\]</span><span class="eqnos-number">(2)</span></span>
+         t+\phi_y)\text{.}\]</span><span class="eqnos-number">(2)</span></span>
          </p>
-         <p>But as the measurements from the first week showed, the
+         <p>But as the measurements from the first week showed, our
          laser beams are commonly well approximated by a beam shape with
          a Gaussian intensity profile. Apparently, since these Gaussian
          profile beams exist, they must be solutions of the wave
          equation. The next section will discuss how we derive the
          Gaussian beam electric field, and give a few key results.</p>
-         <h2 data-number="2.3" id="paraxial-wave-equation"><span
-         class="header-section-number">2.3</span> Paraxial wave
+         <h2 data-number="2.1" id="sec:wave-eqn"><span
+         class="header-section-number">2.1</span> Paraxial wave
          equation</h2>
          <p>One important thing to note about the beam output from most
          lasers is that the width of the beam changes very slowly
@@ -185,14 +155,15 @@
          where the beam is propagating in the <span
          class="math inline">\(\hat{z}\)</span>-direction, with the
          electric field polarization in the <span
-         class="math inline">\(\hat{x}\)</span>-direction.</p>
+         class="math inline">\(\hat{x}\)</span>-direction:</p>
          <p><span id="eq:3" class="eqnos"><span
          class="math display">\[\vec{E}(x,y,z,t)=\hat{x}A(x,y,z)e^{kz-\omega
-         t}\]</span><span class="eqnos-number">(3)</span></span> </p>
+         t}\text{.}\]</span><span class="eqnos-number">(3)</span></span>
+         </p>
          <p>The basic idea is that the spatial pattern of the beam,
          described by the function <span
          class="math inline">\(A(x,y,z)\)</span>, does not change much
-         over a wavelength. In the case of the HeNe laser output, the
+         over a wavelength. In the case of the He-Ne laser output, the
          function <span class="math inline">\(A(x,y,z)\)</span> is a
          Gaussian profile that changes its width as a function of <span
          class="math inline">\(z\)</span>. If we substitute the trial
@@ -200,10 +171,13 @@
          equation in Equation <a href="#eq:1">1</a> we get</p>
          <p><span id="eq:4" class="eqnos"><span
          class="math display">\[\hat{x} \left[
-         \left(\pdv[2]{A}{x}+\pdv[2]{A}{y}+\pdv[2]{A}{z} \right)
-         +2ik\pdv{A}{z} - k^2A \right]e^{i(kz-\omega
+         \left(\frac{\partial^2A}{\partial x^2}
+         +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial
+         z^2} \right) +2ik\frac{\partial A}{\partial z} - k^2A
+         \right]e^{i(kz-\omega
          t)}=\hat{x}\mu_0\epsilon_oA(-\omega^2)e^{i(kz-\omega
-         t)}\]</span><span class="eqnos-number">(4)</span></span> </p>
+         t)}\text{.}\]</span><span class="eqnos-number">(4)</span></span>
+         </p>
          <p>This can be simplified recognizing that <span
          class="math inline">\(k^2=\omega^2/c^2=\mu_0\epsilon_0\omega^2\)</span>,
          where the speed of light is related to the permeability and
@@ -213,9 +187,10 @@
          t)}\)</span> term is common to both sides and can be dropped,
          which results in</p>
          <p><span id="eq:5" class="eqnos"><span
-         class="math display">\[\left(\pdv[2]{A}{x}+\pdv[2]{A}{y}+\pdv[2]{A}{z}
-         \right)
-         +2ik\pdv{A}{z}=0\]</span><span class="eqnos-number">(5)</span></span>
+         class="math display">\[\left(\frac{\partial^2A}{\partial x^2}
+         +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial
+         z^2} \right) +2ik\frac{\partial A}{\partial
+         z}=0\text{.}\]</span><span class="eqnos-number">(5)</span></span>
          </p>
          <p>So far, we have made no approximation to the solution or the
          wave equation, but now we apply the assumption that <span
@@ -224,12 +199,15 @@
          class="math inline">\(\lambda = 2\pi /k\)</span>, so we neglect
          the term</p>
          <p><span id="eq:6" class="eqnos"><span
-         class="math display">\[\left| \pdv[2]{A}{z} \right| \ll
-         \left|2k\pdv{A}{z}\right|\]</span><span class="eqnos-number">(6)</span></span>
+         class="math display">\[\left| \frac{\partial^2A}{\partial z^2}
+         \right| \ll \left|2k\frac{\partial A}{\partial
+         z}\right|\text{.}\]</span><span class="eqnos-number">(6)</span></span>
          </p>
-         <p>And finally, we get the paraxial wave equation</p>
+         <p>Finally, we get the paraxial wave equation,</p>
          <p><span id="eq:7" class="eqnos"><span
-         class="math display">\[\pdv[2]{A}{x}+\pdv[2]{A}{y}+\pdv[2]{A}{z}=0\]</span><span class="eqnos-number">(7)</span></span>
+         class="math display">\[\frac{\partial^2A}{\partial x^2}
+         +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial
+         z^2}=0\text{.}\]</span><span class="eqnos-number">(7)</span></span>
          </p>
          <p>One set of solutions to the paraxial wave equation are
          Gauss-Hermite beams, which have an intensity profiles like
@@ -242,8 +220,9 @@
          <p><span id="eq:8" class="eqnos"><span
          class="math display">\[\vec{E}(x,y,z,t) =
          \vec{E}_0\frac{w_0}{w(z)}exp\left(-\frac{x^2+y^2}{w^2(z)}\right)exp\left(ik\frac{x^2+y^2}{2R(z)}\right)e^{-i\zeta(z)}e^{i(kz-\omega
-         t)}\]</span><span class="eqnos-number">(8)</span></span> </p>
-         <p>Where <span class="math inline">\(\vec{E_0}\)</span> is a
+         t)}\text{,}\]</span><span class="eqnos-number">(8)</span></span>
+         </p>
+         <p>where <span class="math inline">\(\vec{E_0}\)</span> is a
          time-independent vector (orthogonal to propagation direction
          <span class="math inline">\(\hat{z}\)</span>) whose magnitude
          denotes the amplitude of the laser’s electric field and the
@@ -252,19 +231,20 @@
          <p><span id="eq:9" class="eqnos"><span
          class="math display">\[w(z)=w_0\sqrt{1+\left(\frac{\lambda
          z}{\pi
-         w_0^2}\right)^2}\]</span><span class="eqnos-number">(9)</span></span>
+         w_0^2}\right)^2}\text{.}\]</span><span class="eqnos-number">(9)</span></span>
          </p>
          <p><span class="math inline">\(R(z)\)</span>,the radius of
          curvature of the wavefront, is given by</p>
          <p><span id="eq:10" class="eqnos"><span
          class="math display">\[R(z)=z\left(1+\left(\frac{\pi
          w_0^2}{\lambda
-         z}\right)^2\right)\]</span><span class="eqnos-number">(10)</span></span>
+         z}\right)^2\right)\text{,}\]</span><span class="eqnos-number">(10)</span></span>
          </p>
-         <p>And the Gouy phase is given by</p>
+         <p>and the Gouy phase is given by</p>
          <p><span id="eq:11" class="eqnos"><span
          class="math display">\[\zeta(z)=arctan\frac{\pi w_0^2}{\lambda
-         z}\]</span><span class="eqnos-number">(11)</span></span> </p>
+         z}\text{.}\]</span><span class="eqnos-number">(11)</span></span>
+         </p>
          <p>The remarkable thing about all these equations is that only
          two parameters need to be specified to give the whole beam
          profile: the wavelength <span
@@ -278,18 +258,18 @@
          topic that can be explored in the final projects.</p>
          <div id="fig:gauss-hermite" class="fignos">
          <figure>
-         <img
-         src="https://raw.githubusercontent.com/UCBoulder/PHYS-3330/main/lab10fig/tmp.png"
+         <img src="../resources/Gaussian-Laser-Beams/gauss-hermite.png"
+         style="width:20cm"
          alt="Figure 1: Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam width, w." />
          <figcaption aria-hidden="true"><span>Figure 1:</span> Intensity
          distributions for the lowest order Gauss-Hermite solutions to
          the paraxial wave equation. The axes are in units of the beam
-         width, w.</figcaption>
+         width, <span class="math inline">\(w\)</span>.</figcaption>
          </figure>
          </div>
-         <h2 data-number="2.4"
+         <h2 data-number="2.2"
          id="trying-out-the-gaussian-beam-model"><span
-         class="header-section-number">2.4</span> Trying out the
+         class="header-section-number">2.2</span> Trying out the
          gaussian beam model</h2>
          <p>In the first week of the lab, we assumed the intensity
          profile of the Gaussian beam was given by <span
@@ -306,7 +286,8 @@
          </ol>
          <p>The Gaussian beam equations given in Equations <a
          href="#eq:8">8</a> -<a href="#eq:11">11</a> assume the beam
-         comes to its narrowest width (called the beam waist) at <span
+         comes to its narrowest width (called the beam waist, <span
+         class="math inline">\(w_0\)</span>) at <span
          class="math inline">\(z=0\)</span>.</p>
          <ol start="3" type="1">
          <li>How would you rewrite these four equations assuming the
@@ -316,10 +297,9 @@
          simplify to Equations <a href="#eq:8">8</a> -<a
          href="#eq:11">11</a> in the special case of <span
          class="math inline">\(z_w=0\)</span>.</li>
-         <li>Write a function to fit the following data set available
-         at: <a
-         href="http://www.colorado.edu/physics/phys4430/phys4430_sp18/sample_data/Test_beam_width_data.csv">www.colorado.edu/physics/phys4430/phys4430_sp18/sample_data/Test_beam_width_data.csv</a>.
-         Assume the wavelength is <span
+         <li>Write a function to fit <a
+         href="../resources/Gaussian-Laser-Beams/Test_beam_width_data.csv">this
+         data set</a>. Assume the wavelength is <span
          class="math inline">\(\lambda=632.8\ nm\)</span>.</li>
          <li>What is the functional form for your fit function?</li>
          <li>What are the different fit parameters and what do they
@@ -330,26 +310,39 @@
          and occurs at a position <span
          class="math inline">\(z_w=0.3396\pm0.0003\ m\)</span>.</li>
          </ol>
-         <h2 data-number="2.5"
+         <h2 data-number="2.3"
          id="error-propagation-in-mathematica"><span
-         class="header-section-number">2.5</span> Error propagation in
+         class="header-section-number">2.3</span> Error propagation in
          Mathematica</h2>
          <p>So far we have explored the use of Mathematica for basic
          data analysis and plotting, but Mathematica also has powerful
          symbolic math capabilities. One example where this can be
-         helpful is for complicated error propagation calculations. The
-         following bit of Mathematica code can calculate the propagated
-         variance in the derived quantity symbolically. The code is
-         available and explained in a Mathematica notebook on the
-         Canvas, <strong>Uncertainty_Propagation.nb</strong></p>
-         <p><strong>Screenshot?</strong></p>
-         <p>In the section above, we modeled the Gaussian beam’s width
-         <span class="math inline">\(w(z)\)</span> as:</p>
+         helpful is for complicated error propagation calculations. This
+         <a
+         href="../resources/Gaussian-Laser-Beams/Uncertainty_Propagation.nb">Mathematica
+         notebook</a> can calculate the propagated variance in the
+         derived quantity symbolically (see Appendix <a
+         href="#sec:err-prop">7</a> for a brief review of error
+         propagation).</p>
+         <div id="fig:error-prop-mathematica" class="fignos">
+         <figure>
+         <img
+         src="../resources/Gaussian-Laser-Beams/error-prop-mathematica.png"
+         style="width:20cm"
+         alt="Figure 2: Example of Mathematica code for error propagation." />
+         <figcaption aria-hidden="true"><span>Figure 2:</span> Example
+         of Mathematica code for error propagation.</figcaption>
+         </figure>
+         </div>
+         <p>In Section <a href="#sec:wave-eqn">2.1</a>, we modeled the
+         Gaussian beam’s width <span class="math inline">\(w(z)\)</span>
+         as:</p>
          <p><span class="math display">\[w(z) =
          w_0\sqrt{1+\left(\frac{z-z_0}{\pi
-         w_0^2/\lambda}\right)^2}\]</span></p>
-         <p>For the output beam of one of the lasers, a fit of beam
-         width versus position gave the following fit parameters:</p>
+         w_0^2/\lambda}\right)^2}\text{.}\]</span></p>
+         <p>For the output beam of one of the lasers in the lab, a fit
+         of beam width versus position gave the following fit
+         parameters:</p>
          <p><span class="math display">\[z_0 = -0.03 \pm 0.04 \
          m\]</span></p>
          <p><span class="math display">\[w_0=(1.90 \pm 0.09)\times
@@ -357,15 +350,16 @@
          <p>The wavelength is given by <span
          class="math inline">\(\lambda = 632.8 \pm 0.1 \
          nm\)</span>.</p>
-         <p>Use Mathematica to estimate the uncertainty in the derived
+         <ol type="1">
+         <li>Use Mathematica to estimate the uncertainty in the derived
          width <span class="math inline">\(w(z)\)</span> when <span
          class="math inline">\(z\)</span> is a distance of <span
          class="math inline">\(2.000 \pm 0.005 \  m\)</span> from the
          waist position. You will probably find it helpful to copy and
-         modify the code given in the example Mathematica notebook:
-         <strong>Uncertainty_Propagation.nb</strong></p>
-         <h2 data-number="2.6" id="error-bars"><span
-         class="header-section-number">2.6</span> Error bars</h2>
+         modify the code given in the example Mathematica notebook.</li>
+         </ol>
+         <h2 data-number="2.4" id="error-bars"><span
+         class="header-section-number">2.4</span> Error bars</h2>
          <p>The error bar is a graphical way to display the uncertainty
          in a measurement. In order to put error bars on a plot you must
          first estimate the error for each point. Anytime you include
@@ -383,32 +377,141 @@
          than this. Also, there is no reason to believe it was the same
          at low and high voltages. The data and uncertainty form a three
          column data set.</p>
-         <p><strong>Table of data</strong></p>
+         <center>
+         <table>
+         <colgroup>
+         <col style="width: 35%" />
+         <col style="width: 32%" />
+         <col style="width: 32%" />
+         </colgroup>
+         <thead>
+         <tr class="header">
+         <th>Micrometer Position (inches)</th>
+         <th>Photodetector Voltage (V)</th>
+         <th>Estimated uncertainty (V)</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="odd">
+         <td>0.410</td>
+         <td>0.015</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="even">
+         <td>0.412</td>
+         <td>0.016</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="odd">
+         <td>0.414</td>
+         <td>0.017</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="even">
+         <td>0.416</td>
+         <td>0.026</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="odd">
+         <td>0.418</td>
+         <td>0.060</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="even">
+         <td>0.420</td>
+         <td>0.176</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="odd">
+         <td>0.422</td>
+         <td>0.460</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="even">
+         <td>0.424</td>
+         <td>0.849</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="odd">
+         <td>0.426</td>
+         <td>1.364</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="even">
+         <td>0.428</td>
+         <td>1.971</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="odd">
+         <td>0.430</td>
+         <td>2.410</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="even">
+         <td>0.432</td>
+         <td>2.703</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="odd">
+         <td>0.434</td>
+         <td>2.795</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="even">
+         <td>0.436</td>
+         <td>2.861</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="odd">
+         <td>0.438</td>
+         <td>2.879</td>
+         <td>0.04</td>
+         </tr>
+         <tr class="even">
+         <td>0.440</td>
+         <td>2.884</td>
+         <td>0.04</td>
+         </tr>
+         </tbody>
+         </table>
+         </center>
+         <p><br></p>
          <p>The Mathematica code for associating error bars with another
          value utilizes the <code>Around[ ]</code> function. The code
          for attaching and plot with error bars will look something like
          this:</p>
-         <p><code>d = Import["gaussian_data_with_errors.txt", "TSV"]; dNew = Table[{d[[i, 1]], Around[d[[i, 2]], 2*d[[i, 3]]]}, {i, Length[d]}] ListPlot[dNew, FrameLabel -&gt; {"Position, x (inches)", "Photodetector output (V)"}]</code></p>
+         <p><code>d = Import["gaussian_data_with_errors.txt", "TSV"];</code></p>
+         <p><code>dNew = Table[{d[[i, 1]], Around[d[[i, 2]], 2*d[[i, 3]]]}, {i, Length[d]}]</code></p>
+         <p><code>ListPlot[dNew, FrameLabel -&gt; {"Position, x (inches)", "Photodetector output (V)"}]</code></p>
          <p>The second line is important because the error bars have to
          be input in a certain format. The following gives a comparison
          of data with and without error bars in Mathematica.</p>
          <p><strong>Table of data</strong></p>
-         <h3 data-number="2.6.1"
+         <h3 data-number="2.4.1"
          id="example-gaussian-laser-beam-width-measurement"><span
-         class="header-section-number">2.6.1</span> Example: Gaussian
+         class="header-section-number">2.4.1</span> Example: Gaussian
          laser beam width measurement</h3>
-         <p>Import the data set with the uncertainties from the website
-         <strong>gaussian_data_with_errors.txt</strong></p>
-         <p>Use the <code>Around[ ]</code> function to reproduce a plot
-         like this. If you need advice on setting plot options, look at
-         the final section of the Mathematica Activity 2.</p>
-         <p><strong>Figure</strong></p>
-         <h1 data-number="3"
-         id="automation-of-the-measurement-and-analysis"><span
+         <p>Import <a
+         href="../resources/Gaussian-Laser-Beams/gaussian_data_with_errors.txt">this
+         data set</a> with the uncertainties into Mathematica. Use the
+         <code>Around[ ]</code> function to reproduce a plot like Figure
+         <a href="#fig:gauss-example">3</a>.</p>
+         <div id="fig:gauss-example" class="fignos">
+         <figure>
+         <img src="../resources/Gaussian-Laser-Beams/gauss-example.png"
+         style="width:15cm"
+         alt="Figure 3: Plot of the provided Gaussian Beam data showing error bars." />
+         <figcaption aria-hidden="true"><span>Figure 3:</span> Plot of
+         the provided Gaussian Beam data showing error
+         bars.</figcaption>
+         </figure>
+         </div>
+         <h1 data-number="3" id="automation-of-the-measurement"><span
          class="header-section-number">3</span> Automation of the
-         Measurement and Analysis</h1>
-         <p><strong>Blurb about strategy for this week’s
-         lab.</strong></p>
+         Measurement</h1>
+         <p>Before we begin this week’s lab, reflect on your experience
+         from week 1 (and perhaps refer to your lab notebook entry to
+         help guide your memory).</p>
          <ol type="1">
          <li>In week one, how long did the total process of data taking
          through analysis take to make a measurement of the beam width
@@ -421,20 +524,21 @@
          Which parts of the process would benefit from automation?</li>
          </ol>
          <p>In the next step, you will use LabVIEW and your NI USB-6009
-         data acquisition card to automate the procedure for measuring
+         data acquisition device to automate the procedure for measuring
          the width of the laser beam. You can do this with your own
-         laptop or with the laptops in lab.</p>
+         laptop or with the laptops in the lab.</p>
          <p>In order to set up your measurement automation you will need
          to create a LabVIEW VI that performs the automated data taking
          (moving the translation stage, recording the position,
          recording the voltage from the photodiode, repeat).
-         Instructions can be found in the Appendix.</p>
+         Instructions can be found in the Appendix <a
+         href="#sec:labview-automation">6</a>.</p>
          <ol start="4" type="1">
          <li>Test and run the automated LabVIEW program and evaluate the
-         result using the same Mathematica analysis as before.</li>
+         result using the same Mathematica analysis from week 1.</li>
          <li>Before you go on, make sure the automated acquisition and
          analysis routine gives the same result as the method you used
-         last week.</li>
+         in week 1.</li>
          <li>How long does your new measurement method take? (2-3
          minutes per <span class="math inline">\(w\)</span> measurement
          is very good.)</li>
@@ -443,17 +547,17 @@
          class="header-section-number">4</span> The Experiment</h1>
          <p>The Gaussian beam model of light is useful because it often
          describes the beam of light created by lasers. This section
-         will test the validity of the model for our HeNe laser beam.
+         will test the validity of the model for our He-Ne laser beam.
          Also, the effect of a lens on a Gaussian beam will be tested,
          and the Gaussian beam model will be compared with predictions
          from the simpler ray theory. Lastly, the Gaussian beam theory
          can be used to describe the minimum possible focus size for a
          beam and a lens.</p>
          <h2 data-number="4.1"
-         id="measuring-the-beam-profile-of-your-hene-laser-without-any-lenses"><span
+         id="measuring-the-beam-profile-of-your-he-ne-laser-without-any-lenses"><span
          class="header-section-number">4.1</span> Measuring the beam
-         profile of your HeNe laser without any lenses</h2>
-         <p>There is a straight-forward reason that a HeNe laser should
+         profile of your He-Ne laser without any lenses</h2>
+         <p>There is a straight-forward reason that a He-Ne laser should
          produce a Gaussian beam. The laser light builds up between two
          mirrors, and the electromagnetic mode that best matches the
          shape of the mirrors is the Gaussian beam.</p>
@@ -463,7 +567,7 @@
          can you test? Are there any parts of the model you cannot
          test?</li>
          <li>Measure the beam width <span
-         class="math inline">\(w\)</span> versus distance from the
+         class="math inline">\(w\)</span> at various distances from the
          laser. Consider carefully what distance should be varying. Is
          it the distance from laser to razor, the distance from razor to
          photodetector, or the distance from laser to photodetector? How
@@ -487,7 +591,7 @@
          <p>Pick a non-compound lens (not the fancy camera lenses) with
          focal length in the range 100-200 mm and assemble it in a lens
          mount with a retaining ring (see Figure <a
-         href="#fig:mount-assembley">2</a>). Recall that it’s very
+         href="#fig:mount-assembley">4</a>). Recall that it’s very
          important that you <strong>do not handle optical
          components</strong> (lenses, mirrors, polarizers, wave plates,
          beam splitters, etc.) <strong>with your bare hands</strong>.
@@ -498,8 +602,8 @@
          the questions below. Consider carefully where to put the lens.
          Your data for this section can be used in the next section.</p>
          <ol type="1">
-         <li>Now, insert a lens (after the mirrors) into the beam path
-         to change the divergence/convergence of the beam but keep its
+         <li>Insert a lens (after the mirrors) into the beam path to
+         change the divergence/convergence of the beam but keep its
          propagation direction the same.</li>
          <li>When this condition (the beam propagation direction is
          unchanged) is met, where does the beam intersect the lens?
@@ -511,16 +615,16 @@
          class="math inline">\(w_0\)</span> and where does it
          occur?</li>
          <li>What factors affect the beam profile after the lens?</li>
-         <li>Does the measured <span
-         class="math inline">\(w(z)\)</span>match the Gaussian beam
-         prediction given in Equation <a href="#eq:9">9</a>?</li>
+         <li>Does the measured <span class="math inline">\(w(z)\)</span>
+         match the Gaussian beam prediction given in Equation <a
+         href="#eq:9">9</a>?</li>
          </ol>
          <div id="fig:mount-assembley" class="fignos">
          <figure>
-         <img
-         src="https://raw.githubusercontent.com/UCBoulder/PHYS-3330/main/lab10fig/tmp.png"
-         alt="Figure 2: Mounting assemblies for a mirror (left) and a lens (right)." />
-         <figcaption aria-hidden="true"><span>Figure 2:</span> Mounting
+         <img src="../resources/Gaussian-Laser-Beams/mount-assembly.png"
+         style="width:15cm"
+         alt="Figure 4: Mounting assemblies for a mirror (left) and a lens (right)." />
+         <figcaption aria-hidden="true"><span>Figure 4:</span> Mounting
          assemblies for a mirror (left) and a lens (right).</figcaption>
          </figure>
          </div>
@@ -530,11 +634,11 @@
          modeling the effect of a lens</h2>
          <p>One of the simplest ways to model the effect of a lens is
          the thin lens equation, which is based on a ray model of light
-         (see Figure <a href="#fig:ray-diagram">3</a>).</p>
+         (see Figure <a href="#fig:ray-diagram">5</a>).</p>
          <p><span class="math display">\[
          \frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}\]</span></p>
          <ol type="1">
-         <li>Redraw Figure <a href="#fig:ray-diagram">3</a> to show how
+         <li>Redraw Figure <a href="#fig:ray-diagram">5</a> to show how
          it would change when the light is modeled as a Gaussian beam,
          rather than rays. In particular, where should the beam waists
          occur? What determines the relative width of the beam
@@ -550,10 +654,10 @@
          </ol>
          <div id="fig:ray-diagram" class="fignos">
          <figure>
-         <img
-         src="https://raw.githubusercontent.com/UCBoulder/PHYS-3330/main/lab10fig/tmp.png"
-         alt="Figure 3: Diagram showing the focusing of light by a thin lens in the ray approximation. The diagram identifies the quantities in the thin lens equation: image distance, object distance, and focal length." />
-         <figcaption aria-hidden="true"><span>Figure 3:</span> Diagram
+         <img src="../resources/Gaussian-Laser-Beams/ray-diagram.png"
+         style="width:15cm"
+         alt="Figure 5: Diagram showing the focusing of light by a thin lens in the ray approximation. The diagram identifies the quantities in the thin lens equation: image distance, object distance, and focal length." />
+         <figcaption aria-hidden="true"><span>Figure 5:</span> Diagram
          showing the focusing of light by a thin lens in the ray
          approximation. The diagram identifies the quantities in the
          thin lens equation: image distance, object distance, and focal
@@ -562,8 +666,7 @@
          </div>
          <h1 data-number="5" id="analysis"><span
          class="header-section-number">5</span> Analysis</h1>
-         <h1 data-number="6"
-         id="appendix-labview-automation-guide"><span
+         <h1 data-number="6" id="sec:labview-automation"><span
          class="header-section-number">6</span> Appendix: LabVIEW
          Automation Guide</h1>
          <h2 data-number="6.1" id="setting-up-the-motor"><span
@@ -595,7 +698,7 @@
          down should move the motor in either direction. If none of this
          is seen when you open APT User, the motor was not set up
          correctly and you should disconnect the USB and power supply
-         from the motor and start again at step 1.</p>
+         from the motor and start again at Step 1.</p>
          <h2 data-number="6.2" id="labview-vi-implementation"><span
          class="header-section-number">6.2</span> LabVIEW VI
          implementation</h2>
@@ -605,10 +708,10 @@
          position, reading the photodiode voltage, repeat. In order to
          automate this process, two pieces of equipment are used: the
          motor to move the stage and the NI-DAQ to read the voltage.</p>
-         <ol type="1">
-         <li>The first step in data taking is moving the razor. To
+         <p>The first step in data taking is moving the razor. To
          automate this, we need to use the motor cube. To connect the
-         cube to LabVIEW, follow these steps:</li>
+         cube to LabVIEW, follow these steps:</p>
+         <ol type="1">
          <li>On the front panel, place an <code>ActiveX Container</code>
          (Under the “.NET &amp; ActiveX” tab)</li>
          <li>Right click the
@@ -689,104 +792,95 @@
          minimum velocity of 0 mm/s, a maximum velocity of 1 mm/s, and
          an acceleration of 1 mm/s/s.</li>
          </ol></li>
-         <li></li>
          </ol>
-         <ol start="2" type="I">
-         <li>The next step involves the action that we want the motor to
-         execute, as well as the data taking process</li>
-         </ol>
-         <ol type="A">
-         <li>In order to separate the ‘action’ part of the LabVIEW from
-         the ‘initialization’, first add a Flat Sequence Structure in
-         the block diagram under the Structures tab</li>
-         </ol>
+         <p>The next step involves the action that we want the motor to
+         execute, as well as the data taking process:</p>
          <ol type="1">
-         <li>Drag the Flat Sequence Structure to include everything in
-         the block diagram so far (the initialization part)</li>
-         <li>Right click the Flat Sequence Structure and select Add
-         Frame After. The second frame in this sequence loop will
-         contain all the action of moving the motor and taking the
-         data.</li>
-         </ol>
-         <ol start="2" type="A">
-         <li>The data taking process has one key feature that should be
-         addressed at this point, the “repeat” part (Move razor, take
+         <li><p>In order to separate the ‘action’ part of the LabVIEW
+         from the ‘initialization’, first add a
+         <code>Flat Sequence Structure</code> in the block diagram under
+         the <code>Structures</code> tab.</p>
+         <ol type="1">
+         <li>Drag the <code>Flat Sequence Structure</code> to include
+         everything in the block diagram so far (the initialization
+         part).</li>
+         <li>Right click the <code>Flat Sequence Structure</code> and
+         select <code>Add Frame After</code>. The second frame in this
+         sequence loop will contain all the action of moving the motor
+         and taking the data.</li>
+         </ol></li>
+         <li><p>The data taking process has one key feature that should
+         be addressed at this point, the “repeat” part (Move razor, take
          data, repeat). In order to make our LabVIEW repeat this
-         process:</li>
-         </ol>
+         process:</p>
          <ol type="1">
-         <li>Add a While Loop (from the Structures tab) inside the
-         second frame of the Sequence</li>
-         <li>Add a Stop button to the front panel and, in the block
-         diagram, wire the stop button to the red stop circle in the
-         corner of the While Loop. This loop will execute its contents
-         repeatedly <em>while</em> the loop has a Boolean “true” value.
-         Once the LabVIEW is running, pressing this stop button on the
-         front panel will stop the While Loop from continuing.</li>
-         </ol>
-         <ol start="3" type="A">
-         <li>We need to put our other actions inside this While Loop. We
-         want these actions to be performed in a sequence, so inside the
-         While Loop, add another Flat Sequence Structure (we will refer
-         to this loop as sequence #2)</li>
-         </ol>
+         <li>Add a <code>While Loop</code> (from the
+         <code>Structures</code> tab) inside the second frame of the
+         Sequence.</li>
+         <li>Add a <code>Stop</code> button to the front panel and, in
+         the block diagram, wire the stop button to the red stop circle
+         in the corner of the <code>While Loop</code>. This loop will
+         execute its contents repeatedly <em>while</em> the loop has a
+         Boolean “true” value. Once the LabVIEW is running, pressing
+         this stop button on the front panel will stop the While Loop
+         from continuing.</li>
+         </ol></li>
+         <li><p>We need to put our other actions inside this
+         <code>While Loop</code>. We want these actions to be performed
+         in a sequence, so inside the <code>While Loop</code>, add
+         another <code>Flat Sequence Structure</code> (we will refer to
+         this loop as sequence #2).</p>
          <ol type="1">
-         <li>Add 3 frames to sequence #2 for a total of 4 frames</li>
-         </ol>
-         <ol start="4" type="A">
-         <li>Inside the first frame of sequence #2, we want the razor to
-         move one Jog Step.</li>
-         </ol>
+         <li>Add 3 frames to sequence #2 for a total of 4 frames.</li>
+         </ol></li>
+         <li><p>Inside the first frame of sequence #2, we want the razor
+         to move one Jog Step.</p>
          <ol type="1">
-         <li>Right click MG17Motor ® Create ® Method for MG17MotorLib… ®
-         MoveJog and place inside 1st frame of sequence #2</li>
-         <li>Wire <strong>reference out</strong> from SetJogStep node to
-         <strong>reference in</strong> of MoveJog</li>
+         <li>Right click
+         <code>MG17Motor &gt; Create &gt; Method for MG17MotorLib… &gt; MoveJog</code>
+         and place inside 1st frame of sequence #2.</li>
+         <li>Wire <strong>reference out</strong> from
+         <code>SetJogStep</code> node to <strong>reference in</strong>
+         of <code>MoveJog</code>.</li>
          <li>Add a Numerical Constant of 0 to the block diagram and wire
-         it to the <strong>IChanID</strong> input</li>
+         it to the <strong>IChanID</strong> input.</li>
          <li>Add one Numerical Control to the front panel and rename it
-         <em>Jog Direction</em></li>
+         <em>Jog Direction</em>.</li>
          <li>Wire it to the <strong>IJogDir</strong> input and enter its
          value as either 1 or 2 (the values correspond to extending or
-         retracting)</li>
-         </ol>
-         <ol start="5" type="A">
-         <li>The next step in the data taking process to wait some
+         retracting).</li>
+         </ol></li>
+         <li><p>The next step in the data taking process to wait some
          amount of time to ensure we do not read the photodiode voltage
-         while the razor is moving.</li>
-         </ol>
+         while the razor is moving.</p>
          <ol type="1">
-         <li>Add the Wait function (under the Timing tab) to the 2nd
-         frame of sequence #2</li>
+         <li>Add the <code>Wait</code> function (under the
+         <code>Timing</code> tab) to the 2nd frame of sequence #2.</li>
          <li>Add a Numerical Control to the front panel, rename it
-         <em>Wait (ms)</em></li>
-         <li>Wire this control to the Wait function. This allows you to
-         change the wait time from the front panel.</li>
-         </ol>
-         <ol start="6" type="A">
-         <li>At this point we need to introduce the NI-DAQ. First, find
-         a working DAQ. Plug it into the computer via the USB. Wire the
-         BNC output from the photodiode into the +/- analog inputs of
-         the DAQ labeled AI0</li>
-         </ol>
+         <em>Wait (ms)</em>.</li>
+         <li>Wire this control to the <code>Wait</code> function. This
+         allows you to change the wait time from the front panel.</li>
+         </ol></li>
+         <li><p>At this point we need to introduce the NI-DAQ. First,
+         find a working DAQ. Plug it into the computer via the USB. Wire
+         the BNC output from the photodiode into the +/- analog inputs
+         of the DAQ labeled AI0.</p>
          <ol type="1">
-         <li>In the 3rd frame of sequence #2 add Measurement I/O ®
-         NI-DAQmx ® DAQ Assist</li>
-         <li>A window should pop and you should click Acquire Signal ®
-         Analog Input ® Voltage ® Channels <em>ai0</em></li>
+         <li>In the 3rd frame of sequence #2 add
+         <code>Measurement I/O &gt;: NI-DAQmx &gt; DAQ Assist</code>.</li>
+         <li>A window should pop and you should click
+         <code>Acquire Signal &gt; Analog Input &gt; Voltage &gt; Channels ai0</code>.</li>
          <li>A new window should pop up for additional setting options
          called DAQ Assist Properties. Under <em>Timing Settings</em>,
          change the <em>Acquisition Mode</em> to <em>1 Sample (On
-         Demand)</em></li>
+         Demand)</em>.</li>
          <li>Click OK to close the window and save your settings.</li>
-         </ol>
-         <ol start="7" type="A">
-         <li><p>In the 4th frame of sequence #2 select File I/O ® Write
-         to Measurement File</p></li>
+         </ol></li>
+         <li><p>In the 4th frame of sequence #2 select
+         <code>File I/O &gt; Write to Measurement File</code></p></li>
          <li><p>A window should open for properties of this node, if it
          does not then right click the Write to Measurement File icon
-         and select “Properties”</p></li>
-         </ol>
+         and select “Properties”.</p>
          <ol type="1">
          <li>Under the <em>Filename</em> section, select <em>Ask User to
          Choose</em> and check the box <em>Ask Only Once</em>. This
@@ -794,64 +888,58 @@
          <li>Under <em>If a file already exists</em> select <em>Append
          to file</em>. This makes it so each data point is added to the
          same file, instead of overwriting or deleting old data
-         points</li>
+         points.</li>
          <li>The file format should be left as text format because it’s
-         easiest to upload into Mathematica</li>
+         easiest to upload into Mathematica.</li>
          <li>Under the header option, select <em>No Headers</em>. At
          this point all the settings should be as we want so close this
-         window</li>
-         </ol>
-         <ol type="I">
-         <li>Now we need to feed our data into this icon so it knows
+         window.</li>
+         </ol></li>
+         <li><p>Now we need to feed our data into this icon so it knows
          what to write to file. The data that we want should be in the
-         form (position, voltage)</li>
-         </ol>
+         form (position, voltage).</p>
          <ol type="1">
-         <li>In sequence #2 frame 4 add Express ® Sig. Manip. ® Merge
-         Signals</li>
-         </ol>
-         <ol start="10" type="A">
-         <li>This merged signal will output to the Write to File node
+         <li>In sequence #2 frame 4 add
+         <code>Express &gt; Sig. Manip. &gt; Merge Signals</code>.</li>
+         </ol></li>
+         <li><p>This merged signal will output to the Write to File node
          and we want the position value in the upper input of Merge
-         Signals and the voltage value in lower input</li>
-         </ol>
+         Signals and the voltage value in lower input.</p>
          <ol type="1">
-         <li>Wire the <strong>Data</strong> output from the DAQ-Assist
-         icon in frame 3 to the lower input of the Merge Signals
-         operator</li>
+         <li>Wire the <strong>Data</strong> output from the
+         <code>DAQ-Assist</code> icon in frame 3 to the lower input of
+         the <code>Merge Signals</code> operator.</li>
          <li>Add a Numerical Indicator on the front panel and rename it
-         <em>Voltage (V)</em> and wire the data output of the DAQ-Assist
-         to it in the 3rd frame of sequence #2 in the block diagram.
-         This provides a real-time check of the photodiode voltage from
-         the front panel</li>
-         </ol>
-         <ol start="11" type="A">
-         <li>We want to know the position of the stage. Right click
-         MG17Motor ® Create ® Method for MG17MotorLib… ® GetPosition and
-         place the icon in the 3rd frame of sequence #2</li>
-         </ol>
+         <em>Voltage (V)</em> and wire the data output of the
+         <code>DAQ-Assist</code> to it in the 3rd frame of sequence #2
+         in the block diagram. This provides a real-time check of the
+         photodiode voltage from the front panel.</li>
+         </ol></li>
+         <li><p>We want to know the position of the stage. Right click
+         <code>MG17Motor &gt; Create &gt; Method for MG17MotorLib… &gt; GetPosition</code>
+         and place the icon in the 3rd frame of sequence #2.</p>
          <ol type="1">
-         <li>Wire the <strong>reference out</strong> from MoveJog to the
-         <strong>reference in</strong> of GetPosition</li>
+         <li>Wire the <strong>reference out</strong> from
+         <code>MoveJog</code> to the <strong>reference in</strong> of
+         <code>GetPosition</code>.</li>
          <li>Wire a Numerical Constant to the <strong>IChanID</strong>
-         input and enter its value as 0</li>
+         input and enter its value as 0.</li>
          <li>Right-click on <strong>pfPosition</strong> and select
-         Create ® Indicator to give us a real-time indicator of the
-         position.</li>
-         <li>Right-click the new indicator and select Create ® Local
-         variable</li>
-         <li>Right-click on the new local variable and select Change to
-         read and wire it to the input of
-         <strong>pfPosition</strong></li>
+         <code>Create &gt; Indicator</code> to give us a real-time
+         indicator of the position.</li>
+         <li>Right-click the new indicator and select
+         <code>Create &gt; Local variable</code>.</li>
+         <li>Right-click on the new local variable and select
+         <code>Change to read</code> and wire it to the input of
+         <strong>pfPosition</strong>.</li>
          <li>Wire the output of <strong>pfPosition</strong> to the upper
-         input of the Merge Signals operator</li>
-         </ol>
-         <ol start="12" type="A">
-         <li>Now the data is in the form (position, voltage) and the
+         input of the <code>Merge Signals</code> operator.</li>
+         </ol></li>
+         <li><p>Now the data is in the form (position, voltage) and the
          merged signal should be wired into the <strong>Signals</strong>
-         input of the Write to File node.</li>
+         input of the <code>Write to File</code> node.</p></li>
          </ol>
-         <p>And with that, the LabVIEW is complete!</p>
+         <p>And with that, the LabVIEW setup is complete!</p>
          <p>At this point, take a step back and take a look at the big
          picture of the LabVIEW and how it operates. There are many
          different approaches to automating this specific process and
@@ -875,12 +963,12 @@
          <li>The Jog Step Size can be very small (0.05 mm for
          example).</li>
          <li>To determine a good amount of time to wait, you can start
-         with the kinematic equation: x = ½ a t2. For a step size of
-         0.05mm, this indicates a time of 316 ms. You may also need to
-         worry about the maximum velocity if you have a large step size.
-         In general, you probably want to add another 200 ms for safety.
-         This will ensure that vibrations from the movement have damped
-         out.</li>
+         with the kinematic equation: <span class="math inline">\(x =
+         1/2 a t^2\)</span>. For a step size of 0.05mm, this indicates a
+         time of 316 ms. You may also need to worry about the maximum
+         velocity if you have a large step size. In general, you
+         probably want to add another 200 ms for safety. This will
+         ensure that vibrations from the movement have damped out.</li>
          <li>Check where a good starting position is on the control cube
          display. Then, once a data set is taken you can quickly move
          the motor to the start position using the control wheel on the
@@ -894,12 +982,12 @@
          stop, press the stop button and it will cut off the While Loop
          and end the process.</p>
          <p>For more details on how LabVIEW and Thorlabs products
-         interact, you can look at: <a
-         href="http://www.thorlabs.us/images/TabImages/GuidetoLabVIEWandAPT.pdf">www.thorlabs.us/images/TabImages/GuidetoLabVIEWandAPT.pdf</a></p>
-         <h1 data-number="7"
-         id="appendix-error-propagation-from-measured-to-derived-quantities"><span
+         interact, you can look <a
+         href="http://www.thorlabs.us/images/TabImages/GuidetoLabVIEWandAPT.pdf">this
+         user guide</a>.</p>
+         <h1 data-number="7" id="sec:err-prop"><span
          class="header-section-number">7</span> Appendix: Error
-         Propagation: from Measured to Derived Quantities</h1>
+         Propagation - from Measured to Derived Quantities</h1>
          <p>The quantity of interest in an experiment is often derived
          from other measured quantities. An example is estimating the
          resistance of a circuit element from measurements of current
@@ -921,8 +1009,10 @@
          fluctuation in <span class="math inline">\(z\)</span> according
          to</p>
          <p><span class="math display">\[\delta z = \left(
-         \pdv{z}{a}\right)\delta a+\left( \pdv{z}{b}\right)\delta
-         b+\left( \pdv{z}{c}\right)\delta c+ \ ...\]</span></p>
+         \frac{\partial z}{\partial a}\right)\delta a+\left(
+         \frac{\partial z}{\partial b}\right)\delta b+\left(
+         \frac{\partial z}{\partial c}\right)\delta c+ \
+         ...\text{.}\]</span></p>
          <p>This equation comes straight from basic calculus. It’s like
          the first term in a Taylor series. It’s the linear
          approximation of <span class="math inline">\(z(a,b,c, \ ... \
@@ -935,50 +1025,14 @@
          \sigma_c, \ ... \ \)</span> In this case, the propagated
          uncertainty in <span class="math inline">\(z\)</span> is:</p>
          <p><span class="math display">\[\sigma_z^2 = \left(
-         \pdv{z}{a}\right)^2\sigma_a^2+\left(
-         \pdv{z}{b}\right)^2\sigma_b^2+\left(
-         \pdv{z}{c}\right)^2\sigma_c^2+ \ ...\]</span></p>
+         \frac{\partial z}{\partial a}\right)^2\sigma_a^2+\left(
+         \frac{\partial z}{\partial b}\right)^2\sigma_b^2+\left(
+         \frac{\partial z}{\partial c}\right)^2\sigma_c^2+ \
+         ...\text{.}\]</span></p>
          <p>There are standard equations provided in courses like the
          introductory physics lab for the error in the sum, difference,
          product, quotient. These are all easily derived from the
          general formula.</p>
-         <p><strong>Review things from long ago…</strong></p>
-         <p>Apply the general error propagation formula in Eq. 2 to
-         calculate the derived uncertainty <span
-         class="math inline">\(\sigma_z^2\)</span> in terms of the
-         measurement uncertainties <span
-         class="math inline">\(\sigma_a\)</span> and <span
-         class="math inline">\(\sigma_b\)</span> when</p>
-         <ol type="1">
-         <li><span class="math inline">\(z=a+b\)</span></li>
-         <li><span class="math inline">\(z=a-b\)</span></li>
-         <li><span class="math inline">\(z=ab\)</span></li>
-         </ol>
-         <p>In the case where a voltage <span
-         class="math inline">\(V\)</span> and current <span
-         class="math inline">\(I\)</span> are measured to derive the
-         resistance <span class="math inline">\(R\)</span>, use Eq. 2 to
-         calculate the uncertainty in <span
-         class="math inline">\(R\)</span> in terms of the uncertainties
-         <span class="math inline">\(\sigma_I\)</span> and <span
-         class="math inline">\(\sigma_V\)</span>.</p>
-         <p>A diffraction grating can be used to measure the wavelength
-         of light using <span class="math inline">\(2a\ sin\theta =
-         n\lambda\)</span> where <span class="math inline">\(a\)</span>
-         is distance between the grating spacing, and <span
-         class="math inline">\(\theta\)</span> is the angle of incidence
-         and reflection, and <span class="math inline">\(n\)</span> is
-         the “order” of the diffraction peak. Note that <span
-         class="math inline">\(n\)</span> is an integer. If we derive
-         <span class="math inline">\(\lambda\)</span> from measurements
-         of <span class="math inline">\(\theta\)</span> and <span
-         class="math inline">\(a\)</span>, use Eq. 2 to calculate the
-         uncertainty in <span class="math inline">\(\lambda\)</span> in
-         terms of the uncertainty in <span
-         class="math inline">\(a\)</span> and <span
-         class="math inline">\(\theta\)</span>: <span
-         class="math inline">\(\sigma_a\)</span> and <span
-         class="math inline">\(\sigma_{\theta}\)</span>.</p>
                </div>
             <!-- Mathjax -->
       <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
