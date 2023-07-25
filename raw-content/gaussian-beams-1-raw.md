@@ -56,7 +56,7 @@ Now, we will begin assembling the components.
 
 *As you are mounting the optics, choose the heights so that the laser hits the center of each optic and the beam is parallel to the table.*
 
-![CAD assembly showing a He-Ne laser mounted to an optical table with the 3D-printed tube mounts that can be found in the tool cabinets in the optical bays of G-214.](../resources/Gaussian-Laser-Beams/tube-mount.png){#fig:tube-mount width="15cm"}
+![CAD assembly showing a He-Ne laser mounted to an optical table with the 3D-printed tube mounts that can be found in the tool cabinets in the optical bays of G214.](../resources/Gaussian-Laser-Beams/tube-mount.png){#fig:tube-mount width="15cm"}
 
 ## Walking a beam {#sec:walkingbeam}
 
