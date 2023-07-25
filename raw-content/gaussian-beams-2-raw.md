@@ -6,7 +6,7 @@ title: "Gaussian Beams - Week 2"
 
 The second week of the Gaussian Beams lab is intended to introduce you to LabVIEW and guide you though interfacing LabVIEW with the instrumentation and data acquisition systems that we use in this course. 
 
-This week's lab is divided into two parts. In part 1, you are guided through the LabVIEW environment and will get to see many useful features that can be realized throughout this course. In part 2, you begin to see the power of using LabVIEW to interface with your lab experiment by acquiring data through a standard National Instrument data acquisition device, [NI USB-6009](http://sine.ni.com/nips/cds/view/p/lang/en/nid/201987). This multifunction USB powered device has 4 (differential) analog inputs (14-bit, 48 kS/s), 2 analog outputs (12-bit, 150 S/s), 12 digital I/O channels, and a 32-bit counter.
+This week's lab is divided into two parts. In part 1, you are guided through the LabVIEW Environment and will get to see many useful features that can be realized throughout this course. In part 2, you begin to see the power of using LabVIEW to interface with your lab experiment by acquiring data through a standard National Instrument data acquisition device, [NI USB-6009](http://sine.ni.com/nips/cds/view/p/lang/en/nid/201987). This multifunction USB powered device has 4 (differential) analog inputs (14-bit, 48 kS/s), 2 analog outputs (12-bit, 150 S/s), 12 digital I/O channels, and a 32-bit counter.
 
 ## What is LabVIEW?
 
@@ -205,7 +205,7 @@ Add the `Weights->weightslist` option to the `LinearModelFit` or `NonlinearModel
 
 Overestimating the uncertainties makes the fit seem good (according to a $\chi^2$ test), even when it might be obviously a bad fit. It is best to do the $\chi^2$ test using an honest estimate of your uncertainties. If the $\chi^2$ is larger than expected $(\chi^2>𝑁−𝑛)$, then you should consider both the possibility of systematic error sources and the quality of your estimates of the uncertainties. On the other hand, if the $\chi^2$ test is good $(\chi^2\approx 𝑁−𝑛)$, then it shows you have a good handle on the model of your system, and your sources of uncertainty. Finally, if $\chi^2\ll (𝑁−𝑛)$, this likely indicates overestimated uncertainties.
 
-# Part 1 - LabVIEW Environment Introduction
+# LabVIEW Environment Introduction
 
 *Check out the NI Apps YouTube channel playlist, [Getting Started with LabVIEW](https://www.youtube.com/playlist?list=PLB968815D7BB78F9C), for more helpful videos* 
 
@@ -319,7 +319,7 @@ See how to loop code and conditionally execute code in LabVIEW using *For* Loops
 
 For additional information, you may want to review the [Execution Structures: Detailed Explanation](http://www.ni.com/pdf/labview101/us/execstructures_explanation.pdf).
 
-# Part 2 - Interfacing LabVIEW with Hardware
+# Interfacing LabVIEW with Hardware
 
 In part 2 of this week's lab, you will learn how to connect a USB DAQ (data acquisition) device to your computer and test to see if it is working properly using the NI-DAQmx driver and NI-MAX. [This screencast](https://www.youtube.com/watch?v=IuiG1LNCrpI) might be of help. 
 
