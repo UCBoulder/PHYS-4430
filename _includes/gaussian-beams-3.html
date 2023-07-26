@@ -44,9 +44,13 @@
             <li><a href="#error-bars" id="toc-error-bars"><span
             class="toc-section-number">2.4</span> Error bars</a>
             <ul>
+            <li><a href="#error-bars-in-mathematica"
+            id="toc-error-bars-in-mathematica"><span
+            class="toc-section-number">2.4.1</span> Error bars in
+            Mathematica</a></li>
             <li><a href="#example-gaussian-laser-beam-width-measurement"
             id="toc-example-gaussian-laser-beam-width-measurement"><span
-            class="toc-section-number">2.4.1</span> Example: Gaussian
+            class="toc-section-number">2.4.2</span> Example: Gaussian
             laser beam width measurement</a></li>
             </ul></li>
             </ul></li>
@@ -366,17 +370,26 @@
          uncertainty, or you sampled it <span
          class="math inline">\(N\)</span> times and took the standard
          deviation of the mean, etc.)</p>
-         <p>Creating plots with error bars is built-in to Mathematica.
-         Suppose you had estimated the uncertainty at every point in a
-         width measurement of your Gaussian laser beam to be <span
+         <h3 data-number="2.4.1" id="error-bars-in-mathematica"><span
+         class="header-section-number">2.4.1</span> Error bars in
+         Mathematica</h3>
+         <p>Creating plots with error bars in Mathematica requires the
+         use of the <code>ErrorBarPlots</code> package. Suppose you had
+         estimated the uncertainty at every point in a width measurement
+         of your Gaussian laser beam to be <span
          class="math inline">\(0.04 \ V\)</span>. This error was chosen
          to demonstrate the mechanics of making a plot with error bars,
          but the uncertainty in the actual data was probably smaller
          than this. Also, there is no reason to believe it was the same
          at low and high voltages. The data and uncertainty form a three
-         column data set.</p>
+         column data set as seen in Table <a
+         href="#tbl:example-data">1</a>.</p>
          <center>
-         <table>
+         <div id="tbl:example-data" class="tablenos">
+         <table id="tbl:example-data">
+         <caption><span>Table 1:</span> Table of data with a fixed
+         uncertainty used to illustrate creating plots with error bars
+         built in to Mathematica. </caption>
          <colgroup>
          <col style="width: 35%" />
          <col style="width: 32%" />
@@ -384,116 +397,116 @@
          </colgroup>
          <thead>
          <tr class="header">
-         <th>Micrometer Position (inches)</th>
-         <th>Photodetector Voltage (V)</th>
-         <th>Estimated uncertainty (V)</th>
+         <th style="text-align: center;">Micrometer Position
+         (inches)</th>
+         <th style="text-align: center;">Photodetector Voltage (V)</th>
+         <th style="text-align: center;">Estimated uncertainty (V)</th>
          </tr>
          </thead>
          <tbody>
          <tr class="odd">
-         <td>0.410</td>
-         <td>0.015</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.410</td>
+         <td style="text-align: center;">0.015</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="even">
-         <td>0.412</td>
-         <td>0.016</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.412</td>
+         <td style="text-align: center;">0.016</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="odd">
-         <td>0.414</td>
-         <td>0.017</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.414</td>
+         <td style="text-align: center;">0.017</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="even">
-         <td>0.416</td>
-         <td>0.026</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.416</td>
+         <td style="text-align: center;">0.026</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="odd">
-         <td>0.418</td>
-         <td>0.060</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.418</td>
+         <td style="text-align: center;">0.060</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="even">
-         <td>0.420</td>
-         <td>0.176</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.420</td>
+         <td style="text-align: center;">0.176</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="odd">
-         <td>0.422</td>
-         <td>0.460</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.422</td>
+         <td style="text-align: center;">0.460</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="even">
-         <td>0.424</td>
-         <td>0.849</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.424</td>
+         <td style="text-align: center;">0.849</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="odd">
-         <td>0.426</td>
-         <td>1.364</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.426</td>
+         <td style="text-align: center;">1.364</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="even">
-         <td>0.428</td>
-         <td>1.971</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.428</td>
+         <td style="text-align: center;">1.971</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="odd">
-         <td>0.430</td>
-         <td>2.410</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.430</td>
+         <td style="text-align: center;">2.410</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="even">
-         <td>0.432</td>
-         <td>2.703</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.432</td>
+         <td style="text-align: center;">2.703</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="odd">
-         <td>0.434</td>
-         <td>2.795</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.434</td>
+         <td style="text-align: center;">2.795</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="even">
-         <td>0.436</td>
-         <td>2.861</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.436</td>
+         <td style="text-align: center;">2.861</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="odd">
-         <td>0.438</td>
-         <td>2.879</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.438</td>
+         <td style="text-align: center;">2.879</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          <tr class="even">
-         <td>0.440</td>
-         <td>2.884</td>
-         <td>0.04</td>
+         <td style="text-align: center;">0.440</td>
+         <td style="text-align: center;">2.884</td>
+         <td style="text-align: center;">0.04</td>
          </tr>
          </tbody>
          </table>
+         </div>
          </center>
          <p><br></p>
-         <p>The Mathematica code for associating error bars with another
-         value utilizes the <code>Around[ ]</code> function. The code
-         for attaching and plot with error bars will look something like
-         this:</p>
-         <p><code>d = Import["gaussian_data_with_errors.txt", "TSV"];</code></p>
-         <p><code>dNew = Table[{d[[i, 1]], Around[d[[i, 2]], 2*d[[i, 3]]]}, {i, Length[d]}]</code></p>
-         <p><code>ListPlot[dNew, FrameLabel -&gt; {"Position, x (inches)", "Photodetector output (V)"}]</code></p>
-         <p>The second line is important because the error bars have to
-         be input in a certain format. The following gives a comparison
-         of data with and without error bars in Mathematica.</p>
-         <p><strong>Table of data</strong></p>
-         <h3 data-number="2.4.1"
+         <p>The Mathematica code for plotting with error bars will look
+         something like this:</p>
+         <pre><code>Needs[&quot;ErrorBarPlots`&quot;];
+d = Import[“gaussian_data_with_errors.txt”, “TSV”];  
+dNew = Table[{ {d[[i,1]], d[[i,2]]}, ErrorBar[2*d[[i,3]]] }, {i,2,Length[d]}];
+ErrorListPlot[dNew, FrameLabel-&gt;{&quot;Position, x (inches)&quot;, &quot;Photodetector output (V)&quot;}]</code></pre>
+         <p>The first line loads the <code>ErrorBarPlots</code> package.
+         The second line is important because the error bars have to be
+         input in a certain format.</p>
+         <h3 data-number="2.4.2"
          id="example-gaussian-laser-beam-width-measurement"><span
-         class="header-section-number">2.4.1</span> Example: Gaussian
+         class="header-section-number">2.4.2</span> Example: Gaussian
          laser beam width measurement</h3>
          <p>Import <a
          href="../resources/Gaussian-Laser-Beams/gaussian_data_with_errors.txt">this
          data set</a> with the uncertainties into Mathematica. Use the
-         <code>Around[ ]</code> function to reproduce a plot like Figure
-         <a href="#fig:gauss-example">3</a>.</p>
+         <code>ErrorBarPlots</code> package to reproduce a plot like
+         Figure <a href="#fig:gauss-example">3</a>.</p>
          <div id="fig:gauss-example" class="fignos">
          <figure>
          <img src="../resources/Gaussian-Laser-Beams/gauss-example.png"

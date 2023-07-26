@@ -118,48 +118,51 @@ The wavelength is given by $\lambda = 632.8 \pm 0.1 \ nm$.
 
 The error bar is a graphical way to display the uncertainty in a measurement. In order to put error bars on a plot you must first estimate the error for each point. Anytime you include error bars in a plot you should explain how the uncertainty in each point was estimated (e.g., you “eyeballed” the uncertainty, or you sampled it $N$ times and took the standard deviation of the mean, etc.)
 
-Creating plots with error bars is built-in to Mathematica. Suppose you had estimated the uncertainty at every point in a width measurement of your Gaussian laser beam to be $0.04 \ V$. This error was chosen to demonstrate the mechanics of making a plot with error bars, but the uncertainty in the actual data was probably smaller than this. Also, there is no reason to believe it was the same at low and high voltages. The data and uncertainty form a three column data set.
+### Error bars in Mathematica
+
+Creating plots with error bars in Mathematica requires the use of the `ErrorBarPlots` package. Suppose you had estimated the uncertainty at every point in a width measurement of your Gaussian laser beam to be $0.04 \ V$. This error was chosen to demonstrate the mechanics of making a plot with error bars, but the uncertainty in the actual data was probably smaller than this. Also, there is no reason to believe it was the same at low and high voltages. The data and uncertainty form a three column data set as seen in Table @tbl:example-data.
 
 <center>
 
 | Micrometer Position (inches) | Photodetector Voltage (V) | Estimated uncertainty (V) |
-| ---------------------------- | ------------------------- | ------------------------- |
-| 0.410                        | 0.015                     | 0.04                      |
-| 0.412                        | 0.016                     | 0.04                      |
-| 0.414                        | 0.017                     | 0.04                      |
-| 0.416                        | 0.026                     | 0.04                      |
-| 0.418                        | 0.060                     | 0.04                      |
-| 0.420                        | 0.176                     | 0.04                      |
-| 0.422                        | 0.460                     | 0.04                      |
-| 0.424                        | 0.849                     | 0.04                      |
-| 0.426                        | 1.364                     | 0.04                      |
-| 0.428                        | 1.971                     | 0.04                      |
-| 0.430                        | 2.410                     | 0.04                      |
-| 0.432                        | 2.703                     | 0.04                      |
-| 0.434                        | 2.795                     | 0.04                      |
-| 0.436                        | 2.861                     | 0.04                      |
-| 0.438                        | 2.879                     | 0.04                      |
-| 0.440                        | 2.884                     | 0.04                      |
+| :--------------------------: | :-----------------------: | :-----------------------: |
+|            0.410             |           0.015           |           0.04            |
+|            0.412             |           0.016           |           0.04            |
+|            0.414             |           0.017           |           0.04            |
+|            0.416             |           0.026           |           0.04            |
+|            0.418             |           0.060           |           0.04            |
+|            0.420             |           0.176           |           0.04            |
+|            0.422             |           0.460           |           0.04            |
+|            0.424             |           0.849           |           0.04            |
+|            0.426             |           1.364           |           0.04            |
+|            0.428             |           1.971           |           0.04            |
+|            0.430             |           2.410           |           0.04            |
+|            0.432             |           2.703           |           0.04            |
+|            0.434             |           2.795           |           0.04            |
+|            0.436             |           2.861           |           0.04            |
+|            0.438             |           2.879           |           0.04            |
+|            0.440             |           2.884           |           0.04            |
+
+Table: Table of data with a fixed uncertainty used to illustrate creating plots with error bars built in to Mathematica. {#tbl:example-data}
 
 </center>
 
 <br>
 
-The Mathematica code for associating error bars with another value utilizes the `Around[ ]` function. The code for attaching and plot with error bars will look something like this:
+The Mathematica code for plotting with error bars will look something like this:
 
-`d = Import["gaussian_data_with_errors.txt", "TSV"];`
+```
+Needs["ErrorBarPlots`"];
+d = Import[“gaussian_data_with_errors.txt”, “TSV”];  
+dNew = Table[{ {d[[i,1]], d[[i,2]]}, ErrorBar[2*d[[i,3]]] }, {i,2,Length[d]}];
+ErrorListPlot[dNew, FrameLabel->{"Position, x (inches)", "Photodetector output (V)"}]
+```
 
-`dNew = Table[{d[[i, 1]], Around[d[[i, 2]], 2*d[[i, 3]]]}, {i, Length[d]}]`
-
-`ListPlot[dNew, FrameLabel -> {"Position, x (inches)", "Photodetector output (V)"}]`
-
-The second line is important because the error bars have to be input in a certain format. The following gives a comparison of data with and without error bars in Mathematica.
-
-**Table of data**
+The first line loads the `ErrorBarPlots` package.  The second line is important because the error bars have to be input in a certain format.
 
 ### Example: Gaussian laser beam width measurement
 
-Import [this data set](../resources/Gaussian-Laser-Beams/gaussian_data_with_errors.txt) with the uncertainties into Mathematica. Use the `Around[ ]` function to reproduce a plot like Figure @fig:gauss-example.
+Import [this data set](../resources/Gaussian-Laser-Beams/gaussian_data_with_errors.txt) with the uncertainties into Mathematica. Use the `ErrorBarPlots` package to reproduce a plot like Figure @fig:gauss-example.
 
 ![Plot of the provided Gaussian Beam data showing error bars.](../resources/Gaussian-Laser-Beams/gauss-example.png){#fig:gauss-example width="15cm"}
 
