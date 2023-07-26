@@ -101,4 +101,3 @@ Lab equipment may fail, malfunction, or become damaged throughout the semester. 
 As part of your enrollment in this course, we offer to cover the costs associated with taking the [Machining Course](https://www.colorado.edu/physics/partners/trades-teaching-lab/classes) in the [Physics Trades Teaching Lab](https://www.colorado.edu/physics/partners/trades-teaching-lab). While this is not a requirement, we strongly encourage all students to participate in this opportunity. More details will be provided later in the semester.
 
 
----

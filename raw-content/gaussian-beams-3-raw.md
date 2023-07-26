@@ -219,10 +219,6 @@ $$ \frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}$$
 
 ![Diagram showing the focusing of light by a thin lens in the ray approximation. The diagram identifies the quantities in the thin lens equation: image distance, object distance, and focal length.](../resources/Gaussian-Laser-Beams/ray-diagram.png){#fig:ray-diagram width="15cm"}
 
-# Analysis
-
-
-
 # Appendix: LabVIEW Automation Guide {#sec:labview-automation}
 
 ## Setting up the motor
