@@ -11,3 +11,5 @@ permalink: /lab-guides/gaussian-beams
 [Gaussian Beams Week 2](/PHYS-4430/lab-guides/gaussian-beams-2)
 
 [Gaussian Beams Week 3](/PHYS-4430/lab-guides/gaussian-beams-3)
+
+[Gaussian Beams Week 4](/PHYS-4430/lab-guides/gaussian-beams-4)
