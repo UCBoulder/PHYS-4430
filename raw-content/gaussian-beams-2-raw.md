@@ -44,7 +44,7 @@ This week's prelab will be a continuation of the measurement uncertainty and err
 4. Be able to interpret the uncertainty in fit parameters that Mathematica’s fit routines output.
 5. Be able to compute $\chi^2$ for a fit and use it to determine if a fit is “good”.
 
-## Useful Readings
+## Useful readings
 
 1. Taylor, J. R. (1997). *An Introduction to Error Analysis: The Study of Uncertainties in Physical Measurements* (p. 327). University Science Books. This is the standard undergraduate text for measurement and uncertainty.
 2. Bevington, P. R., & Robinson, K. D. (2003). *Data Reduction and Error Analysis for the Physical Sciences* Third Edition (3rd ed.). New York: McGraw-Hill. Great for advanced undergrad error analysis. Professional physicists use it too.
@@ -221,7 +221,7 @@ Learn how to navigate LabVIEW and use the block diagram, front panel, and Functi
 
 For additional information, you may want to review the [NI LabVIEW Environment: Detailed Explanation](http://www.ni.com/pdf/labview101/us/environment_explanation.pdf). 
 
-## Graphical Programming
+## Graphical programming
 
 Examine the basics of graphical programming and how to determine data flow and order of execution in the LabVIEW environment. Watch the Graphical Programming video: [Data Flow Programming Basics](https://www.youtube.com/watch?v=PqxStfwjQoQ&list=PLB968815D7BB78F9C&index=2).
 
@@ -235,7 +235,7 @@ Examine the basics of graphical programming and how to determine data flow and o
 
 For additional information, you may want to review the [Graphical of Programming: Detailed Explanation](http://www.ni.com/pdf/labview101/us/gprogramming_explanation.pdf).
 
-## Programming Tools – Using the Tools Palette
+## Programming tools – using the tools palette
 
 Discover how to use important tools in LabVIEW that can save you time. Watch the Programming Tools video: [Using the Tools Palette](https://www.youtube.com/watch?v=p-6w7x45Cs0&list=PLB968815D7BB78F9C&index=7).
 
@@ -249,7 +249,7 @@ Discover how to use important tools in LabVIEW that can save you time. Watch the
 
 For additional information, you may want to review the [Programming Tools: Detailed Explanation](http://www.ni.com/pdf/labview101/us/programming_explanation.pdf).
 
-## Debugging and Handling Errors
+## Debugging and handling errors
 
 Learn how to use key debugging and troubleshooting tools that optimize code. Watch the Debugging and Handling Errors video: [Using Debugging Tools in NI LabVIEW](https://www.youtube.com/watch?v=1Rx6AXhF31I&list=PLB968815D7BB78F9C&index=6).
 
@@ -262,7 +262,7 @@ Learn how to use key debugging and troubleshooting tools that optimize code. Wat
 
 For additional information, you may want to review the [Debugging and Handling Errors: Detailed Explanation](http://www.ni.com/pdf/labview101/us/debugging_explanation.pdf).
 
-## Data Types and Structures
+## Data types and structures
 
 Explore the different data types (e.g., integer, Boolean, string) and methods to organize and group data, controls, and indicators in LabVIEW. Watch the Data Types and Structures video: [LabVIEW Data Types](https://www.youtube.com/watch?v=dvShgNdY_GE&list=PLB968815D7BB78F9C&index=3).
 
@@ -292,7 +292,7 @@ Explore the different data types (e.g., integer, Boolean, string) and methods to
 
 For additional information, you may want to review the [Data Types and Structures: Detailed Explanation](http://www.ni.com/pdf/labview101/us/datatypes_explanation.pdf).
 
-## Loops and Case Structures
+## Loops and case structures
 
 See how to loop code and conditionally execute code in LabVIEW using *For* Loops, *While* Loops, and *Case* structures. Watch the [Using Loops in LabVIEW](https://www.youtube.com/watch?v=hnx9WI2D9zU&list=PLB968815D7BB78F9C&index=10) and [Using LabView Case Structures](https://www.youtube.com/watch?v=cgS3u0nupfs&list=PLB968815D7BB78F9C&index=9) videos.
 
