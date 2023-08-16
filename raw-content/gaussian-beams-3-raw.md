@@ -42,9 +42,9 @@ There are standard equations provided in courses like the introductory physics l
 
 ## Error propagation in Mathematica
 
-So far we have explored the use of Mathematica for basic data analysis and plotting, but Mathematica also has powerful symbolic math capabilities. One example where this can be helpful is for complicated error propagation calculations. This [Mathematica notebook](../resources/Gaussian-Laser-Beams/Uncertainty_Propagation.nb) can calculate the propagated variance in the derived quantity symbolically.
+So far we have explored the use of Mathematica for basic data analysis and plotting, but Mathematica also has powerful symbolic math capabilities. One example where this can be helpful is for complicated error propagation calculations. This [Mathematica notebook](../resources/lab-guides/Gaussian-Laser-Beams/Uncertainty_Propagation.nb) can calculate the propagated variance in the derived quantity symbolically.
 
-![Example of Mathematica code for error propagation.](../resources/Gaussian-Laser-Beams/error-prop-mathematica.png){#fig:error-prop-mathematica width="20cm"}
+![Example of Mathematica code for error propagation.](../resources/lab-guides/Gaussian-Laser-Beams/error-prop-mathematica.png){#fig:error-prop-mathematica width="20cm"}
 
 In next week's prelab, we will model a Gaussian beam’s width $w(z)$ as:
 
@@ -122,9 +122,9 @@ Table: Comparison of code for plotting with and without error bars in Mathematic
 
 ### Example: Gaussian laser beam width measurement
 
-Import [this data set](../resources/Gaussian-Laser-Beams/gaussian_data_with_errors.txt) with the uncertainties into Mathematica. Use the `ErrorBarPlots` package to reproduce a plot like Figure @fig:gauss-example.
+Import [this data set](../resources/lab-guides/Gaussian-Laser-Beams/gaussian_data_with_errors.txt) with the uncertainties into Mathematica. Use the `ErrorBarPlots` package to reproduce a plot like Figure @fig:gauss-example.
 
-![Plot of the provided Gaussian Beam data showing error bars.](../resources/Gaussian-Laser-Beams/gauss-example.png){#fig:gauss-example width="15cm"}
+![Plot of the provided Gaussian Beam data showing error bars.](../resources/lab-guides/Gaussian-Laser-Beams/gauss-example.png){#fig:gauss-example width="15cm"}
 
 # Digital Sampling of Data
 
@@ -184,7 +184,7 @@ The *Nyquist Frequency* is defined to be half the sample rate.
    2. Predict what should you observe if you set the waveform generator to the same frequency as the sample rate? Try it out, compare with your prediction, and explain your observations.
    3. What happens if you change the oscilloscope time scale? Or change the waveform generator frequency slightly? Try to explain what you observe.
 
-![The horizontal menu on the Rigol DS1052E Oscilloscope.](../resources/Gaussian-Laser-Beams/scope-menu.png){#fig:scope-menu width="20cm"}
+![The horizontal menu on the Rigol DS1052E Oscilloscope.](../resources/lab-guides/Gaussian-Laser-Beams/scope-menu.png){#fig:scope-menu width="20cm"}
 
 # Fourier Analysis Techniques
 

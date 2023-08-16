@@ -4,7 +4,7 @@ layout: lab-guide
 permalink: /lab-guides/gaussian-beams
 ---
 
-**The Gaussian Beams lab guide spans three weeks**.
+**The Gaussian Beams lab guide spans four weeks**.
 
 [Gaussian Beams Week 1](/PHYS-4430/lab-guides/gaussian-beams-1)
 

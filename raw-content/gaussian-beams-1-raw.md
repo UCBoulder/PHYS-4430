@@ -56,7 +56,7 @@ Now, we will begin assembling the components.
 
 *As you are mounting the optics, choose the heights so that the laser hits the center of each optic and the beam is parallel to the table.*
 
-![CAD assembly showing a He-Ne laser mounted to an optical table with the 3D-printed tube mounts that can be found in the tool cabinets in the optical bays of G214.](../resources/Gaussian-Laser-Beams/tube-mount.png){#fig:tube-mount width="15cm"}
+![CAD assembly showing a He-Ne laser mounted to an optical table with the 3D-printed tube mounts that can be found in the tool cabinets in the optical bays of G214.](../resources/lab-guides/Gaussian-Laser-Beams/tube-mount.png){#fig:tube-mount width="15cm"}
 
 ## Walking a beam {#sec:walkingbeam}
 
@@ -66,11 +66,11 @@ Next, you will align your laser such that beam is aligned parallel to the table.
 2. Use only two mirrors to get the beam to pass through the center of each disc. Having two mirrors allows you to independently adjust the angle and position of your beam.
 3. Draw a diagram in your lab notebook of the configuration of your laser, mirrors, and alignment discs.
 
-![Mounting assemblies for a mirror (left) and a lens (right).](../resources/Gaussian-Laser-Beams/mount-assembly.png){#fig:mount-assembley width="15cm"}
+![Mounting assemblies for a mirror (left) and a lens (right).](../resources/lab-guides/Gaussian-Laser-Beams/mount-assembly.png){#fig:mount-assembley width="15cm"}
 
 # Modeling Characteristics of the Photodetector
 
-The goal of this part of the lab is to understand a lot about the specifications given on the datasheet for the Thorlabs [PDA36A](../resources/Gaussian-Laser-Beams/PDA36A-Manual.pdf) (or [PDA36A2](../resources/Gaussian-Laser-Beams/PDA36A2-Manual.pdf)) Switchable Gain Amplified Photodetectors (we have both in the lab, so check the model number to know which one you are using). It is important to realize that data sheets (also called spec sheets or specification sheets) provide a model for the realistic behavior of the device. This model can be tested and improved, a process more commonly called "calibration." Note that there are **two** power switches, one on the power supply and one on the photodetector. The photodetector will respond to light with the power off but it won't work well and changing the gain will have little effect.
+The goal of this part of the lab is to understand a lot about the specifications given on the datasheet for the Thorlabs [PDA36A](../resources/lab-guides/Gaussian-Laser-Beams/PDA36A-Manual.pdf) (or [PDA36A2](../resources/lab-guides/Gaussian-Laser-Beams/PDA36A2-Manual.pdf)) Switchable Gain Amplified Photodetectors (we have both in the lab, so check the model number to know which one you are using). It is important to realize that data sheets (also called spec sheets or specification sheets) provide a model for the realistic behavior of the device. This model can be tested and improved, a process more commonly called "calibration." Note that there are **two** power switches, one on the power supply and one on the photodetector. The photodetector will respond to light with the power off but it won't work well and changing the gain will have little effect.
 
 ## Basic function of the amplified photodetector
 
@@ -127,7 +127,7 @@ Using your digital multimeter, make a table of estimated DC voltages from your p
 1. “Eyeball” the mean. “Eyeball” the amplitude of the random fluctuations.
 2. Set the multimeter on max/min mode to record the $V_{max}$ and $V_{min}$ fluctuations over a certain time period. You can estimate the mean by $(V_{max}+V_{min})/2$ and the uncertainty by $(V_{max}-V_{min})/2$.
 3. Record the instantaneous voltage reading on the multimeter $N$ times and calculate the estimated uncertainty from the standard deviation.
-4. What is the resolution intrinsic to the multimeter according to the [spec sheet](../resources/Gaussian-Laser-Beams/Fluke_115_Multimeter_Data_Sheet.pdf) (no measurement required)? How does this compare to the observed uncertainty in parts 1-3?
+4. What is the resolution intrinsic to the multimeter according to the [spec sheet](../resources/lab-guides/Gaussian-Laser-Beams/Fluke_115_Multimeter_Data_Sheet.pdf) (no measurement required)? How does this compare to the observed uncertainty in parts 1-3?
 
 ## Measurement and uncertainty using the oscilloscope
 
@@ -137,7 +137,7 @@ Now connect the photodiode to an oscilloscope. Continue the previous table of es
 2. Use the measurement function on the scope to record the mean and RMS fluctuations.
 3. Use the cursors to measure the mean and size of fluctuations.
 4. Record the voltage from the oscilloscope $N$ times and calculate the estimated uncertainty from the standard deviation.
-5. A comparison with the data sheet is difficult because so many factors affect the observed noise in the oscilloscope. You can find some information [here](../resources/Gaussian-Laser-Beams/Rigol_DS1052E_Oscilloscope_Datasheet.pdf) (there is information about the resolution and the DC measurement accuracy) .
+5. A comparison with the data sheet is difficult because so many factors affect the observed noise in the oscilloscope. You can find some information [here](../resources/lab-guides/Gaussian-Laser-Beams/Rigol_DS1052E_Oscilloscope_Datasheet.pdf) (there is information about the resolution and the DC measurement accuracy) .
 
 ## Summary of methods 
 
@@ -174,7 +174,7 @@ The goal of this section is to develop a measurement technique and analysis sche
 
 The basic scheme involves measuring the power in the laser beam as the beam is gradually blocked by a knife edge (razor blade) using a setup similar to Figure @fig:knife-assembley.
 
-![Razor blade mounted on a translation stage.](../resources/Gaussian-Laser-Beams/knife-assembley.png){#fig:knife-assembley width="15cm"}
+![Razor blade mounted on a translation stage.](../resources/lab-guides/Gaussian-Laser-Beams/knife-assembley.png){#fig:knife-assembley width="15cm"}
 
 1. Suppose a laser beam has a Gaussian intensity profile $I(x,y) = I_{max}e^{-2(x^2+y^2)/w^2}$, and is incident upon a photodiode. What is the expression for the power hitting the photodiode when a portion of the beam is blocked by a razor blade?
    1. Draw a diagram showing the beam and the razor.
@@ -188,7 +188,7 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
 2. Is it a linear or nonlinear fit function? Why?
 3. What are the fit parameters? Why do you need this many?
 4. How do the fit parameters relate to the beam width?
-5. Download [this data set](../resources/Gaussian-Laser-Beams/Test_Profile_Data.csv).
+5. Download [this data set](../resources/lab-guides/Gaussian-Laser-Beams/Test_Profile_Data.csv).
    1. Make a plot of the data.
    2. Make a fit and plot it with the data.
    3. Check that the fit looks good and you get a beam width of $w=4.52 \times 10^{-4}\ m$. If you get a different value, check with your instructor to understand the problem. What is the uncertainty on your measurement?
