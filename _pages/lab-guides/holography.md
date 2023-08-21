@@ -10,3 +10,8 @@ Expose and reconstruct a two-beam transmission hologram. The physics of polymeri
 
 [Lab Guide](../resources/lab-guides/holography/Holography lab Spring 2010.pdf)
 
+# Prelab
+
+Please read through the lab guide, provide a short paragraph about the main goals of the experiment, and then complete the indicated prelab questions from the lab guide:
+
+Questions 1-2 on top of page 6.2
