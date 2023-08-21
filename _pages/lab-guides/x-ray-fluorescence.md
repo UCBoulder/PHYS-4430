@@ -1,14 +1,14 @@
 ---
-title: "PHYS 4430 - X-Ray Diffraction"
+title: "PHYS 4430 - X-Ray Fluorescence"
 layout: lab-guide
-permalink: /lab-guides/x-ray-diffraction
+permalink: /lab-guides/x-ray-fluorescence
 ---
 
-# X-Ray Diffraction
+# X-Ray Fluorescence
 
-The lab emphasizes the use of diffraction of x-rays to determine the atomic structure of crystalline solids. The lab begins with an experiment using visible light diffraction from a 'colloidal crystal'. All the physics of x-ray diffraction occurs, but in the visible wavelength region where you can SEE what is happening. Then a study of x-ray diffraction from silicon and a 'mystery' sample allows you to see how to map the atomic structure of solids.
+Use an x-ray source and detector to measure various materials and determine their composition. You should also consult [this](../resources/lab-guides/x-ray-fluorescence/more_xrf.pdf) supplemental lab writeup, which has more information about how to use the software and additional suggestions for quantitative studies that you should do.
 
-[Lab Guide](../resources/lab-guides/x-ray-diffraction/x-ray diffraction Spring 2010.pdf)
+[Lab Guide](../resources/lab-guides/x-ray-fluorescence/X-Ray_Fluorescence_sp14.pdf)
 
 # Prelab
 

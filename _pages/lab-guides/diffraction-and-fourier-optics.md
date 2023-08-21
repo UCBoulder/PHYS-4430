@@ -10,3 +10,8 @@ Diffraction of a Gaussian laser beam through a single slit, and a variety of oth
 
 [Lab Guide](../resources/lab-guides/diffraction-and-fourier-optics/Diffraction and Fourier Optics v2.pdf)
 
+# Prelab
+
+Please read through the lab guide, provide a short paragraph about the main goals of the experiment, and then complete the indicated prelab questions from the lab guide:
+
+Questions 2-4 on pages 5-6
