@@ -75,7 +75,7 @@ $$\zeta(z)=arctan\frac{\pi w_0^2}{\lambda z}\text{.}$$ {#eq:11}
 
 The remarkable thing about all these equations is that only two parameters need to be specified to give the whole beam profile: the wavelength $\lambda$ and the beam waist $w_0$, which is the narrowest point in the beam profile. There is a more general set of Hermite Gaussian modes which are shown in Figure @fig:gauss-hermite. The laser cavity typically produces the (0,0) mode shown in the upper left corner, but an optical cavity can also be used to create these other modes – a topic that can be explored in the final projects.
 
-![Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam width, $w$.](../resources/lab-guides/Gaussian-Laser-Beams/gauss-hermite.png){#fig:gauss-hermite width="20cm"}
+![Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam width, $w$.](../resources/lab-guides/gaussian-laser-beams/gauss-hermite.png){#fig:gauss-hermite width="20cm"}
 
 ## Trying out the gaussian beam model
 
@@ -88,7 +88,7 @@ The Gaussian beam equations given in Equations @eq:8 -@eq:11 assume the beam com
 
 3.  How would you rewrite these four equations assuming the beam waist occurs at a different position $z=z_w$?
 4.  One way to check your answer is to make sure the equations simplify to Equations @eq:8 -@eq:11 in the special case of $z_w=0$.
-5.  Write a function to fit [this data set](../resources/lab-guides/Gaussian-Laser-Beams/Test_beam_width_data.csv). Assume the wavelength is $\lambda=632.8\ nm$.
+5.  Write a function to fit [this data set](../resources/lab-guides/gaussian-laser-beams/Test_beam_width_data.csv). Assume the wavelength is $\lambda=632.8\ nm$.
    1. What is the functional form for your fit function?
    2. What are the different fit parameters and what do they mean?
    3. Is it a linear or nonlinear fit function? Why?
@@ -136,7 +136,7 @@ Design and carry out an experiment to quantitatively answer the questions below.
 5. What factors affect the beam profile after the lens?
 6. Does the measured $w(z)$ match the Gaussian beam prediction given in Equation @eq:9?
 
-![Mounting assemblies for a mirror (left) and a lens (right).](../resources/lab-guides/Gaussian-Laser-Beams/mount-assembly.png){#fig:mount-assembley width="15cm"}
+![Mounting assemblies for a mirror (left) and a lens (right).](../resources/lab-guides/gaussian-laser-beams/mount-assembly.png){#fig:mount-assembley width="15cm"}
 
 ## Quantitatively modeling the effect of a lens
 
@@ -148,7 +148,7 @@ $$ \frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}$$
 2. Experimentally test the accuracy of the thin lens equation for the imaging of Gaussian beams. Your data from the previous question can probably be used. Is the agreement within the estimated uncertainties? 
 3. Systematic errors: Under what conditions should the thin lens equation be most valid? How do these conditions compare to conditions of your actual measurements? Can you get better agreement?
 
-![Diagram showing the focusing of light by a thin lens in the ray approximation. The diagram identifies the quantities in the thin lens equation: image distance, object distance, and focal length.](../resources/lab-guides/Gaussian-Laser-Beams/ray-diagram.png){#fig:ray-diagram width="15cm"}
+![Diagram showing the focusing of light by a thin lens in the ray approximation. The diagram identifies the quantities in the thin lens equation: image distance, object distance, and focal length.](../resources/lab-guides/gaussian-laser-beams/ray-diagram.png){#fig:ray-diagram width="15cm"}
 
 # Appendix: LabVIEW Automation Guide {#sec:labview-automation}
 
