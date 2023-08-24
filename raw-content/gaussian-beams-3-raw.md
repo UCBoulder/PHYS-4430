@@ -258,3 +258,6 @@ There are multiple ways to define the discrete Fourier transform, so it is impor
 
 If you want the `Fourier` function to compute a Fourier Transform that agrees with MATLAB’s default settings, then set `FourierParameters->{-1,1}`. 
 
+# Revisit Measuring the Beam Width
+
+Next week you will be implementing automation into measuring the beam width of He-Ne lasers. To be prepared for this endeavor, you now should go back and review (and complete) [section 7](gaussian-beams-1#measuring-the-beam-width) from week 1.

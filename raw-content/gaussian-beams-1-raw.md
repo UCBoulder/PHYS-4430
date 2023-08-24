@@ -60,7 +60,7 @@ Now, we will begin assembling the components.
 
 ## Walking a beam {#sec:walkingbeam}
 
-Next, you will align your laser such that beam is aligned parallel to the table. You will do this by using two mirrors and a technique that is called "walking a beam". [This video](https://www.youtube.com/watch?v=qzxILY6nOmA&t=249s) provides an overview on how to do so. The most relevant information for our lab starts at 4:09 (which the above link should take you to). Also, we have 3D printed beam alignment tools that are used in place of the iris in the video.
+Next, you will align your laser such that beam is aligned parallel to the table. You will do this by using two mirrors and a technique that is called "walking a beam". [This video](https://www.youtube.com/watch?v=qzxILY6nOmA&t=249s) provides an overview on how to do so. The most relevant information for our lab starts at 4:09 (which the above link should take you to). Also, we have 3D printed beam alignment tools that are used in place of the iris in the video (these can be found in the colored drawer cabinet in your optics bay).
 
 1. Mount two 3D printed beam alignment discs onto the optical table at the same height above the table. 
 2. Use only two mirrors to get the beam to pass through the center of each disc. Having two mirrors allows you to independently adjust the angle and position of your beam.
@@ -170,7 +170,7 @@ $$b=2.2700000000000005 \pm 0.2035517952102936$$
 
 # Measuring the Beam Width
 
-The goal of this section is to develop a measurement technique and analysis scheme to measure the width of a laser beam. The scheme will let you measure the width in one dimension. The technique is most useful for beams that have an approximately Gaussian intensity profile. You will improve and refine this technique in the upcoming weeks of this lab.
+The goal of this section is to develop a measurement technique and analysis scheme to measure the width of a laser beam. The scheme will let you measure the width in one dimension. The technique is most useful for beams that have an approximately Gaussian intensity profile. You will improve and refine this technique in the upcoming weeks of this lab. *Note: You may or may not find that completing this section during your lab time this week is challenging due to time constraints. This is okay - get as far as you can now. You'll have an opportunity to revisit this section during week 3. However, don't just skip it now as you'll find the outcomes to be useful in the upcoming weeks.*
 
 The basic scheme involves measuring the power in the laser beam as the beam is gradually blocked by a knife edge (razor blade) using a setup similar to Figure @fig:knife-assembley.
 
@@ -211,3 +211,48 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
 1. Use the analysis procedures verified in section @sec:analysis to find the beam width for your data. Be sure to include the uncertainty.
 2. Plot your fit together with your data to make sure it is good.
 
+# Postlab
+
+Please choose either Mathematica, Matlab, or Python for this assignment. Both Mathematica and Matlab
+[licenses are provided by CU](https://oit.colorado.edu/software-hardware/software-catalog) and Python is free. You must submit both code and results. Note that the following assignment was created based on Mathematica and Matlab.
+
+1. Evaluate the following math expressions:
+
+   1. $e^{1.6\pi j}$
+   2. $4i\pi+e^{7\pi /4}$
+   3. $sin^2(\frac{\pi}{5})$
+   4. $log(3+\sqrt{3})$
+   5. $|3+4i|^{2/3}$
+
+2. Plot the following functions at the given ranges. Make sure to add appropriate $x$ and $y$-axis ticks and numeric labels at the ticks locations.
+
+   1.  Plot $sin^2~\theta$ vs. $\theta$ in the range $0\le\theta\le 6\pi$. Add the legend that indicate the name of the function used.
+   2. Plot $sin~2t$ and $cos~5t$ together (using different colored lines) on the sample for $t$ in the range of $0\le t \le 10$.
+
+3. Plot the following data set (wavelength, $\lambda$, and the corresponding index of refraction, $n$, of a particular type of glass): 
+
+   $$ \lambda~ [{\rm \mu m}]: 0.375, ~ 0.419,~0.558,~ 0.612,~0.744,~0.821 \\ n:1.553,~1.531,~1.521,~1.516,~1.513,~1.511 $$
+
+   1. Make a plot of $n$ vs. $\lambda$. Which variable would you choose for $x$-axis? Please make sure to add the axes names and appropriate ticks for each axis. 
+   2. Add lines to connect each points. What can you tell about the relation between the wavelength and the index of refraction from this plot? 
+   3. Provide your code to make your plot from 8.3.1 including the following:
+      1. Title of "Refraction index as a function of $\lambda$".
+      2. Add the linear fitting line $ y= ax +b$, where $y$ corresponds to $n$ and $x$ to $\lambda$ on the data. 
+      3. Include the fitting linear equation on the plot. 
+   4. If you would like to display the $x$-axis only below $0.6\mu m$ (i.e. $\lambda \le 0.6~ \mu m$), how can you do that? 
+
+4. Familiarize yourself with the **HELP** functions of your chosen software package and perform the following tasks and answer the questions. 
+
+   1. Make a contour plot of any function of $z=f(y,x)$ of your choice.
+   2. What are the built-in function names for:
+      1. Inverse sine function ($\sin^{-1} x$)
+      2. Hyperbolic functions (e.g. $\sinh x$, $\cosh x$ etc.)
+      3. Natural log and 10-based log function
+
+5. We would like to evaluate a function, $f(x)$, at $x= \frac{\pi}{10}, \frac{2\pi}{10}, ~\cdots~,\frac{9\pi}{10}\frac{10\pi}{10}$.
+
+   1. How can we represent/create these $x$ points in your chosen software package? What should we modify in order to make the increment of $x$ be $\frac{\pi}{100}$, instead of $\frac{\pi}{10}$?
+   2. Now, define a function that represents $y= f(x) = \frac{\sin x}{x}$ and evaluate $y$ at the given $x$ with increment of $\frac{\pi}{10}$.
+   3. Export your $(x,y)$ data created in 8.5.2 in .csv format.
+
+6. Download [this data set](../resources/lab-guides/gaussian-laser-beams/BoulderDailyTemp.txt) (in .txt format), where the temperature of Boulder was recorded at approximately every hour ($\approx 0.04$ days) since January 1st. Using the **HELP** function of your chosen software package, export this data and plot in an appropriate way (make sure to include labels, ticks, titles etc). 
