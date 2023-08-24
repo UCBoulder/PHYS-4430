@@ -110,6 +110,8 @@
             class="toc-section-number">7.4</span> Analysis of the real
             data</a></li>
             </ul></li>
+            <li><a href="#postlab" id="toc-postlab"><span
+            class="toc-section-number">8</span> Postlab</a></li>
             </ul>
         </nav>
         <hr/>
@@ -246,8 +248,9 @@
          video</a> provides an overview on how to do so. The most
          relevant information for our lab starts at 4:09 (which the
          above link should take you to). Also, we have 3D printed beam
-         alignment tools that are used in place of the iris in the
-         video.</p>
+         alignment tools that are used in place of the iris in the video
+         (these can be found in the colored drawer cabinet in your
+         optics bay).</p>
          <ol type="1">
          <li>Mount two 3D printed beam alignment discs onto the optical
          table at the same height above the table.</li>
@@ -528,7 +531,13 @@
          beam. The scheme will let you measure the width in one
          dimension. The technique is most useful for beams that have an
          approximately Gaussian intensity profile. You will improve and
-         refine this technique in the upcoming weeks of this lab.</p>
+         refine this technique in the upcoming weeks of this lab.
+         <em>Note: You may or may not find that completing this section
+         during your lab time this week is challenging due to time
+         constraints. This is okay - get as far as you can now. You’ll
+         have an opportunity to revisit this section during week 3.
+         However, don’t just skip it now as you’ll find the outcomes to
+         be useful in the upcoming weeks.</em></p>
          <p>The basic scheme involves measuring the power in the laser
          beam as the beam is gradually blocked by a knife edge (razor
          blade) using a setup similar to Figure <a
@@ -628,6 +637,117 @@
          data. Be sure to include the uncertainty.</li>
          <li>Plot your fit together with your data to make sure it is
          good.</li>
+         </ol>
+         <h1 data-number="8" id="postlab"><span
+         class="header-section-number">8</span> Postlab</h1>
+         <p>Please choose either Mathematica, Matlab, or Python for this
+         assignment. Both Mathematica and Matlab <a
+         href="https://oit.colorado.edu/software-hardware/software-catalog">licenses
+         are provided by CU</a> and Python is free. You must submit both
+         code and results. Note that the following assignment was
+         created based on Mathematica and Matlab.</p>
+         <ol type="1">
+         <li><p>Evaluate the following math expressions:</p>
+         <ol type="1">
+         <li><span class="math inline">\(e^{1.6\pi j}\)</span></li>
+         <li><span class="math inline">\(4i\pi+e^{7\pi /4}\)</span></li>
+         <li><span
+         class="math inline">\(sin^2(\frac{\pi}{5})\)</span></li>
+         <li><span class="math inline">\(log(3+\sqrt{3})\)</span></li>
+         <li><span class="math inline">\(|3+4i|^{2/3}\)</span></li>
+         </ol></li>
+         <li><p>Plot the following functions at the given ranges. Make
+         sure to add appropriate <span class="math inline">\(x\)</span>
+         and <span class="math inline">\(y\)</span>-axis ticks and
+         numeric labels at the ticks locations.</p>
+         <ol type="1">
+         <li>Plot <span class="math inline">\(sin^2~\theta\)</span>
+         vs. <span class="math inline">\(\theta\)</span> in the range
+         <span class="math inline">\(0\le\theta\le 6\pi\)</span>. Add
+         the legend that indicate the name of the function used.</li>
+         <li>Plot <span class="math inline">\(sin~2t\)</span> and <span
+         class="math inline">\(cos~5t\)</span> together (using different
+         colored lines) on the sample for <span
+         class="math inline">\(t\)</span> in the range of <span
+         class="math inline">\(0\le t \le 10\)</span>.</li>
+         </ol></li>
+         <li><p>Plot the following data set (wavelength, <span
+         class="math inline">\(\lambda\)</span>, and the corresponding
+         index of refraction, <span class="math inline">\(n\)</span>, of
+         a particular type of glass):</p>
+         <p><span class="math display">\[ \lambda~ [{\rm \mu m}]: 0.375,
+         ~ 0.419,~0.558,~ 0.612,~0.744,~0.821 \\
+         n:1.553,~1.531,~1.521,~1.516,~1.513,~1.511 \]</span></p>
+         <ol type="1">
+         <li>Make a plot of <span class="math inline">\(n\)</span>
+         vs. <span class="math inline">\(\lambda\)</span>. Which
+         variable would you choose for <span
+         class="math inline">\(x\)</span>-axis? Please make sure to add
+         the axes names and appropriate ticks for each axis.</li>
+         <li>Add lines to connect each points. What can you tell about
+         the relation between the wavelength and the index of refraction
+         from this plot?</li>
+         <li>Provide your code to make your plot from 8.3.1 including
+         the following:
+         <ol type="1">
+         <li>Title of “Refraction index as a function of <span
+         class="math inline">\(\lambda\)</span>”.</li>
+         <li>Add the linear fitting line $ y= ax +b$, where <span
+         class="math inline">\(y\)</span> corresponds to <span
+         class="math inline">\(n\)</span> and <span
+         class="math inline">\(x\)</span> to <span
+         class="math inline">\(\lambda\)</span> on the data.</li>
+         <li>Include the fitting linear equation on the plot.</li>
+         </ol></li>
+         <li>If you would like to display the <span
+         class="math inline">\(x\)</span>-axis only below <span
+         class="math inline">\(0.6\mu m\)</span> (i.e. <span
+         class="math inline">\(\lambda \le 0.6~ \mu m\)</span>), how can
+         you do that?</li>
+         </ol></li>
+         <li><p>Familiarize yourself with the <strong>HELP</strong>
+         functions of your chosen software package and perform the
+         following tasks and answer the questions.</p>
+         <ol type="1">
+         <li>Make a contour plot of any function of <span
+         class="math inline">\(z=f(y,x)\)</span> of your choice.</li>
+         <li>What are the built-in function names for:
+         <ol type="1">
+         <li>Inverse sine function (<span
+         class="math inline">\(\sin^{-1} x\)</span>)</li>
+         <li>Hyperbolic functions (e.g. <span
+         class="math inline">\(\sinh x\)</span>, <span
+         class="math inline">\(\cosh x\)</span> etc.)</li>
+         <li>Natural log and 10-based log function</li>
+         </ol></li>
+         </ol></li>
+         <li><p>We would like to evaluate a function, <span
+         class="math inline">\(f(x)\)</span>, at <span
+         class="math inline">\(x= \frac{\pi}{10}, \frac{2\pi}{10},
+         ~\cdots~,\frac{9\pi}{10}\frac{10\pi}{10}\)</span>.</p>
+         <ol type="1">
+         <li>How can we represent/create these <span
+         class="math inline">\(x\)</span> points in your chosen software
+         package? What should we modify in order to make the increment
+         of <span class="math inline">\(x\)</span> be <span
+         class="math inline">\(\frac{\pi}{100}\)</span>, instead of
+         <span class="math inline">\(\frac{\pi}{10}\)</span>?</li>
+         <li>Now, define a function that represents <span
+         class="math inline">\(y= f(x) = \frac{\sin x}{x}\)</span> and
+         evaluate <span class="math inline">\(y\)</span> at the given
+         <span class="math inline">\(x\)</span> with increment of <span
+         class="math inline">\(\frac{\pi}{10}\)</span>.</li>
+         <li>Export your <span class="math inline">\((x,y)\)</span> data
+         created in 8.5.2 in .csv format.</li>
+         </ol></li>
+         <li><p>Download <a
+         href="../resources/lab-guides/gaussian-laser-beams/BoulderDailyTemp.txt">this
+         data set</a> (in .txt format), where the temperature of Boulder
+         was recorded at approximately every hour (<span
+         class="math inline">\(\approx 0.04\)</span> days) since January
+         1st. Using the <strong>HELP</strong> function of your chosen
+         software package, export this data and plot in an appropriate
+         way (make sure to include labels, ticks, titles etc).</p></li>
          </ol>
                </div>
             <!-- Mathjax -->
