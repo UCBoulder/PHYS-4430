@@ -7,9 +7,9 @@ permalink: /lab-guides
 
 # Guided Labs
 
-The first guided lab of this course is [Gaussian Beams](/PHYS-4430/lab-guides/gaussian-beams) which will be completed in the first four weeks of the semester. 
-
 For the experiments with a * in front, there is a write-up that provides a description of the equipment and the physical phenomena involved. It also gives a set of measurement goals, but usually not a detailed procedure. You must develop your own procedure for best achieving these goals. All of these experiments are somewhat open‑ended in that they offer opportunities for you to pursue additional research topics, and you are encouraged to investigate additional topics of your own choosing. All the experiments typically take 2 weeks to complete if you do the basic minimum experiment. This assumes you put in something like 6 hours per week in the lab and prepare ahead of time. If you pursue additional topics (with the permission of the instructor) they can take much longer.
+
+The first guided lab of this course is [Gaussian Beams](/PHYS-4430/lab-guides/gaussian-beams) which will be completed in the first four weeks of the semester. 
 
 [Diffraction and Fourier Optics](/PHYS-4430/lab-guides/diffraction-and-fourier-optics)
 
