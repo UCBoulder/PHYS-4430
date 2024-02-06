@@ -154,10 +154,10 @@ $$ \frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}$$
 
 ## Setting up the motor
 
-You will likely need to download additional device drivers for LabVIEW. You should download the 32-bit software for 64-bit Windows APT software [here](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control) in order to get the MGMotor library used below. Once you have done this, follow the next steps:
+If you are using your own laptop, you will likely need to download additional device drivers for LabVIEW (the software should already be installed on the lab computers). You should download the APT software [here](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control) in order to get the MGMotor library used below (you should install the 32-bit software for 64-bit Windows if you have the 32-bit version of LabVIEW installed, and the 64-bit software for 64-bit Windows if you have the 64-bit version of LabVIEW installed). Once you have done this, follow the next steps:
 
 1. Start with LabVIEW closed on your computer and no cords connected to the motor cube.
-2. Connect the USB to the KST101 controller cube, THEN turn on the power.
+2. Connect the USB to the KST101 controller cube, THEN turn on the power. If you receive a device driver loading error, you'll likely need to disable the Memory Integrity Core Isolation device protection feature in Windows Security. If you get this error on a lab computer, please find a technical staff member for assistance.
 3. Open APT Config on the computer. Your motor should be seen by the software. Click the motor drop down menu and select your motor. Now, in the drop down menu for Stage, find ZST225(B) and select it. With these options in place, select the Add/Change Stage Association button.
 4. Close APT Config.
 
