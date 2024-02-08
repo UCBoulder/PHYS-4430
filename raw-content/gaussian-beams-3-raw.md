@@ -192,7 +192,7 @@ The *Nyquist Frequency* is defined to be half the sample rate.
 
 The discrete Fourier Transform of a set of data $\{y_0,y_1, ... , y_{N-1}\}$ is given by
 
-$$Y_m=\displaystyle \sum_{n=0}^{N-1}y_n\cdot e^{-2\pi i \frac{m}{n}N}$$
+$$Y_m=\displaystyle \sum_{n=0}^{N-1}y_n\cdot e^{-2\pi i \frac{m}{N}n}$$
 
 The basic idea is that a Fourier Transform decomposes the data into a set of different frequency components, so the amplitude of $Y_m$ tells you how much of your signal was formed by an oscillation at the $m$-th frequency.
 
