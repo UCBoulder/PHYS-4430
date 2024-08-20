@@ -5,7 +5,7 @@ sitemap: false
 permalink: /final-project-ideas
 ---
 
-# Final Project Ides
+# Final Project Ideas
 
 Below is a list of ideas for projects. Feel free to bring in your own ideas for final projects. In addition, students have also taken existing labs and extended them in some way such as using an optical chopper and lock-in amplifier to obtain better results from hydrogen spectroscopy. Many of the labs even have suggestions for projects at the end of the write-ups.
 
