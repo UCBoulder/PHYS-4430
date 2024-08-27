@@ -17,13 +17,13 @@ In the first part of the course you will cover several guided experiments of you
 
 **Lectures:** Lectures are on Tuesday and Thursday each week in the classroom of Duane G214. See below for the lecture times for each section. Lectures will not be recorded but the slides used will be [posted in Canvas](https://canvas.colorado.edu/).
 
-- Section 200 - Tuesdays and Thursdays from 9:00 am to 9:50 am
-- Section 100 - Tuesdays and Thursdays from 1:00 pm to 1:50 pm
+- Section 100 - Tuesdays and Thursdays from 9:00 am to 9:50 am
+- Section 200 - Tuesdays and Thursdays from 1:00 pm to 1:50 pm
 
 **Lab Sessions:** Each section has one three-hour instructional lab session per week, supervised by your lab instructor. You must attend the weekly scheduled lab session that corresponds with the section you are enrolled in. 
 
-- Section 201 - Tuesdays from 10:00 am to 12:50 pm
-- Section 101 - Thursdays from 2:00 pm to 4:50 pm
+- Section 101 - Tuesdays from 10:00 am to 12:50 pm
+- Section 201 - Tuesdays from 2:00 pm to 4:50 pm
 
 *Not all sections listed above are offered each semester. Be sure to visit [classes.colorado.edu](https://classes.colorado.edu) for the currently offered sections.*
 
@@ -43,5 +43,4 @@ Lab equipment may fail, malfunction, or become damaged throughout the semester. 
 ## Machine Shop Course
 
 As part of your enrollment in this course, we offer to cover the costs associated with taking the [Machining Course](https://www.colorado.edu/physics/partners/trades-teaching-lab/classes) in the [Physics Trades Teaching Lab](https://www.colorado.edu/physics/partners/trades-teaching-lab). While this is not a requirement, we strongly encourage all students to participate in this opportunity. More details will be provided later in the semester.
-
 
