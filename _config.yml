@@ -30,6 +30,14 @@ incremental: false
 # Exclude
 exclude:
   - /raw-content
+  - /.git/
+  - /.github
+  - /.gitignore
+  - /ta-notes
+  - /README.md
+  - /Gemfile.lock
+  - /Dockerfile
+  - /compose.yaml
 
 # Markdown Processing
 kramdown:
