@@ -1,5 +1,5 @@
 # Use the official Ruby image from the Docker Hub
-FROM ruby:2.7
+FROM ruby:3.3.4
 
 # Install dependencies
 RUN apt-get update -qq && apt-get install -y \
@@ -7,13 +7,15 @@ RUN apt-get update -qq && apt-get install -y \
     libpq-dev \
     nodejs \
     pandoc \
-    python3-pip
+    python3-pip \
+    python3-venv \
+    dos2unix
 
-# Install pandoc-xnos filters via pip
-RUN pip3 install pandoc-xnos pandoc-fignos pandoc-eqnos pandoc-tablenos pandoc-secnos --user
-
-# Add the user's local bin directory to the PATH
-ENV PATH=$PATH:/root/.local/bin
+# Create a virtual environment and install pandoc-xnos filters via pip
+RUN python3 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
+RUN pip install --upgrade pip
+RUN pip install pandoc-xnos pandoc-fignos pandoc-eqnos pandoc-tablenos pandoc-secnos
 
 # Update RubyGems to a compatible version
 RUN gem update --system 3.3.22
