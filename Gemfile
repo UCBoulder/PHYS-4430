@@ -1,4 +1,9 @@
 source 'https://rubygems.org'
-
-gem "jekyll", ">= 3.6.3"
-
+gem 'jekyll', '3.10.0'
+gem 'jekyll-sass-converter', '1.5.2'
+gem 'rouge', '3.30.0'
+gem 'kramdown-parser-gfm', '1.1.0'
+gem 'kramdown', '2.4.0'
+gem 'liquid', '4.0.4'
+gem 'safe_yaml', '1.0.5'
+gem 'sass', '3.7.4'
