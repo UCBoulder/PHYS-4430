@@ -160,17 +160,19 @@ The convention used in this course is that we:
 
 The numbers $154\pm 3$, $576.33\pm 0.04$, and $245.1\pm 1.4$ follow theis convention. However, numbers copied from the computer are often displayed as “machine precision” with no regard for significant digits. 
 
-Mathematica generated the following fit parameters and corresponding uncertainties:
+Python generated the following fit parameters and corresponding uncertainties:
 
 $$a=-0.6699999999999988 \pm 0.6751049301158053$$
 
 $$b=2.2700000000000005 \pm 0.2035517952102936$$
 
-1. How should the two Mathematica fit parameters above be rewritten such that they correspond with the convention described above?
+1. How should the two Python fit parameters above be rewritten such that they correspond with the convention described above?
 
 # Measuring the Beam Width
 
-The goal of this section is to develop a measurement technique and analysis scheme to measure the width of a laser beam. The scheme will let you measure the width in one dimension. The technique is most useful for beams that have an approximately Gaussian intensity profile. You will improve and refine this technique in the upcoming weeks of this lab. *Note: You may or may not find that completing this section during your lab time this week is challenging due to time constraints. This is okay - get as far as you can now. You'll have an opportunity to revisit this section during week 3. However, don't just skip it now as you'll find the outcomes to be useful in the upcoming weeks.*
+The goal of this section is to develop a measurement technique and analysis scheme to measure the width of a laser beam. The scheme will let you measure the width in one dimension. The technique is most useful for beams that have an approximately Gaussian intensity profile. You will improve and refine this technique in the upcoming weeks of this lab. 
+
+<!-- *Note: You may or may not find that completing this section during your lab time this week is challenging due to time constraints. This is okay - get as far as you can now. You'll have an opportunity to revisit this section during week 3. However, don't just skip it now as you'll find the outcomes to be useful in the upcoming weeks.* -->
 
 The basic scheme involves measuring the power in the laser beam as the beam is gradually blocked by a knife edge (razor blade) using a setup similar to Figure @fig:knife-assembley.
 
@@ -180,9 +182,9 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
    1. Draw a diagram showing the beam and the razor.
    2. Using the above expression for $I(x,y)$, write the mathematical expression for the power incident on the photodiode as a function of razor position. Note, to address this question, you will need to become familiar with the Error Function, $erf(x)$. What assumptions, if any, did you need to make in evaluating the integral? Hint: if you are moving in the $x$ direction, what is going on in the $y$ direction?
 
-## Before you take data: create an analysis function to fit a test set of data {#sec:analysis}
+## Before you build your setup and take data: create an analysis function to fit a test set of data {#sec:analysis}
 
-*Note: Nonlinear least squares fitting is covered in next week's prelab. There is also a YouTube video available on [least squares fitting in Mathematica](https://www.youtube.com/watch?v=KolZZm8If9Q&t=2s).*
+<!-- *Note: Nonlinear least squares fitting is covered in next week's prelab. There is also a YouTube video available on [least squares fitting in Mathematica](https://www.youtube.com/watch?v=KolZZm8If9Q&t=2s).* -->
 
 1. What is the functional form for your fit function?
 2. Is it a linear or nonlinear fit function? Why?
@@ -194,6 +196,8 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
    3. Check that the fit looks good and you get a beam width of $w=4.52 \times 10^{-4}\ m$. If you get a different value, check with your instructor to understand the problem. What is the uncertainty on your measurement?
 
 ## Build your setup for measuring the beam width of your laser
+
+NEED GUIDANCE ON HOW TO USE STAGES
 
 1. Draw a detailed schematic of the setup (from the laser all the way to the photodetector).
 2. After assembling your experiment, but prior to taking a lot of data, how can you quickly determine if the measurement is working?
@@ -211,10 +215,9 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
 1. Use the analysis procedures verified in section @sec:analysis to find the beam width for your data. Be sure to include the uncertainty.
 2. Plot your fit together with your data to make sure it is good.
 
-# Postlab
+# Postlab {#sec:postlab}
 
-Please choose either Mathematica, Matlab, or Python for this assignment. Both Mathematica and Matlab
-[licenses are provided by CU](https://oit.colorado.edu/software-hardware/software-catalog) and Python is free. You must submit both code and results. Note that the following assignment was created based on Mathematica and Matlab.
+Please use Python to answer the following questions. You must submit both code and results. 
 
 1. Evaluate the following math expressions:
 
@@ -235,16 +238,16 @@ Please choose either Mathematica, Matlab, or Python for this assignment. Both Ma
 
    1. Make a plot of $n$ vs. $\lambda$. Which variable would you choose for $x$-axis? Please make sure to add the axes names and appropriate ticks for each axis. 
    2. Add lines to connect each points. What can you tell about the relation between the wavelength and the index of refraction from this plot? 
-   3. Provide your code to make your plot from 8.3.1 including the following:
+   3. Provide your code to make your plot from @sec:postlab\.3.1 including the following:
       1. Title of "Refraction index as a function of $\lambda$".
       2. Add the linear fitting line $ y= ax +b$, where $y$ corresponds to $n$ and $x$ to $\lambda$ on the data. 
       3. Include the fitting linear equation on the plot. 
    4. If you would like to display the $x$-axis only below $0.6\mu m$ (i.e. $\lambda \le 0.6~ \mu m$), how can you do that? 
 
-4. Familiarize yourself with the **HELP** functions of your chosen software package and perform the following tasks and answer the questions. 
+4. Familiarize yourself with Python's built-in **help()** function and documentation resources to perform the following tasks and answer the questions. You will need NumPy and a plotting libray (like matplotlib).
 
    1. Make a contour plot of any function of $z=f(y,x)$ of your choice.
-   2. What are the built-in function names for:
+   2. What are the Python function names for:
       1. Inverse sine function ($\sin^{-1} x$)
       2. Hyperbolic functions (e.g. $\sinh x$, $\cosh x$ etc.)
       3. Natural log and 10-based log function
@@ -255,4 +258,4 @@ Please choose either Mathematica, Matlab, or Python for this assignment. Both Ma
    2. Now, define a function that represents $y= f(x) = \frac{\sin x}{x}$ and evaluate $y$ at the given $x$ with increment of $\frac{\pi}{10}$.
    3. Export your $(x,y)$ data created in 8.5.2 in .csv format.
 
-6. Download [this data set](../resources/lab-guides/gaussian-laser-beams/BoulderDailyTemp.txt) (in .txt format), where the temperature of Boulder was recorded at approximately every hour ($\approx 0.04$ days) since January 1st. Using the **HELP** function of your chosen software package, export this data and plot in an appropriate way (make sure to include labels, ticks, titles etc). 
+6. Download [this data set](../resources/lab-guides/gaussian-laser-beams/BoulderDailyTemp.txt) (in .txt format), where the temperature of Boulder was recorded at approximately every hour ($\approx 0.04$ days) since January 1st. Using Python's **help()** function and documentation resources to learn about data loading and visualization methods, import this data and create an appropriate plot (make sure to include labels, ticks, titles etc).
