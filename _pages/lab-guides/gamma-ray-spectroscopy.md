@@ -8,9 +8,11 @@ permalink: /lab-guides/gamma-ray-spectroscopy
 
 # Gamma Ray Spectroscopy
 
-This experiment uses a NaI crystal and the photoelectric effect to obtain spectra of the gamma rays emitted by various sources. Compton scattering is also observed, the mass of the neutron is precisely determined by measuring the energy of the gamma produced in the nuclear reaction producing a deuteron, and the radioactive constituents of a dirt sample are determined.
+This experiment uses a NaI crystal and the photoelectric effect to obtain spectra of the gamma rays emitted by various sources.
 
-[Lab Guide](../resources/lab-guides/gamma-ray-spectroscopy/Gamma Ray Spectroscopy Spring 2010.pdf)
+[Old Lab Guide](../resources/lab-guides/gamma-ray-spectroscopy/Gamma Ray Spectroscopy Spring 2010.pdf)
+
+[New Lab Guide](../resources/lab-guides/gamma-ray-spectroscopy/UpdatedGammaRayLab_Oct03.pdf)
 
 # Prelab
 
