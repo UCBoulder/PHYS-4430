@@ -9,6 +9,14 @@ permalink: /python-resources
 
 This page provides a comprehensive guide to using Python for data acquisition, analysis, and visualization in PHYS 4430. Whether you're new to Python or need a refresher, this resource will help you succeed in the lab.
 
+## Table of Contents
+{:.no_toc}
+
+* TOC
+{:toc}
+
+---
+
 # Getting Started
 
 ## Required Software
