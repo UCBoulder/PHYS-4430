@@ -21,6 +21,52 @@
 
     {% include footer.html %}
 
+    <!-- Add copy buttons to code blocks -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Add copy buttons to all code blocks
+        document.querySelectorAll('pre').forEach(function(pre) {
+          // Create copy button
+          var button = document.createElement('button');
+          button.className = 'copy-button';
+          button.textContent = 'Copy';
+
+          button.addEventListener('click', function() {
+            var code = pre.querySelector('code');
+            var text = code ? code.textContent : pre.textContent;
+
+            navigator.clipboard.writeText(text).then(function() {
+              // Success feedback
+              button.textContent = 'Copied!';
+              button.classList.add('copied');
+
+              setTimeout(function() {
+                button.textContent = 'Copy';
+                button.classList.remove('copied');
+              }, 2000);
+            }).catch(function(err) {
+              // Fallback for older browsers
+              var textarea = document.createElement('textarea');
+              textarea.value = text;
+              document.body.appendChild(textarea);
+              textarea.select();
+              document.execCommand('copy');
+              document.body.removeChild(textarea);
+
+              button.textContent = 'Copied!';
+              button.classList.add('copied');
+              setTimeout(function() {
+                button.textContent = 'Copy';
+                button.classList.remove('copied');
+              }, 2000);
+            });
+          });
+
+          pre.appendChild(button);
+        });
+      });
+    </script>
+
   </body>
 
 </html>
