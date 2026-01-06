@@ -6,6 +6,13 @@
       
       
       <title>PHYS 4430</title>
+            
+            <!-- pandoc-eqnos: equation style -->
+            <style>
+              .eqnos { display: inline-block; position: relative; width: 100%; }
+              .eqnos br { display: none; }
+              .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
+            </style>
          </head>
    <body>
             <div>
@@ -18,143 +25,124 @@
                   <h1 class="title">Contents</h1>
         <nav id="TOC">
             <ul>
-            <li><a href="#overview" id="toc-overview"><span
+            <li><a href="#overview"><span
             class="toc-section-number">1</span> Overview</a>
             <ul>
-            <li><a href="#what-is-python" id="toc-what-is-python"><span
+            <li><a href="#what-is-python"><span
             class="toc-section-number">1.1</span> What is
             Python?</a></li>
-            <li><a href="#learning-goals" id="toc-learning-goals"><span
+            <li><a href="#learning-goals"><span
             class="toc-section-number">1.2</span> Learning
             Goals</a></li>
             </ul></li>
-            <li><a href="#prelab" id="toc-prelab"><span
+            <li><a href="#prelab"><span
             class="toc-section-number">2</span> Prelab</a>
             <ul>
-            <li><a href="#useful-readings"
-            id="toc-useful-readings"><span
+            <li><a href="#useful-readings"><span
             class="toc-section-number">2.1</span> Useful
             readings</a></li>
-            <li><a href="#why-do-we-minimize-the-sum-of-squares"
-            id="toc-why-do-we-minimize-the-sum-of-squares"><span
+            <li><a href="#why-do-we-minimize-the-sum-of-squares"><span
             class="toc-section-number">2.2</span> Why do we minimize the
             sum of squares?</a></li>
-            <li><a href="#sec:min-graph" id="toc-sec:min-graph"><span
+            <li><a href="#sec:min-graph"><span
             class="toc-section-number">2.3</span> Minimizing <span
             class="math inline">\(\chi^2\)</span> graphically</a></li>
-            <li><a href="#uncertainty-in-the-fit-parameters"
-            id="toc-uncertainty-in-the-fit-parameters"><span
+            <li><a href="#uncertainty-in-the-fit-parameters"><span
             class="toc-section-number">2.4</span> Uncertainty in the fit
             parameters</a></li>
-            <li><a href="#estimating-the-uncertainty-in-the-data"
-            id="toc-estimating-the-uncertainty-in-the-data"><span
+            <li><a href="#estimating-the-uncertainty-in-the-data"><span
             class="toc-section-number">2.5</span> Estimating the
             uncertainty in the data</a></li>
-            <li><a href="#goodness-of-fit"
-            id="toc-goodness-of-fit"><span
+            <li><a href="#goodness-of-fit"><span
             class="toc-section-number">2.6</span> Goodness of fit</a>
             <ul>
-            <li><a href="#sec:plot-res" id="toc-sec:plot-res"><span
+            <li><a href="#sec:plot-res"><span
             class="toc-section-number">2.6.1</span> Plotting the fit
             residuals</a></li>
-            <li><a href="#chi-by-eye---eyeballing-the-goodness-of-fit"
-            id="toc-chi-by-eye---eyeballing-the-goodness-of-fit"><span
+            <li><a
+            href="#chi-by-eye---eyeballing-the-goodness-of-fit"><span
             class="toc-section-number">2.6.2</span> “Chi by eye” -
             eyeballing the goodness of fit</a></li>
             <li><a
-            href="#chi2-and-chi_red2-for-testing-the-goodness-of-fit"
-            id="toc-chi2-and-chi_red2-for-testing-the-goodness-of-fit"><span
+            href="#chi2-and-chi_red2-for-testing-the-goodness-of-fit"><span
             class="toc-section-number">2.6.3</span> <span
             class="math inline">\(\chi^2\)</span> and <span
             class="math inline">\(\chi_{red}^2\)</span> for testing the
             “goodness” of fit</a></li>
             <li><a
-            href="#choosing-a-strategy-to-estimate-the-uncertainty"
-            id="toc-choosing-a-strategy-to-estimate-the-uncertainty"><span
+            href="#choosing-a-strategy-to-estimate-the-uncertainty"><span
             class="toc-section-number">2.6.4</span> Choosing a strategy
             to estimate the uncertainty</a></li>
-            <li><a href="#weighted-fits" id="toc-weighted-fits"><span
+            <li><a href="#weighted-fits"><span
             class="toc-section-number">2.6.5</span> Weighted
             fits</a></li>
             <li><a
-            href="#why-is-it-often-bad-to-overestimate-uncertainties"
-            id="toc-why-is-it-often-bad-to-overestimate-uncertainties"><span
+            href="#why-is-it-often-bad-to-overestimate-uncertainties"><span
             class="toc-section-number">2.6.6</span> Why is it often bad
             to overestimate uncertainties?</a></li>
             </ul></li>
             </ul></li>
-            <li><a href="#introduction-to-python-for-data-acquisition"
-            id="toc-introduction-to-python-for-data-acquisition"><span
+            <li><a
+            href="#introduction-to-python-for-data-acquisition"><span
             class="toc-section-number">3</span> Introduction to Python
             for Data Acquisition</a>
             <ul>
-            <li><a href="#development-environment"
-            id="toc-development-environment"><span
+            <li><a href="#development-environment"><span
             class="toc-section-number">3.1</span> Development
             Environment</a></li>
-            <li><a href="#connect-the-usb-6009-and-verify-it-is-working"
-            id="toc-connect-the-usb-6009-and-verify-it-is-working"><span
+            <li><a
+            href="#connect-the-usb-6009-and-verify-it-is-working"><span
             class="toc-section-number">3.2</span> Connect the USB-6009
             and verify it is working</a></li>
-            <li><a href="#reading-multiple-samples"
-            id="toc-reading-multiple-samples"><span
+            <li><a href="#reading-multiple-samples"><span
             class="toc-section-number">3.3</span> Reading Multiple
             Samples</a>
             <ul>
-            <li><a href="#understanding-sample-rate-and-samples-to-read"
-            id="toc-understanding-sample-rate-and-samples-to-read"><span
+            <li><a
+            href="#understanding-sample-rate-and-samples-to-read"><span
             class="toc-section-number">3.3.1</span> Understanding Sample
             Rate and Samples to Read</a></li>
-            <li><a href="#sec:analogmeas" id="toc-sec:analogmeas"><span
+            <li><a href="#sec:analogmeas"><span
             class="toc-section-number">3.3.2</span> Acquiring Multiple
             Samples</a></li>
-            <li><a href="#exercise-capture-a-waveform"
-            id="toc-exercise-capture-a-waveform"><span
+            <li><a href="#exercise-capture-a-waveform"><span
             class="toc-section-number">3.3.3</span> Exercise: Capture a
             Waveform</a></li>
             </ul></li>
-            <li><a href="#continuous-data-acquisition"
-            id="toc-continuous-data-acquisition"><span
+            <li><a href="#continuous-data-acquisition"><span
             class="toc-section-number">3.4</span> Continuous Data
             Acquisition</a></li>
-            <li><a href="#spectral-analysis-with-fft"
-            id="toc-spectral-analysis-with-fft"><span
+            <li><a href="#spectral-analysis-with-fft"><span
             class="toc-section-number">3.5</span> Spectral Analysis with
             FFT</a>
             <ul>
-            <li><a href="#computing-the-power-spectrum"
-            id="toc-computing-the-power-spectrum"><span
+            <li><a href="#computing-the-power-spectrum"><span
             class="toc-section-number">3.5.1</span> Computing the Power
             Spectrum</a></li>
-            <li><a href="#exercise-spectral-analysis"
-            id="toc-exercise-spectral-analysis"><span
+            <li><a href="#exercise-spectral-analysis"><span
             class="toc-section-number">3.5.2</span> Exercise: Spectral
             Analysis</a></li>
             </ul></li>
-            <li><a href="#saving-data-to-a-file"
-            id="toc-saving-data-to-a-file"><span
+            <li><a href="#saving-data-to-a-file"><span
             class="toc-section-number">3.6</span> Saving Data to a
             File</a>
             <ul>
-            <li><a href="#exercise-save-and-reload-data"
-            id="toc-exercise-save-and-reload-data"><span
+            <li><a href="#exercise-save-and-reload-data"><span
             class="toc-section-number">3.6.1</span> Exercise: Save and
             Reload Data</a></li>
             </ul></li>
-            <li><a href="#generating-an-analog-output"
-            id="toc-generating-an-analog-output"><span
+            <li><a href="#generating-an-analog-output"><span
             class="toc-section-number">3.7</span> Generating an Analog
             Output</a>
             <ul>
-            <li><a href="#exercise-test-analog-output"
-            id="toc-exercise-test-analog-output"><span
+            <li><a href="#exercise-test-analog-output"><span
             class="toc-section-number">3.7.1</span> Exercise: Test
             Analog Output</a></li>
             </ul></li>
-            <li><a href="#error-handling" id="toc-error-handling"><span
+            <li><a href="#error-handling"><span
             class="toc-section-number">3.8</span> Error
             Handling</a></li>
-            <li><a href="#summary" id="toc-summary"><span
+            <li><a href="#summary"><span
             class="toc-section-number">3.9</span> Summary</a></li>
             </ul></li>
             </ul>
@@ -261,9 +249,11 @@
          by minimizing the weighted sum of squares of the deviation
          between the data and the fit. Properly speaking this “sum of
          squares” is called “chi-squared” and is given by</p>
-         <p><span class="math display">\[\chi^2 = {\displaystyle
+         <p><span id="eq:1" class="eqnos"><span
+         class="math display">\[\chi^2 = {\displaystyle
          \sum_{i=1}^{N}}\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \ ... \
-         ))^2\text{,}\]</span> {#eq:1}</p>
+         ))^2\text{,}\]</span><span class="eqnos-number">(1)</span></span>
+         </p>
          <p>where there are where <span class="math inline">\(N\)</span>
          data points, <span class="math inline">\((x_i,y_i )\)</span>,
          and the fit function is given by <span
@@ -345,10 +335,9 @@
          by averaging the first 6 data points to get <span
          class="math inline">\(V_{min}\)</span> and the last 5 to get
          <span class="math inline">\(V_{max}\)</span>.</p></li>
-         <li><p>Use Equation <span class="citation"
-         data-cites="eq:1">@eq:1</span> to write an expression for <span
-         class="math inline">\(\chi^2\)</span> in terms of your <span
-         class="math inline">\(w\)</span> and <span
+         <li><p>Use Equation <a href="#eq:1">1</a> to write an
+         expression for <span class="math inline">\(\chi^2\)</span> in
+         terms of your <span class="math inline">\(w\)</span> and <span
          class="math inline">\(b\)</span> parameters, and the <span
          class="math inline">\(x\)</span> (position) data and <span
          class="math inline">\(y\)</span> (voltage) data. Since you
@@ -366,8 +355,8 @@
          initial guess for your fit parameters. You can iteratively
          improve the plot range to zoom in on the parameter values that
          minimize <span class="math inline">\(\chi^2\)</span>. You
-         should get a plot kind of like Figure <span class="citation"
-         data-cites="fig:contour">@fig:contour</span>.</p>
+         should get a plot kind of like Figure <a
+         href="#fig:contour">1</a>.</p>
          <div class="sourceCode" id="cb4"><pre
          class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a grid of w and b values</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>w_range <span class="op">=</span> np.linspace(<span class="fl">0.0003</span>, <span class="fl">0.0007</span>, <span class="dv">100</span>)</span>
@@ -392,13 +381,15 @@
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;$</span><span class="ch">\\</span><span class="st">chi^2$ Contour Plot&#39;</span>)</span>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          </ol>
-         <figure id="fig:contour">
+         <div id="fig:contour" class="fignos">
+         <figure>
          <img
          src="../resources/lab-guides/gaussian-laser-beams/contour.png"
-         style="width:15cm" alt="Contour plot example." />
-         <figcaption aria-hidden="true">Contour plot
-         example.</figcaption>
+         style="width:15cm" alt="Figure 1: Contour plot example." />
+         <figcaption aria-hidden="true"><span>Figure 1:</span> Contour
+         plot example.</figcaption>
          </figure>
+         </div>
          <ol start="6" type="1">
          <li><p>Graphically determine the best fit parameters to 3
          significant digits.</p></li>
@@ -444,10 +435,11 @@
          the uncertainty in the data <span
          class="math inline">\(\sigma_y^2\)</span> using the “residuals”
          of the best fit:</p>
-         <p><span class="math display">\[\sigma_y^2 =
-         \frac{1}{N-n}{\displaystyle
+         <p><span id="eq:2" class="eqnos"><span
+         class="math display">\[\sigma_y^2 = \frac{1}{N-n}{\displaystyle
          \sum_{i=1}^{N}}(y_i-y(x_i,a_0,b_0,c_0, \ ... \
-         ))^2\text{,}\quad\quad\]</span> {#eq:2}</p>
+         ))^2\text{,}\quad\quad\]</span><span class="eqnos-number">(2)</span></span>
+         </p>
          <p>where there are <span class="math inline">\(N\)</span> data
          points <span class="math inline">\(y_i\)</span> and the best
          fit value at each point is given by <span
@@ -458,10 +450,10 @@
          very similar to how you would estimate the standard deviation
          of a repeated measurement, which for comparison’s sake is given
          by:</p>
-         <p><span class="math display">\[\sigma_y^2 =
-         \frac{1}{N-n}{\displaystyle
-         \sum_{i=1}^{N}}(y_i-\overline{y})^2\text{.}\]</span>
-         {#eq:3}</p>
+         <p><span id="eq:3" class="eqnos"><span
+         class="math display">\[\sigma_y^2 = \frac{1}{N-n}{\displaystyle
+         \sum_{i=1}^{N}}(y_i-\overline{y})^2\text{.}\]</span><span class="eqnos-number">(3)</span></span>
+         </p>
          <p>The parameter uncertainties are then extracted from the
          covariance matrix:</p>
          <div class="sourceCode" id="cb6"><pre
@@ -478,10 +470,10 @@
          class="header-section-number">2.5</span> Estimating the
          uncertainty in the data</h2>
          <ol type="1">
-         <li><p>Use Equation <span class="citation"
-         data-cites="eq:2">@eq:2</span> and your best fit parameters to
-         estimate <span class="math inline">\(\sigma_y^2\)</span>, the
-         random error of each data point given by your data.</p>
+         <li><p>Use Equation <a href="#eq:2">2</a> and your best fit
+         parameters to estimate <span
+         class="math inline">\(\sigma_y^2\)</span>, the random error of
+         each data point given by your data.</p>
          <div class="sourceCode" id="cb7"><pre
          class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate residuals</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y_fit <span class="op">=</span> beam_profile(x_data, <span class="op">*</span>popt)</span>
@@ -570,17 +562,25 @@
          (i.e., random) error, with a known standard deviation <span
          class="math inline">\(\sigma_i\)</span>, then on average each
          term in the sum is</p>
-         <p><span
+         <p><span id="eq:4" class="eqnos"><span
          class="math display">\[\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \
-         ... \ ))^2 \approx 1\text{,}\]</span> {#eq:4}</p>
+         ... \ ))^2 \approx
+         1\text{,}\]</span><span class="eqnos-number">(4)</span></span>
+         </p>
          <p>and the full <span class="math inline">\(\chi^2\)</span> sum
          of squares is approximately</p>
-         <p><span class="math display">\[\chi^2 = {\displaystyle
+         <p><span id="eq:5" class="eqnos"><span
+         class="math display">\[\chi^2 = {\displaystyle
          \sum_{i=1}^{N}}\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \ ... \
-         ))^2\approx N-n\text{.}\quad\quad\]</span> {#eq:5}</p>
+         ))^2\approx
+         N-n\text{.}\quad\quad\]</span><span class="eqnos-number">(5)</span></span>
+         </p>
          <p>So a good fit has</p>
-         <p><span class="math display">\[\chi_{red}^2 \equiv
-         \frac{\chi^2}{N-n}\approx 1\text{.}\]</span> {#eq:6}</p>
+         <p><span id="eq:6" class="eqnos"><span
+         class="math display">\[\chi_{red}^2 \equiv
+         \frac{\chi^2}{N-n}\approx
+         1\text{.}\]</span><span class="eqnos-number">(6)</span></span>
+         </p>
          <ol type="1">
          <li><strong>Fact: To find the goodness of fit test, you must
          first estimate the uncertainties on the data points that you
@@ -592,12 +592,11 @@
          class="header-section-number">2.6.4</span> Choosing a strategy
          to estimate the uncertainty</h3>
          <ol type="1">
-         <li><p>Considering your answers from Section <span
-         class="citation" data-cites="sec:plot-res">@sec:plot-res</span>
-         (especially <span class="citation"
-         data-cites="sec:plot-res">@sec:plot-res</span>.5), which method
-         would give you the best estimate of the uncertainty for each
-         data point, and why?</p>
+         <li><p>Considering your answers from Section <a
+         href="#sec:plot-res">2.6.1</a> (especially <a
+         href="#sec:plot-res">2.6.1</a>.5), which method would give you
+         the best estimate of the uncertainty for each data point, and
+         why?</p>
          <ul>
          <li><p>Eyeballing the fluctuations in each data point.</p></li>
          <li><p>Taking <span class="math inline">\(N\)</span>
@@ -613,10 +612,9 @@
          class="math inline">\(\sigma_i\)</span> of each data point
          <span class="math inline">\(y_i\)</span> you should use this
          information when fitting to correctly evaluate the <span
-         class="math inline">\(\chi^2\)</span> expression in Equation
-         <span class="citation" data-cites="eq:1">@eq:1</span>. The
-         points with high uncertainty contribute less information when
-         choosing the best fit parameters.</p>
+         class="math inline">\(\chi^2\)</span> expression in Equation <a
+         href="#eq:1">1</a>. The points with high uncertainty contribute
+         less information when choosing the best fit parameters.</p>
          <p>In Python’s <code>curve_fit</code>, you provide
          uncertainties using the <code>sigma</code> parameter:</p>
          <div class="sourceCode" id="cb9"><pre
@@ -643,9 +641,8 @@
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>y_data <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>y_err <span class="op">=</span> data[:, <span class="dv">2</span>]</span></code></pre></div></li>
          <li><p>Do a weighted fit using the same fit function as in
-         Section <span class="citation"
-         data-cites="sec:min-graph">@sec:min-graph</span>. Use the
-         uncertainty estimates in the third column.</p>
+         Section <a href="#sec:min-graph">2.3</a>. Use the uncertainty
+         estimates in the third column.</p>
          <div class="sourceCode" id="cb11"><pre
          class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weighted fit</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(</span>
@@ -686,13 +683,16 @@
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> stats.chi2.cdf(chi2, dof)</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;P-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
          </ol>
-         <figure id="fig:cdf">
+         <div id="fig:cdf" class="fignos">
+         <figure>
          <img src="../resources/lab-guides/gaussian-laser-beams/cdf.png"
          style="width:15cm"
-         alt="Cumulative Density Function (CDF) for the chi-squared distribution." />
-         <figcaption aria-hidden="true">Cumulative Density Function
-         (CDF) for the chi-squared distribution.</figcaption>
+         alt="Figure 2: Cumulative Density Function (CDF) for the chi-squared distribution." />
+         <figcaption aria-hidden="true"><span>Figure 2:</span>
+         Cumulative Density Function (CDF) for the chi-squared
+         distribution.</figcaption>
          </figure>
+         </div>
          <h3 data-number="2.6.6"
          id="why-is-it-often-bad-to-overestimate-uncertainties"><span
          class="header-section-number">2.6.6</span> Why is it often bad
