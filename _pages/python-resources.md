@@ -21,23 +21,58 @@ This page provides a comprehensive guide to using Python for data acquisition, a
 
 ## Required Software
 
-The lab computers have all required software pre-installed. If you want to use your own computer, you'll need:
+The lab computers have all required software pre-installed. If you want to use your own computer, follow the steps below.
 
-1. **Python 3.10 or newer** - [Download from python.org](https://www.python.org/downloads/)
-2. **Required packages** - Install with pip:
+### 1. Install Python (Windows)
+
+We recommend using the **Python Install Manager**, the official tool from python.org for managing Python on Windows.
+
+**Option A: Download from python.org (Recommended)**
+
+1. Go to [python.org/downloads](https://www.python.org/downloads/)
+2. Click **"Download Python install manager"**
+3. Run the installer and follow the prompts
+
+**Option B: Install from Microsoft Store**
+
+Search for "Python Install Manager" in the [Microsoft Store](https://apps.microsoft.com/detail/9nq7512cxl7t) and install it.
+
+**After installation**, open a terminal (PowerShell or Command Prompt) and install Python:
 
 ```bash
-pip install numpy matplotlib pandas scipy nidaqmx pythonnet pyvisa
+py install 3.12
 ```
 
-Or download our [requirements.txt](resources/lab-guides/gaussian-laser-beams/python/requirements.txt) and run:
+You can verify the installation with:
 
 ```bash
-pip install -r requirements.txt
+py --version
 ```
 
-3. **NI-DAQmx drivers** - [Download from National Instruments](https://www.ni.com/en-us/support/downloads/drivers/download.ni-daq-mx.html)
-4. **Thorlabs Kinesis** (for Week 4) - [Download from Thorlabs](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control)
+To see all available Python versions:
+
+```bash
+py list --online
+```
+
+### 2. Install Required Packages
+
+Once Python is installed, install the packages needed for this course:
+
+```bash
+py -m pip install numpy matplotlib pandas scipy nidaqmx pythonnet pyvisa jupyter
+```
+
+Or download our [requirements.txt](/PHYS-4430/resources/lab-guides/gaussian-laser-beams/python/requirements.txt) and run:
+
+```bash
+py -m pip install -r requirements.txt
+```
+
+### 3. Install Hardware Drivers
+
+- **NI-DAQmx drivers** - [Download from National Instruments](https://www.ni.com/en-us/support/downloads/drivers/download.ni-daq-mx.html)
+- **Thorlabs Kinesis** (for Week 4) - [Download from Thorlabs](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control)
 
 ## Development Environments
 
