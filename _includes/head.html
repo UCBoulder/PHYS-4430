@@ -13,34 +13,38 @@
     /* Code block container */
     pre {
       position: relative;
-      padding-top: 2.5em !important;
       background-color: #f8f8f8;
       border: 1px solid #ddd;
       border-radius: 4px;
     }
 
-    /* Copy button */
+    /* Copy button - overlays top-right corner */
     .copy-button {
       position: absolute;
       top: 0.5em;
       right: 0.5em;
       padding: 0.25em 0.5em;
       font-size: 0.75em;
-      background-color: #f0f0f0;
+      background-color: rgba(240, 240, 240, 0.9);
       border: 1px solid #ccc;
       border-radius: 4px;
       cursor: pointer;
-      opacity: 0.7;
+      opacity: 0;
       transition: opacity 0.2s, background-color 0.2s;
       z-index: 10;
     }
 
-    .copy-button:hover {
+    /* Show button on hover */
+    pre:hover .copy-button {
       opacity: 1;
+    }
+
+    .copy-button:hover {
       background-color: #e0e0e0;
     }
 
     .copy-button.copied {
+      opacity: 1;
       background-color: #28a745;
       color: white;
       border-color: #28a745;
