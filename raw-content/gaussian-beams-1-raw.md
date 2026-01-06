@@ -182,7 +182,7 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
 
 ## Before you take data: create an analysis function to fit a test set of data {#sec:analysis}
 
-*Note: Nonlinear least squares fitting is covered in next week's prelab. See the [Python Resources](/python-resources) page for a guide to curve fitting with `scipy.optimize.curve_fit`.*
+*Note: Nonlinear least squares fitting is covered in next week's prelab. See the [Python Resources](/PHYS-4430/python-resources) page for a guide to curve fitting with `scipy.optimize.curve_fit`.*
 
 1. What is the functional form for your fit function?
 2. Is it a linear or nonlinear fit function? Why?
@@ -213,7 +213,7 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
 
 # Postlab
 
-Please use Python for this assignment. See the [Python Resources](/python-resources) page if you need help getting started. You will need NumPy for numerical calculations and Matplotlib for plotting. You must submit both your code and results.
+Please use Python for this assignment. See the [Python Resources](/PHYS-4430/python-resources) page if you need help getting started. You will need NumPy for numerical calculations and Matplotlib for plotting. You must submit both your code and results.
 
 1. Evaluate the following math expressions (use NumPy):
 
