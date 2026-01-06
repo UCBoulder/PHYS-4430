@@ -6,13 +6,6 @@
       
       
       <title>PHYS 4430</title>
-            
-            <!-- pandoc-eqnos: equation style -->
-            <style>
-              .eqnos { display: inline-block; position: relative; width: 100%; }
-              .eqnos br { display: none; }
-              .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
-            </style>
          </head>
    <body>
             <div>
@@ -25,445 +18,1060 @@
                   <h1 class="title">Contents</h1>
         <nav id="TOC">
             <ul>
-            <li><a href="#overview"><span class="toc-section-number">1</span> Overview</a>
+            <li><a href="#overview" id="toc-overview"><span
+            class="toc-section-number">1</span> Overview</a>
             <ul>
-            <li><a href="#what-is-labview"><span class="toc-section-number">1.1</span> What is LabVIEW?</a></li>
-            <li><a href="#learning-goals"><span class="toc-section-number">1.2</span> Learning Goals</a></li>
+            <li><a href="#what-is-python" id="toc-what-is-python"><span
+            class="toc-section-number">1.1</span> What is
+            Python?</a></li>
+            <li><a href="#learning-goals" id="toc-learning-goals"><span
+            class="toc-section-number">1.2</span> Learning
+            Goals</a></li>
             </ul></li>
-            <li><a href="#prelab"><span class="toc-section-number">2</span> Prelab</a>
+            <li><a href="#prelab" id="toc-prelab"><span
+            class="toc-section-number">2</span> Prelab</a>
             <ul>
-            <li><a href="#useful-readings"><span class="toc-section-number">2.1</span> Useful readings</a></li>
-            <li><a href="#why-do-we-minimize-the-sum-of-squares"><span class="toc-section-number">2.2</span> Why do we minimize the sum of squares?</a></li>
-            <li><a href="#sec:min-graph"><span class="toc-section-number">2.3</span> Minimizing <span class="math inline">\(\chi^2\)</span> graphically</a></li>
-            <li><a href="#uncertainty-in-the-fit-parameters"><span class="toc-section-number">2.4</span> Uncertainty in the fit parameters</a></li>
-            <li><a href="#estimating-the-uncertainty-in-the-data"><span class="toc-section-number">2.5</span> Estimating the uncertainty in the data</a></li>
-            <li><a href="#goodness-of-fit"><span class="toc-section-number">2.6</span> Goodness of fit</a>
+            <li><a href="#useful-readings"
+            id="toc-useful-readings"><span
+            class="toc-section-number">2.1</span> Useful
+            readings</a></li>
+            <li><a href="#why-do-we-minimize-the-sum-of-squares"
+            id="toc-why-do-we-minimize-the-sum-of-squares"><span
+            class="toc-section-number">2.2</span> Why do we minimize the
+            sum of squares?</a></li>
+            <li><a href="#sec:min-graph" id="toc-sec:min-graph"><span
+            class="toc-section-number">2.3</span> Minimizing <span
+            class="math inline">\(\chi^2\)</span> graphically</a></li>
+            <li><a href="#uncertainty-in-the-fit-parameters"
+            id="toc-uncertainty-in-the-fit-parameters"><span
+            class="toc-section-number">2.4</span> Uncertainty in the fit
+            parameters</a></li>
+            <li><a href="#estimating-the-uncertainty-in-the-data"
+            id="toc-estimating-the-uncertainty-in-the-data"><span
+            class="toc-section-number">2.5</span> Estimating the
+            uncertainty in the data</a></li>
+            <li><a href="#goodness-of-fit"
+            id="toc-goodness-of-fit"><span
+            class="toc-section-number">2.6</span> Goodness of fit</a>
             <ul>
-            <li><a href="#sec:plot-res"><span class="toc-section-number">2.6.1</span> Plotting the fit residuals</a></li>
-            <li><a href="#chi-by-eye---eyeballing-the-goodness-of-fit"><span class="toc-section-number">2.6.2</span> “Chi by eye” - eyeballing the goodness of fit</a></li>
-            <li><a href="#chi2-and-chi_red2-for-testing-the-goodness-of-fit"><span class="toc-section-number">2.6.3</span> <span class="math inline">\(\chi^2\)</span> and <span class="math inline">\(\chi_{red}^2\)</span> for testing the “goodness” of fit</a></li>
-            <li><a href="#choosing-a-strategy-to-estimate-the-uncertainty"><span class="toc-section-number">2.6.4</span> Choosing a strategy to estimate the uncertainty</a></li>
-            <li><a href="#weighted-best-fits-in-mathematica"><span class="toc-section-number">2.6.5</span> Weighted best fits in Mathematica</a></li>
-            <li><a href="#why-is-it-often-bad-to-overestimate-uncertainties"><span class="toc-section-number">2.6.6</span> Why is it often bad to overestimate uncertainties?</a></li>
-            </ul></li>
-            </ul></li>
-            <li><a href="#labview-environment-introduction"><span class="toc-section-number">3</span> LabVIEW Environment Introduction</a>
-            <ul>
-            <li><a href="#create-a-vi-that-displays-constants-of-different-data-types"><span class="toc-section-number">3.0.1</span> Create a VI that displays constants of different data types</a></li>
-            <li><a href="#graphical-programming"><span class="toc-section-number">3.1</span> Graphical programming</a>
-            <ul>
-            <li><a href="#create-a-vi-that-will-display-the-energy-of-a-photon-when-the-user-enters-the-wavelength"><span class="toc-section-number">3.1.1</span> Create a VI that will display the energy of a photon when the user enters the wavelength</a></li>
-            </ul></li>
-            <li><a href="#programming-tools-using-the-tools-palette"><span class="toc-section-number">3.2</span> Programming tools – using the tools palette</a>
-            <ul>
-            <li><a href="#modify-your-photon-energy-vi"><span class="toc-section-number">3.2.1</span> Modify your photon energy VI</a></li>
-            </ul></li>
-            <li><a href="#debugging-and-handling-errors"><span class="toc-section-number">3.3</span> Debugging and handling errors</a>
-            <ul>
-            <li><a href="#correct-errors-in-a-previously-created-vi"><span class="toc-section-number">3.3.1</span> Correct errors in a previously created VI</a></li>
-            </ul></li>
-            <li><a href="#data-types-and-structures"><span class="toc-section-number">3.4</span> Data types and structures</a>
-            <ul>
-            <li><a href="#change-your-photon-energy-vi-to-include-arrays"><span class="toc-section-number">3.4.1</span> Change your photon energy VI to include arrays</a></li>
-            <li><a href="#change-data-types"><span class="toc-section-number">3.4.2</span> Change data types</a></li>
-            </ul></li>
-            <li><a href="#loops-and-case-structures"><span class="toc-section-number">3.5</span> Loops and case structures</a>
-            <ul>
-            <li><a href="#add-a-while-loop-to-your-vi-to-continuously-loop-until-a-stop-button-is-pressed"><span class="toc-section-number">3.5.1</span> Add a while loop to your VI to continuously loop until a stop button is pressed</a></li>
-            <li><a href="#sec:photon"><span class="toc-section-number">3.5.2</span> Change your VI to calculate the energy in units of either joules or eV using a case structure</a></li>
-            </ul></li>
-            </ul></li>
-            <li><a href="#interfacing-labview-with-hardware"><span class="toc-section-number">4</span> Interfacing LabVIEW with Hardware</a>
-            <ul>
-            <li><a href="#connect-the-usb-6009-to-the-computer-and-confirm-it-is-working-correctly"><span class="toc-section-number">4.1</span> Connect the USB-6009 to the computer and confirm it is working correctly</a></li>
-            <li><a href="#taking-a-measurement"><span class="toc-section-number">4.2</span> Taking a measurement</a>
-            <ul>
-            <li><a href="#sec:analogmeas"><span class="toc-section-number">4.2.1</span> Use the DAQ Assistant to take an analog voltage measurement</a></li>
-            </ul></li>
-            <li><a href="#generating-a-signal-using-labview"><span class="toc-section-number">4.3</span> Generating a signal using LabVIEW</a>
-            <ul>
-            <li><a href="#add-to-the-vi-created-in-section-secanalogmeas-to-include-an-adjustable-dc-analog-output-signal"><span class="toc-section-number">4.3.1</span> Add to the VI created in section <span>4.2.1</span> to include an adjustable DC analog output signal</a></li>
-            </ul></li>
-            <li><a href="#acquired-signal-processing-and-analysis"><span class="toc-section-number">4.4</span> Acquired signal processing and analysis</a>
-            <ul>
-            <li><a href="#create-a-vi-that-filters-the-acquired-signal-and-displays-a-power-spectrum."><span class="toc-section-number">4.4.1</span> Create a VI that filters the acquired signal and displays a power spectrum.</a></li>
-            </ul></li>
-            <li><a href="#logging-data-and-saving-it-to-a-file"><span class="toc-section-number">4.5</span> Logging data and saving it to a file</a></li>
-            <li><a href="#modify-the-take-measurement-vi-to-save-the-data-to-a-file"><span class="toc-section-number">4.6</span> Modify the take measurement VI to save the data to a file</a></li>
-            <li><a href="#creating-graphs-and-charts"><span class="toc-section-number">4.7</span> Creating graphs and charts</a>
-            <ul>
-            <li><a href="#modify-the-take-measurement-vi-to-include-a-waveform-chart"><span class="toc-section-number">4.7.1</span> Modify the take measurement VI to include a waveform chart</a></li>
-            </ul></li>
-            <li><a href="#using-text-based-programming-within-the-labview-environment"><span class="toc-section-number">4.8</span> Using text-based programming within the LabVIEW Environment</a>
-            <ul>
-            <li><a href="#rewrite-your-photon-energy-vi-you-created-in-section-secphoton-to-include-two-formula-nodes"><span class="toc-section-number">4.8.1</span> Rewrite your photon energy VI you created in section <span>3.5.2</span> to include two formula nodes</a></li>
+            <li><a href="#sec:plot-res" id="toc-sec:plot-res"><span
+            class="toc-section-number">2.6.1</span> Plotting the fit
+            residuals</a></li>
+            <li><a href="#chi-by-eye---eyeballing-the-goodness-of-fit"
+            id="toc-chi-by-eye---eyeballing-the-goodness-of-fit"><span
+            class="toc-section-number">2.6.2</span> “Chi by eye” -
+            eyeballing the goodness of fit</a></li>
+            <li><a
+            href="#chi2-and-chi_red2-for-testing-the-goodness-of-fit"
+            id="toc-chi2-and-chi_red2-for-testing-the-goodness-of-fit"><span
+            class="toc-section-number">2.6.3</span> <span
+            class="math inline">\(\chi^2\)</span> and <span
+            class="math inline">\(\chi_{red}^2\)</span> for testing the
+            “goodness” of fit</a></li>
+            <li><a
+            href="#choosing-a-strategy-to-estimate-the-uncertainty"
+            id="toc-choosing-a-strategy-to-estimate-the-uncertainty"><span
+            class="toc-section-number">2.6.4</span> Choosing a strategy
+            to estimate the uncertainty</a></li>
+            <li><a href="#weighted-fits" id="toc-weighted-fits"><span
+            class="toc-section-number">2.6.5</span> Weighted
+            fits</a></li>
+            <li><a
+            href="#why-is-it-often-bad-to-overestimate-uncertainties"
+            id="toc-why-is-it-often-bad-to-overestimate-uncertainties"><span
+            class="toc-section-number">2.6.6</span> Why is it often bad
+            to overestimate uncertainties?</a></li>
             </ul></li>
             </ul></li>
-            <li><a href="#getting-help-in-labview"><span class="toc-section-number">5</span> Getting help in Labview</a>
+            <li><a href="#introduction-to-python-for-data-acquisition"
+            id="toc-introduction-to-python-for-data-acquisition"><span
+            class="toc-section-number">3</span> Introduction to Python
+            for Data Acquisition</a>
             <ul>
-            <li><a href="#explore-context-help"><span class="toc-section-number">5.1</span> Explore Context Help</a></li>
+            <li><a href="#development-environment"
+            id="toc-development-environment"><span
+            class="toc-section-number">3.1</span> Development
+            Environment</a></li>
+            <li><a href="#connect-the-usb-6009-and-verify-it-is-working"
+            id="toc-connect-the-usb-6009-and-verify-it-is-working"><span
+            class="toc-section-number">3.2</span> Connect the USB-6009
+            and verify it is working</a></li>
+            <li><a href="#reading-multiple-samples"
+            id="toc-reading-multiple-samples"><span
+            class="toc-section-number">3.3</span> Reading Multiple
+            Samples</a>
+            <ul>
+            <li><a href="#understanding-sample-rate-and-samples-to-read"
+            id="toc-understanding-sample-rate-and-samples-to-read"><span
+            class="toc-section-number">3.3.1</span> Understanding Sample
+            Rate and Samples to Read</a></li>
+            <li><a href="#sec:analogmeas" id="toc-sec:analogmeas"><span
+            class="toc-section-number">3.3.2</span> Acquiring Multiple
+            Samples</a></li>
+            <li><a href="#exercise-capture-a-waveform"
+            id="toc-exercise-capture-a-waveform"><span
+            class="toc-section-number">3.3.3</span> Exercise: Capture a
+            Waveform</a></li>
+            </ul></li>
+            <li><a href="#continuous-data-acquisition"
+            id="toc-continuous-data-acquisition"><span
+            class="toc-section-number">3.4</span> Continuous Data
+            Acquisition</a></li>
+            <li><a href="#spectral-analysis-with-fft"
+            id="toc-spectral-analysis-with-fft"><span
+            class="toc-section-number">3.5</span> Spectral Analysis with
+            FFT</a>
+            <ul>
+            <li><a href="#computing-the-power-spectrum"
+            id="toc-computing-the-power-spectrum"><span
+            class="toc-section-number">3.5.1</span> Computing the Power
+            Spectrum</a></li>
+            <li><a href="#exercise-spectral-analysis"
+            id="toc-exercise-spectral-analysis"><span
+            class="toc-section-number">3.5.2</span> Exercise: Spectral
+            Analysis</a></li>
+            </ul></li>
+            <li><a href="#saving-data-to-a-file"
+            id="toc-saving-data-to-a-file"><span
+            class="toc-section-number">3.6</span> Saving Data to a
+            File</a>
+            <ul>
+            <li><a href="#exercise-save-and-reload-data"
+            id="toc-exercise-save-and-reload-data"><span
+            class="toc-section-number">3.6.1</span> Exercise: Save and
+            Reload Data</a></li>
+            </ul></li>
+            <li><a href="#generating-an-analog-output"
+            id="toc-generating-an-analog-output"><span
+            class="toc-section-number">3.7</span> Generating an Analog
+            Output</a>
+            <ul>
+            <li><a href="#exercise-test-analog-output"
+            id="toc-exercise-test-analog-output"><span
+            class="toc-section-number">3.7.1</span> Exercise: Test
+            Analog Output</a></li>
+            </ul></li>
+            <li><a href="#error-handling" id="toc-error-handling"><span
+            class="toc-section-number">3.8</span> Error
+            Handling</a></li>
+            <li><a href="#summary" id="toc-summary"><span
+            class="toc-section-number">3.9</span> Summary</a></li>
             </ul></li>
             </ul>
         </nav>
         <hr/>
-         <h1 data-number="1" id="overview"><span class="header-section-number">1</span> Overview</h1>
-         <p>The second week of the Gaussian Beams lab is intended to introduce you to LabVIEW and guide you though interfacing LabVIEW with the instrumentation and data acquisition systems that we use in this course.</p>
-         <p>This week’s lab is divided into two parts. In part 1, you are guided through the LabVIEW Environment and will get to see many useful features that can be realized throughout this course. In part 2, you begin to see the power of using LabVIEW to interface with your lab experiment by acquiring data through a standard National Instrument data acquisition device, <a href="http://sine.ni.com/nips/cds/view/p/lang/en/nid/201987">NI USB-6009</a>. This multifunction USB powered device has 4 (differential) analog inputs (14-bit, 48 kS/s), 2 analog outputs (12-bit, 150 S/s), 12 digital I/O channels, and a 32-bit counter.</p>
-         <h2 data-number="1.1" id="what-is-labview"><span class="header-section-number">1.1</span> What is LabVIEW?</h2>
-         <p>LabVIEW is a graphical programing language designed for scientists and engineers for experimental control and data acquisition. Many table-top research labs use LabVIEW to communicate with their commercial equipment (e.g., frequency synthesizers, oscilloscopes) and for acquiring data. It has advantages over basic languages such as C++. The graphical environment is intuitive and easy to learn. Also, since it is so widely used, almost all commercial test and measurement equipment comes with LabVIEW drivers and example programs.</p>
-         <p>You can choose to use LabVIEW on the lab laptops. You can also install LabVIEW on your own laptop. The student edition of LabVIEW can be obtained through <a href="http://www.colorado.edu/oit/software-hardware/site-licenses/labview">CU Boulder’s OIT</a>. In addition, you will also eventually need to download the <a href="https://www.ni.com/en-us/support/downloads/drivers/download.ni-daq-mx.html">NI-DAQmx</a> data acquisition drivers (if installing on your own laptop) .</p>
-         <h2 data-number="1.2" id="learning-goals"><span class="header-section-number">1.2</span> Learning Goals</h2>
-         <p>After completing the first part of this week’s lab, you will be:</p>
+         <h1 data-number="1" id="overview"><span
+         class="header-section-number">1</span> Overview</h1>
+         <p>The second week of the Gaussian Beams lab introduces you to
+         Python for data acquisition and guides you through interfacing
+         Python with the instrumentation and data acquisition systems
+         used in this course.</p>
+         <p>This week’s lab is divided into two parts. In part 1
+         (Prelab), you will learn essential curve fitting techniques
+         that you’ll use throughout this course. In part 2 (Lab), you
+         will learn Python programming for data acquisition using a
+         National Instruments DAQ device, the <a
+         href="http://sine.ni.com/nips/cds/view/p/lang/en/nid/201987">NI
+         USB-6009</a>. This multifunction USB powered device has 4
+         (differential) analog inputs (14-bit, 48 kS/s), 2 analog
+         outputs (12-bit, 150 S/s), 12 digital I/O channels, and a
+         32-bit counter.</p>
+         <h2 data-number="1.1" id="what-is-python"><span
+         class="header-section-number">1.1</span> What is Python?</h2>
+         <p>Python is a versatile programming language widely used in
+         scientific computing and data analysis. Many research labs use
+         Python for instrument control, data acquisition, and analysis.
+         Its advantages include:</p>
+         <ul>
+         <li>Free and open source</li>
+         <li>Extensive scientific libraries (NumPy, SciPy,
+         Matplotlib)</li>
+         <li>Large community with excellent documentation</li>
+         <li>Easy to learn and read</li>
+         <li>Works on all major operating systems</li>
+         </ul>
+         <p>You can use Python on the lab laptops where it is already
+         installed. See the <a href="/PHYS-4430/python-resources">Python
+         Resources</a> page for installation instructions if you want to
+         set it up on your own computer.</p>
+         <h2 data-number="1.2" id="learning-goals"><span
+         class="header-section-number">1.2</span> Learning Goals</h2>
+         <p>After completing the prelab, you will be able to:</p>
          <ol type="1">
-         <li>…able to create simple LabVIEW Virtual Instruments (VIs) that include controls, indicators, simple math, arrays, and loops.</li>
-         <li>…able to customize the user interface of a VI.</li>
-         <li>…able to use the Error List created by LabVIEW to find and correct coding errors.</li>
-         <li>… able to use various types of data types and convert between them.</li>
-         <li>…able to use context help to determine the function of a subVI or a function and the inputs and outputs.</li>
-         </ol>
-         <p>After completing the second part of this week’s lab you will be:</p>
-         <ol type="1">
-         <li>…able connect an USB DAQ-Device to a computer and confirm the analog inputs are working correctly.</li>
-         <li>…able to configure the DAQ Assistant to take a series of analog voltage measurements.</li>
-         <li>…able to generate an analog voltage signal using the DAQ-Device.</li>
-         <li>…able to filter and perform spectral measurements on an acquired signal using built-in Vis.</li>
-         <li>…able to use text-based programming to more easily code simply mathematical formulas.</li>
-         <li>…able to save acquired data to a file.</li>
-         <li>…able to use charts and graph indicators for the appropriate application.</li>
-         </ol>
-         <h1 data-number="2" id="prelab"><span class="header-section-number">2</span> Prelab</h1>
-         <p>This week’s prelab will be a continuation of the measurement uncertainty and error analysis exploration that was covered in last week’s lab. This is a “user’s guide” to least-squares fitting and to determining the goodness of your fits. It doesn’t derive many results. There are good textbooks listed in the references. At the end of the prelab you will be able to:</p>
-         <ol type="1">
-         <li>Explain why we minimize the sum of squares to get the best fit.</li>
+         <li>Explain why we minimize the sum of squares to get the best
+         fit.</li>
          <li>Carry out a least-squares minimization graphically.</li>
-         <li>Plot residuals to visually inspect the goodness of a fit.</li>
-         <li>Be able to interpret the uncertainty in fit parameters that Mathematica’s fit routines output.</li>
-         <li>Be able to compute <span class="math inline">\(\chi^2\)</span> for a fit and use it to determine if a fit is “good”.</li>
+         <li>Plot residuals to visually inspect the goodness of a
+         fit.</li>
+         <li>Interpret the uncertainty in fit parameters from
+         <code>scipy.optimize.curve_fit</code>.</li>
+         <li>Compute <span class="math inline">\(\chi^2\)</span> for a
+         fit and use it to determine if a fit is “good”.</li>
          </ol>
-         <h2 data-number="2.1" id="useful-readings"><span class="header-section-number">2.1</span> Useful readings</h2>
+         <p>After completing the lab, you will be able to:</p>
          <ol type="1">
-         <li>Taylor, J. R. (1997). <em>An Introduction to Error Analysis: The Study of Uncertainties in Physical Measurements</em> (p. 327). University Science Books. This is the standard undergraduate text for measurement and uncertainty.</li>
-         <li>Bevington, P. R., &amp; Robinson, K. D. (2003). <em>Data Reduction and Error Analysis for the Physical Sciences</em> Third Edition (3rd ed.). New York: McGraw-Hill. Great for advanced undergrad error analysis. Professional physicists use it too.</li>
+         <li>Connect a USB DAQ device to a computer and confirm the
+         analog inputs are working correctly.</li>
+         <li>Write a Python script to read analog voltage
+         measurements.</li>
+         <li>Configure sample rate and number of samples for data
+         acquisition.</li>
+         <li>Visualize acquired data using Matplotlib.</li>
+         <li>Perform spectral analysis using NumPy’s FFT functions.</li>
+         <li>Save acquired data to a CSV file.</li>
+         <li>Understand the basics of real-time data plotting.</li>
          </ol>
-         <h2 data-number="2.2" id="why-do-we-minimize-the-sum-of-squares"><span class="header-section-number">2.2</span> Why do we minimize the sum of squares?</h2>
-         <p><strong>Question:</strong> Why do we call it “least-squares” fitting?</p>
-         <p><strong>Answer:</strong> Because the best fit is determined by minimizing the weighted sum of squares of the deviation between the data and the fit. Properly speaking this “sum of squares” is called “chi-squared” and is given by</p>
-         <p><span id="eq:1" class="eqnos"><span class="math display">\[\chi^2 = {\displaystyle \sum_{i=1}^{N}}\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \ ... \ ))^2\text{,}\]</span><span class="eqnos-number">(1)</span></span> </p>
-         <p>where there are where <span class="math inline">\(N\)</span> data points, <span class="math inline">\((x_i,y_i )\)</span>, and the fit function is given by <span class="math inline">\(y(x_i,a,b,c, \ … \ )\)</span> where <span class="math inline">\(a, b,\)</span> etc. are the fit parameters.</p>
-         <p><strong>Question:</strong> What assumptions are made for the method to be valid?</p>
+         <h1 data-number="2" id="prelab"><span
+         class="header-section-number">2</span> Prelab</h1>
+         <p>This week’s prelab continues the measurement uncertainty and
+         error analysis exploration from last week. This is a “user’s
+         guide” to least-squares fitting and determining the goodness of
+         your fits. At the end of the prelab you will be able to:</p>
+         <ol type="1">
+         <li>Explain why we minimize the sum of squares to get the best
+         fit.</li>
+         <li>Carry out a least-squares minimization graphically.</li>
+         <li>Plot residuals to visually inspect the goodness of a
+         fit.</li>
+         <li>Interpret the uncertainty in fit parameters.</li>
+         <li>Compute <span class="math inline">\(\chi^2\)</span> for a
+         fit and use it to determine if a fit is “good”.</li>
+         </ol>
+         <h2 data-number="2.1" id="useful-readings"><span
+         class="header-section-number">2.1</span> Useful readings</h2>
+         <ol type="1">
+         <li>Taylor, J. R. (1997). <em>An Introduction to Error
+         Analysis: The Study of Uncertainties in Physical
+         Measurements</em> (p. 327). University Science Books. This is
+         the standard undergraduate text for measurement and
+         uncertainty.</li>
+         <li>Bevington, P. R., &amp; Robinson, K. D. (2003). <em>Data
+         Reduction and Error Analysis for the Physical Sciences</em>
+         Third Edition (3rd ed.). New York: McGraw-Hill. Great for
+         advanced undergrad error analysis. Professional physicists use
+         it too.</li>
+         </ol>
+         <h2 data-number="2.2"
+         id="why-do-we-minimize-the-sum-of-squares"><span
+         class="header-section-number">2.2</span> Why do we minimize the
+         sum of squares?</h2>
+         <p><strong>Question:</strong> Why do we call it “least-squares”
+         fitting?</p>
+         <p><strong>Answer:</strong> Because the best fit is determined
+         by minimizing the weighted sum of squares of the deviation
+         between the data and the fit. Properly speaking this “sum of
+         squares” is called “chi-squared” and is given by</p>
+         <p><span class="math display">\[\chi^2 = {\displaystyle
+         \sum_{i=1}^{N}}\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \ ... \
+         ))^2\text{,}\]</span> {#eq:1}</p>
+         <p>where there are where <span class="math inline">\(N\)</span>
+         data points, <span class="math inline">\((x_i,y_i )\)</span>,
+         and the fit function is given by <span
+         class="math inline">\(y(x_i,a,b,c, \ … \ )\)</span> where <span
+         class="math inline">\(a, b,\)</span> etc. are the fit
+         parameters.</p>
+         <p><strong>Question:</strong> What assumptions are made for the
+         method to be valid?</p>
          <p><strong>Answer:</strong> The two assumptions are:</p>
          <ol type="1">
-         <li><strong>Gaussian distributed.</strong> The random fluctuations in each data point <span class="math inline">\(y_i\)</span> are Gaussian distributed with standard deviation <span class="math inline">\(\sigma_i\)</span>.</li>
-         <li><strong>Uncorrelated.</strong> The random fluctuations in any one data point are uncorrelated with those in another data point.</li>
+         <li><strong>Gaussian distributed.</strong> The random
+         fluctuations in each data point <span
+         class="math inline">\(y_i\)</span> are Gaussian distributed
+         with standard deviation <span
+         class="math inline">\(\sigma_i\)</span>.</li>
+         <li><strong>Uncorrelated.</strong> The random fluctuations in
+         any one data point are uncorrelated with those in another data
+         point.</li>
          </ol>
-         <p><strong>Question:</strong> Why does minimizing the sum of squares give us the best fit?</p>
-         <p><strong>Answer:</strong> Given the two above assumptions, the fit that minimizes the sum of squares is the <strong><em>most likely</em></strong> function to produce the observed data. This can be proven using a little calculus and probability. A more detailed explanation is found in Taylor’s <em>Introduction to Error Analysis</em> Sec. 5.5 “Justification of the Mean as Best Estimate” or Bevington and Robinson’s <em>Data Reduction</em> Sec. 4.1 “Method of Least-Squares”.</p>
-         <h2 data-number="2.3" id="sec:min-graph"><span class="header-section-number">2.3</span> Minimizing <span class="math inline">\(\chi^2\)</span> graphically</h2>
-         <p><em>You will rarely minimize <span class="math inline">\(\chi^2\)</span> graphically in a lab. However, this exercise will help you better understand what the fitting routines in Mathematica actually do to find the best fit. <a href="https://www.youtube.com/watch?v=KolZZm8If9Q">This video</a> can be reviewed if you need a reminder on how to fit data in Mathematica.</em></p>
+         <p><strong>Question:</strong> Why does minimizing the sum of
+         squares give us the best fit?</p>
+         <p><strong>Answer:</strong> Given the two above assumptions,
+         the fit that minimizes the sum of squares is the
+         <strong><em>most likely</em></strong> function to produce the
+         observed data. This can be proven using a little calculus and
+         probability. A more detailed explanation is found in Taylor’s
+         <em>Introduction to Error Analysis</em> Sec. 5.5 “Justification
+         of the Mean as Best Estimate” or Bevington and Robinson’s
+         <em>Data Reduction</em> Sec. 4.1 “Method of Least-Squares”.</p>
+         <h2 data-number="2.3" id="sec:min-graph"><span
+         class="header-section-number">2.3</span> Minimizing <span
+         class="math inline">\(\chi^2\)</span> graphically</h2>
+         <p><em>You will rarely minimize <span
+         class="math inline">\(\chi^2\)</span> graphically in a lab.
+         However, this exercise will help you better understand what
+         fitting routines actually do to find the best fit.</em></p>
          <ol type="1">
-         <li><p>Import and plot <a href="../resources/lab-guides/gaussian-laser-beams/profile_data_without_errors.csv">this data set</a>. It was generated by inserting a razor blade into path of a laser beam and measuring the photodetector voltage of the laser light. The <span class="math inline">\(x\)</span> column is the micrometer (razor) position in meters and the <span class="math inline">\(y\)</span> column is the photodetector voltage in volts.</p>
-         <p><code>Import</code> <code>["profile_data_without_errors",”CSV”]</code></p></li>
+         <li><p>Download and plot <a
+         href="../resources/lab-guides/gaussian-laser-beams/profile_data_without_errors.csv">this
+         data set</a>. It was generated by inserting a razor blade into
+         path of a laser beam and measuring the photodetector voltage of
+         the laser light. The <span class="math inline">\(x\)</span>
+         column is the micrometer (razor) position in meters and the
+         <span class="math inline">\(y\)</span> column is the
+         photodetector voltage in volts.</p>
+         <div class="sourceCode" id="cb1"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;profile_data_without_errors.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x_data <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>y_data <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_data, y_data, label<span class="op">=</span><span class="st">&#39;Data&#39;</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (m)&#39;</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          <li><p>Define the same fit function as:</p>
-         <p><span class="math display">\[y(x,a,b,c,w) = a \ Erf\left(\frac{\sqrt{2}}{w}(x-b)\right)+c\]</span></p></li>
-         <li><p>Reduce the fit to two free parameters. This step is only necessary because it is hard to visualize more than 3 dimensions. Assume <span class="math inline">\(a_{fit}=(V_{max}-V_{min})/2 = 1.4375\)</span> and <span class="math inline">\(c_{fit} =(V_{max}+V_{min})/2 = 1.45195\)</span>. These were determined by averaging the first 6 data points to get <span class="math inline">\(V_{min}\)</span> and the last 5 to get <span class="math inline">\(V_{max}\)</span>.</p></li>
-         <li><p>Use Equation <a href="#eq:1">1</a> to write an expression for <span class="math inline">\(\chi^2\)</span> in terms of your <span class="math inline">\(w\)</span> and <span class="math inline">\(c\)</span> parameters, and the <span class="math inline">\(x\)</span> (position) data and <span class="math inline">\(y\)</span> (voltage) data. Since you don’t have any estimate for the uncertainties <span class="math inline">\(\sigma_i\)</span>, do what Mathematica does and assume they are all unity so <span class="math inline">\(\sigma_i=1\)</span>.</p></li>
-         <li><p>Make a contour plot of <span class="math inline">\(\chi^2(w,b)\)</span> and tweak the plot range until you see the minimum. Just like with <code>NonlinearModelFit</code>, it will help to have a good initial guess for your fit parameters. You can iteratively improve the plot range of your plot to zoom in on the parameter values that minimize <span class="math inline">\(\chi^2\)</span>. You should get a plot kind of like Figure <a href="#fig:contour">1</a>.</p></li>
+         <p><span class="math display">\[y(x,a,b,c,w) = a \
+         Erf\left(\frac{\sqrt{2}}{w}(x-b)\right)+c\]</span></p>
+         <p>In Python, this can be written using
+         <code>scipy.special.erf</code>:</p>
+         <div class="sourceCode" id="cb2"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> erf</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> beam_profile(x, a, b, c, w):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Error function model for knife-edge beam profile.&quot;&quot;&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a <span class="op">*</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">*</span> (x <span class="op">-</span> b) <span class="op">/</span> w) <span class="op">+</span> c</span></code></pre></div></li>
+         <li><p>Reduce the fit to two free parameters. This step is only
+         necessary because it is hard to visualize more than 3
+         dimensions. Assume <span
+         class="math inline">\(a_{fit}=(V_{max}-V_{min})/2 =
+         1.4375\)</span> and <span class="math inline">\(c_{fit}
+         =(V_{max}+V_{min})/2 = 1.45195\)</span>. These were determined
+         by averaging the first 6 data points to get <span
+         class="math inline">\(V_{min}\)</span> and the last 5 to get
+         <span class="math inline">\(V_{max}\)</span>.</p></li>
+         <li><p>Use Equation <span class="citation"
+         data-cites="eq:1">@eq:1</span> to write an expression for <span
+         class="math inline">\(\chi^2\)</span> in terms of your <span
+         class="math inline">\(w\)</span> and <span
+         class="math inline">\(b\)</span> parameters, and the <span
+         class="math inline">\(x\)</span> (position) data and <span
+         class="math inline">\(y\)</span> (voltage) data. Since you
+         don’t have any estimate for the uncertainties <span
+         class="math inline">\(\sigma_i\)</span>, assume they are all
+         unity so <span class="math inline">\(\sigma_i=1\)</span>.</p>
+         <div class="sourceCode" id="cb3"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> chi_squared(w, b, x_data, y_data, a_fixed, c_fixed):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Calculate chi-squared for given parameters.&quot;&quot;&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    y_fit <span class="op">=</span> beam_profile(x_data, a_fixed, b, c_fixed, w)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>((y_data <span class="op">-</span> y_fit)<span class="op">**</span><span class="dv">2</span>)</span></code></pre></div></li>
+         <li><p>Make a contour plot of <span
+         class="math inline">\(\chi^2(w,b)\)</span> and tweak the plot
+         range until you see the minimum. It will help to have a good
+         initial guess for your fit parameters. You can iteratively
+         improve the plot range to zoom in on the parameter values that
+         minimize <span class="math inline">\(\chi^2\)</span>. You
+         should get a plot kind of like Figure <span class="citation"
+         data-cites="fig:contour">@fig:contour</span>.</p>
+         <div class="sourceCode" id="cb4"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a grid of w and b values</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>w_range <span class="op">=</span> np.linspace(<span class="fl">0.0003</span>, <span class="fl">0.0007</span>, <span class="dv">100</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>b_range <span class="op">=</span> np.linspace(<span class="fl">0.009</span>, <span class="fl">0.011</span>, <span class="dv">100</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>W, B <span class="op">=</span> np.meshgrid(w_range, b_range)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate chi-squared for each combination</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>a_fixed <span class="op">=</span> <span class="fl">1.4375</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>c_fixed <span class="op">=</span> <span class="fl">1.45195</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> np.zeros_like(W)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(b_range)):</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(w_range)):</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        Z[i, j] <span class="op">=</span> chi_squared(w_range[j], b_range[i], x_data, y_data,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                              a_fixed, c_fixed)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Make contour plot</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.contour(W <span class="op">*</span> <span class="dv">1000</span>, B <span class="op">*</span> <span class="dv">1000</span>, Z, levels<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">&#39;$</span><span class="ch">\\</span><span class="st">chi^2$&#39;</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;w (mm)&#39;</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;b (mm)&#39;</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;$</span><span class="ch">\\</span><span class="st">chi^2$ Contour Plot&#39;</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          </ol>
-         <div id="fig:contour" class="fignos">
-         <figure>
-         <img src="../resources/lab-guides/gaussian-laser-beams/contour.png" style="width:15cm" alt="" /><figcaption><span>Figure 1:</span> Contour plot example.</figcaption>
+         <figure id="fig:contour">
+         <img
+         src="../resources/lab-guides/gaussian-laser-beams/contour.png"
+         style="width:15cm" alt="Contour plot example." />
+         <figcaption aria-hidden="true">Contour plot
+         example.</figcaption>
          </figure>
-         </div>
          <ol start="6" type="1">
-         <li>Graphically determine the best fit parameters to 3 significant digits.</li>
-         <li>Compare with the best fit result from <code>NonlinearModelFit</code> (allow all 4 parameters to vary). Do the fits agree for those three digits of precision?</li>
+         <li><p>Graphically determine the best fit parameters to 3
+         significant digits.</p></li>
+         <li><p>Compare with the best fit result from
+         <code>scipy.optimize.curve_fit</code> (allow all 4 parameters
+         to vary). Do the fits agree for those three digits of
+         precision?</p>
+         <div class="sourceCode" id="cb5"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> curve_fit</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial guesses</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> [<span class="fl">1.4375</span>, <span class="fl">0.01</span>, <span class="fl">1.45195</span>, <span class="fl">0.0005</span>]</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the fit</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(beam_profile, x_data, y_data, p0<span class="op">=</span>p0)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Best fit parameters:&quot;</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  a = </span><span class="sc">{</span>popt[<span class="dv">0</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  b = </span><span class="sc">{</span>popt[<span class="dv">1</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  c = </span><span class="sc">{</span>popt[<span class="dv">2</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  w = </span><span class="sc">{</span>popt[<span class="dv">3</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
          </ol>
-         <h2 data-number="2.4" id="uncertainty-in-the-fit-parameters"><span class="header-section-number">2.4</span> Uncertainty in the fit parameters</h2>
-         <p><strong>Question:</strong> Where does the uncertainty in the fit parameters come from?</p>
-         <p><strong>Answer:</strong> The optimal fit parameters depend on the data points <span class="math inline">\((x_i,y_i)\)</span>. The uncertainty, <span class="math inline">\(\sigma_i\)</span>, in the <span class="math inline">\(y_i\)</span> means there is a propagated uncertainty in the calculation of the fit parameters. The error propagation calculation is explained in detail in the references, especially Bevington and Robinson.</p>
-         <p><strong>Question:</strong> How does Mathematica calculate the uncertainty in the fit parameters when no error estimate for the <span class="math inline">\(\sigma_i\)</span> is provided?</p>
-         <p><strong>Answer:</strong> Mathematica (and other programs) estimate the uncertainty in the data <span class="math inline">\(\sigma_y^2\)</span> using the “residuals” of the best fit:</p>
-         <p><span id="eq:2" class="eqnos"><span class="math display">\[\sigma_y^2 = \frac{1}{N-n}{\displaystyle \sum_{i=1}^{N}}(y_i-y(x_i,a_0,b_0,c_0, \ ... \ ))^2\text{,}\quad\quad\]</span><span class="eqnos-number">(2)</span></span> </p>
-         <p>where there are <span class="math inline">\(N\)</span> data points <span class="math inline">\(y_i\)</span> and the best fit value at each point is given by <span class="math inline">\(y\)</span>, which depends on <span class="math inline">\(x_i\)</span> and the <span class="math inline">\(n\)</span> best fit parameters <span class="math inline">\(a_0,b_0,c_0, \ ... \ \)</span>. It is very similar to how you would estimate the standard deviation of a repeated measurement, which for comparison’s sake is given by:</p>
-         <p><span id="eq:3" class="eqnos"><span class="math display">\[\sigma_y^2 = \frac{1}{N-n}{\displaystyle \sum_{i=1}^{N}}(y_i-\overline{y})^2\text{.}\]</span><span class="eqnos-number">(3)</span></span> </p>
-         <h2 data-number="2.5" id="estimating-the-uncertainty-in-the-data"><span class="header-section-number">2.5</span> Estimating the uncertainty in the data</h2>
+         <h2 data-number="2.4"
+         id="uncertainty-in-the-fit-parameters"><span
+         class="header-section-number">2.4</span> Uncertainty in the fit
+         parameters</h2>
+         <p><strong>Question:</strong> Where does the uncertainty in the
+         fit parameters come from?</p>
+         <p><strong>Answer:</strong> The optimal fit parameters depend
+         on the data points <span
+         class="math inline">\((x_i,y_i)\)</span>. The uncertainty,
+         <span class="math inline">\(\sigma_i\)</span>, in the <span
+         class="math inline">\(y_i\)</span> means there is a propagated
+         uncertainty in the calculation of the fit parameters. The error
+         propagation calculation is explained in detail in the
+         references, especially Bevington and Robinson.</p>
+         <p><strong>Question:</strong> How does <code>curve_fit</code>
+         calculate the uncertainty in the fit parameters when no error
+         estimate for the <span class="math inline">\(\sigma_i\)</span>
+         is provided?</p>
+         <p><strong>Answer:</strong> When no uncertainties are provided,
+         <code>curve_fit</code> (and other fitting routines) estimate
+         the uncertainty in the data <span
+         class="math inline">\(\sigma_y^2\)</span> using the “residuals”
+         of the best fit:</p>
+         <p><span class="math display">\[\sigma_y^2 =
+         \frac{1}{N-n}{\displaystyle
+         \sum_{i=1}^{N}}(y_i-y(x_i,a_0,b_0,c_0, \ ... \
+         ))^2\text{,}\quad\quad\]</span> {#eq:2}</p>
+         <p>where there are <span class="math inline">\(N\)</span> data
+         points <span class="math inline">\(y_i\)</span> and the best
+         fit value at each point is given by <span
+         class="math inline">\(y\)</span>, which depends on <span
+         class="math inline">\(x_i\)</span> and the <span
+         class="math inline">\(n\)</span> best fit parameters <span
+         class="math inline">\(a_0,b_0,c_0, \ ... \ \)</span>. It is
+         very similar to how you would estimate the standard deviation
+         of a repeated measurement, which for comparison’s sake is given
+         by:</p>
+         <p><span class="math display">\[\sigma_y^2 =
+         \frac{1}{N-n}{\displaystyle
+         \sum_{i=1}^{N}}(y_i-\overline{y})^2\text{.}\]</span>
+         {#eq:3}</p>
+         <p>The parameter uncertainties are then extracted from the
+         covariance matrix:</p>
+         <div class="sourceCode" id="cb6"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get parameter uncertainties from the covariance matrix</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Parameter uncertainties:&quot;</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  σ_a = </span><span class="sc">{</span>perr[<span class="dv">0</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  σ_b = </span><span class="sc">{</span>perr[<span class="dv">1</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  σ_c = </span><span class="sc">{</span>perr[<span class="dv">2</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  σ_w = </span><span class="sc">{</span>perr[<span class="dv">3</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+         <h2 data-number="2.5"
+         id="estimating-the-uncertainty-in-the-data"><span
+         class="header-section-number">2.5</span> Estimating the
+         uncertainty in the data</h2>
          <ol type="1">
-         <li>Use Equation <a href="#eq:2">2</a> and your best fit parameters to estimate <span class="math inline">\(\sigma_y^2\)</span>, the random error of each data point given by your data.</li>
-         <li>Compare your result with Mathematica’s <code>NonlinearModelFit</code>, which can also output this estimate of the random error. If <code>nlm</code> is the <code>NonlinearModelFit</code> output, the estimate of <span class="math inline">\(\sigma_y^2\)</span> is given by <code>nlm[“EstimatedVariance”]</code>.</li>
-         <li>Do the estimates agree? Why or why not?</li>
+         <li><p>Use Equation <span class="citation"
+         data-cites="eq:2">@eq:2</span> and your best fit parameters to
+         estimate <span class="math inline">\(\sigma_y^2\)</span>, the
+         random error of each data point given by your data.</p>
+         <div class="sourceCode" id="cb7"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate residuals</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y_fit <span class="op">=</span> beam_profile(x_data, <span class="op">*</span>popt)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>residuals <span class="op">=</span> y_data <span class="op">-</span> y_fit</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate variance (N data points, n=4 parameters)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="bu">len</span>(y_data)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>sigma_y_squared <span class="op">=</span> np.<span class="bu">sum</span>(residuals<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> (N <span class="op">-</span> n)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>sigma_y <span class="op">=</span> np.sqrt(sigma_y_squared)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Estimated σ_y = </span><span class="sc">{</span>sigma_y<span class="sc">:.6f}</span><span class="ss"> V&quot;</span>)</span></code></pre></div></li>
+         <li><p>Compare your result with the estimate from the fit. The
+         estimated variance can be calculated from the
+         residuals.</p></li>
+         <li><p>Do the estimates agree? Why or why not?</p></li>
          </ol>
-         <h2 data-number="2.6" id="goodness-of-fit"><span class="header-section-number">2.6</span> Goodness of fit</h2>
-         <p>This section covers two ways to analyze if a fit is good.</p>
+         <h2 data-number="2.6" id="goodness-of-fit"><span
+         class="header-section-number">2.6</span> Goodness of fit</h2>
+         <p>This section covers two ways to analyze if a fit is
+         good.</p>
          <ol type="1">
          <li>Plotting the residuals.</li>
-         <li>Doing a <span class="math inline">\(\chi^2\)</span> test.</li>
+         <li>Doing a <span class="math inline">\(\chi^2\)</span>
+         test.</li>
          </ol>
-         <h3 data-number="2.6.1" id="sec:plot-res"><span class="header-section-number">2.6.1</span> Plotting the fit residuals</h3>
-         <p>The first step is to look at the residuals. The residuals, <span class="math inline">\(r_i\)</span>, are defined as the difference between the data and the fit.</p>
-         <p><span class="math display">\[r_i=y_i-y(x_i,a,b,c, \ ... \ )\]</span></p>
+         <h3 data-number="2.6.1" id="sec:plot-res"><span
+         class="header-section-number">2.6.1</span> Plotting the fit
+         residuals</h3>
+         <p>The first step is to look at the residuals. The residuals,
+         <span class="math inline">\(r_i\)</span>, are defined as the
+         difference between the data and the fit.</p>
+         <p><span class="math display">\[r_i=y_i-y(x_i,a,b,c, \ ... \
+         )\]</span></p>
          <ol type="1">
-         <li>Make a <code>ListPlot</code> of the residuals. If <code>nlm</code> is the <code>NonlinearModelFi</code>t output, the list of residuals is given by <code>nlm[“FitResiduals”]</code>.</li>
-         <li>Since we didn’t provide any estimates of the uncertainties, Mathematica assumed the uncertainty of every point is the same. Based on the plot of residuals, was this a good assumption?</li>
-         <li>Do the residuals look randomly scattered about zero or do you notice any systematic error sources?</li>
-         <li>Is the distribution of residuals scattered evenly around zero? Or is there a particular range of <span class="math inline">\(x\)</span> values where the residuals are larger than others?</li>
-         <li>What is the most likely source of the large uncertainty as the beam is cut near the center of the beam?</li>
+         <li><p>Make a plot of the residuals:</p>
+         <div class="sourceCode" id="cb8"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate and plot residuals</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>residuals <span class="op">=</span> y_data <span class="op">-</span> beam_profile(x_data, <span class="op">*</span>popt)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_data, residuals)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">&#39;r&#39;</span>, linestyle<span class="op">=</span><span class="st">&#39;--&#39;</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (m)&#39;</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Residuals (V)&#39;</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Fit Residuals&#39;</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <li><p>Since we didn’t provide any estimates of the
+         uncertainties, the fitting assumed the uncertainty of every
+         point is the same. Based on the plot of residuals, was this a
+         good assumption?</p></li>
+         <li><p>Do the residuals look randomly scattered about zero or
+         do you notice any systematic error sources?</p></li>
+         <li><p>Is the distribution of residuals scattered evenly around
+         zero? Or is there a particular range of <span
+         class="math inline">\(x\)</span> values where the residuals are
+         larger than others?</p></li>
+         <li><p>What is the most likely source of the large uncertainty
+         as the beam is cut near the center of the beam?</p></li>
          </ol>
-         <h3 data-number="2.6.2" id="chi-by-eye---eyeballing-the-goodness-of-fit"><span class="header-section-number">2.6.2</span> “Chi by eye” - eyeballing the goodness of fit</h3>
-         <p><strong>Question:</strong> If I have a good fit, should every data point lie within an error bar?</p>
-         <p><strong>Answer:</strong> No. Most should, but we wouldn’t expect every data point to lie within an error bar. If the uncertainty is Gaussian distributed with a standard deviation <span class="math inline">\(\sigma_i\)</span> for each data point, <span class="math inline">\(y_i\)</span>, then we expect roughly 68% of the data points to lie within their error bar. This is because 68% of the probability in a Gaussian distribution lies within one standard deviation of the mean.</p>
-         <h3 data-number="2.6.3" id="chi2-and-chi_red2-for-testing-the-goodness-of-fit"><span class="header-section-number">2.6.3</span> <span class="math inline">\(\chi^2\)</span> and <span class="math inline">\(\chi_{red}^2\)</span> for testing the “goodness” of fit</h3>
-         <p>This section answers the question “What should <span class="math inline">\(\chi^2\)</span> be for a good fit?”</p>
-         <p>Suppose the only uncertainty in the data is statistical (i.e., random) error, with a known standard deviation <span class="math inline">\(\sigma_i\)</span>, then on average each term in the sum is</p>
-         <p><span id="eq:4" class="eqnos"><span class="math display">\[\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \ ... \ ))^2 \approx 1\text{,}\]</span><span class="eqnos-number">(4)</span></span> </p>
-         <p>and the full <span class="math inline">\(\chi^2\)</span> sum of squares is approximately</p>
-         <p><span id="eq:5" class="eqnos"><span class="math display">\[\chi^2 = {\displaystyle \sum_{i=1}^{N}}\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \ ... \ ))^2\approx N-n\text{.}\quad\quad\]</span><span class="eqnos-number">(5)</span></span> </p>
+         <h3 data-number="2.6.2"
+         id="chi-by-eye---eyeballing-the-goodness-of-fit"><span
+         class="header-section-number">2.6.2</span> “Chi by eye” -
+         eyeballing the goodness of fit</h3>
+         <p><strong>Question:</strong> If I have a good fit, should
+         every data point lie within an error bar?</p>
+         <p><strong>Answer:</strong> No. Most should, but we wouldn’t
+         expect every data point to lie within an error bar. If the
+         uncertainty is Gaussian distributed with a standard deviation
+         <span class="math inline">\(\sigma_i\)</span> for each data
+         point, <span class="math inline">\(y_i\)</span>, then we expect
+         roughly 68% of the data points to lie within their error bar.
+         This is because 68% of the probability in a Gaussian
+         distribution lies within one standard deviation of the
+         mean.</p>
+         <h3 data-number="2.6.3"
+         id="chi2-and-chi_red2-for-testing-the-goodness-of-fit"><span
+         class="header-section-number">2.6.3</span> <span
+         class="math inline">\(\chi^2\)</span> and <span
+         class="math inline">\(\chi_{red}^2\)</span> for testing the
+         “goodness” of fit</h3>
+         <p>This section answers the question “What should <span
+         class="math inline">\(\chi^2\)</span> be for a good fit?”</p>
+         <p>Suppose the only uncertainty in the data is statistical
+         (i.e., random) error, with a known standard deviation <span
+         class="math inline">\(\sigma_i\)</span>, then on average each
+         term in the sum is</p>
+         <p><span
+         class="math display">\[\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \
+         ... \ ))^2 \approx 1\text{,}\]</span> {#eq:4}</p>
+         <p>and the full <span class="math inline">\(\chi^2\)</span> sum
+         of squares is approximately</p>
+         <p><span class="math display">\[\chi^2 = {\displaystyle
+         \sum_{i=1}^{N}}\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \ ... \
+         ))^2\approx N-n\text{.}\quad\quad\]</span> {#eq:5}</p>
          <p>So a good fit has</p>
-         <p><span id="eq:6" class="eqnos"><span class="math display">\[\chi_{red}^2 \equiv \frac{\chi^2}{N-n}\approx 1\text{.}\]</span><span class="eqnos-number">(6)</span></span> </p>
+         <p><span class="math display">\[\chi_{red}^2 \equiv
+         \frac{\chi^2}{N-n}\approx 1\text{.}\]</span> {#eq:6}</p>
          <ol type="1">
-         <li><strong>Fact: To find the goodness of fit test, you must first estimate the uncertainties on the data points that you are fitting.</strong> How would you explain the reason for this in your own words?</li>
+         <li><strong>Fact: To find the goodness of fit test, you must
+         first estimate the uncertainties on the data points that you
+         are fitting.</strong> How would you explain the reason for this
+         in your own words?</li>
          </ol>
-         <h3 data-number="2.6.4" id="choosing-a-strategy-to-estimate-the-uncertainty"><span class="header-section-number">2.6.4</span> Choosing a strategy to estimate the uncertainty</h3>
+         <h3 data-number="2.6.4"
+         id="choosing-a-strategy-to-estimate-the-uncertainty"><span
+         class="header-section-number">2.6.4</span> Choosing a strategy
+         to estimate the uncertainty</h3>
          <ol type="1">
-         <li><p>Considering your answers from Section <a href="#sec:plot-res">2.6.1</a> (especially <a href="#sec:plot-res">2.6.1</a>.5), which method would give you the best estimate of the uncertainty for each data point, and why?</p>
+         <li><p>Considering your answers from Section <span
+         class="citation" data-cites="sec:plot-res">@sec:plot-res</span>
+         (especially <span class="citation"
+         data-cites="sec:plot-res">@sec:plot-res</span>.5), which method
+         would give you the best estimate of the uncertainty for each
+         data point, and why?</p>
          <ul>
          <li><p>Eyeballing the fluctuations in each data point.</p></li>
-         <li><p>Taking <span class="math inline">\(N\)</span> measurements at each razor position and then going to the next position.</p></li>
-         <li><p>Taking the entire data set <span class="math inline">\(N\)</span> times.</p></li>
+         <li><p>Taking <span class="math inline">\(N\)</span>
+         measurements at each razor position and then going to the next
+         position.</p></li>
+         <li><p>Taking the entire data set <span
+         class="math inline">\(N\)</span> times.</p></li>
          </ul></li>
          </ol>
-         <h3 data-number="2.6.5" id="weighted-best-fits-in-mathematica"><span class="header-section-number">2.6.5</span> Weighted best fits in Mathematica</h3>
-         <p>When you have estimated the uncertainty <span class="math inline">\(\sigma_i\)</span> of each data point <span class="math inline">\(y_i\)</span> you would like to use this information when fitting to correctly evaluate the <span class="math inline">\(\chi^2\)</span> expression in Equation <a href="#eq:1">1</a>. The points with high uncertainty contribute less information when choosing the best fit parameters. If you have a list of uncertainties</p>
-         <p><code>sigmalist = { sigma1, sigma2, sigma3, ...}</code>,</p>
-         <p>then the weights for the fit are:</p>
-         <p><code>weightslist = 1/ sigmalist^2 = {1/ sigma1^2, 1/ sigma2^2, ...}</code>.</p>
-         <p>Add the <code>Weights-&gt;weightslist</code> option to the <code>LinearModelFit</code> or <code>NonlinearModelFit</code>. For example:</p>
-         <p><code>NonlinearModelFit[data,fit[x,a,b,c],{a,b,c},x, Weights-&gt;weightslist]</code></p>
+         <h3 data-number="2.6.5" id="weighted-fits"><span
+         class="header-section-number">2.6.5</span> Weighted fits</h3>
+         <p>When you have estimated the uncertainty <span
+         class="math inline">\(\sigma_i\)</span> of each data point
+         <span class="math inline">\(y_i\)</span> you should use this
+         information when fitting to correctly evaluate the <span
+         class="math inline">\(\chi^2\)</span> expression in Equation
+         <span class="citation" data-cites="eq:1">@eq:1</span>. The
+         points with high uncertainty contribute less information when
+         choosing the best fit parameters.</p>
+         <p>In Python’s <code>curve_fit</code>, you provide
+         uncertainties using the <code>sigma</code> parameter:</p>
+         <div class="sourceCode" id="cb9"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weighted fit with known uncertainties</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    beam_profile,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    x_data,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    y_data,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    p0<span class="op">=</span>p0,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    sigma<span class="op">=</span>sigma_list,        <span class="co"># Your uncertainty estimates</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    absolute_sigma<span class="op">=</span><span class="va">True</span>      <span class="co"># Use actual sigma values (not relative)</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
          <ol type="1">
-         <li><p>Import <a href="../resources/lab-guides/gaussian-laser-beams/profile_data_with_errors.csv">this data set</a> for a beam width measurement with uncertainties. The first column is razor position in meters, the second column is photodetector output voltage, and the third column is the uncertainty on the photodetector output voltage.</p>
-         <p><code>Import</code> <code>["profile_data_with_errors.csv",,”CSV”]</code></p></li>
-         <li><p>Do a weighted fit using the same fit function as in Section <a href="#sec:min-graph">2.3</a>. Use the uncertainty estimates in the third column to calculate the weights.</p></li>
-         <li><p>Calculate <span class="math inline">\(\chi^2\)</span>. You can obtain <span class="math inline">\(\chi^2\)</span> from the fit returned by Mathematica. Supposing the fit was called <code>nlmError</code>, use <code>nlmError[“ANOVATable”]</code>. For the curious, ANOVA stands for ANalysis Of VAriance.</p></li>
+         <li><p>Download <a
+         href="../resources/lab-guides/gaussian-laser-beams/profile_data_with_errors.csv">this
+         data set</a> for a beam width measurement with uncertainties.
+         The first column is razor position in meters, the second column
+         is photodetector output voltage, and the third column is the
+         uncertainty on the photodetector output voltage.</p>
+         <div class="sourceCode" id="cb10"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data with uncertainties</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;profile_data_with_errors.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>x_data <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>y_data <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>y_err <span class="op">=</span> data[:, <span class="dv">2</span>]</span></code></pre></div></li>
+         <li><p>Do a weighted fit using the same fit function as in
+         Section <span class="citation"
+         data-cites="sec:min-graph">@sec:min-graph</span>. Use the
+         uncertainty estimates in the third column.</p>
+         <div class="sourceCode" id="cb11"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weighted fit</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    beam_profile, x_data, y_data,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    p0<span class="op">=</span>[<span class="fl">1.4</span>, <span class="fl">0.01</span>, <span class="fl">1.45</span>, <span class="fl">0.0005</span>],</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    sigma<span class="op">=</span>y_err,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    absolute_sigma<span class="op">=</span><span class="va">True</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))</span></code></pre></div></li>
+         <li><p>Calculate <span
+         class="math inline">\(\chi^2\)</span>:</p>
+         <div class="sourceCode" id="cb12"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate chi-squared</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>y_fit <span class="op">=</span> beam_profile(x_data, <span class="op">*</span>popt)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>chi2 <span class="op">=</span> np.<span class="bu">sum</span>(((y_data <span class="op">-</span> y_fit) <span class="op">/</span> y_err)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>dof <span class="op">=</span> <span class="bu">len</span>(y_data) <span class="op">-</span> <span class="bu">len</span>(popt)  <span class="co"># degrees of freedom</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>chi2_red <span class="op">=</span> chi2 <span class="op">/</span> dof</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Chi-squared: </span><span class="sc">{</span>chi2<span class="sc">:.2f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Degrees of freedom: </span><span class="sc">{</span>dof<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Reduced chi-squared: </span><span class="sc">{</span>chi2_red<span class="sc">:.2f}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
+         <li><p>How close is the reduced chi-squared to 1?</p></li>
+         <li><p><strong>The “chi-squared test”.</strong> This part helps
+         us understand if the value of <span
+         class="math inline">\(\chi^2\)</span> is statistically likely
+         or not. The following graph gives the probability of exceeding
+         a particular value of <span
+         class="math inline">\(\chi^2\)</span> for <span
+         class="math inline">\(\nu=𝑁−𝑛=22\)</span> degrees of freedom.
+         It can be calculated using the Cumulative Density Function
+         (CDF) for the chi-squared distribution. Use the graph to
+         estimate the likelihood this value of <span
+         class="math inline">\(\chi^2\)</span> occurred by chance.</p>
+         <div class="sourceCode" id="cb13"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate p-value (probability of getting this chi2 or higher by chance)</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> stats.chi2.cdf(chi2, dof)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;P-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
          </ol>
-         <div id="fig:anova" class="fignos">
-         <figure>
-         <img src="../resources/lab-guides/gaussian-laser-beams/anova.png" style="width:15cm" alt="" /><figcaption><span>Figure 2:</span> ANOVA table output.</figcaption>
+         <figure id="fig:cdf">
+         <img src="../resources/lab-guides/gaussian-laser-beams/cdf.png"
+         style="width:15cm"
+         alt="Cumulative Density Function (CDF) for the chi-squared distribution." />
+         <figcaption aria-hidden="true">Cumulative Density Function
+         (CDF) for the chi-squared distribution.</figcaption>
          </figure>
-         </div>
-         <ol start="4" type="1">
-         <li>How close is the reduced chi-squared to 1?</li>
-         <li><strong>The “chi-squared test”.</strong> This part helps us understand if the value of <span class="math inline">\(\chi^2\)</span> is statistically likely or not. The following graph gives the probability of exceeding a particular value of <span class="math inline">\(\chi^2\)</span> for <span class="math inline">\(\nu=𝑁−𝑛=22\)</span> degrees of freedom. It can be calculated using the Cumulative Density Function (CDF) for the chi-squared distribution. Use the graph to estimate the likelihood this value of <span class="math inline">\(\chi^2\)</span> occurred by chance.</li>
+         <h3 data-number="2.6.6"
+         id="why-is-it-often-bad-to-overestimate-uncertainties"><span
+         class="header-section-number">2.6.6</span> Why is it often bad
+         to overestimate uncertainties?</h3>
+         <ol type="1">
+         <li>Why can overestimating the uncertainty make your fit appear
+         good (i.e., <span
+         class="math inline">\(\frac{\chi^2}{N-n}\approx
+         1\)</span>)?</li>
          </ol>
-         <div id="fig:cdf" class="fignos">
-         <figure>
-         <img src="../resources/lab-guides/gaussian-laser-beams/cdf.png" style="width:15cm" alt="" /><figcaption><span>Figure 3:</span> Cumulative Density Function (CDF) for the chi-squared distribution.</figcaption>
-         </figure>
-         </div>
-         <h3 data-number="2.6.6" id="why-is-it-often-bad-to-overestimate-uncertainties"><span class="header-section-number">2.6.6</span> Why is it often bad to overestimate uncertainties?</h3>
+         <p>Overestimating the uncertainties makes the fit seem good
+         (according to a <span class="math inline">\(\chi^2\)</span>
+         test), even when it might be obviously a bad fit. It is best to
+         do the <span class="math inline">\(\chi^2\)</span> test using
+         an honest estimate of your uncertainties. If the <span
+         class="math inline">\(\chi^2\)</span> is larger than expected
+         <span class="math inline">\((\chi^2&gt;𝑁−𝑛)\)</span>, then you
+         should consider both the possibility of systematic error
+         sources and the quality of your estimates of the uncertainties.
+         On the other hand, if the <span
+         class="math inline">\(\chi^2\)</span> test is good <span
+         class="math inline">\((\chi^2\approx 𝑁−𝑛)\)</span>, then it
+         shows you have a good handle on the model of your system, and
+         your sources of uncertainty. Finally, if <span
+         class="math inline">\(\chi^2\ll (𝑁−𝑛)\)</span>, this likely
+         indicates overestimated uncertainties.</p>
+         <h1 data-number="3"
+         id="introduction-to-python-for-data-acquisition"><span
+         class="header-section-number">3</span> Introduction to Python
+         for Data Acquisition</h1>
+         <p>In this part of the lab, you will learn to use Python for
+         data acquisition. We’ll use the <code>nidaqmx</code> library to
+         interface with National Instruments DAQ devices.</p>
+         <h2 data-number="3.1" id="development-environment"><span
+         class="header-section-number">3.1</span> Development
+         Environment</h2>
+         <p>For this lab, we recommend starting with <strong>Jupyter
+         Notebook</strong> for interactive exploration, then
+         transitioning to <strong>VS Code</strong> or another editor for
+         writing reusable scripts. See the <a
+         href="/PHYS-4430/python-resources">Python Resources</a> page
+         for setup instructions.</p>
+         <h2 data-number="3.2"
+         id="connect-the-usb-6009-and-verify-it-is-working"><span
+         class="header-section-number">3.2</span> Connect the USB-6009
+         and verify it is working</h2>
          <ol type="1">
-         <li>Why can overestimating the uncertainty make your fit appear good (i.e., <span class="math inline">\(\frac{\chi^2}{N-n}\approx 1\)</span>)?</li>
-         </ol>
-         <p>Overestimating the uncertainties makes the fit seem good (according to a <span class="math inline">\(\chi^2\)</span> test), even when it might be obviously a bad fit. It is best to do the <span class="math inline">\(\chi^2\)</span> test using an honest estimate of your uncertainties. If the <span class="math inline">\(\chi^2\)</span> is larger than expected <span class="math inline">\((\chi^2&gt;𝑁−𝑛)\)</span>, then you should consider both the possibility of systematic error sources and the quality of your estimates of the uncertainties. On the other hand, if the <span class="math inline">\(\chi^2\)</span> test is good <span class="math inline">\((\chi^2\approx 𝑁−𝑛)\)</span>, then it shows you have a good handle on the model of your system, and your sources of uncertainty. Finally, if <span class="math inline">\(\chi^2\ll (𝑁−𝑛)\)</span>, this likely indicates overestimated uncertainties.</p>
-         <h1 data-number="3" id="labview-environment-introduction"><span class="header-section-number">3</span> LabVIEW Environment Introduction</h1>
-         <p><em>Check out the NI Apps YouTube channel playlist, <a href="https://www.youtube.com/playlist?list=PLB968815D7BB78F9C">Getting Started with LabVIEW</a>, for more helpful videos</em></p>
-         <p>Learn how to navigate LabVIEW and use the block diagram, front panel, and Functions and Controls palettes. Watch the LabVIEW Environment video: <a href="https://www.youtube.com/watch?v=ZHNlKyYzrPE&amp;list=PLB968815D7BB78F9C&amp;index=2">Writing Your First LabVIEW Program</a>.</p>
-         <h3 data-number="3.0.1" id="create-a-vi-that-displays-constants-of-different-data-types"><span class="header-section-number">3.0.1</span> Create a VI that displays constants of different data types</h3>
-         <ol type="1">
-         <li>Open up a new blank VI (virtual instrument).</li>
-         <li>Create a VI that has three types of data indicators (outputs) (i.e., string, Boolean (on/off), and numeric).</li>
-         <li>Create constants of the appropriate data type for each indicator. Wire the terminals such that the indicators show the constant values when the program is run.</li>
-         </ol>
-         <p>For additional information, you may want to review the <a href="http://www.ni.com/pdf/labview101/us/environment_explanation.pdf">NI LabVIEW Environment: Detailed Explanation</a>.</p>
-         <h2 data-number="3.1" id="graphical-programming"><span class="header-section-number">3.1</span> Graphical programming</h2>
-         <p>Examine the basics of graphical programming and how to determine data flow and order of execution in the LabVIEW environment. Watch the Graphical Programming video: <a href="https://www.youtube.com/watch?v=PqxStfwjQoQ&amp;list=PLB968815D7BB78F9C&amp;index=2">Data Flow Programming Basics</a>.</p>
-         <h3 data-number="3.1.1" id="create-a-vi-that-will-display-the-energy-of-a-photon-when-the-user-enters-the-wavelength"><span class="header-section-number">3.1.1</span> Create a VI that will display the energy of a photon when the user enters the wavelength</h3>
-         <ol type="1">
-         <li>Create a control to be able to enter the wavelength of light.</li>
-         <li>Create an indicator to display the energy of the photon.</li>
-         <li>Wire appropriate math operators and constants to convert the entered wavelength to energy.</li>
-         <li>Run your program in “light bulb” mode to see the intermediate values appear on the block diagram.</li>
-         <li>Confirm the VI correctly calculates and displays the energy of a photon.</li>
-         </ol>
-         <p>For additional information, you may want to review the <a href="http://www.ni.com/pdf/labview101/us/gprogramming_explanation.pdf">Graphical of Programming: Detailed Explanation</a>.</p>
-         <h2 data-number="3.2" id="programming-tools-using-the-tools-palette"><span class="header-section-number">3.2</span> Programming tools – using the tools palette</h2>
-         <p>Discover how to use important tools in LabVIEW that can save you time. Watch the Programming Tools video: <a href="https://www.youtube.com/watch?v=p-6w7x45Cs0&amp;list=PLB968815D7BB78F9C&amp;index=7">Using the Tools Palette</a>.</p>
-         <h3 data-number="3.2.1" id="modify-your-photon-energy-vi"><span class="header-section-number">3.2.1</span> Modify your photon energy VI</h3>
-         <ol type="1">
-         <li>Change the labels on the control and indicator to “Wavelength (nm)” and “Energy (J)”.</li>
-         <li>Reposition the control and indicator on the front panel and increase their size.</li>
-         <li>Change the number of significant digits shown in the “Energy indicator” to three by right clicking on the indicator and choosing <code>Display Format</code>.</li>
-         <li>Bring up the <code>Tools Palette</code> and switch between “automatic tool selection” and “manual tool selection.”
-         <ol type="1">
-         <li>Do you like to use the automatic tool selection or tab to change tools?</li>
-         </ol></li>
-         </ol>
-         <p>For additional information, you may want to review the <a href="http://www.ni.com/pdf/labview101/us/programming_explanation.pdf">Programming Tools: Detailed Explanation</a>.</p>
-         <h2 data-number="3.3" id="debugging-and-handling-errors"><span class="header-section-number">3.3</span> Debugging and handling errors</h2>
-         <p>Learn how to use key debugging and troubleshooting tools that optimize code. Watch the Debugging and Handling Errors video: <a href="https://www.youtube.com/watch?v=1Rx6AXhF31I&amp;list=PLB968815D7BB78F9C&amp;index=6">Using Debugging Tools in NI LabVIEW</a>.</p>
-         <h3 data-number="3.3.1" id="correct-errors-in-a-previously-created-vi"><span class="header-section-number">3.3.1</span> Correct errors in a previously created VI</h3>
-         <ol type="1">
-         <li>Download the <a href="../resources/lab-guides/gaussian-laser-beams/Bad_photon.vi">Bad Photon VI</a>. Try to run the program.</li>
-         <li>Read the <code>Error List</code>.</li>
-         <li>Double click on an error to find the location in the program.</li>
-         <li>Fix all errors.</li>
-         </ol>
-         <p>For additional information, you may want to review the <a href="http://www.ni.com/pdf/labview101/us/debugging_explanation.pdf">Debugging and Handling Errors: Detailed Explanation</a>.</p>
-         <h2 data-number="3.4" id="data-types-and-structures"><span class="header-section-number">3.4</span> Data types and structures</h2>
-         <p>Explore the different data types (e.g., integer, Boolean, string) and methods to organize and group data, controls, and indicators in LabVIEW. Watch the Data Types and Structures video: <a href="https://www.youtube.com/watch?v=dvShgNdY_GE&amp;list=PLB968815D7BB78F9C&amp;index=3">LabVIEW Data Types</a>.</p>
-         <h3 data-number="3.4.1" id="change-your-photon-energy-vi-to-include-arrays"><span class="header-section-number">3.4.1</span> Change your photon energy VI to include arrays</h3>
-         <ol type="1">
-         <li>Right click on the front panel to display the <code>Controls Palette</code>.</li>
-         <li>Expand the Palette by clicking on the double-down arrow.</li>
-         <li>Pin the <code>Modern Controls Palette</code> to the desktop.</li>
-         <li>Create an array control. (This creates an array with an unspecified data type.)</li>
-         <li>Drag your wavelength control into the array on the front panel. This sets the array data type to be the data type of the wavelength control (i.e., double-precision floating point).</li>
-         <li>Repeat the process to change the “Energy Indicator” from a single value to an array.</li>
-         <li>Go to the block diagram and fix any broken wires.</li>
-         <li>Run the VI and confirm correct operation.</li>
-         </ol>
-         <h3 data-number="3.4.2" id="change-data-types"><span class="header-section-number">3.4.2</span> Change data types</h3>
-         <ol type="1">
-         <li>Create a string indicator array.</li>
-         <li>In the block diagram, connect the wire entering the numeric indicator array to the string indicator array.</li>
-         <li>Notice the broken wire due to incompatible data types.</li>
-         <li>Insert a function to convert from numeric to string type data.
-         <ol type="1">
-         <li>Right click to display the <code>Function Palette</code>.</li>
-         <li>Expand the Palette by clicking on the double-down arrow.</li>
-         <li>Choose the <code>Programming-&gt;String-&gt;String/Numeric Conversion Palette</code>.</li>
-         <li>Choose the function <code>Number to Exponential String</code>.</li>
-         </ol></li>
-         <li>Wire the numeric data through the <code>Number to Exponential String</code> function to the string array.</li>
-         <li>Run the VI and confirm correct operation.</li>
-         </ol>
-         <p>For additional information, you may want to review the <a href="http://www.ni.com/pdf/labview101/us/datatypes_explanation.pdf">Data Types and Structures: Detailed Explanation</a>.</p>
-         <h2 data-number="3.5" id="loops-and-case-structures"><span class="header-section-number">3.5</span> Loops and case structures</h2>
-         <p>See how to loop code and conditionally execute code in LabVIEW using <em>For</em> Loops, <em>While</em> Loops, and <em>Case</em> structures. Watch the <a href="https://www.youtube.com/watch?v=hnx9WI2D9zU&amp;list=PLB968815D7BB78F9C&amp;index=10">Using Loops in LabVIEW</a> and <a href="https://www.youtube.com/watch?v=cgS3u0nupfs&amp;list=PLB968815D7BB78F9C&amp;index=9">Using LabView Case Structures</a> videos.</p>
-         <h3 data-number="3.5.1" id="add-a-while-loop-to-your-vi-to-continuously-loop-until-a-stop-button-is-pressed"><span class="header-section-number">3.5.1</span> Add a while loop to your VI to continuously loop until a stop button is pressed</h3>
-         <p><strong>Goal:</strong> Include a while loop around the code, so that the user can enter a new wavelength and not have to press run to get the updated result.</p>
-         <ol type="1">
-         <li>Place a <code>While Loop</code> around your entire program in the block diagram.</li>
-         <li>Test your VI to confirm correct operation of the loop.</li>
-         </ol>
-         <h3 data-number="3.5.2" id="sec:photon"><span class="header-section-number">3.5.2</span> Change your VI to calculate the energy in units of either joules or eV using a case structure</h3>
-         <p><strong>Goal:</strong> Change your VI to calculate the energy in units of either Joules or eV using a case structure. Use the same Wavelength Control and Energy Indicator, but the numerical calculation to either Joules or eV will reside in a case structure. The case structure has two cases. In one case, place the code to convert to Joules and the other to convert to eV. A control (switch) on the front panel will determine which case is executed.</p>
-         <p><strong>Here are a few questions to help you get started.</strong></p>
+         <li><p>Ensure the NI-DAQmx drivers are installed (they should
+         already be on lab computers). If needed, download from <a
+         href="https://www.ni.com/en-us/support/downloads/drivers/download.ni-daq-mx.html">NI-DAQmx</a>.</p></li>
+         <li><p>Connect the USB cable to your computer and the
+         USB-6009.</p></li>
+         <li><p>Open NI Measurement &amp; Automation Explorer (NI-MAX)
+         to verify the device is recognized:</p>
          <ul>
-         <li><p>Should your case structure be inside or outside the <code>While Loop</code>?</p></li>
-         <li><p>Should the control and indicator be inside or outside the case structure?</p></li>
-         <li><p>Where do you connect the Boolean switch to control which case runs?</p></li>
+         <li>The device should appear under “Devices and
+         Interfaces”</li>
+         <li>Right-click and run “Self-Test” to verify the
+         connection</li>
+         <li>Open the “Test Panel” to test analog inputs manually</li>
+         </ul></li>
+         <li><p>Use Python to list available DAQ devices:</p>
+         <div class="sourceCode" id="cb14"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.system <span class="im">import</span> System</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># List all connected DAQ devices</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>system <span class="op">=</span> System.local()</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> device <span class="kw">in</span> system.devices:</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Device: </span><span class="sc">{</span>device<span class="sc">.</span>name<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  Product Type: </span><span class="sc">{</span>device<span class="sc">.</span>product_type<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  AI Channels: </span><span class="sc">{</span>[ch.name <span class="cf">for</span> ch <span class="kw">in</span> device.ai_physical_chans]<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
+         <li><p>Connect the 5V power rail to <code>AI0+</code> and
+         ground to <code>AI0-</code>. You must connect both wires since
+         the device measures a potential difference between the two
+         terminals.</p></li>
+         <li><p>Read a voltage to verify the connection:</p>
+         <div class="sourceCode" id="cb15"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    voltage <span class="op">=</span> task.read()</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Measured voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span></code></pre></div></li>
+         </ol>
+         <h2 data-number="3.3" id="reading-multiple-samples"><span
+         class="header-section-number">3.3</span> Reading Multiple
+         Samples</h2>
+         <p>To capture time-varying signals, you need to configure the
+         sample rate and number of samples.</p>
+         <h3 data-number="3.3.1"
+         id="understanding-sample-rate-and-samples-to-read"><span
+         class="header-section-number">3.3.1</span> Understanding Sample
+         Rate and Samples to Read</h3>
+         <p>When acquiring data, you must specify:</p>
+         <ul>
+         <li><strong>Sample Rate</strong>: How many samples per second
+         (Hz)</li>
+         <li><strong>Samples to Read</strong>: Total number of samples
+         to acquire</li>
          </ul>
-         <ol type="1">
-         <li>Write the rest of the code to accomplish the goal outlined above.</li>
-         <li>Test your VI to confirm you have achieved the goal.</li>
-         </ol>
-         <p>For additional information, you may want to review the <a href="http://www.ni.com/pdf/labview101/us/execstructures_explanation.pdf">Execution Structures: Detailed Explanation</a>.</p>
-         <h1 data-number="4" id="interfacing-labview-with-hardware"><span class="header-section-number">4</span> Interfacing LabVIEW with Hardware</h1>
-         <p>In part 2 of this week’s lab, you will learn how to connect a USB DAQ (data acquisition) device to your computer and test to see if it is working properly using the NI-DAQmx driver and NI-MAX. <a href="https://www.youtube.com/watch?v=IuiG1LNCrpI">This screencast</a> might be of help.</p>
-         <h2 data-number="4.1" id="connect-the-usb-6009-to-the-computer-and-confirm-it-is-working-correctly"><span class="header-section-number">4.1</span> Connect the USB-6009 to the computer and confirm it is working correctly</h2>
-         <ol type="1">
-         <li>Download and install <a href="https://www.ni.com/en-us/support/downloads/drivers/download.ni-daq-mx.html">NI-DAQmx</a> drivers if you have not already done so (this should already be installed on the lab computers).</li>
-         <li>Launch NI Measurement &amp; Automation Explorer program (NI-MAX).</li>
-         <li>Confirm you have the DAQmx driver installed. It will appear under <code>My System-&gt; Software</code>.</li>
-         <li>Connect the USB cable to your computer and the DAQ-6009.</li>
-         <li>Confirm DAQ-6009 is recognized by Measurement &amp; Automation Explorer program. It will appear below Devices and Interfaces. (If you are using a lab computer, it may have connected to many of these devices, so there may be multiple boxes under Devices, but most will have an <span style="color: red;"><strong>X</strong></span> and only one will be connected.)</li>
-         <li>Self test the DAQ-6009 by right clicking on the device. If the test fails, fix the connection before going on.</li>
-         <li>Open the <code>Test Panel</code> for the device to test the analog input.</li>
-         <li>Connect the 5V power rail to the <code>AI0+</code> and ground to the <code>AI0-</code>. You must connect both wires, since the device measures a potential difference between the two terminals.</li>
-         <li>Verify <code>AI0</code> is working.</li>
-         </ol>
-         <p>For additional information, you may want to review the <a href="http://www.ni.com/pdf/labview101/us/hardware_explanation.pdf">Connecting Hardware: Detailed Explanation</a>.</p>
-         <h2 data-number="4.2" id="taking-a-measurement"><span class="header-section-number">4.2</span> Taking a measurement</h2>
-         <p>This section covers how to take an analog voltage measurement by creating a LabVIEW VI with DAQ Assistant sub-VI and measuring the output of a function generator. Watch the <a href="https://www.youtube.com/watch?v=ofzbA3keOYE">Taking a Measurement with your Computer</a> video.</p>
-         <h3 data-number="4.2.1" id="sec:analogmeas"><span class="header-section-number">4.2.1</span> Use the DAQ Assistant to take an analog voltage measurement</h3>
-         <ol type="1">
-         <li>Open up a new blank VI.</li>
-         <li>Insert a DAQ assistant subVI. It is in the <code>Functions Palette-&gt;Input</code>.</li>
-         <li>Set up the VI to take an analog voltage measurement on channel <code>AI0</code>. You will need to set the <code>Samples to Read</code> and <code>Sample Rate</code> in the DAQ assistant. The following explains how these parameters are determined.
+         <p>For example, to capture 5 periods of a 1 kHz sine wave with
+         20 samples per period:</p>
          <ul>
-         <li>You first have to define the number of periods and number of samples per period to acquire. Then calculate <code>Samples to Read</code>:
+         <li>Samples to Read = 5 periods × 20 samples/period = 100
+         samples</li>
+         <li>Total time = 5 periods / 1000 Hz = 5 ms</li>
+         <li>Sample Rate = 100 samples / 0.005 s = 20,000 Hz</li>
+         </ul>
+         <h3 data-number="3.3.2" id="sec:analogmeas"><span
+         class="header-section-number">3.3.2</span> Acquiring Multiple
+         Samples</h3>
+         <div class="sourceCode" id="cb16"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">20000</span>  <span class="co"># Hz</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>samples_to_read <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire data</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    task.timing.cfg_samp_clk_timing(</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>        rate<span class="op">=</span>sample_rate,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        samps_per_chan<span class="op">=</span>samples_to_read</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>samples_to_read)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(samples_to_read) <span class="op">/</span> sample_rate</span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>plt.plot(time <span class="op">*</span> <span class="dv">1000</span>, data)  <span class="co"># Time in ms</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Acquired Signal&#39;</span>)</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+         <h3 data-number="3.3.3" id="exercise-capture-a-waveform"><span
+         class="header-section-number">3.3.3</span> Exercise: Capture a
+         Waveform</h3>
+         <ol type="1">
+         <li>Connect your waveform generator to both an oscilloscope and
+         your DAQ device.</li>
+         <li>Set the waveform generator to output a sine wave at a
+         frequency compatible with your sample rate calculation.</li>
+         <li>Modify the sample rate and samples to read to capture
+         approximately 5 complete periods.</li>
+         <li>Run the acquisition and compare the Python plot with the
+         oscilloscope display. Are they compatible?</li>
+         <li>Add to your notebook: the Python code, the resulting plot,
+         and the oscilloscope output. Explain how they all make sense
+         together.</li>
+         </ol>
+         <h2 data-number="3.4" id="continuous-data-acquisition"><span
+         class="header-section-number">3.4</span> Continuous Data
+         Acquisition</h2>
+         <p>For continuous monitoring, you can read data in a loop:</p>
+         <div class="sourceCode" id="cb17"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>samples_per_read <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>plt.ion()  <span class="co"># Enable interactive mode</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>line, <span class="op">=</span> ax.plot([], [])</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">&#39;Sample&#39;</span>)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&#39;Continuous Acquisition&#39;</span>)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>    task.timing.cfg_samp_clk_timing(</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        rate<span class="op">=</span>sample_rate,</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>        sample_mode<span class="op">=</span>AcquisitionType.CONTINUOUS</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    task.start()</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>samples_per_read)</span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>            line.set_data(<span class="bu">range</span>(<span class="bu">len</span>(data)), data)</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>            ax.set_xlim(<span class="dv">0</span>, <span class="bu">len</span>(data))</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>            ax.set_ylim(<span class="bu">min</span>(data) <span class="op">-</span> <span class="fl">0.1</span>, <span class="bu">max</span>(data) <span class="op">+</span> <span class="fl">0.1</span>)</span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>            plt.pause(<span class="fl">0.01</span>)</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Stopped by user&quot;</span>)</span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>plt.ioff()</span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+         <h2 data-number="3.5" id="spectral-analysis-with-fft"><span
+         class="header-section-number">3.5</span> Spectral Analysis with
+         FFT</h2>
+         <p>Python’s NumPy library provides powerful FFT (Fast Fourier
+         Transform) functions for spectral analysis.</p>
+         <h3 data-number="3.5.1" id="computing-the-power-spectrum"><span
+         class="header-section-number">3.5.1</span> Computing the Power
+         Spectrum</h3>
+         <div class="sourceCode" id="cb18"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_power_spectrum(data, sample_rate):</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Compute the one-sided power spectrum.&quot;&quot;&quot;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(data)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute FFT</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    fft_result <span class="op">=</span> np.fft.fft(data)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get positive frequencies only</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    n_unique <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)[:n_unique]</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.<span class="bu">abs</span>(frequencies)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Power spectrum (magnitude squared, normalized)</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    power <span class="op">=</span> (np.<span class="bu">abs</span>(fft_result[:n_unique]) <span class="op">/</span> n) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    power[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">*=</span> <span class="dv">2</span>  <span class="co"># Account for negative frequencies</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> frequencies, power</span></code></pre></div>
+         <h3 data-number="3.5.2" id="exercise-spectral-analysis"><span
+         class="header-section-number">3.5.2</span> Exercise: Spectral
+         Analysis</h3>
+         <ol type="1">
+         <li><p>Acquire a signal from your waveform generator at a known
+         frequency (e.g., 500 Hz).</p></li>
+         <li><p>Compute and plot the power spectrum:</p>
+         <div class="sourceCode" id="cb19"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire data</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    task.timing.cfg_samp_clk_timing(</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        rate<span class="op">=</span><span class="dv">10000</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        samps_per_chan<span class="op">=</span><span class="dv">10000</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span><span class="dv">10000</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute and plot spectrum</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>frequencies, power <span class="op">=</span> compute_power_spectrum(np.array(data), <span class="dv">10000</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>plt.plot(frequencies, power)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Power&#39;</span>)</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Power Spectrum&#39;</span>)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">2000</span>)  <span class="co"># Show up to 2 kHz</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <li><p>Verify that the peak in the spectrum appears at the
+         expected frequency.</p></li>
+         <li><p>Try adding a second frequency component from the
+         waveform generator and observe the spectrum.</p></li>
+         </ol>
+         <h2 data-number="3.6" id="saving-data-to-a-file"><span
+         class="header-section-number">3.6</span> Saving Data to a
+         File</h2>
+         <p>Save your acquired data to a CSV file for later
+         analysis:</p>
+         <div class="sourceCode" id="cb20"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># After acquiring data...</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a timestamp for the filename</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>timestamp <span class="op">=</span> datetime.now().strftime(<span class="st">&quot;%Y%m</span><span class="sc">%d</span><span class="st">_%H%M%S&quot;</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="ss">f&quot;data_</span><span class="sc">{</span>timestamp<span class="sc">}</span><span class="ss">.csv&quot;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="bu">len</span>(data)) <span class="op">/</span> sample_rate</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Save to CSV</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>np.savetxt(</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    filename,</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    np.column_stack([time, data]),</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    header<span class="op">=</span><span class="st">&#39;Time (s), Voltage (V)&#39;</span>,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    comments<span class="op">=</span><span class="st">&#39;&#39;</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Data saved to </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+         <h3 data-number="3.6.1"
+         id="exercise-save-and-reload-data"><span
+         class="header-section-number">3.6.1</span> Exercise: Save and
+         Reload Data</h3>
+         <ol type="1">
+         <li><p>Acquire a waveform and save it to a CSV file.</p></li>
+         <li><p>Load the data back and plot it:</p>
+         <div class="sourceCode" id="cb21"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>loaded_data <span class="op">=</span> np.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>time_loaded <span class="op">=</span> loaded_data[:, <span class="dv">0</span>]</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>voltage_loaded <span class="op">=</span> loaded_data[:, <span class="dv">1</span>]</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>plt.plot(time_loaded <span class="op">*</span> <span class="dv">1000</span>, voltage_loaded)</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Loaded Data&#39;</span>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <li><p>Verify the loaded data matches your original
+         acquisition.</p></li>
+         </ol>
+         <h2 data-number="3.7" id="generating-an-analog-output"><span
+         class="header-section-number">3.7</span> Generating an Analog
+         Output</h2>
+         <p>The USB-6009 can also generate analog voltages (though at a
+         limited rate of 150 S/s):</p>
+         <div class="sourceCode" id="cb22"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Output a DC voltage</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    task.ao_channels.add_ao_voltage_chan(<span class="st">&quot;Dev1/ao0&quot;</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    task.write(<span class="fl">2.5</span>)  <span class="co"># Output 2.5 V</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Outputting 2.5 V on AO0&quot;</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>(<span class="st">&quot;Press Enter to stop...&quot;</span>)</span></code></pre></div>
+         <h3 data-number="3.7.1" id="exercise-test-analog-output"><span
+         class="header-section-number">3.7.1</span> Exercise: Test
+         Analog Output</h3>
+         <ol type="1">
+         <li>Configure your DAQ to output a voltage on
+         <code>AO0</code>.</li>
+         <li>Connect <code>AO0</code> to <code>AI0</code> (loopback
+         test).</li>
+         <li>Write a script that:
          <ul>
-         <li>(Samples to Read) = (number of periods) x (number of samples per period) <em>Example: 5 periods, 20 samples per period <span class="math inline">\(\implies\)</span> 100 Samples to Read</em></li>
+         <li>Outputs a voltage on <code>AO0</code></li>
+         <li>Reads the voltage on <code>AI0</code></li>
+         <li>Verifies they match</li>
          </ul></li>
-         <li>To calculate the Sample Rate, you first must calculate the total time of the acquisition as follows:
-         <ul>
-         <li>(Total time) = (number of periods) / (frequency of sine wave) <em>Example: 5 periods, 1kHz frequency <span class="math inline">\(\implies\)</span> 5ms total acquisition time</em></li>
-         </ul></li>
-         <li>Now the sample rate can be calculated:
-         <ul>
-         <li>(Sample rate) = (Samples to Read) / (Total Time) <em>Example: 100 Samples to Read, 5 ms total acquisition time <span class="math inline">\(\implies\)</span> 20 kHz Sample Rate</em></li>
-         </ul></li>
-         </ul></li>
-         <li>Determine appropriate values for <code>Samples to Read</code> and <code>Sample Rate</code> and enter them. Use <code>N Samples</code> for the Acquisition Mode.</li>
-         <li>Connect your waveform generator to both an oscilloscope and your DAQ device. Choose the frequency to be compatible with your calculation of <code>Samples to Read</code> and <code>Sample Rate</code>.</li>
-         <li>Wire a graph indicator to the output of the DAQ Assistant VI by right-clicking on “data” and selecting “Create” and “Graph Indicator”.</li>
-         <li>Run the VI and compare the output with the oscilloscope output. Are they compatible? If not, understand why and adjust.</li>
-         <li>Double-click the DAQ assistant and change to <code>Continuous Sampling</code>. When saving, accept the option to create a loop. Check if this works.</li>
-         <li>Add to your notebook a printout of the LabVIEW diagram, the LabVIEW output, oscilloscope output, and the waveform generator settings. Explain how it all makes sense.</li>
          </ol>
-         <p>For additional information, you may want to review the <a href="http://www.ni.com/pdf/labview101/us/measurement_steps.pdf">Taking a Measurement: Step by Step Procedure</a>.</p>
-         <h2 data-number="4.3" id="generating-a-signal-using-labview"><span class="header-section-number">4.3</span> Generating a signal using LabVIEW</h2>
-         <p>This section covers how to create a VI to output a DC voltage from your USB DAQ device. Watch the <a href="https://www.youtube.com/watch?v=XcGABamVkME&amp;list=PLB968815D7BB78F9C&amp;index=20">Generating a Signal with Your Computer</a> video.</p>
-         <p><em>Note: The DAQ-6009 does not have the ability to create a waveform as depicted in the video. It can produce a waveform with an update rate 150 samples/sec using the example program you can find <a href="http://www.ni.com/example/25646/en/">here</a>.</em></p>
-         <h3 data-number="4.3.1" id="add-to-the-vi-created-in-section-secanalogmeas-to-include-an-adjustable-dc-analog-output-signal"><span class="header-section-number">4.3.1</span> Add to the VI created in section <a href="#sec:analogmeas">4.2.1</a> to include an adjustable DC analog output signal</h3>
+         <h2 data-number="3.8" id="error-handling"><span
+         class="header-section-number">3.8</span> Error Handling</h2>
+         <p>Always include error handling in your data acquisition
+         code:</p>
+         <div class="sourceCode" id="cb23"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.errors <span class="im">import</span> DaqError</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        voltage <span class="op">=</span> task.read()</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> DaqError <span class="im">as</span> e:</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;DAQ Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Check that:&quot;</span>)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The DAQ device is connected&quot;</span>)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The device name is correct (try &#39;Dev1&#39;, &#39;Dev2&#39;, etc.)&quot;</span>)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - NI-DAQmx drivers are installed&quot;</span>)</span></code></pre></div>
+         <h2 data-number="3.9" id="summary"><span
+         class="header-section-number">3.9</span> Summary</h2>
+         <p>In this lab, you learned to:</p>
          <ol type="1">
-         <li>Use the DAQ assistant with Generation Mode set to 1 Sample (On Demand).</li>
-         <li>Add a control to the output generator DAQ assistant.</li>
-         <li>Adjust the DAQ-6009 so that <code>AI0</code> is reading from <code>AO0</code> rather than from the function generator.</li>
-         <li>Verify that everything works as expected. Print out your results and add them to your lab notebook.</li>
+         <li>Connect and verify a USB DAQ device</li>
+         <li>Read single and multiple voltage samples</li>
+         <li>Configure sample rate and acquisition timing</li>
+         <li>Visualize data in real-time</li>
+         <li>Perform spectral analysis using FFT</li>
+         <li>Save data to CSV files</li>
+         <li>Generate analog output voltages</li>
+         <li>Handle common errors</li>
          </ol>
-         <p>You can create sub Vis. Here is a video on <a href="https://www.youtube.com/watch?v=zr2qqv1F4kk&amp;list=PLB968815D7BB78F9C&amp;index=4">Creating Sub VIs in NI LabVIEW</a>. Also, you may want to review this page: <a href="https://knowledge.ni.com/KnowledgeArticleDetails?id=kA03q000000YK4VCAW&amp;l=en-US">Create and Configure a LabVIEW SubVI</a>.</p>
-         <p>For additional information, you may want to review the <a href="http://www.ni.com/pdf/labview101/us/generate_steps.pdf">Generating a Signal: Step by Step Procedure</a>.</p>
-         <h2 data-number="4.4" id="acquired-signal-processing-and-analysis"><span class="header-section-number">4.4</span> Acquired signal processing and analysis</h2>
-         <p>This section covers how to create a VI to filter and analyze the signal acquired by your USB DAQ device. Watch the <a href="https://www.youtube.com/watch?v=xMWIATas_e0">Real-time Signal Processing and Analysis on Measurement Data</a> video.</p>
-         <h3 data-number="4.4.1" id="create-a-vi-that-filters-the-acquired-signal-and-displays-a-power-spectrum."><span class="header-section-number">4.4.1</span> Create a VI that filters the acquired signal and displays a power spectrum.</h3>
-         <p><strong>Goal:</strong> Demonstrate the effect of a low-pass filter. Acquire a sine wave voltage signal using the DAQ device and put those data through a low pass filter. The Spectral Measurements VI can then be used to create a power spectrum of the filtered data. Display both the filtered data and power spectrum as graphs. Vary the frequency of the signal from below to above the cutoff frequency.</p>
-         <p><strong>Describe the qualitative behavior of the filtered signal and the power spectrum as the frequency is varied.</strong></p>
-         <p><strong>Here are a few questions to help you get started.</strong></p>
-         <ol type="1">
-         <li>What should you set your Samples to Read and Rate values to in the DAQ Assistant VI to get about enough cycles for the power spectrum to look smooth at 500 Hz?</li>
-         <li>It is quicker to connect numeric controls to the DAQ assistant for these quantities rather than opening up the VI many times.</li>
-         <li>The Spectral Measurements VI performs a FFT (Fast Fourier Transform).</li>
-         <li>What x-scale range should you use for the graph of the Spectral Measurements?</li>
-         <li>Do you want to auto scale the y-axes on the graphs?</li>
-         </ol>
-         <p>For additional information, you may want to review the <a href="http://www.ni.com/pdf/labview101/us/Signal_Processing_Step_By_Step.pdf">Signal Processing: Step-by-Step Procedure</a>.</p>
-         <h2 data-number="4.5" id="logging-data-and-saving-it-to-a-file"><span class="header-section-number">4.5</span> Logging data and saving it to a file</h2>
-         <p>This section covers how create, save, and read a file containing data acquired from your USB DAQ device. Watch the <a href="https://www.youtube.com/watch?v=y0Ey6h0Tr64&amp;list=PLB968815D7BB78F9C&amp;index=14">Logging Data with a USB Data Acquisition Device</a> video.</p>
-         <h2 data-number="4.6" id="modify-the-take-measurement-vi-to-save-the-data-to-a-file"><span class="header-section-number">4.6</span> Modify the take measurement VI to save the data to a file</h2>
-         <p>Use the <code>Write to Measurement File VI</code> to save the filtered signal data. Make sure to use <code>Append to File</code> to avoid writing over your previously saved data. The Text file format is the easiest to read into Mathematica or other data processing program.</p>
-         <ol type="1">
-         <li>Run the VI to save some data and plot those data using Mathematica.</li>
-         <li>Do you want to include the header information?</li>
-         <li>Remember the file you create is just a text file and can be manipulated using any text editor.</li>
-         </ol>
-         <p>For additional information, you may want to review the <a href="http://www.ni.com/pdf/labview101/us/datalogging_steps.pdf">Adding Data Logging: Step-by-Step Procedure</a>.</p>
-         <h2 data-number="4.7" id="creating-graphs-and-charts"><span class="header-section-number">4.7</span> Creating graphs and charts</h2>
-         <p>This section covers how to create and use various graphs and charts. <a href="https://zone.ni.com/reference/en-XX/help/371361R-01/lvhowto/graph_controls/">This page</a> is very useful. Or you can watch the <a href="https://www.youtube.com/watch?v=HtjgeoJc4zA&amp;list=PLB968815D7BB78F9C&amp;index=5">Using Charts and Graphs in NI LabVIEW</a> video.</p>
-         <h3 data-number="4.7.1" id="modify-the-take-measurement-vi-to-include-a-waveform-chart"><span class="header-section-number">4.7.1</span> Modify the take measurement VI to include a waveform chart</h3>
-         <ol type="1">
-         <li>Add a waveform chart to the front panel and connect the filtered data to the terminal.</li>
-         <li>Run the VI.</li>
-         <li>Describe the difference between the chart and graph displays.</li>
-         </ol>
-         <p>For additional information, you may want to review the <a href="http://www.ni.com/pdf/labview101/us/graphs_steps.pdf">Using Graphs and Charts: Step by Step Procedure</a>.</p>
-         <h2 data-number="4.8" id="using-text-based-programming-within-the-labview-environment"><span class="header-section-number">4.8</span> Using text-based programming within the LabVIEW Environment</h2>
-         <p>This section covers how to implement formulas using formula and mathscript nodes, as well as incorporate MATLAB scripts into LabVIEW. Watch the <a href="https://www.youtube.com/watch?v=lyEPDSwf9dk">Integrating MATLAB code</a> video on <a href="https://www.youtube.com/watch?v=vcktyORArtM&amp;list=PL48D229C937DE5DD1&amp;index=24">text-based Programming</a>.</p>
-         <h3 data-number="4.8.1" id="rewrite-your-photon-energy-vi-you-created-in-section-secphoton-to-include-two-formula-nodes"><span class="header-section-number">4.8.1</span> Rewrite your photon energy VI you created in section <a href="#sec:photon">3.5.2</a> to include two formula nodes</h3>
-         <p><strong>Goal:</strong> Instead of using individual functions such as multiply, use a formula node to calculate the energy of the photon in both Joules and eV.</p>
-         <ol type="1">
-         <li>Confirm the VI correctly calculates the photon energy in both units.</li>
-         </ol>
-         <p>For additional information, you may want to review the <a href="http://www.ni.com/pdf/labview101/us/textbased_steps.pdf">Text-Based Integration: Step by Step Procedure</a>.</p>
-         <h1 data-number="5" id="getting-help-in-labview"><span class="header-section-number">5</span> Getting help in Labview</h1>
-         <p>Check out the NI Apps Youtube channel playlist, <a href="https://www.youtube.com/playlist?list=PLB968815D7BB78F9C">Getting Started with LabVIEW</a>, for more helpful videos. LabVIEW has built-in help resources that can assist in better understand concepts and coding techniques.</p>
-         <h2 data-number="5.1" id="explore-context-help"><span class="header-section-number">5.1</span> Explore Context Help</h2>
-         <ol type="1">
-         <li>Turn on <code>Context Help</code> by clicking the yellow question mark in the upper right hand corner of the block diagram.</li>
-         <li>Place a new function on your block diagram, <code>Array Subset</code>. It is located in <code>Functions palette-&gt; Programming-&gt;Array</code>.</li>
-         <li>Move your cursor over the function.</li>
-         <li>Click on Detailed Help.</li>
-         </ol>
-         <p>For additional information you may want to review the <a href="http://www.ni.com/pdf/labview101/us/help_explanation.pdf">Help Within LabVIEW: Detailed Explanation</a>.</p>
+         <p>These skills form the foundation for the automated
+         measurements you’ll perform in the coming weeks. See the <a
+         href="/PHYS-4430/python-resources">Python Resources</a> page
+         and the example scripts in the <code>python/</code> folder for
+         more detailed examples.</p>
                </div>
             <!-- Mathjax -->
       <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
