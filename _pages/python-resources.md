@@ -10,6 +10,7 @@ permalink: /python-resources
 This page provides a comprehensive guide to using Python for data acquisition, analysis, and visualization in PHYS 4430. Whether you're new to Python or need a refresher, this resource will help you succeed in the lab.
 
 ## Table of Contents
+
 {:.no_toc}
 
 * TOC
@@ -73,8 +74,8 @@ py -m pip install -r requirements.txt
 
 ### 3. Install Hardware Drivers
 
-- **NI-DAQmx drivers** - [Download from National Instruments](https://www.ni.com/en-us/support/downloads/drivers/download.ni-daq-mx.html)
-- **Thorlabs Kinesis** (for Week 4) - [Download from Thorlabs](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control)
+* **NI-DAQmx drivers** - [Download from National Instruments](https://www.ni.com/en-us/support/downloads/drivers/download.ni-daq-mx.html)
+* **Thorlabs Kinesis** (for Week 4) - [Download from Thorlabs](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control)
 
 ## Development Environments
 
@@ -83,31 +84,40 @@ You have two main options for writing and running Python code:
 ### Jupyter Notebooks (Recommended for Learning)
 
 Jupyter notebooks allow you to write code in cells and see results immediately. This is ideal for:
-- Learning new concepts
-- Exploratory data analysis
-- Creating documented analysis workflows
+* Learning new concepts
+* Exploratory data analysis
+* Creating documented analysis workflows
 
 **To start Jupyter:**
+
 ```bash
-jupyter notebook
+py -m jupyter notebook
+```
+
+Or for the newer JupyterLab interface:
+
+```bash
+py -m jupyter lab
 ```
 
 ### VS Code (Recommended for Longer Scripts)
 
 VS Code is a full-featured code editor, better suited for:
-- Writing longer programs (like automation scripts)
-- Debugging complex code
-- Working with multiple files
+* Writing longer programs (like automation scripts)
+* Debugging complex code
+* Working with multiple files
 
 **Recommended VS Code extensions:**
-- Python (Microsoft)
-- Jupyter (Microsoft)
-- Pylance (Microsoft)
+* Python (Microsoft)
+* Jupyter (Microsoft)
+* Pylance (Microsoft)
+
+**Tip:** VS Code can also open and run Jupyter notebooks (`.ipynb` files) directly with the Jupyter extension installed. This gives you notebook interactivity with VS Code's powerful editing features like IntelliSense, debugging, and version control integration.
 
 ### When to Use Each
 
 | Task | Recommended Environment |
-|------|------------------------|
+|------|-------------------------|
 | Learning a new concept | Jupyter Notebook |
 | Quick data exploration | Jupyter Notebook |
 | Fitting and plotting data | Either |
@@ -750,6 +760,7 @@ device.Disconnect()
 **Problem:** `ModuleNotFoundError: No module named 'numpy'`
 
 **Solution:** Install the missing package:
+
 ```bash
 pip install numpy
 ```
@@ -759,6 +770,7 @@ pip install numpy
 **Problem:** `DaqError: Device identifier is invalid`
 
 **Solutions:**
+
 1. Check that the DAQ is plugged in via USB
 2. Run `list_daq_devices()` to see available devices
 3. Verify the device name (might be "Dev1", "Dev2", etc.)
@@ -769,6 +781,7 @@ pip install numpy
 **Problem:** `Device not connected` or timeout errors
 
 **Solutions:**
+
 1. Check USB connection
 2. Verify the serial number matches your device
 3. Ensure Kinesis software is installed
@@ -780,6 +793,7 @@ pip install numpy
 **Problem:** `plt.show()` does nothing
 
 **Solutions:**
+
 1. In Jupyter: Add `%matplotlib inline` at the top of your notebook
 2. In VS Code: Make sure you're not running in a non-interactive environment
 3. Try `plt.savefig('plot.png')` to save instead of display
@@ -789,15 +803,18 @@ pip install numpy
 # Additional Resources
 
 ## Python Learning
+
 - [Python Tutorial](https://docs.python.org/3/tutorial/) - Official Python documentation
-- [NumPy Quickstart](https://numpy.org/doc/stable/user/quickstart.html)
-- [Matplotlib Tutorials](https://matplotlib.org/stable/tutorials/index.html)
-- [SciPy Curve Fitting](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html)
+* [NumPy Quickstart](https://numpy.org/doc/stable/user/quickstart.html)
+* [Matplotlib Tutorials](https://matplotlib.org/stable/tutorials/index.html)
+* [SciPy Curve Fitting](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html)
 
 ## Hardware Documentation
+
 - [NI-DAQmx Python Documentation](https://nidaqmx-python.readthedocs.io/)
-- [NI USB-6009 Specifications](https://www.ni.com/en-us/support/model.usb-6009.html)
-- [Thorlabs Kinesis Documentation](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control)
+* [NI USB-6009 Specifications](https://www.ni.com/en-us/support/model.usb-6009.html)
+* [Thorlabs Kinesis Documentation](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control)
 
 ## Course-Specific
+
 - [Download Python Examples](resources/lab-guides/gaussian-laser-beams/python/)
