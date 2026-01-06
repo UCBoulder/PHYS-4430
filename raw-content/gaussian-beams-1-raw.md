@@ -158,15 +158,15 @@ The convention used in this course is that we:
 
 - display the measurement to the same digit as the uncertainty.
 
-The numbers $154\pm 3$, $576.33\pm 0.04$, and $245.1\pm 1.4$ follow theis convention. However, numbers copied from the computer are often displayed as “machine precision” with no regard for significant digits. 
+The numbers $154\pm 3$, $576.33\pm 0.04$, and $245.1\pm 1.4$ follow this convention. However, numbers copied from the computer are often displayed as "machine precision" with no regard for significant digits.
 
-Mathematica generated the following fit parameters and corresponding uncertainties:
+A curve fitting program generated the following fit parameters and corresponding uncertainties:
 
 $$a=-0.6699999999999988 \pm 0.6751049301158053$$
 
 $$b=2.2700000000000005 \pm 0.2035517952102936$$
 
-1. How should the two Mathematica fit parameters above be rewritten such that they correspond with the convention described above?
+1. How should the two fit parameters above be rewritten such that they correspond with the convention described above?
 
 # Measuring the Beam Width
 
@@ -182,7 +182,7 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
 
 ## Before you take data: create an analysis function to fit a test set of data {#sec:analysis}
 
-*Note: Nonlinear least squares fitting is covered in next week's prelab. There is also a YouTube video available on [least squares fitting in Mathematica](https://www.youtube.com/watch?v=KolZZm8If9Q&t=2s).*
+*Note: Nonlinear least squares fitting is covered in next week's prelab. See the [Python Resources](/python-resources) page for a guide to curve fitting with `scipy.optimize.curve_fit`.*
 
 1. What is the functional form for your fit function?
 2. Is it a linear or nonlinear fit function? Why?
@@ -213,10 +213,9 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
 
 # Postlab
 
-Please choose either Mathematica, Matlab, or Python for this assignment. Both Mathematica and Matlab
-[licenses are provided by CU](https://oit.colorado.edu/software-hardware/software-catalog) and Python is free. You must submit both code and results. Note that the following assignment was created based on Mathematica and Matlab.
+Please use Python for this assignment. See the [Python Resources](/python-resources) page if you need help getting started. You will need NumPy for numerical calculations and Matplotlib for plotting. You must submit both your code and results.
 
-1. Evaluate the following math expressions:
+1. Evaluate the following math expressions (use NumPy):
 
    1. $e^{1.6\pi j}$
    2. $4i\pi+e^{7\pi /4}$
@@ -241,18 +240,18 @@ Please choose either Mathematica, Matlab, or Python for this assignment. Both Ma
       3. Include the fitting linear equation on the plot. 
    4. If you would like to display the $x$-axis only below $0.6\mu m$ (i.e. $\lambda \le 0.6~ \mu m$), how can you do that? 
 
-4. Familiarize yourself with the **HELP** functions of your chosen software package and perform the following tasks and answer the questions. 
+4. Familiarize yourself with Python's built-in `help()` function and documentation. Perform the following tasks and answer the questions.
 
-   1. Make a contour plot of any function of $z=f(y,x)$ of your choice.
-   2. What are the built-in function names for:
+   1. Make a contour plot of any function of $z=f(y,x)$ of your choice using `plt.contour()` or `plt.contourf()`.
+   2. What are the NumPy function names for:
       1. Inverse sine function ($\sin^{-1} x$)
       2. Hyperbolic functions (e.g. $\sinh x$, $\cosh x$ etc.)
-      3. Natural log and 10-based log function
+      3. Natural log and base-10 log function
 
-5. We would like to evaluate a function, $f(x)$, at $x= \frac{\pi}{10}, \frac{2\pi}{10}, ~\cdots~,\frac{9\pi}{10}\frac{10\pi}{10}$.
+5. We would like to evaluate a function, $f(x)$, at $x= \frac{\pi}{10}, \frac{2\pi}{10}, ~\cdots~,\frac{9\pi}{10}, \frac{10\pi}{10}$.
 
-   1. How can we represent/create these $x$ points in your chosen software package? What should we modify in order to make the increment of $x$ be $\frac{\pi}{100}$, instead of $\frac{\pi}{10}$?
+   1. How can we create these $x$ points using NumPy? (Hint: look at `np.linspace()` or `np.arange()`). What should we modify in order to make the increment of $x$ be $\frac{\pi}{100}$, instead of $\frac{\pi}{10}$?
    2. Now, define a function that represents $y= f(x) = \frac{\sin x}{x}$ and evaluate $y$ at the given $x$ with increment of $\frac{\pi}{10}$.
-   3. Export your $(x,y)$ data created in 8.5.2 in .csv format.
+   3. Export your $(x,y)$ data created in 5.2 as a .csv file using `np.savetxt()`.
 
-6. Download [this data set](../resources/lab-guides/gaussian-laser-beams/BoulderDailyTemp.txt) (in .txt format), where the temperature of Boulder was recorded at approximately every hour ($\approx 0.04$ days) since January 1st. Using the **HELP** function of your chosen software package, export this data and plot in an appropriate way (make sure to include labels, ticks, titles etc). 
+6. Download [this data set](../resources/lab-guides/gaussian-laser-beams/BoulderDailyTemp.txt) (in .txt format), where the temperature of Boulder was recorded at approximately every hour ($\approx 0.04$ days) since January 1st. Load this data using `np.loadtxt()` and create an appropriate plot (make sure to include labels, ticks, titles, etc.). 
