@@ -1,0 +1,22 @@
+# Python dependencies for PHYS 4430 Gaussian Beams Lab
+# Install with: pip install -r requirements.txt
+
+# Core scientific computing
+numpy>=1.24.0
+matplotlib>=3.7.0
+pandas>=2.0.0
+scipy>=1.10.0
+
+# Data acquisition
+nidaqmx>=0.8.0
+
+# Thorlabs motor control (requires Kinesis SDK installed separately)
+pythonnet>=3.0.1
+
+# Oscilloscope communication
+pyvisa>=1.13.0
+pyvisa-py>=0.7.0
+
+# Jupyter notebooks (optional but recommended)
+jupyter>=1.0.0
+ipykernel>=6.0.0
