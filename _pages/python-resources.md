@@ -37,6 +37,13 @@ We recommend using the **Python Install Manager**, the official tool from python
 
 Search for "Python Install Manager" in the [Microsoft Store](https://apps.microsoft.com/detail/9nq7512cxl7t) and install it.
 
+> **Note:** If you previously installed Python using the old standalone installer, you may have the legacy "Python Launcher" installed. The new Install Manager and the old Launcher both use the `py` command and will conflict. To fix this:
+> 1. Open **Settings → Apps → Installed Apps**
+> 2. Search for "Python Launcher"
+> 3. Uninstall it
+>
+> After removing the old launcher, the new Install Manager's `py` command will work correctly.
+
 **After installation**, open a terminal (PowerShell or Command Prompt) and install Python:
 
 ```bash
