@@ -6,6 +6,13 @@
       
       
       <title>PHYS 4430</title>
+            
+            <!-- pandoc-eqnos: equation style -->
+            <style>
+              .eqnos { display: inline-block; position: relative; width: 100%; }
+              .eqnos br { display: none; }
+              .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
+            </style>
          </head>
    <body>
             <div>
@@ -44,17 +51,15 @@
             class="toc-section-number">3.2.3</span> Exercise: Beam width
             uncertainty</a></li>
             </ul></li>
-            <li><a href="#error-bars"><span
-            class="toc-section-number">3.3</span> Error bars</a>
-            <ul>
-            <li><a href="#error-bars-in-python-with-matplotlib"><span
-            class="toc-section-number">3.3.1</span> Error bars in Python
-            with Matplotlib</a></li>
-            <li><a
-            href="#example-gaussian-laser-beam-width-measurement"><span
-            class="toc-section-number">3.3.2</span> Example: Gaussian
-            laser beam width measurement</a></li>
-            </ul></li>
+            <li><a href="#gaussian-beam-theory"><span
+            class="toc-section-number">3.3</span> Gaussian beam
+            theory</a></li>
+            <li><a href="#sec:wave-eqn"><span
+            class="toc-section-number">3.4</span> Paraxial wave
+            equation</a></li>
+            <li><a href="#trying-out-the-gaussian-beam-model"><span
+            class="toc-section-number">3.5</span> Trying out the
+            Gaussian beam model</a></li>
             </ul></li>
             <li><a href="#digital-sampling-of-data"><span
             class="toc-section-number">4</span> Digital Sampling of
@@ -126,14 +131,32 @@
          <h1 data-number="1" id="overview"><span
          class="header-section-number">1</span> Overview</h1>
          <p>The third week of the Gaussian Beams lab builds upon the
-         Python data acquisition skills you developed last week. We will
-         focus on understanding digital sampling and using spectral
-         analysis tools to perform Fourier Transforms in real time. This
-         will allow you to quickly vary parameters and observe how they
-         affect the frequency spectrum. Be sure to document all of your
-         work in your lab notebook.</p>
+         Python data acquisition skills you developed last week. This
+         week’s prelab covers error propagation (how uncertainties in
+         measured quantities affect derived quantities) and introduces
+         the theoretical foundation for Gaussian laser beams, deriving
+         the equations you’ll use in Week 4’s experiments. In the lab
+         portion, we will focus on understanding digital sampling and
+         using spectral analysis tools to perform Fourier Transforms in
+         real time. This will allow you to quickly vary parameters and
+         observe how they affect the frequency spectrum. Be sure to
+         document all of your work in your lab notebook.</p>
          <h1 data-number="2" id="goals"><span
          class="header-section-number">2</span> Goals</h1>
+         <p>In this week’s prelab, you will…</p>
+         <ol type="1">
+         <li>…learn to propagate uncertainties from measured to derived
+         quantities.</li>
+         <li>…derive the paraxial wave equation from Maxwell’s
+         equations.</li>
+         <li>…understand the Gaussian beam solution and its key
+         parameters (<span class="math inline">\(w_0\)</span>, <span
+         class="math inline">\(w(z)\)</span>, <span
+         class="math inline">\(R(z)\)</span>, <span
+         class="math inline">\(\zeta(z)\)</span>).</li>
+         <li>…fit Gaussian beam data to extract beam waist and
+         position.</li>
+         </ol>
          <p>In the first part of this week’s lab, you will…</p>
          <ol type="1">
          <li>…extend your previously developed Python script to add
@@ -159,10 +182,8 @@
          </ol>
          <h1 data-number="3" id="prelab"><span
          class="header-section-number">3</span> Prelab</h1>
-         <p>This week’s prelab builds upon our exploration of
-         measurement uncertainty from the previous two weeks. Here we
-         will focus on error propagation and how to display data with
-         uncertainties.</p>
+         <p>This week’s prelab covers two topics: error propagation and
+         the theoretical foundation for Gaussian laser beams.</p>
          <h2 data-number="3.1"
          id="error-propagation---from-measured-to-derived-quantities"><span
          class="header-section-number">3.1</span> Error propagation -
@@ -267,7 +288,7 @@
          id="exercise-beam-width-uncertainty"><span
          class="header-section-number">3.2.3</span> Exercise: Beam width
          uncertainty</h3>
-         <p>In next week’s prelab, we will model a Gaussian beam’s width
+         <p>Later in this prelab, we will model a Gaussian beam’s width
          <span class="math inline">\(w(z)\)</span> as:</p>
          <p><span class="math display">\[w(z) =
          w_0\sqrt{1+\left(\frac{z-z_0}{\pi
@@ -306,198 +327,199 @@
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;w(z) = </span><span class="sc">{</span>w<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
          </ol>
-         <h2 data-number="3.3" id="error-bars"><span
-         class="header-section-number">3.3</span> Error bars</h2>
-         <p>The error bar is a graphical way to display the uncertainty
-         in a measurement. In order to put error bars on a plot you must
-         first estimate the error for each point. Anytime you include
-         error bars in a plot you should explain how the uncertainty in
-         each point was estimated (e.g., you “eyeballed” the
-         uncertainty, or you sampled it <span
-         class="math inline">\(N\)</span> times and took the standard
-         deviation of the mean, etc.)</p>
-         <h3 data-number="3.3.1"
-         id="error-bars-in-python-with-matplotlib"><span
-         class="header-section-number">3.3.1</span> Error bars in Python
-         with Matplotlib</h3>
-         <p>Creating plots with error bars in Python is straightforward
-         using <code>plt.errorbar()</code>:</p>
-         <div class="sourceCode" id="cb4"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data with uncertainties</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;gaussian_data_with_errors.txt&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> data[:, <span class="dv">0</span>]      <span class="co"># Position</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data[:, <span class="dv">1</span>]      <span class="co"># Voltage</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>y_err <span class="op">=</span> data[:, <span class="dv">2</span>]  <span class="co"># Uncertainty</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot with error bars</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>plt.errorbar(x, y, yerr<span class="op">=</span>y_err, fmt<span class="op">=</span><span class="st">&#39;o&#39;</span>, capsize<span class="op">=</span><span class="dv">3</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">&#39;Data with uncertainties&#39;</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Micrometer Position (inches)&#39;</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Photodetector Voltage (V)&#39;</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Gaussian Beam Width Measurement&#39;</span>)</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-         <p>The <code>errorbar()</code> function parameters: -
-         <code>x</code>, <code>y</code>: Data points -
-         <code>yerr</code>: Uncertainty values (can also use
-         <code>xerr</code> for horizontal error bars) -
-         <code>fmt='o'</code>: Marker style (circles) -
-         <code>capsize=3</code>: Size of error bar caps</p>
-         <h3 data-number="3.3.2"
-         id="example-gaussian-laser-beam-width-measurement"><span
-         class="header-section-number">3.3.2</span> Example: Gaussian
-         laser beam width measurement</h3>
-         <p>Suppose you had estimated the uncertainty at every point in
-         a width measurement of your Gaussian laser beam to be <span
-         class="math inline">\(0.04 \ V\)</span>. This error was chosen
-         to demonstrate the mechanics of making a plot with error bars,
-         but the uncertainty in the actual data was probably smaller
-         than this.</p>
-         <center>
-         <div id="tbl:example-data" class="tablenos">
-         <table id="tbl:example-data">
-         <caption><span>Table 1:</span> Table of data with a fixed
-         uncertainty used to illustrate creating plots with error bars.
-         </caption>
-         <colgroup>
-         <col style="width: 35%" />
-         <col style="width: 32%" />
-         <col style="width: 32%" />
-         </colgroup>
-         <thead>
-         <tr class="header">
-         <th style="text-align: center;">Micrometer Position
-         (inches)</th>
-         <th style="text-align: center;">Photodetector Voltage (V)</th>
-         <th style="text-align: center;">Estimated uncertainty (V)</th>
-         </tr>
-         </thead>
-         <tbody>
-         <tr class="odd">
-         <td style="text-align: center;">0.410</td>
-         <td style="text-align: center;">0.015</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="even">
-         <td style="text-align: center;">0.412</td>
-         <td style="text-align: center;">0.016</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="odd">
-         <td style="text-align: center;">0.414</td>
-         <td style="text-align: center;">0.017</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="even">
-         <td style="text-align: center;">0.416</td>
-         <td style="text-align: center;">0.026</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="odd">
-         <td style="text-align: center;">0.418</td>
-         <td style="text-align: center;">0.060</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="even">
-         <td style="text-align: center;">0.420</td>
-         <td style="text-align: center;">0.176</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="odd">
-         <td style="text-align: center;">0.422</td>
-         <td style="text-align: center;">0.460</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="even">
-         <td style="text-align: center;">0.424</td>
-         <td style="text-align: center;">0.849</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="odd">
-         <td style="text-align: center;">0.426</td>
-         <td style="text-align: center;">1.364</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="even">
-         <td style="text-align: center;">0.428</td>
-         <td style="text-align: center;">1.971</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="odd">
-         <td style="text-align: center;">0.430</td>
-         <td style="text-align: center;">2.410</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="even">
-         <td style="text-align: center;">0.432</td>
-         <td style="text-align: center;">2.703</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="odd">
-         <td style="text-align: center;">0.434</td>
-         <td style="text-align: center;">2.795</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="even">
-         <td style="text-align: center;">0.436</td>
-         <td style="text-align: center;">2.861</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="odd">
-         <td style="text-align: center;">0.438</td>
-         <td style="text-align: center;">2.879</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         <tr class="even">
-         <td style="text-align: center;">0.440</td>
-         <td style="text-align: center;">2.884</td>
-         <td style="text-align: center;">0.04</td>
-         </tr>
-         </tbody>
-         </table>
-         </div>
-         </center>
-         <p><br></p>
-         <p>Download <a
-         href="../resources/lab-guides/gaussian-laser-beams/gaussian_data_with_errors.txt">this
-         data set</a> and create a plot with error bars like Figure <a
-         href="#fig:gauss-example">1</a>.</p>
-         <div class="sourceCode" id="cb5"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;gaussian_data_with_errors.txt&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>position <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>voltage <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>uncertainty <span class="op">=</span> data[:, <span class="dv">2</span>]</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>plt.errorbar(position, voltage, yerr<span class="op">=</span>uncertainty,</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>             fmt<span class="op">=</span><span class="st">&#39;o&#39;</span>, capsize<span class="op">=</span><span class="dv">3</span>, markersize<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (inches)&#39;</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Photodetector Output (V)&#39;</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Gaussian Beam Width Measurement&#39;</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-         <div id="fig:gauss-example" class="fignos">
+         <h2 data-number="3.3" id="gaussian-beam-theory"><span
+         class="header-section-number">3.3</span> Gaussian beam
+         theory</h2>
+         <p>Light is a propagating oscillation of the electromagnetic
+         field. The general principles which govern electromagnetic
+         waves are Maxwell’s equations. From these general relations, a
+         vector wave equation can be derived.</p>
+         <p><span id="eq:1" class="eqnos"><span class="math display">\[
+         \nabla^2\vec{E}=\mu_0\epsilon_0
+         \frac{\partial^2\vec{E}}{\partial
+         t^2}\text{.}\]</span><span class="eqnos-number">(1)</span></span>
+         </p>
+         <p>One of the simplest solutions is that of a plane wave
+         propagating in the <span class="math inline">\(\hat{z}\)</span>
+         direction:</p>
+         <p><span id="eq:2" class="eqnos"><span
+         class="math display">\[\vec{E}(x,y,z,t)=E_x\hat{x}cos(kz-\omega
+         t+\phi_x)+E_y\hat{y}cos(kz-\omega
+         t+\phi_y)\text{.}\quad\quad\]</span><span class="eqnos-number">(2)</span></span>
+         </p>
+         <p>But as the measurements from the first week showed, our
+         laser beams are commonly well approximated by a beam shape with
+         a Gaussian intensity profile. Apparently, since these Gaussian
+         profile beams exist, they must be solutions of the wave
+         equation. The next section will discuss how we derive the
+         Gaussian beam electric field, and give a few key results.</p>
+         <h2 data-number="3.4" id="sec:wave-eqn"><span
+         class="header-section-number">3.4</span> Paraxial wave
+         equation</h2>
+         <p>One important thing to note about the beam output from most
+         lasers is that the width of the beam changes very slowly
+         compared to the wavelength of light. Assume a complex solution,
+         where the beam is propagating in the <span
+         class="math inline">\(\hat{z}\)</span>-direction, with the
+         electric field polarization in the <span
+         class="math inline">\(\hat{x}\)</span>-direction:</p>
+         <p><span id="eq:3" class="eqnos"><span
+         class="math display">\[\vec{E}(x,y,z,t)=\hat{x}A(x,y,z)e^{kz-\omega
+         t}\text{.}\]</span><span class="eqnos-number">(3)</span></span>
+         </p>
+         <p>The basic idea is that the spatial pattern of the beam,
+         described by the function <span
+         class="math inline">\(A(x,y,z)\)</span>, does not change much
+         over a wavelength. In the case of the He-Ne laser output, the
+         function <span class="math inline">\(A(x,y,z)\)</span> is a
+         Gaussian profile that changes its width as a function of <span
+         class="math inline">\(z\)</span>. If we substitute the trial
+         solution in Equation <a href="#eq:3">3</a> into the wave
+         equation in Equation <a href="#eq:1">1</a> we get</p>
+         <p><span id="eq:4" class="eqnos"><span
+         class="math display">\[\hat{x} \left[
+         \left(\frac{\partial^2A}{\partial x^2}
+         +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial
+         z^2} \right) +2ik\frac{\partial A}{\partial z} - k^2A
+         \right]e^{i(kz-\omega
+         t)}=\hat{x}\mu_0\epsilon_oA(-\omega^2)e^{i(kz-\omega
+         t)}\text{.}\quad\quad\]</span><span class="eqnos-number">(4)</span></span>
+         </p>
+         <p>This can be simplified recognizing that <span
+         class="math inline">\(k^2=\omega^2/c^2=\mu_0\epsilon_0\omega^2\)</span>,
+         where the speed of light is related to the permeability and
+         permittivity of free space by <span
+         class="math inline">\(c=(\mu_0\epsilon_0)^{-1/2}\)</span>.
+         Also, the <span class="math inline">\(\hat{x}e^{i(kz-\omega
+         t)}\)</span> term is common to both sides and can be dropped,
+         which results in</p>
+         <p><span id="eq:5" class="eqnos"><span
+         class="math display">\[\left(\frac{\partial^2A}{\partial x^2}
+         +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial
+         z^2} \right) +2ik\frac{\partial A}{\partial
+         z}=0\text{.}\quad\quad\]</span><span class="eqnos-number">(5)</span></span>
+         </p>
+         <p>So far, we have made no approximation to the solution or the
+         wave equation, but now we apply the assumption that <span
+         class="math inline">\(\partial{A}(x,y,z)/\partial{z}\)</span>
+         changes slowly over a wavelength <span
+         class="math inline">\(\lambda = 2\pi /k\)</span>, so we neglect
+         the term</p>
+         <p><span id="eq:6" class="eqnos"><span
+         class="math display">\[\left| \frac{\partial^2A}{\partial z^2}
+         \right| \ll \left|2k\frac{\partial A}{\partial
+         z}\right|\text{.}\]</span><span class="eqnos-number">(6)</span></span>
+         </p>
+         <p>Finally, we get the paraxial wave equation,</p>
+         <p><span id="eq:7" class="eqnos"><span
+         class="math display">\[\frac{\partial^2A}{\partial x^2}
+         +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial
+         z^2}=0\text{.}\]</span><span class="eqnos-number">(7)</span></span>
+         </p>
+         <p>One set of solutions to the paraxial wave equation are
+         Gauss-Hermite beams, which have an intensity profiles like
+         those shown in Figure <a href="#fig:gauss-hermite">1</a>. These
+         are the same solutions as for the quantum simple harmonic
+         oscillator, a topic that could be further explored as a final
+         project.</p>
+         <p>The simplest of these solutions is the Gaussian beam, which
+         has an electric field given by</p>
+         <p><span id="eq:8" class="eqnos"><span
+         class="math display">\[\vec{E}(x,y,z,t) =
+         \vec{E}_0\frac{w_0}{w(z)}exp\left(-\frac{x^2+y^2}{w^2(z)}\right)exp\left(ik\frac{x^2+y^2}{2R(z)}\right)e^{-i\zeta(z)}e^{i(kz-\omega
+         t)}\text{,}\quad\quad\]</span><span class="eqnos-number">(8)</span></span>
+         </p>
+         <p>where <span class="math inline">\(\vec{E_0}\)</span> is a
+         time-independent vector (orthogonal to propagation direction
+         <span class="math inline">\(\hat{z}\)</span>) whose magnitude
+         denotes the amplitude of the laser’s electric field and the
+         direction denotes the direction of polarization. The beam
+         radius <span class="math inline">\(w(z)\)</span>is given by</p>
+         <p><span id="eq:9" class="eqnos"><span
+         class="math display">\[w(z)=w_0\sqrt{1+\left(\frac{\lambda
+         z}{\pi
+         w_0^2}\right)^2}\text{.}\]</span><span class="eqnos-number">(9)</span></span>
+         </p>
+         <p><span class="math inline">\(R(z)\)</span>,the radius of
+         curvature of the wavefront, is given by</p>
+         <p><span id="eq:10" class="eqnos"><span
+         class="math display">\[R(z)=z\left(1+\left(\frac{\pi
+         w_0^2}{\lambda
+         z}\right)^2\right)\text{,}\]</span><span class="eqnos-number">(10)</span></span>
+         </p>
+         <p>and the Gouy phase is given by</p>
+         <p><span id="eq:11" class="eqnos"><span
+         class="math display">\[\zeta(z)=arctan\frac{\pi w_0^2}{\lambda
+         z}\text{.}\]</span><span class="eqnos-number">(11)</span></span>
+         </p>
+         <p>The remarkable thing about all these equations is that only
+         two parameters need to be specified to give the whole beam
+         profile: the wavelength <span
+         class="math inline">\(\lambda\)</span> and the beam waist <span
+         class="math inline">\(w_0\)</span>, which is the narrowest
+         point in the beam profile. There is a more general set of
+         Hermite Gaussian modes which are shown in Figure <a
+         href="#fig:gauss-hermite">1</a>. The laser cavity typically
+         produces the (0,0) mode shown in the upper left corner, but an
+         optical cavity can also be used to create these other modes – a
+         topic that can be explored in the final projects.</p>
+         <div id="fig:gauss-hermite" class="fignos">
          <figure>
          <img
-         src="../resources/lab-guides/gaussian-laser-beams/gauss-example.png"
-         style="width:15cm"
-         alt="Figure 1: Plot of the provided Gaussian Beam data showing error bars." />
-         <figcaption aria-hidden="true"><span>Figure 1:</span> Plot of
-         the provided Gaussian Beam data showing error
-         bars.</figcaption>
+         src="../resources/lab-guides/gaussian-laser-beams/gauss-hermite.png"
+         style="width:20cm"
+         alt="Figure 1: Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam width, w." />
+         <figcaption aria-hidden="true"><span>Figure 1:</span> Intensity
+         distributions for the lowest order Gauss-Hermite solutions to
+         the paraxial wave equation. The axes are in units of the beam
+         width, <span class="math inline">\(w\)</span>.</figcaption>
          </figure>
          </div>
+         <h2 data-number="3.5"
+         id="trying-out-the-gaussian-beam-model"><span
+         class="header-section-number">3.5</span> Trying out the
+         Gaussian beam model</h2>
+         <p>In the first week of the lab, we assumed the intensity
+         profile of the Gaussian beam was given by <span
+         class="math inline">\(I(x,y)=I_{max}e^{-2(x^2+y^2)/w^2}\)</span>.
+         The equation for the electric field of the Gaussian Beam in
+         Equation <a href="#eq:8">8</a> looks substantially more
+         complicated.</p>
+         <ol type="1">
+         <li>How are the expressions for electric field and intensity
+         related?</li>
+         <li>Is Equation <a href="#eq:8">8</a> consistent with the
+         simple expression for intensity <span
+         class="math inline">\(I(x,y)=I_{max}e^{-2(x^2+y^2)/w^2}\)</span>?</li>
+         </ol>
+         <p>The Gaussian beam equations given in Equations <a
+         href="#eq:8">8</a> -<a href="#eq:11">11</a> assume the beam
+         comes to its narrowest width (called the beam waist, <span
+         class="math inline">\(w_0\)</span>) at <span
+         class="math inline">\(z=0\)</span>.</p>
+         <ol start="3" type="1">
+         <li>How would you rewrite these four equations assuming the
+         beam waist occurs at a different position <span
+         class="math inline">\(z=z_w\)</span>?</li>
+         <li>One way to check your answer is to make sure the equations
+         simplify to Equations <a href="#eq:8">8</a> -<a
+         href="#eq:11">11</a> in the special case of <span
+         class="math inline">\(z_w=0\)</span>.</li>
+         <li>Write a Python function to fit <a
+         href="../resources/lab-guides/gaussian-laser-beams/Test_beam_width_data.csv">this
+         data set</a>. Assume the wavelength is <span
+         class="math inline">\(\lambda=632.8\ nm\)</span>.
+         <ol type="1">
+         <li>What is the functional form for your fit function?</li>
+         <li>What are the different fit parameters and what do they
+         mean?</li>
+         <li>Is it a linear or nonlinear fit function? Why?</li>
+         </ol></li>
+         <li>You should get that a beam waist of <span
+         class="math inline">\(w_0=(93.9\pm0.1)\times10^{-6}\ m\)</span>
+         and occurs at a position <span
+         class="math inline">\(z_w=0.3396\pm0.0003\ m\)</span>.</li>
+         </ol>
          <h1 data-number="4" id="digital-sampling-of-data"><span
          class="header-section-number">4</span> Digital Sampling of
          Data</h1>
@@ -510,28 +532,28 @@
          the <em>Number of Samples</em> and <em>Sample Rate</em> are
          easily configurable variables at the top of your script (or as
          function parameters).</p>
-         <div class="sourceCode" id="cb6"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration - easily adjustable</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>SAMPLE_RATE <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Samples per second</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>NUM_SAMPLES <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Total samples (1 second of data)</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>DAQ_CHANNEL <span class="op">=</span> <span class="st">&quot;Dev1/ai0&quot;</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> acquire_data(sample_rate, num_samples, channel):</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Acquire data from DAQ with specified parameters.&quot;&quot;&quot;</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(channel)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>num_samples)</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array(data)</span></code></pre></div></li>
+         <div class="sourceCode" id="cb4"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration - easily adjustable</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>SAMPLE_RATE <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Samples per second</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>NUM_SAMPLES <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Total samples (1 second of data)</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>DAQ_CHANNEL <span class="op">=</span> <span class="st">&quot;Dev1/ai0&quot;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> acquire_data(sample_rate, num_samples, channel):</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Acquire data from DAQ with specified parameters.&quot;&quot;&quot;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(channel)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>num_samples)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array(data)</span></code></pre></div></li>
          <li><p>Set up a function generator to produce a 1 kHz sine
          wave.</p></li>
          <li><p>Connect the function generator’s output to both the
@@ -548,18 +570,18 @@
          the DAQ. Make sure that the time range on the oscilloscope is
          set such that it is on the same order as the data being
          recorded by the DAQ.</p>
-         <div class="sourceCode" id="cb7"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire and plot data</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> acquire_data(SAMPLE_RATE, NUM_SAMPLES, DAQ_CHANNEL)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(NUM_SAMPLES) <span class="op">/</span> SAMPLE_RATE</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.plot(time, data)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (s)&#39;</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f&#39;Acquired Signal (</span><span class="sc">{</span>SAMPLE_RATE<span class="sc">}</span><span class="ss"> Hz sample rate)&#39;</span>)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <div class="sourceCode" id="cb5"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire and plot data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> acquire_data(SAMPLE_RATE, NUM_SAMPLES, DAQ_CHANNEL)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(NUM_SAMPLES) <span class="op">/</span> SAMPLE_RATE</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.plot(time, data)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (s)&#39;</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f&#39;Acquired Signal (</span><span class="sc">{</span>SAMPLE_RATE<span class="sc">}</span><span class="ss"> Hz sample rate)&#39;</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          <li><p>Compare the two plots. What are the major differences
          between the two?</p></li>
          <li><p>Why might one or both of these plots be giving an
@@ -702,36 +724,36 @@
          <h3 data-number="5.2.1" id="computing-the-power-spectrum"><span
          class="header-section-number">5.2.1</span> Computing the Power
          Spectrum</h3>
-         <div class="sourceCode" id="cb8"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_spectrum(data, sample_rate):</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Compute the one-sided power spectrum of a signal.</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">        data: 1D array of signal values</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">        sample_rate: Sample rate in Hz</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">        frequencies: Array of frequency values</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">        power: Power spectrum (magnitude squared)</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(data)</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute FFT</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    fft_result <span class="op">=</span> np.fft.fft(data)</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get positive frequencies only (real signal has symmetric spectrum)</span></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    n_unique <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)[:n_unique]</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.<span class="bu">abs</span>(frequencies)</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Power spectrum (magnitude squared, normalized)</span></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    power <span class="op">=</span> (np.<span class="bu">abs</span>(fft_result[:n_unique]) <span class="op">/</span> n) <span class="op">**</span> <span class="dv">2</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    power[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">*=</span> <span class="dv">2</span>  <span class="co"># Double power for frequencies with both +/- components</span></span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> frequencies, power</span></code></pre></div>
+         <div class="sourceCode" id="cb6"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_spectrum(data, sample_rate):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Compute the one-sided power spectrum of a signal.</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">        data: 1D array of signal values</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">        sample_rate: Sample rate in Hz</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">        frequencies: Array of frequency values</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">        power: Power spectrum (magnitude squared)</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(data)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute FFT</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    fft_result <span class="op">=</span> np.fft.fft(data)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get positive frequencies only (real signal has symmetric spectrum)</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    n_unique <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)[:n_unique]</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.<span class="bu">abs</span>(frequencies)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Power spectrum (magnitude squared, normalized)</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    power <span class="op">=</span> (np.<span class="bu">abs</span>(fft_result[:n_unique]) <span class="op">/</span> n) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    power[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">*=</span> <span class="dv">2</span>  <span class="co"># Double power for frequencies with both +/- components</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> frequencies, power</span></code></pre></div>
          <h3 data-number="5.2.2"
          id="setting-up-real-time-spectral-analysis"><span
          class="header-section-number">5.2.2</span> Setting up real-time
@@ -744,90 +766,90 @@
          <li>Has keyboard interrupt (Ctrl+C) to stop</li>
          <li>Saves the last dataset after stopping</li>
          </ol>
-         <div class="sourceCode" id="cb9"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>SAMPLE_RATE <span class="op">=</span> <span class="dv">10000</span>  <span class="co"># Hz</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>NUM_SAMPLES <span class="op">=</span> <span class="dv">2000</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>DAQ_CHANNEL <span class="op">=</span> <span class="st">&quot;Dev1/ai0&quot;</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_spectrum(data, sample_rate):</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Compute one-sided power spectrum.&quot;&quot;&quot;</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(data)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    fft_result <span class="op">=</span> np.fft.fft(data)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    n_unique <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.<span class="bu">abs</span>(np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)[:n_unique])</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    power <span class="op">=</span> (np.<span class="bu">abs</span>(fft_result[:n_unique]) <span class="op">/</span> n) <span class="op">**</span> <span class="dv">2</span></span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    power[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">*=</span> <span class="dv">2</span></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> frequencies, power</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up real-time plotting</span></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>plt.ion()</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Time domain plot</span></span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>line1, <span class="op">=</span> ax1.plot([], [], <span class="st">&#39;b-&#39;</span>)</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">&#39;Time Domain&#39;</span>)</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>ax1.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency domain plot</span></span>
-<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>line2, <span class="op">=</span> ax2.plot([], [], <span class="st">&#39;r-&#39;</span>)</span>
-<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">&#39;Power&#39;</span>)</span>
-<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">&#39;Frequency Domain (Power Spectrum)&#39;</span>)</span>
-<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>ax2.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(<span class="dv">0</span>, SAMPLE_RATE <span class="op">/</span> <span class="dv">2</span>)</span>
-<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>last_data <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(DAQ_CHANNEL)</span>
-<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>    task.timing.cfg_samp_clk_timing(</span>
-<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>        rate<span class="op">=</span>SAMPLE_RATE,</span>
-<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>        sample_mode<span class="op">=</span>AcquisitionType.CONTINUOUS</span>
-<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>    task.start()</span>
-<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Acquiring data... Press Ctrl+C to stop&quot;</span>)</span>
-<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Acquire data</span></span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>NUM_SAMPLES)</span>
-<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>            last_data <span class="op">=</span> np.array(data)</span>
-<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update time domain plot</span></span>
-<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>            time_ms <span class="op">=</span> np.arange(<span class="bu">len</span>(data)) <span class="op">/</span> SAMPLE_RATE <span class="op">*</span> <span class="dv">1000</span></span>
-<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>            line1.set_data(time_ms, data)</span>
-<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>            ax1.set_xlim(<span class="dv">0</span>, time_ms[<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>            ax1.set_ylim(np.<span class="bu">min</span>(data) <span class="op">-</span> <span class="fl">0.1</span>, np.<span class="bu">max</span>(data) <span class="op">+</span> <span class="fl">0.1</span>)</span>
-<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update frequency domain plot</span></span>
-<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>            frequencies, power <span class="op">=</span> compute_spectrum(np.array(data), SAMPLE_RATE)</span>
-<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>            line2.set_data(frequencies, power)</span>
-<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a>            ax2.set_ylim(<span class="dv">0</span>, np.<span class="bu">max</span>(power) <span class="op">*</span> <span class="fl">1.1</span> <span class="op">+</span> <span class="fl">0.001</span>)</span>
-<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>            plt.pause(<span class="fl">0.05</span>)</span>
-<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
-<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Stopped by user&quot;</span>)</span>
-<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>plt.ioff()</span>
-<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Save last dataset</span></span>
-<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> last_data <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>    np.savetxt(<span class="st">&#39;last_acquisition.csv&#39;</span>,</span>
-<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>               np.column_stack([np.arange(<span class="bu">len</span>(last_data))<span class="op">/</span>SAMPLE_RATE, last_data]),</span>
-<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>               delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, header<span class="op">=</span><span class="st">&#39;Time (s), Voltage (V)&#39;</span>, comments<span class="op">=</span><span class="st">&#39;&#39;</span>)</span>
-<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Last dataset saved to &#39;last_acquisition.csv&#39;&quot;</span>)</span>
-<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+         <div class="sourceCode" id="cb7"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>SAMPLE_RATE <span class="op">=</span> <span class="dv">10000</span>  <span class="co"># Hz</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>NUM_SAMPLES <span class="op">=</span> <span class="dv">2000</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>DAQ_CHANNEL <span class="op">=</span> <span class="st">&quot;Dev1/ai0&quot;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_spectrum(data, sample_rate):</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Compute one-sided power spectrum.&quot;&quot;&quot;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(data)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    fft_result <span class="op">=</span> np.fft.fft(data)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    n_unique <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.<span class="bu">abs</span>(np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)[:n_unique])</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    power <span class="op">=</span> (np.<span class="bu">abs</span>(fft_result[:n_unique]) <span class="op">/</span> n) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    power[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">*=</span> <span class="dv">2</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> frequencies, power</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up real-time plotting</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>plt.ion()</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Time domain plot</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>line1, <span class="op">=</span> ax1.plot([], [], <span class="st">&#39;b-&#39;</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">&#39;Time Domain&#39;</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>ax1.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency domain plot</span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>line2, <span class="op">=</span> ax2.plot([], [], <span class="st">&#39;r-&#39;</span>)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">&#39;Power&#39;</span>)</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">&#39;Frequency Domain (Power Spectrum)&#39;</span>)</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>ax2.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(<span class="dv">0</span>, SAMPLE_RATE <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>last_data <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(DAQ_CHANNEL)</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    task.timing.cfg_samp_clk_timing(</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>        rate<span class="op">=</span>SAMPLE_RATE,</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>        sample_mode<span class="op">=</span>AcquisitionType.CONTINUOUS</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>    task.start()</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Acquiring data... Press Ctrl+C to stop&quot;</span>)</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Acquire data</span></span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>NUM_SAMPLES)</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>            last_data <span class="op">=</span> np.array(data)</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update time domain plot</span></span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>            time_ms <span class="op">=</span> np.arange(<span class="bu">len</span>(data)) <span class="op">/</span> SAMPLE_RATE <span class="op">*</span> <span class="dv">1000</span></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>            line1.set_data(time_ms, data)</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>            ax1.set_xlim(<span class="dv">0</span>, time_ms[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>            ax1.set_ylim(np.<span class="bu">min</span>(data) <span class="op">-</span> <span class="fl">0.1</span>, np.<span class="bu">max</span>(data) <span class="op">+</span> <span class="fl">0.1</span>)</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update frequency domain plot</span></span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>            frequencies, power <span class="op">=</span> compute_spectrum(np.array(data), SAMPLE_RATE)</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>            line2.set_data(frequencies, power)</span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>            ax2.set_ylim(<span class="dv">0</span>, np.<span class="bu">max</span>(power) <span class="op">*</span> <span class="fl">1.1</span> <span class="op">+</span> <span class="fl">0.001</span>)</span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>            plt.pause(<span class="fl">0.05</span>)</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Stopped by user&quot;</span>)</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>plt.ioff()</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Save last dataset</span></span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> last_data <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>    np.savetxt(<span class="st">&#39;last_acquisition.csv&#39;</span>,</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>               np.column_stack([np.arange(<span class="bu">len</span>(last_data))<span class="op">/</span>SAMPLE_RATE, last_data]),</span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>               delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, header<span class="op">=</span><span class="st">&#39;Time (s), Voltage (V)&#39;</span>, comments<span class="op">=</span><span class="st">&#39;&#39;</span>)</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Last dataset saved to &#39;last_acquisition.csv&#39;&quot;</span>)</span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
          <h2 data-number="5.3"
          id="using-your-spectral-analysis-script"><span
          class="header-section-number">5.3</span> Using your spectral
@@ -849,13 +871,13 @@
          frequency</strong> relate to the <strong>sample rate</strong>
          and <strong>number of samples</strong>? Try to find an
          algebraic relationship.</p>
-         <div class="sourceCode" id="cb10"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency resolution and maximum frequency</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>freq_resolution <span class="op">=</span> sample_rate <span class="op">/</span> num_samples  <span class="co"># Hz per bin</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>max_frequency <span class="op">=</span> sample_rate <span class="op">/</span> <span class="dv">2</span>  <span class="co"># Nyquist frequency</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Frequency resolution: </span><span class="sc">{</span>freq_resolution<span class="sc">}</span><span class="ss"> Hz&quot;</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Maximum frequency: </span><span class="sc">{</span>max_frequency<span class="sc">}</span><span class="ss"> Hz&quot;</span>)</span></code></pre></div></li>
+         <div class="sourceCode" id="cb8"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency resolution and maximum frequency</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>freq_resolution <span class="op">=</span> sample_rate <span class="op">/</span> num_samples  <span class="co"># Hz per bin</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>max_frequency <span class="op">=</span> sample_rate <span class="op">/</span> <span class="dv">2</span>  <span class="co"># Nyquist frequency</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Frequency resolution: </span><span class="sc">{</span>freq_resolution<span class="sc">}</span><span class="ss"> Hz&quot;</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Maximum frequency: </span><span class="sc">{</span>max_frequency<span class="sc">}</span><span class="ss"> Hz&quot;</span>)</span></code></pre></div></li>
          <li><p>If the data is sampled for 2 seconds at 100 Hz sample
          rate, what frequency does the <span
          class="math inline">\(m\)</span>-th component of the Fourier
@@ -896,38 +918,38 @@
          <p>While it is convenient to use real-time spectral analysis,
          sometimes you may want to analyze data after it is saved.
          Here’s how to compute the Fourier Transform of saved data:</p>
-         <div class="sourceCode" id="cb11"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load saved data</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;saved_waveform.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine sample rate from time data</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (time[<span class="dv">1</span>] <span class="op">-</span> time[<span class="dv">0</span>])</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute FFT</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(signal)</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>fft_result <span class="op">=</span> np.fft.fft(signal)</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create frequency axis</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)</span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Get positive frequencies only</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>positive_mask <span class="op">=</span> frequencies <span class="op">&gt;=</span> <span class="dv">0</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>freq_positive <span class="op">=</span> frequencies[positive_mask]</span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(fft_result[positive_mask]) <span class="op">/</span> n</span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot spectrum</span></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>plt.plot(freq_positive, magnitude)</span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Magnitude&#39;</span>)</span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Fourier Transform of Saved Data&#39;</span>)</span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+         <div class="sourceCode" id="cb9"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load saved data</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;saved_waveform.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine sample rate from time data</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (time[<span class="dv">1</span>] <span class="op">-</span> time[<span class="dv">0</span>])</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute FFT</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(signal)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>fft_result <span class="op">=</span> np.fft.fft(signal)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create frequency axis</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Get positive frequencies only</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>positive_mask <span class="op">=</span> frequencies <span class="op">&gt;=</span> <span class="dv">0</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>freq_positive <span class="op">=</span> frequencies[positive_mask]</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(fft_result[positive_mask]) <span class="op">/</span> n</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot spectrum</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>plt.plot(freq_positive, magnitude)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Magnitude&#39;</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Fourier Transform of Saved Data&#39;</span>)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
          <h3 data-number="5.4.1" id="exercises"><span
          class="header-section-number">5.4.1</span> Exercises</h3>
          <ol type="1">
@@ -949,35 +971,35 @@
          </ol></li>
          <li><p>Make sure to add the frequency column to create a proper
          plot of spectrum vs. frequency:</p>
-         <div class="sourceCode" id="cb12"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Complete example</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(signal)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">10000</span>  <span class="co"># Adjust to your actual sample rate</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute FFT and frequencies</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>fft_result <span class="op">=</span> np.fft.fft(signal)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sided spectrum (positive frequencies)</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>n_half <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>freq_pos <span class="op">=</span> frequencies[:n_half]</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(fft_result[:n_half]) <span class="op">*</span> <span class="dv">2</span> <span class="op">/</span> n  <span class="co"># Normalize and account for one-sided</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>magnitude[<span class="dv">0</span>] <span class="op">/=</span> <span class="dv">2</span>  <span class="co"># DC component doesn&#39;t double</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>plt.plot(freq_pos, magnitude)</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Magnitude&#39;</span>)</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, sample_rate<span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <div class="sourceCode" id="cb10"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Complete example</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(signal)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">10000</span>  <span class="co"># Adjust to your actual sample rate</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute FFT and frequencies</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>fft_result <span class="op">=</span> np.fft.fft(signal)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sided spectrum (positive frequencies)</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>n_half <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>freq_pos <span class="op">=</span> frequencies[:n_half]</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(fft_result[:n_half]) <span class="op">*</span> <span class="dv">2</span> <span class="op">/</span> n  <span class="co"># Normalize and account for one-sided</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>magnitude[<span class="dv">0</span>] <span class="op">/=</span> <span class="dv">2</span>  <span class="co"># DC component doesn&#39;t double</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.plot(freq_pos, magnitude)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Magnitude&#39;</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, sample_rate<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          <li><p>Does the spectral analysis show the same spectrum at the
          same frequencies that you expect from the waveform generator
          settings?</p></li>
          <li><p>NumPy’s FFT uses specific conventions. You can check the
          documentation with:</p>
-         <div class="sourceCode" id="cb13"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(np.fft.fft)</span></code></pre></div>
+         <div class="sourceCode" id="cb11"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(np.fft.fft)</span></code></pre></div>
          <p>The convention used is: <span class="math inline">\(Y_k =
          \sum_{n=0}^{N-1} y_n e^{-2\pi i k n / N}\)</span></p></li>
          </ol>
@@ -991,7 +1013,7 @@
          7</a> from week 1.</p>
                </div>
             <!-- Mathjax -->
-      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       <script>
 
       </script>

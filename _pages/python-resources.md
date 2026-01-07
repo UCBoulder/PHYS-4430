@@ -63,13 +63,19 @@ py list --online
 Once Python is installed, install the packages needed for this course:
 
 ```bash
-py -m pip install numpy matplotlib pandas scipy nidaqmx pythonnet pyvisa jupyter
+py -m pip install uv numpy pandas matplotlib scipy nidaqmx jupyterlab pyvisa pyserial pythonnet
 ```
 
 Or download our [requirements.txt](/PHYS-4430/resources/lab-guides/gaussian-laser-beams/python/requirements.txt) and run:
 
 ```bash
 py -m pip install -r requirements.txt
+```
+
+**Faster alternative with uv:** After installing `uv`, you can use it for much faster package installs:
+
+```bash
+uv pip install -r requirements.txt
 ```
 
 ### 3. Install Hardware Drivers
@@ -81,23 +87,23 @@ py -m pip install -r requirements.txt
 
 You have two main options for writing and running Python code:
 
-### Jupyter Notebooks (Recommended for Learning)
+### JupyterLab (Recommended for Learning)
 
-Jupyter notebooks allow you to write code in cells and see results immediately. This is ideal for:
+JupyterLab provides an interactive environment where you write code in cells and see results immediately. This is ideal for:
 * Learning new concepts
 * Exploratory data analysis
 * Creating documented analysis workflows
 
-**To start Jupyter:**
-
-```bash
-py -m jupyter notebook
-```
-
-Or for the newer JupyterLab interface:
+**To start JupyterLab:**
 
 ```bash
 py -m jupyter lab
+```
+
+Or for the classic notebook interface:
+
+```bash
+py -m jupyter notebook
 ```
 
 ### VS Code (Recommended for Longer Scripts)
@@ -118,8 +124,8 @@ VS Code is a full-featured code editor, better suited for:
 
 | Task | Recommended Environment |
 |------|-------------------------|
-| Learning a new concept | Jupyter Notebook |
-| Quick data exploration | Jupyter Notebook |
+| Learning a new concept | JupyterLab |
+| Quick data exploration | JupyterLab |
 | Fitting and plotting data | Either |
 | Real-time data acquisition | VS Code (Python script) |
 | Automated measurements | VS Code (Python script) |

@@ -6,13 +6,6 @@
       
       
       <title>PHYS 4430</title>
-            
-            <!-- pandoc-eqnos: equation style -->
-            <style>
-              .eqnos { display: inline-block; position: relative; width: 100%; }
-              .eqnos br { display: none; }
-              .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
-            </style>
          </head>
    <body>
             <div>
@@ -28,15 +21,7 @@
             <li><a href="#goals"><span
             class="toc-section-number">1</span> Goals</a></li>
             <li><a href="#prelab"><span
-            class="toc-section-number">2</span> Prelab</a>
-            <ul>
-            <li><a href="#sec:wave-eqn"><span
-            class="toc-section-number">2.1</span> Paraxial wave
-            equation</a></li>
-            <li><a href="#trying-out-the-gaussian-beam-model"><span
-            class="toc-section-number">2.2</span> Trying out the
-            gaussian beam model</a></li>
-            </ul></li>
+            class="toc-section-number">2</span> Prelab</a></li>
             <li><a href="#automation-of-the-measurement"><span
             class="toc-section-number">3</span> Automation of the
             Measurement</a></li>
@@ -153,11 +138,11 @@
          <h1 data-number="1" id="goals"><span
          class="header-section-number">1</span> Goals</h1>
          <p>In week one, we measured the profile of the laser and found
-         it to be Gaussian to a good approximation. However, we don’t
-         have any model for how the profile changes as the beam
-         propagates and we will work to improve our model. Also, we will
-         apply automation to more rapidly take data. The full set of
-         learning goals includes:</p>
+         it to be Gaussian to a good approximation. Last week, we
+         derived the Gaussian beam model and learned how the profile
+         changes as the beam propagates. This week, we will apply
+         automation to more rapidly take data and test the model
+         experimentally. The full set of learning goals includes:</p>
          <ol type="1">
          <li>Automated data acquisition.
          <ul>
@@ -165,7 +150,8 @@
          <li>USB DAQ (NI USB-6009) with nidaqmx</li>
          </ul></li>
          <li>Fitting and analysis of data in Python</li>
-         <li>Using a predictive model of Gaussian laser beams
+         <li>Using the predictive model of Gaussian laser beams from
+         Week 3
          <ul>
          <li>Contrast Gaussian beams with geometric optics</li>
          </ul></li>
@@ -180,196 +166,14 @@
          </ol>
          <h1 data-number="2" id="prelab"><span
          class="header-section-number">2</span> Prelab</h1>
-         <p>Light is a propagating oscillation of the electromagnetic
-         field. The general principles which govern electromagnetic
-         waves are Maxwell’s equations. From these general relations, a
-         vector wave equation can be derived.</p>
-         <p><span id="eq:1" class="eqnos"><span class="math display">\[
-         \nabla^2\vec{E}=\mu_0\epsilon_0
-         \frac{\partial^2\vec{E}}{\partial
-         t^2}\text{.}\]</span><span class="eqnos-number">(1)</span></span>
-         </p>
-         <p>One of the simplest solutions is that of a plane wave
-         propagating in the <span class="math inline">\(\hat{z}\)</span>
-         direction:</p>
-         <p><span id="eq:2" class="eqnos"><span
-         class="math display">\[\vec{E}(x,y,z,t)=E_x\hat{x}cos(kz-\omega
-         t+\phi_x)+E_y\hat{y}cos(kz-\omega
-         t+\phi_y)\text{.}\quad\quad\]</span><span class="eqnos-number">(2)</span></span>
-         </p>
-         <p>But as the measurements from the first week showed, our
-         laser beams are commonly well approximated by a beam shape with
-         a Gaussian intensity profile. Apparently, since these Gaussian
-         profile beams exist, they must be solutions of the wave
-         equation. The next section will discuss how we derive the
-         Gaussian beam electric field, and give a few key results.</p>
-         <h2 data-number="2.1" id="sec:wave-eqn"><span
-         class="header-section-number">2.1</span> Paraxial wave
-         equation</h2>
-         <p>One important thing to note about the beam output from most
-         lasers is that the width of the beam changes very slowly
-         compared to the wavelength of light. Assume a complex solution,
-         where the beam is propagating in the <span
-         class="math inline">\(\hat{z}\)</span>-direction, with the
-         electric field polarization in the <span
-         class="math inline">\(\hat{x}\)</span>-direction:</p>
-         <p><span id="eq:3" class="eqnos"><span
-         class="math display">\[\vec{E}(x,y,z,t)=\hat{x}A(x,y,z)e^{kz-\omega
-         t}\text{.}\]</span><span class="eqnos-number">(3)</span></span>
-         </p>
-         <p>The basic idea is that the spatial pattern of the beam,
-         described by the function <span
-         class="math inline">\(A(x,y,z)\)</span>, does not change much
-         over a wavelength. In the case of the He-Ne laser output, the
-         function <span class="math inline">\(A(x,y,z)\)</span> is a
-         Gaussian profile that changes its width as a function of <span
-         class="math inline">\(z\)</span>. If we substitute the trial
-         solution in Equation <a href="#eq:3">3</a> into the wave
-         equation in Equation <a href="#eq:1">1</a> we get</p>
-         <p><span id="eq:4" class="eqnos"><span
-         class="math display">\[\hat{x} \left[
-         \left(\frac{\partial^2A}{\partial x^2}
-         +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial
-         z^2} \right) +2ik\frac{\partial A}{\partial z} - k^2A
-         \right]e^{i(kz-\omega
-         t)}=\hat{x}\mu_0\epsilon_oA(-\omega^2)e^{i(kz-\omega
-         t)}\text{.}\quad\quad\]</span><span class="eqnos-number">(4)</span></span>
-         </p>
-         <p>This can be simplified recognizing that <span
-         class="math inline">\(k^2=\omega^2/c^2=\mu_0\epsilon_0\omega^2\)</span>,
-         where the speed of light is related to the permeability and
-         permittivity of free space by <span
-         class="math inline">\(c=(\mu_0\epsilon_0)^{-1/2}\)</span>.
-         Also, the <span class="math inline">\(\hat{x}e^{i(kz-\omega
-         t)}\)</span> term is common to both sides and can be dropped,
-         which results in</p>
-         <p><span id="eq:5" class="eqnos"><span
-         class="math display">\[\left(\frac{\partial^2A}{\partial x^2}
-         +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial
-         z^2} \right) +2ik\frac{\partial A}{\partial
-         z}=0\text{.}\quad\quad\]</span><span class="eqnos-number">(5)</span></span>
-         </p>
-         <p>So far, we have made no approximation to the solution or the
-         wave equation, but now we apply the assumption that <span
-         class="math inline">\(\partial{A}(x,y,z)/\partial{z}\)</span>
-         changes slowly over a wavelength <span
-         class="math inline">\(\lambda = 2\pi /k\)</span>, so we neglect
-         the term</p>
-         <p><span id="eq:6" class="eqnos"><span
-         class="math display">\[\left| \frac{\partial^2A}{\partial z^2}
-         \right| \ll \left|2k\frac{\partial A}{\partial
-         z}\right|\text{.}\]</span><span class="eqnos-number">(6)</span></span>
-         </p>
-         <p>Finally, we get the paraxial wave equation,</p>
-         <p><span id="eq:7" class="eqnos"><span
-         class="math display">\[\frac{\partial^2A}{\partial x^2}
-         +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial
-         z^2}=0\text{.}\]</span><span class="eqnos-number">(7)</span></span>
-         </p>
-         <p>One set of solutions to the paraxial wave equation are
-         Gauss-Hermite beams, which have an intensity profiles like
-         those shown in Figure <a href="#fig:gauss-hermite">1</a>. These
-         are the same solutions as for the quantum simple harmonic
-         oscillator, a topic that could be further explored as a final
-         project.</p>
-         <p>The simplest of these solutions is the Gaussian beam, which
-         has an electric field given by</p>
-         <p><span id="eq:8" class="eqnos"><span
-         class="math display">\[\vec{E}(x,y,z,t) =
-         \vec{E}_0\frac{w_0}{w(z)}exp\left(-\frac{x^2+y^2}{w^2(z)}\right)exp\left(ik\frac{x^2+y^2}{2R(z)}\right)e^{-i\zeta(z)}e^{i(kz-\omega
-         t)}\text{,}\quad\quad\]</span><span class="eqnos-number">(8)</span></span>
-         </p>
-         <p>where <span class="math inline">\(\vec{E_0}\)</span> is a
-         time-independent vector (orthogonal to propagation direction
-         <span class="math inline">\(\hat{z}\)</span>) whose magnitude
-         denotes the amplitude of the laser’s electric field and the
-         direction denotes the direction of polarization. The beam
-         radius <span class="math inline">\(w(z)\)</span>is given by</p>
-         <p><span id="eq:9" class="eqnos"><span
+         <p>This week’s prelab focuses on preparing for automated data
+         acquisition. Review the Gaussian beam theory from Week 3’s
+         prelab, particularly the beam width equation:</p>
+         <p><span
          class="math display">\[w(z)=w_0\sqrt{1+\left(\frac{\lambda
-         z}{\pi
-         w_0^2}\right)^2}\text{.}\]</span><span class="eqnos-number">(9)</span></span>
-         </p>
-         <p><span class="math inline">\(R(z)\)</span>,the radius of
-         curvature of the wavefront, is given by</p>
-         <p><span id="eq:10" class="eqnos"><span
-         class="math display">\[R(z)=z\left(1+\left(\frac{\pi
-         w_0^2}{\lambda
-         z}\right)^2\right)\text{,}\]</span><span class="eqnos-number">(10)</span></span>
-         </p>
-         <p>and the Gouy phase is given by</p>
-         <p><span id="eq:11" class="eqnos"><span
-         class="math display">\[\zeta(z)=arctan\frac{\pi w_0^2}{\lambda
-         z}\text{.}\]</span><span class="eqnos-number">(11)</span></span>
-         </p>
-         <p>The remarkable thing about all these equations is that only
-         two parameters need to be specified to give the whole beam
-         profile: the wavelength <span
-         class="math inline">\(\lambda\)</span> and the beam waist <span
-         class="math inline">\(w_0\)</span>, which is the narrowest
-         point in the beam profile. There is a more general set of
-         Hermite Gaussian modes which are shown in Figure <a
-         href="#fig:gauss-hermite">1</a>. The laser cavity typically
-         produces the (0,0) mode shown in the upper left corner, but an
-         optical cavity can also be used to create these other modes – a
-         topic that can be explored in the final projects.</p>
-         <div id="fig:gauss-hermite" class="fignos">
-         <figure>
-         <img
-         src="../resources/lab-guides/gaussian-laser-beams/gauss-hermite.png"
-         style="width:20cm"
-         alt="Figure 1: Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam width, w." />
-         <figcaption aria-hidden="true"><span>Figure 1:</span> Intensity
-         distributions for the lowest order Gauss-Hermite solutions to
-         the paraxial wave equation. The axes are in units of the beam
-         width, <span class="math inline">\(w\)</span>.</figcaption>
-         </figure>
-         </div>
-         <h2 data-number="2.2"
-         id="trying-out-the-gaussian-beam-model"><span
-         class="header-section-number">2.2</span> Trying out the
-         gaussian beam model</h2>
-         <p>In the first week of the lab, we assumed the intensity
-         profile of the Gaussian beam was given by <span
-         class="math inline">\(I(x,y)=I_{max}e^{-2(x^2+y^2)/w^2}\)</span>.
-         The equation for the electric field of the Gaussian Beam in
-         Equation <a href="#eq:8">8</a> looks substantially more
-         complicated.</p>
-         <ol type="1">
-         <li>How are the expressions for electric field and intensity
-         related?</li>
-         <li>Is Equation <a href="#eq:8">8</a> consistent with the
-         simple expression for intensity <span
-         class="math inline">\(I(x,y)=I_{max}e^{-2(x^2+y^2)/w^2}\)</span>?</li>
-         </ol>
-         <p>The Gaussian beam equations given in Equations <a
-         href="#eq:8">8</a> -<a href="#eq:11">11</a> assume the beam
-         comes to its narrowest width (called the beam waist, <span
-         class="math inline">\(w_0\)</span>) at <span
-         class="math inline">\(z=0\)</span>.</p>
-         <ol start="3" type="1">
-         <li>How would you rewrite these four equations assuming the
-         beam waist occurs at a different position <span
-         class="math inline">\(z=z_w\)</span>?</li>
-         <li>One way to check your answer is to make sure the equations
-         simplify to Equations <a href="#eq:8">8</a> -<a
-         href="#eq:11">11</a> in the special case of <span
-         class="math inline">\(z_w=0\)</span>.</li>
-         <li>Write a Python function to fit <a
-         href="../resources/lab-guides/gaussian-laser-beams/Test_beam_width_data.csv">this
-         data set</a>. Assume the wavelength is <span
-         class="math inline">\(\lambda=632.8\ nm\)</span>.
-         <ol type="1">
-         <li>What is the functional form for your fit function?</li>
-         <li>What are the different fit parameters and what do they
-         mean?</li>
-         <li>Is it a linear or nonlinear fit function? Why?</li>
-         </ol></li>
-         <li>You should get that a beam waist of <span
-         class="math inline">\(w_0=(93.9\pm0.1)\times10^{-6}\ m\)</span>
-         and occurs at a position <span
-         class="math inline">\(z_w=0.3396\pm0.0003\ m\)</span>.</li>
-         </ol>
+         z}{\pi w_0^2}\right)^2}\text{.}\]</span></p>
+         <p>You will use this model to analyze your automated
+         measurements.</p>
          <h1 data-number="3" id="automation-of-the-measurement"><span
          class="header-section-number">3</span> Automation of the
          Measurement</h1>
@@ -424,10 +228,13 @@
          mirrors, and the electromagnetic mode that best matches the
          shape of the mirrors is the Gaussian beam.</p>
          <ol type="1">
-         <li>Considering Equations <a href="#eq:8">8</a> -<a
-         href="#eq:11">11</a>, which aspects of the Gaussian beam model
-         can you test? Are there any parts of the model you cannot
-         test?</li>
+         <li>Considering the Gaussian beam equations from Week 3’s
+         prelab (the electric field, beam width <span
+         class="math inline">\(w(z)\)</span>, radius of curvature <span
+         class="math inline">\(R(z)\)</span>, and Gouy phase <span
+         class="math inline">\(\zeta(z)\)</span>), which aspects of the
+         Gaussian beam model can you test? Are there any parts of the
+         model you cannot test?</li>
          <li>Measure the beam width <span
          class="math inline">\(w\)</span> at various distances from the
          laser. Consider carefully what distance should be varying. Is
@@ -438,8 +245,9 @@
          sticks and other measurement tools are available in the
          lab)?</li>
          <li>Fit the data to <span class="math inline">\(w(z)\)</span>,
-         the predicted expression for a Gaussian beam given in Equation
-         <a href="#eq:9">9</a>.</li>
+         the predicted expression for a Gaussian beam: <span
+         class="math inline">\(w(z)=w_0\sqrt{1+\left(\frac{\lambda
+         z}{\pi w_0^2}\right)^2}\)</span>.</li>
          <li>What is the value of the beam waist <span
          class="math inline">\(w_0\)</span> (including uncertainty)?
          Where does the beam waist <span
@@ -453,7 +261,7 @@
          <p>Pick a non-compound lens (not the fancy camera lenses) with
          focal length in the range 100-200 mm and assemble it in a lens
          mount with a retaining ring (see Figure <a
-         href="#fig:mount-assembley">2</a>). Recall that it’s very
+         href="#fig:mount-assembley">1</a>). Recall that it’s very
          important that you <strong>do not handle optical
          components</strong> (lenses, mirrors, polarizers, wave plates,
          beam splitters, etc.) <strong>with your bare hands</strong>.
@@ -478,16 +286,17 @@
          occur?</li>
          <li>What factors affect the beam profile after the lens?</li>
          <li>Does the measured <span class="math inline">\(w(z)\)</span>
-         match the Gaussian beam prediction given in Equation <a
-         href="#eq:9">9</a>?</li>
+         match the Gaussian beam prediction <span
+         class="math inline">\(w(z)=w_0\sqrt{1+\left(\frac{\lambda
+         z}{\pi w_0^2}\right)^2}\)</span>?</li>
          </ol>
          <div id="fig:mount-assembley" class="fignos">
          <figure>
          <img
          src="../resources/lab-guides/gaussian-laser-beams/mount-assembly.png"
          style="width:15cm"
-         alt="Figure 2: Mounting assemblies for a mirror (left) and a lens (right)." />
-         <figcaption aria-hidden="true"><span>Figure 2:</span> Mounting
+         alt="Figure 1: Mounting assemblies for a mirror (left) and a lens (right)." />
+         <figcaption aria-hidden="true"><span>Figure 1:</span> Mounting
          assemblies for a mirror (left) and a lens (right).</figcaption>
          </figure>
          </div>
@@ -497,11 +306,11 @@
          modeling the effect of a lens</h2>
          <p>One of the simplest ways to model the effect of a lens is
          the thin lens equation, which is based on a ray model of light
-         (see Figure <a href="#fig:ray-diagram">3</a>).</p>
+         (see Figure <a href="#fig:ray-diagram">2</a>).</p>
          <p><span class="math display">\[
          \frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}\]</span></p>
          <ol type="1">
-         <li>Redraw Figure <a href="#fig:ray-diagram">3</a> to show how
+         <li>Redraw Figure <a href="#fig:ray-diagram">2</a> to show how
          it would change when the light is modeled as a Gaussian beam,
          rather than rays. In particular, where should the beam waists
          occur? What determines the relative width of the beam
@@ -520,8 +329,8 @@
          <img
          src="../resources/lab-guides/gaussian-laser-beams/ray-diagram.png"
          style="width:15cm"
-         alt="Figure 3: Diagram showing the focusing of light by a thin lens in the ray approximation. The diagram identifies the quantities in the thin lens equation: image distance, object distance, and focal length." />
-         <figcaption aria-hidden="true"><span>Figure 3:</span> Diagram
+         alt="Figure 2: Diagram showing the focusing of light by a thin lens in the ray approximation. The diagram identifies the quantities in the thin lens equation: image distance, object distance, and focal length." />
+         <figcaption aria-hidden="true"><span>Figure 2:</span> Diagram
          showing the focusing of light by a thin lens in the ray
          approximation. The diagram identifies the quantities in the
          thin lens equation: image distance, object distance, and focal
@@ -838,7 +647,7 @@
          </ol>
                </div>
             <!-- Mathjax -->
-      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       <script>
 
       </script>

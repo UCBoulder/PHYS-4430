@@ -4,14 +4,14 @@ title: "Gaussian Beams - Week 4"
 
 # Goals
 
-In week one, we measured the profile of the laser and found it to be Gaussian to a good approximation. However, we don't have any model for how the profile changes as the beam propagates and we will work to improve our model. Also, we will apply automation to more rapidly take data. The full set of learning goals includes:
+In week one, we measured the profile of the laser and found it to be Gaussian to a good approximation. Last week, we derived the Gaussian beam model and learned how the profile changes as the beam propagates. This week, we will apply automation to more rapidly take data and test the model experimentally. The full set of learning goals includes:
 
 1. Automated data acquisition.
    - Python with Thorlabs Kinesis SDK
    - USB DAQ (NI USB-6009) with nidaqmx
 
 2. Fitting and analysis of data in Python
-3. Using a predictive model of Gaussian laser beams
+3. Using the predictive model of Gaussian laser beams from Week 3
    - Contrast Gaussian beams with geometric optics
 
 4. Measure profiles of a Gaussian beam, and extract the Gaussian beam parameters
@@ -22,77 +22,11 @@ In week one, we measured the profile of the laser and found it to be Gaussian to
 
 # Prelab
 
-Light is a propagating oscillation of the electromagnetic field. The general principles which govern electromagnetic waves are Maxwell's equations. From these general relations, a vector wave equation can be derived.
+This week's prelab focuses on preparing for automated data acquisition. Review the Gaussian beam theory from Week 3's prelab, particularly the beam width equation:
 
-$$ \nabla^2\vec{E}=\mu_0\epsilon_0 \frac{\partial^2\vec{E}}{\partial t^2}\text{.}$$ {#eq:1}
+$$w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}\text{.}$$
 
-
-One of the simplest solutions is that of a plane wave propagating in the $\hat{z}$ direction:
-
-$$\vec{E}(x,y,z,t)=E_x\hat{x}cos(kz-\omega t+\phi_x)+E_y\hat{y}cos(kz-\omega t+\phi_y)\text{.}\quad\quad$$ {#eq:2}
-
-But as the measurements from the first week showed, our laser beams are commonly well approximated by a beam shape with a Gaussian intensity profile. Apparently, since these Gaussian profile beams exist, they must be solutions of the wave equation. The next section will discuss how we derive the Gaussian beam electric field, and give a few key results.
-
-## Paraxial wave equation {#sec:wave-eqn}
-
-One important thing to note about the beam output from most lasers is that the width of the beam changes very slowly compared to the wavelength of light. Assume a complex solution, where the beam is propagating in the $\hat{z}$-direction, with the electric field polarization in the $\hat{x}$-direction:
-
-$$\vec{E}(x,y,z,t)=\hat{x}A(x,y,z)e^{kz-\omega t}\text{.}$$ {#eq:3}
-
-The basic idea is that the spatial pattern of the beam, described by the function $A(x,y,z)$, does not change much over a wavelength. In the case of the He-Ne laser output, the function $A(x,y,z)$ is a Gaussian profile that changes its width as a function of $z$. If we substitute the trial solution in Equation @eq:3 into the wave equation in Equation @eq:1 we get
-
-$$\hat{x} \left[ \left(\frac{\partial^2A}{\partial x^2} +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial z^2} \right) +2ik\frac{\partial A}{\partial z} - k^2A \right]e^{i(kz-\omega t)}=\hat{x}\mu_0\epsilon_oA(-\omega^2)e^{i(kz-\omega t)}\text{.}\quad\quad$$ {#eq:4}
-
-This can be simplified recognizing that $k^2=\omega^2/c^2=\mu_0\epsilon_0\omega^2$, where the speed of light is related to the permeability and permittivity of free space by $c=(\mu_0\epsilon_0)^{-1/2}$. Also, the $\hat{x}e^{i(kz-\omega t)}$ term is common to both sides and can be dropped, which results in
-
-$$\left(\frac{\partial^2A}{\partial x^2} +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial z^2} \right) +2ik\frac{\partial A}{\partial z}=0\text{.}\quad\quad$$ {#eq:5}
-
-So far, we have made no approximation to the solution or the wave equation, but now we apply the assumption that $\partial{A}(x,y,z)/\partial{z}$ changes slowly over a wavelength $\lambda = 2\pi /k$, so we neglect the term
-
-$$\left| \frac{\partial^2A}{\partial z^2} \right| \ll \left|2k\frac{\partial A}{\partial z}\right|\text{.}$$ {#eq:6}
-
-Finally, we get the paraxial wave equation,
-
-$$\frac{\partial^2A}{\partial x^2} +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial z^2}=0\text{.}$$ {#eq:7}
-
-One set of solutions to the paraxial wave equation are Gauss-Hermite beams, which have an intensity profiles like those shown in Figure @fig:gauss-hermite. These are the same solutions as for the quantum simple harmonic oscillator, a topic that could be further explored as a final project.
-
-The simplest of these solutions is the Gaussian beam, which has an electric field given by
-
-$$\vec{E}(x,y,z,t) = \vec{E}_0\frac{w_0}{w(z)}exp\left(-\frac{x^2+y^2}{w^2(z)}\right)exp\left(ik\frac{x^2+y^2}{2R(z)}\right)e^{-i\zeta(z)}e^{i(kz-\omega t)}\text{,}\quad\quad$$ {#eq:8}
-
-where $\vec{E_0}$ is a time-independent vector (orthogonal to propagation direction $\hat{z}$) whose magnitude denotes the amplitude of the laser's electric field and the direction denotes the direction of polarization. The beam radius $w(z)$is given by
-
-$$w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}\text{.}$$ {#eq:9}
-
-$R(z)$,the radius of curvature of the wavefront, is given by
-
-$$R(z)=z\left(1+\left(\frac{\pi w_0^2}{\lambda z}\right)^2\right)\text{,}$$ {#eq:10}
-
-and the Gouy phase is given by
-
-$$\zeta(z)=arctan\frac{\pi w_0^2}{\lambda z}\text{.}$$ {#eq:11}
-
-The remarkable thing about all these equations is that only two parameters need to be specified to give the whole beam profile: the wavelength $\lambda$ and the beam waist $w_0$, which is the narrowest point in the beam profile. There is a more general set of Hermite Gaussian modes which are shown in Figure @fig:gauss-hermite. The laser cavity typically produces the (0,0) mode shown in the upper left corner, but an optical cavity can also be used to create these other modes – a topic that can be explored in the final projects.
-
-![Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam width, $w$.](../resources/lab-guides/gaussian-laser-beams/gauss-hermite.png){#fig:gauss-hermite width="20cm"}
-
-## Trying out the gaussian beam model
-
-In the first week of the lab, we assumed the intensity profile of the Gaussian beam was given by $I(x,y)=I_{max}e^{-2(x^2+y^2)/w^2}$. The equation for the electric field of the Gaussian Beam in Equation @eq:8 looks substantially more complicated.
-
-1. How are the expressions for electric field and intensity related?
-2. Is Equation @eq:8 consistent with the simple expression for intensity $I(x,y)=I_{max}e^{-2(x^2+y^2)/w^2}$?
-
-The Gaussian beam equations given in Equations @eq:8 -@eq:11 assume the beam comes to its narrowest width (called the beam waist, $w_0$) at $z=0$.
-
-3.  How would you rewrite these four equations assuming the beam waist occurs at a different position $z=z_w$?
-4.  One way to check your answer is to make sure the equations simplify to Equations @eq:8 -@eq:11 in the special case of $z_w=0$.
-5.  Write a Python function to fit [this data set](../resources/lab-guides/gaussian-laser-beams/Test_beam_width_data.csv). Assume the wavelength is $\lambda=632.8\ nm$.
-    1. What is the functional form for your fit function?
-    2. What are the different fit parameters and what do they mean?
-    3. Is it a linear or nonlinear fit function? Why?
-6.  You should get that a beam waist of $w_0=(93.9\pm0.1)\times10^{-6}\ m$ and occurs at a position $z_w=0.3396\pm0.0003\ m$.
+You will use this model to analyze your automated measurements.
 
 # Automation of the Measurement
 
@@ -118,9 +52,9 @@ The Gaussian beam model of light is useful because it often describes the beam o
 
 There is a straight-forward reason that a He-Ne laser should produce a Gaussian beam. The laser light builds up between two mirrors, and the electromagnetic mode that best matches the shape of the mirrors is the Gaussian beam.
 
-1. Considering Equations @eq:8 -@eq:11, which aspects of the Gaussian beam model can you test? Are there any parts of the model you cannot test?
+1. Considering the Gaussian beam equations from Week 3's prelab (the electric field, beam width $w(z)$, radius of curvature $R(z)$, and Gouy phase $\zeta(z)$), which aspects of the Gaussian beam model can you test? Are there any parts of the model you cannot test?
 2. Measure the beam width $w$ at various distances from the laser. Consider carefully what distance should be varying. Is it the distance from laser to razor, the distance from razor to photodetector, or the distance from laser to photodetector? How did you decide what positions $z$ to measure the width at (meter sticks and other measurement tools are available in the lab)?
-3. Fit the data to $w(z)$, the predicted expression for a Gaussian beam given in Equation @eq:9.
+3. Fit the data to $w(z)$, the predicted expression for a Gaussian beam: $w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$.
 4. What is the value of the beam waist $w_0$ (including uncertainty)? Where does the beam waist $z_w$ occur relative to the laser?
 
 ## How does a lens change a Gaussian beam?
@@ -134,7 +68,7 @@ Design and carry out an experiment to quantitatively answer the questions below.
 3. Does the beam retain a Gaussian profile after the lens?
 4. What is the new beam waist $w_0$ and where does it occur?
 5. What factors affect the beam profile after the lens?
-6. Does the measured $w(z)$ match the Gaussian beam prediction given in Equation @eq:9?
+6. Does the measured $w(z)$ match the Gaussian beam prediction $w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$?
 
 ![Mounting assemblies for a mirror (left) and a lens (right).](../resources/lab-guides/gaussian-laser-beams/mount-assembly.png){#fig:mount-assembley width="15cm"}
 

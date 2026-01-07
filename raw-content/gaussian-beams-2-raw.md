@@ -29,6 +29,7 @@ After completing the prelab, you will be able to:
 3. Plot residuals to visually inspect the goodness of a fit.
 4. Interpret the uncertainty in fit parameters from `scipy.optimize.curve_fit`.
 5. Compute $\chi^2$ for a fit and use it to determine if a fit is "good".
+6. Create plots with error bars using Matplotlib.
 
 After completing the lab, you will be able to:
 
@@ -49,6 +50,7 @@ This week's prelab continues the measurement uncertainty and error analysis expl
 3. Plot residuals to visually inspect the goodness of a fit.
 4. Interpret the uncertainty in fit parameters.
 5. Compute $\chi^2$ for a fit and use it to determine if a fit is "good".
+6. Create plots with error bars using Matplotlib.
 
 ## Useful readings
 
@@ -372,6 +374,99 @@ popt, pcov = curve_fit(
 1. Why can overestimating the uncertainty make your fit appear good (i.e., $\frac{\chi^2}{N-n}\approx 1$)?
 
 Overestimating the uncertainties makes the fit seem good (according to a $\chi^2$ test), even when it might be obviously a bad fit. It is best to do the $\chi^2$ test using an honest estimate of your uncertainties. If the $\chi^2$ is larger than expected $(\chi^2>𝑁−𝑛)$, then you should consider both the possibility of systematic error sources and the quality of your estimates of the uncertainties. On the other hand, if the $\chi^2$ test is good $(\chi^2\approx 𝑁−𝑛)$, then it shows you have a good handle on the model of your system, and your sources of uncertainty. Finally, if $\chi^2\ll (𝑁−𝑛)$, this likely indicates overestimated uncertainties.
+
+## Error bars
+
+The error bar is a graphical way to display the uncertainty in a measurement. In order to put error bars on a plot you must first estimate the error for each point. Anytime you include error bars in a plot you should explain how the uncertainty in each point was estimated (e.g., you "eyeballed" the uncertainty, or you sampled it $N$ times and took the standard deviation of the mean, etc.)
+
+### Error bars in Python with Matplotlib
+
+Creating plots with error bars in Python is straightforward using `plt.errorbar()`:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load data with uncertainties
+data = np.loadtxt('gaussian_data_with_errors.txt', skiprows=1)
+x = data[:, 0]      # Position
+y = data[:, 1]      # Voltage
+y_err = data[:, 2]  # Uncertainty
+
+# Create plot with error bars
+plt.figure(figsize=(10, 6))
+plt.errorbar(x, y, yerr=y_err, fmt='o', capsize=3,
+             label='Data with uncertainties')
+plt.xlabel('Micrometer Position (inches)')
+plt.ylabel('Photodetector Voltage (V)')
+plt.title('Gaussian Beam Width Measurement')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.show()
+```
+
+The `errorbar()` function parameters:
+- `x`, `y`: Data points
+- `yerr`: Uncertainty values (can also use `xerr` for horizontal error bars)
+- `fmt='o'`: Marker style (circles)
+- `capsize=3`: Size of error bar caps
+
+### Example: Gaussian laser beam width measurement
+
+Suppose you had estimated the uncertainty at every point in a width measurement of your Gaussian laser beam to be $0.04 \ V$. This error was chosen to demonstrate the mechanics of making a plot with error bars, but the uncertainty in the actual data was probably smaller than this.
+
+<center>
+
+| Micrometer Position (inches) | Photodetector Voltage (V) | Estimated uncertainty (V) |
+| :--------------------------: | :-----------------------: | :-----------------------: |
+|            0.410             |           0.015           |           0.04            |
+|            0.412             |           0.016           |           0.04            |
+|            0.414             |           0.017           |           0.04            |
+|            0.416             |           0.026           |           0.04            |
+|            0.418             |           0.060           |           0.04            |
+|            0.420             |           0.176           |           0.04            |
+|            0.422             |           0.460           |           0.04            |
+|            0.424             |           0.849           |           0.04            |
+|            0.426             |           1.364           |           0.04            |
+|            0.428             |           1.971           |           0.04            |
+|            0.430             |           2.410           |           0.04            |
+|            0.432             |           2.703           |           0.04            |
+|            0.434             |           2.795           |           0.04            |
+|            0.436             |           2.861           |           0.04            |
+|            0.438             |           2.879           |           0.04            |
+|            0.440             |           2.884           |           0.04            |
+
+Table: Table of data with a fixed uncertainty used to illustrate creating plots with error bars. {#tbl:example-data}
+
+</center>
+
+<br>
+
+Download [this data set](../resources/lab-guides/gaussian-laser-beams/gaussian_data_with_errors.txt) and create a plot with error bars like Figure @fig:gauss-example.
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load data
+data = np.loadtxt('gaussian_data_with_errors.txt', skiprows=1)
+position = data[:, 0]
+voltage = data[:, 1]
+uncertainty = data[:, 2]
+
+# Create plot
+plt.figure(figsize=(10, 6))
+plt.errorbar(position, voltage, yerr=uncertainty,
+             fmt='o', capsize=3, markersize=5)
+plt.xlabel('Position (inches)')
+plt.ylabel('Photodetector Output (V)')
+plt.title('Gaussian Beam Width Measurement')
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.show()
+```
+
+![Plot of the provided Gaussian Beam data showing error bars.](../resources/lab-guides/gaussian-laser-beams/gauss-example.png){#fig:gauss-example width="15cm"}
 
 # Introduction to Python for Data Acquisition
 

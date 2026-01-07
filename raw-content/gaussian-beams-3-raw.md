@@ -4,9 +4,16 @@ title: "Gaussian Beams - Week 3"
 
 # Overview
 
-The third week of the Gaussian Beams lab builds upon the Python data acquisition skills you developed last week. We will focus on understanding digital sampling and using spectral analysis tools to perform Fourier Transforms in real time. This will allow you to quickly vary parameters and observe how they affect the frequency spectrum. Be sure to document all of your work in your lab notebook.
+The third week of the Gaussian Beams lab builds upon the Python data acquisition skills you developed last week. This week's prelab covers error propagation (how uncertainties in measured quantities affect derived quantities) and introduces the theoretical foundation for Gaussian laser beams, deriving the equations you'll use in Week 4's experiments. In the lab portion, we will focus on understanding digital sampling and using spectral analysis tools to perform Fourier Transforms in real time. This will allow you to quickly vary parameters and observe how they affect the frequency spectrum. Be sure to document all of your work in your lab notebook.
 
 # Goals
+
+In this week's prelab, you will…
+
+1. …learn to propagate uncertainties from measured to derived quantities.
+2. …derive the paraxial wave equation from Maxwell's equations.
+3. …understand the Gaussian beam solution and its key parameters ($w_0$, $w(z)$, $R(z)$, $\zeta(z)$).
+4. …fit Gaussian beam data to extract beam waist and position.
 
 In the first part of this week's lab, you will…
 
@@ -24,7 +31,7 @@ You will gain an understanding of Fourier Transforms by…
 
 # Prelab
 
-This week's prelab builds upon our exploration of measurement uncertainty from the previous two weeks. Here we will focus on error propagation and how to display data with uncertainties.
+This week's prelab covers two topics: error propagation and the theoretical foundation for Gaussian laser beams.
 
 ## Error propagation - from measured to derived quantities
 
@@ -91,7 +98,7 @@ print(f"R = {R}")  # Shows value ± uncertainty
 
 ### Exercise: Beam width uncertainty
 
-In next week's prelab, we will model a Gaussian beam's width $w(z)$ as:
+Later in this prelab, we will model a Gaussian beam's width $w(z)$ as:
 
 $$w(z) = w_0\sqrt{1+\left(\frac{z-z_0}{\pi w_0^2/\lambda}\right)^2}\text{.}$$
 
@@ -125,98 +132,79 @@ The wavelength is given by $\lambda = 632.8 \pm 0.1 \ nm$.
    print(f"w(z) = {w}")
    ```
 
-## Error bars
+## Gaussian beam theory
 
-The error bar is a graphical way to display the uncertainty in a measurement. In order to put error bars on a plot you must first estimate the error for each point. Anytime you include error bars in a plot you should explain how the uncertainty in each point was estimated (e.g., you "eyeballed" the uncertainty, or you sampled it $N$ times and took the standard deviation of the mean, etc.)
+Light is a propagating oscillation of the electromagnetic field. The general principles which govern electromagnetic waves are Maxwell's equations. From these general relations, a vector wave equation can be derived.
 
-### Error bars in Python with Matplotlib
+$$ \nabla^2\vec{E}=\mu_0\epsilon_0 \frac{\partial^2\vec{E}}{\partial t^2}\text{.}$$ {#eq:1}
 
-Creating plots with error bars in Python is straightforward using `plt.errorbar()`:
 
-```python
-import numpy as np
-import matplotlib.pyplot as plt
+One of the simplest solutions is that of a plane wave propagating in the $\hat{z}$ direction:
 
-# Load data with uncertainties
-data = np.loadtxt('gaussian_data_with_errors.txt', skiprows=1)
-x = data[:, 0]      # Position
-y = data[:, 1]      # Voltage
-y_err = data[:, 2]  # Uncertainty
+$$\vec{E}(x,y,z,t)=E_x\hat{x}cos(kz-\omega t+\phi_x)+E_y\hat{y}cos(kz-\omega t+\phi_y)\text{.}\quad\quad$$ {#eq:2}
 
-# Create plot with error bars
-plt.figure(figsize=(10, 6))
-plt.errorbar(x, y, yerr=y_err, fmt='o', capsize=3,
-             label='Data with uncertainties')
-plt.xlabel('Micrometer Position (inches)')
-plt.ylabel('Photodetector Voltage (V)')
-plt.title('Gaussian Beam Width Measurement')
-plt.legend()
-plt.grid(True, alpha=0.3)
-plt.show()
-```
+But as the measurements from the first week showed, our laser beams are commonly well approximated by a beam shape with a Gaussian intensity profile. Apparently, since these Gaussian profile beams exist, they must be solutions of the wave equation. The next section will discuss how we derive the Gaussian beam electric field, and give a few key results.
 
-The `errorbar()` function parameters:
-- `x`, `y`: Data points
-- `yerr`: Uncertainty values (can also use `xerr` for horizontal error bars)
-- `fmt='o'`: Marker style (circles)
-- `capsize=3`: Size of error bar caps
+## Paraxial wave equation {#sec:wave-eqn}
 
-### Example: Gaussian laser beam width measurement
+One important thing to note about the beam output from most lasers is that the width of the beam changes very slowly compared to the wavelength of light. Assume a complex solution, where the beam is propagating in the $\hat{z}$-direction, with the electric field polarization in the $\hat{x}$-direction:
 
-Suppose you had estimated the uncertainty at every point in a width measurement of your Gaussian laser beam to be $0.04 \ V$. This error was chosen to demonstrate the mechanics of making a plot with error bars, but the uncertainty in the actual data was probably smaller than this.
+$$\vec{E}(x,y,z,t)=\hat{x}A(x,y,z)e^{kz-\omega t}\text{.}$$ {#eq:3}
 
-<center>
+The basic idea is that the spatial pattern of the beam, described by the function $A(x,y,z)$, does not change much over a wavelength. In the case of the He-Ne laser output, the function $A(x,y,z)$ is a Gaussian profile that changes its width as a function of $z$. If we substitute the trial solution in Equation @eq:3 into the wave equation in Equation @eq:1 we get
 
-| Micrometer Position (inches) | Photodetector Voltage (V) | Estimated uncertainty (V) |
-| :--------------------------: | :-----------------------: | :-----------------------: |
-|            0.410             |           0.015           |           0.04            |
-|            0.412             |           0.016           |           0.04            |
-|            0.414             |           0.017           |           0.04            |
-|            0.416             |           0.026           |           0.04            |
-|            0.418             |           0.060           |           0.04            |
-|            0.420             |           0.176           |           0.04            |
-|            0.422             |           0.460           |           0.04            |
-|            0.424             |           0.849           |           0.04            |
-|            0.426             |           1.364           |           0.04            |
-|            0.428             |           1.971           |           0.04            |
-|            0.430             |           2.410           |           0.04            |
-|            0.432             |           2.703           |           0.04            |
-|            0.434             |           2.795           |           0.04            |
-|            0.436             |           2.861           |           0.04            |
-|            0.438             |           2.879           |           0.04            |
-|            0.440             |           2.884           |           0.04            |
+$$\hat{x} \left[ \left(\frac{\partial^2A}{\partial x^2} +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial z^2} \right) +2ik\frac{\partial A}{\partial z} - k^2A \right]e^{i(kz-\omega t)}=\hat{x}\mu_0\epsilon_oA(-\omega^2)e^{i(kz-\omega t)}\text{.}\quad\quad$$ {#eq:4}
 
-Table: Table of data with a fixed uncertainty used to illustrate creating plots with error bars. {#tbl:example-data}
+This can be simplified recognizing that $k^2=\omega^2/c^2=\mu_0\epsilon_0\omega^2$, where the speed of light is related to the permeability and permittivity of free space by $c=(\mu_0\epsilon_0)^{-1/2}$. Also, the $\hat{x}e^{i(kz-\omega t)}$ term is common to both sides and can be dropped, which results in
 
-</center>
+$$\left(\frac{\partial^2A}{\partial x^2} +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial z^2} \right) +2ik\frac{\partial A}{\partial z}=0\text{.}\quad\quad$$ {#eq:5}
 
-<br>
+So far, we have made no approximation to the solution or the wave equation, but now we apply the assumption that $\partial{A}(x,y,z)/\partial{z}$ changes slowly over a wavelength $\lambda = 2\pi /k$, so we neglect the term
 
-Download [this data set](../resources/lab-guides/gaussian-laser-beams/gaussian_data_with_errors.txt) and create a plot with error bars like Figure @fig:gauss-example.
+$$\left| \frac{\partial^2A}{\partial z^2} \right| \ll \left|2k\frac{\partial A}{\partial z}\right|\text{.}$$ {#eq:6}
 
-```python
-import numpy as np
-import matplotlib.pyplot as plt
+Finally, we get the paraxial wave equation,
 
-# Load data
-data = np.loadtxt('gaussian_data_with_errors.txt', skiprows=1)
-position = data[:, 0]
-voltage = data[:, 1]
-uncertainty = data[:, 2]
+$$\frac{\partial^2A}{\partial x^2} +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial z^2}=0\text{.}$$ {#eq:7}
 
-# Create plot
-plt.figure(figsize=(10, 6))
-plt.errorbar(position, voltage, yerr=uncertainty,
-             fmt='o', capsize=3, markersize=5)
-plt.xlabel('Position (inches)')
-plt.ylabel('Photodetector Output (V)')
-plt.title('Gaussian Beam Width Measurement')
-plt.grid(True, alpha=0.3)
-plt.tight_layout()
-plt.show()
-```
+One set of solutions to the paraxial wave equation are Gauss-Hermite beams, which have an intensity profiles like those shown in Figure @fig:gauss-hermite. These are the same solutions as for the quantum simple harmonic oscillator, a topic that could be further explored as a final project.
 
-![Plot of the provided Gaussian Beam data showing error bars.](../resources/lab-guides/gaussian-laser-beams/gauss-example.png){#fig:gauss-example width="15cm"}
+The simplest of these solutions is the Gaussian beam, which has an electric field given by
+
+$$\vec{E}(x,y,z,t) = \vec{E}_0\frac{w_0}{w(z)}exp\left(-\frac{x^2+y^2}{w^2(z)}\right)exp\left(ik\frac{x^2+y^2}{2R(z)}\right)e^{-i\zeta(z)}e^{i(kz-\omega t)}\text{,}\quad\quad$$ {#eq:8}
+
+where $\vec{E_0}$ is a time-independent vector (orthogonal to propagation direction $\hat{z}$) whose magnitude denotes the amplitude of the laser's electric field and the direction denotes the direction of polarization. The beam radius $w(z)$is given by
+
+$$w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}\text{.}$$ {#eq:9}
+
+$R(z)$,the radius of curvature of the wavefront, is given by
+
+$$R(z)=z\left(1+\left(\frac{\pi w_0^2}{\lambda z}\right)^2\right)\text{,}$$ {#eq:10}
+
+and the Gouy phase is given by
+
+$$\zeta(z)=arctan\frac{\pi w_0^2}{\lambda z}\text{.}$$ {#eq:11}
+
+The remarkable thing about all these equations is that only two parameters need to be specified to give the whole beam profile: the wavelength $\lambda$ and the beam waist $w_0$, which is the narrowest point in the beam profile. There is a more general set of Hermite Gaussian modes which are shown in Figure @fig:gauss-hermite. The laser cavity typically produces the (0,0) mode shown in the upper left corner, but an optical cavity can also be used to create these other modes – a topic that can be explored in the final projects.
+
+![Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam width, $w$.](../resources/lab-guides/gaussian-laser-beams/gauss-hermite.png){#fig:gauss-hermite width="20cm"}
+
+## Trying out the Gaussian beam model
+
+In the first week of the lab, we assumed the intensity profile of the Gaussian beam was given by $I(x,y)=I_{max}e^{-2(x^2+y^2)/w^2}$. The equation for the electric field of the Gaussian Beam in Equation @eq:8 looks substantially more complicated.
+
+1. How are the expressions for electric field and intensity related?
+2. Is Equation @eq:8 consistent with the simple expression for intensity $I(x,y)=I_{max}e^{-2(x^2+y^2)/w^2}$?
+
+The Gaussian beam equations given in Equations @eq:8 -@eq:11 assume the beam comes to its narrowest width (called the beam waist, $w_0$) at $z=0$.
+
+3.  How would you rewrite these four equations assuming the beam waist occurs at a different position $z=z_w$?
+4.  One way to check your answer is to make sure the equations simplify to Equations @eq:8 -@eq:11 in the special case of $z_w=0$.
+5.  Write a Python function to fit [this data set](../resources/lab-guides/gaussian-laser-beams/Test_beam_width_data.csv). Assume the wavelength is $\lambda=632.8\ nm$.
+    1. What is the functional form for your fit function?
+    2. What are the different fit parameters and what do they mean?
+    3. Is it a linear or nonlinear fit function? Why?
+6.  You should get that a beam waist of $w_0=(93.9\pm0.1)\times10^{-6}\ m$ and occurs at a position $z_w=0.3396\pm0.0003\ m$.
 
 # Digital Sampling of Data
 
