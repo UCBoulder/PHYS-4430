@@ -805,16 +805,16 @@ pip install numpy
 ## Python Learning
 
 - [Python Tutorial](https://docs.python.org/3/tutorial/) - Official Python documentation
-* [NumPy Quickstart](https://numpy.org/doc/stable/user/quickstart.html)
-* [Matplotlib Tutorials](https://matplotlib.org/stable/tutorials/index.html)
-* [SciPy Curve Fitting](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html)
+- [NumPy Quickstart](https://numpy.org/doc/stable/user/quickstart.html)
+- [Matplotlib Tutorials](https://matplotlib.org/stable/tutorials/index.html)
+- [SciPy Curve Fitting](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html)
 
 ## Hardware Documentation
 
 - [NI-DAQmx Python Documentation](https://nidaqmx-python.readthedocs.io/)
-* [NI USB-6009 Specifications](https://www.ni.com/en-us/support/model.usb-6009.html)
-* [Thorlabs Kinesis Documentation](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control)
+- [NI USB-6009 Specifications](https://www.ni.com/en-us/support/model.usb-6009.html)
+- [Thorlabs Kinesis Documentation](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control)
 
 ## Course-Specific
 
-- [Download Python Examples](resources/lab-guides/gaussian-laser-beams/python/)
+- [Download Python Examples](/PHYS-4430/resources/lab-guides/gaussian-laser-beams/python/)
