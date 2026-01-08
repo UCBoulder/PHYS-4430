@@ -4,18 +4,22 @@ title: "Gaussian Beams - Week 4"
 
 # Goals
 
-In week one, we measured the profile of the laser and found it to be Gaussian to a good approximation. Last week, we derived the Gaussian beam model and learned how the profile changes as the beam propagates. This week, we will apply automation to more rapidly take data and test the model experimentally. The full set of learning goals includes:
+In Week 1, we measured the profile of the laser and found it to be Gaussian to a good approximation. In Week 3, we derived the Gaussian beam model and learned how the profile changes as the beam propagates. This week, we will apply automation to more rapidly take data and test the model experimentally. Since you already set up and verified the motor controller in Week 2, we can focus on the physics.
 
-1. Automated data acquisition.
+The full set of learning goals includes:
+
+1. Automated data acquisition
    - Python with Thorlabs Kinesis SDK
    - USB DAQ (NI USB-6009) with nidaqmx
 
 2. Fitting and analysis of data in Python
+
 3. Using the predictive model of Gaussian laser beams from Week 3
    - Contrast Gaussian beams with geometric optics
 
 4. Measure profiles of a Gaussian beam, and extract the Gaussian beam parameters
-5. Effect of a lens on Gaussian beams.
+
+5. Effect of a lens on Gaussian beams
    - Is it still Gaussian?
    - Does the thin lens equation apply to Gaussian beams?
    - What limits the minimum achievable spot size?
@@ -28,150 +32,23 @@ $$w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}\text{.}$$
 
 You will use this model to analyze your automated measurements.
 
+# Verify Your Setup
+
+In Week 2, you set up and verified the motor controller and DAQ. Before starting the experiments, confirm everything is still working:
+
+1. [ ] DAQ can read voltages from the photodetector
+2. [ ] Python can connect to the motor controller (check your serial number: ____________)
+3. [ ] Motor moves when commanded
+
+If you encounter issues, refer back to the troubleshooting section in Week 2's lab guide.
+
 # Automation of the Measurement
 
-Before we begin this week's lab, reflect on your experience from week one (and perhaps refer to your lab notebook entry to help guide your memory).
+Before we begin this week's lab, reflect on your experience from Week 1 (and perhaps refer to your lab notebook entry to help guide your memory).
 
-1. In week one, how long did the total process of data taking through analysis take to make a measurement of the beam width $w$?
-2. In this lab, you may have to take 20-30 beam profiles in order to measure $w_0$ and $z_w$. How long would this take with your current method?
-3. What are the most time consuming portions of the process? Which parts of the process would benefit from automation?
-
-In the next step, you will use Python and your NI USB-6009 data acquisition device to automate the procedure for measuring the width of the laser beam. You can do this with your own laptop or with the laptops in the lab.
-
-In order to set up your measurement automation you will use a Python script that controls the motor and reads the photodetector. Instructions can be found in the Appendix @sec:python-automation.
-
-4. Test and run the automated Python program and evaluate the result using the same Python analysis from week one.
-5. Before you go on, make sure the automated acquisition and analysis routine gives the same result as the method you used in week one.
-6. How long does your new measurement method take? (2-3 minutes per $w$ measurement is very good.)
-
-# The Experiment
-
-The Gaussian beam model of light is useful because it often describes the beam of light created by lasers. This section will test the validity of the model for our He-Ne laser beam. Also, the effect of a lens on a Gaussian beam will be tested, and the Gaussian beam model will be compared with predictions from the simpler ray theory. Lastly, the Gaussian beam theory can be used to describe the minimum possible focus size for a beam and a lens.
-
-## Measuring the beam profile of your He-Ne laser without any lenses
-
-There is a straight-forward reason that a He-Ne laser should produce a Gaussian beam. The laser light builds up between two mirrors, and the electromagnetic mode that best matches the shape of the mirrors is the Gaussian beam.
-
-1. Considering the Gaussian beam equations from Week 3's prelab (the electric field, beam width $w(z)$, radius of curvature $R(z)$, and Gouy phase $\zeta(z)$), which aspects of the Gaussian beam model can you test? Are there any parts of the model you cannot test?
-2. Measure the beam width $w$ at various distances from the laser. Consider carefully what distance should be varying. Is it the distance from laser to razor, the distance from razor to photodetector, or the distance from laser to photodetector? How did you decide what positions $z$ to measure the width at (meter sticks and other measurement tools are available in the lab)?
-3. Fit the data to $w(z)$, the predicted expression for a Gaussian beam: $w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$.
-4. What is the value of the beam waist $w_0$ (including uncertainty)? Where does the beam waist $z_w$ occur relative to the laser?
-
-## How does a lens change a Gaussian beam?
-
-Pick a non-compound lens (not the fancy camera lenses) with focal length in the range 100-200 mm and assemble it in a lens mount with a retaining ring (see Figure @fig:mount-assembley). Recall that it's very important that you **do not handle optical components** (lenses, mirrors, polarizers, wave plates, beam splitters, etc.) **with your bare hands**. The oils on your skin can damage the optics and degrade the light in your experiment. Always handle these components while using **latex/nitrile gloves or finger cots**.
-
-Design and carry out an experiment to quantitatively answer the questions below. Consider carefully where to put the lens. Your data for this section can be used in the next section.
-
-1. Insert a lens (after the mirrors) into the beam path to change the divergence/convergence of the beam but keep its propagation direction the same.
-2. When this condition (the beam propagation direction is unchanged) is met, where does the beam intersect the lens? *Note: This is the preferred method of adding a lens to an optical set up.*
-3. Does the beam retain a Gaussian profile after the lens?
-4. What is the new beam waist $w_0$ and where does it occur?
-5. What factors affect the beam profile after the lens?
-6. Does the measured $w(z)$ match the Gaussian beam prediction $w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$?
-
-![Mounting assemblies for a mirror (left) and a lens (right).](../resources/lab-guides/gaussian-laser-beams/mount-assembly.png){#fig:mount-assembley width="15cm"}
-
-## Quantitatively modeling the effect of a lens
-
-One of the simplest ways to model the effect of a lens is the thin lens equation, which is based on a ray model of light (see Figure @fig:ray-diagram).
-
-$$ \frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}$$
-
-1. Redraw Figure @fig:ray-diagram to show how it would change when the light is modeled as a Gaussian beam, rather than rays. In particular, where should the beam waists occur? What determines the relative width of the beam waist?
-2. Experimentally test the accuracy of the thin lens equation for the imaging of Gaussian beams. Your data from the previous question can probably be used. Is the agreement within the estimated uncertainties?
-3. Systematic errors: Under what conditions should the thin lens equation be most valid? How do these conditions compare to conditions of your actual measurements? Can you get better agreement?
-
-![Diagram showing the focusing of light by a thin lens in the ray approximation. The diagram identifies the quantities in the thin lens equation: image distance, object distance, and focal length.](../resources/lab-guides/gaussian-laser-beams/ray-diagram.png){#fig:ray-diagram width="15cm"}
-
-# Appendix: Python Automation Guide {#sec:python-automation}
-
-This appendix guides you through setting up and running the automated beam profile measurement using Python. The script controls the Thorlabs KST101 motor controller to move the knife-edge while simultaneously reading voltage from the photodetector via the NI-DAQmx.
-
-## Hardware Setup
-
-The physical connections are:
-
-1. **Motor Controller (KST101)**:
-   - Connect the USB cable from the KST101 cube to your computer
-   - Connect the power supply to the KST101
-   - The motor should already be mechanically connected to the translation stage with the razor
-
-2. **Data Acquisition (NI USB-6009)**:
-   - Connect the USB cable from the DAQ to your computer
-   - Connect the photodetector BNC output to the analog input terminals:
-     - Positive signal to AI0+ (pin 2)
-     - Ground to AI0- (pin 1 or GND)
-
-3. **Optical Setup**:
-   - Position the photodetector after the knife-edge in the beam path
-   - Ensure the beam passes cleanly through when the razor is fully retracted
-
-## Software Prerequisites
-
-Before running the automation script, you need to install:
-
-### 1. Thorlabs Kinesis SDK
-
-Download and install from the Thorlabs website:
-[https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control)
-
-**Important**: Choose the correct version:
-- If you have 32-bit Python: Install the 32-bit Kinesis software
-- If you have 64-bit Python: Install the 64-bit Kinesis software
-
-To check your Python version, run:
-
-```python
-import sys
-print(sys.maxsize > 2**32)  # True = 64-bit, False = 32-bit
-```
-
-### 2. Python Packages
-
-Install the required packages:
-
-```bash
-pip install pythonnet nidaqmx numpy matplotlib
-```
-
-### 3. NI-DAQmx Drivers
-
-If not already installed, download from:
-[https://www.ni.com/en-us/support/downloads/drivers/download.ni-daq-mx.html](https://www.ni.com/en-us/support/downloads/drivers/download.ni-daq-mx.html)
-
-## Verifying the Setup
-
-### Test the Motor Connection
-
-First, verify that Windows recognizes the motor controller:
-
-1. Connect the USB to the KST101, then turn on power
-2. Open **Device Manager** and look for the device under "USB devices" or "Thorlabs APT Device"
-3. Note the serial number (displayed on the KST101 screen)
-
-If you get a driver error, you may need to disable Memory Integrity in Windows Security (ask technical staff for help if this occurs on a lab computer).
-
-### Test the DAQ Connection
-
-Run this quick test to verify DAQ communication:
-
-```python
-import nidaqmx
-
-# List available devices
-system = nidaqmx.system.System.local()
-for device in system.devices:
-    print(f"Found: {device.name}")
-
-# Test reading a voltage
-with nidaqmx.Task() as task:
-    task.ai_channels.add_ai_voltage_chan("Dev1/ai0")
-    voltage = task.read()
-    print(f"Voltage: {voltage:.4f} V")
-```
-
-If no device is found, check the USB connection and ensure NI-DAQmx drivers are installed.
+1. In Week 1, how long did the total process of data taking through analysis take to make a measurement of the beam width $w$?
+2. In this lab, you may have to take 20-30 beam profiles in order to measure $w_0$ and $z_w$. How long would this take with your manual method?
+3. What are the most time-consuming portions of the process? Which parts benefit most from automation?
 
 ## Running the Beam Profiler
 
@@ -201,9 +78,7 @@ The script will prompt you for:
 - You can use larger steps (0.1 mm) for initial alignment
 
 **Wait Time**: This ensures measurements are taken after vibrations settle:
-- Use kinematic equation to estimate: $x = \frac{1}{2}at^2$
-- For 0.05 mm step and 1 mm/s² acceleration: $t = \sqrt{2 \times 0.05/1} \approx 316$ ms
-- Add safety margin: 500 ms is usually sufficient
+- 500 ms is usually sufficient
 - Increase if you see noisy data
 
 ### Output Files
@@ -217,11 +92,111 @@ The script automatically generates two files with timestamps:
 2. **Plot image**: `beam_profile_YYYYMMDD_HHMMSS.png`
    - Quick visualization of the measured profile
 
-## Understanding the Code Structure
+### Validating the Automation
 
-The beam profiler script uses a class-based structure. Here are the key components:
+4. Test and run the automated Python program and evaluate the result using the same Python analysis from Week 1.
+5. Before you go on, make sure the automated acquisition and analysis routine gives the same result as the method you used in Week 1.
+6. How long does your new measurement method take? (2-3 minutes per $w$ measurement is very good.)
 
-### The `BeamProfiler` Class
+## Customizing the Script (Optional)
+
+If you need to modify the script behavior:
+
+### Changing the DAQ Channel
+
+If your photodetector is connected to a different channel (e.g., AI1):
+
+```python
+profiler = BeamProfiler(serial_number, daq_channel="ai1")
+```
+
+### Adding Averaging
+
+For noisy signals, you can modify `read_voltage()` to average multiple samples:
+
+```python
+def read_voltage(self, num_samples=10):
+    """Read averaged voltage from DAQ."""
+    with nidaqmx.Task() as task:
+        task.ai_channels.add_ai_voltage_chan(
+            f"{self.daq_device}/{self.daq_channel}"
+        )
+        voltages = task.read(number_of_samples_per_channel=num_samples)
+        return np.mean(voltages)
+```
+
+# The Experiment
+
+The Gaussian beam model of light is useful because it often describes the beam of light created by lasers. This section will test the validity of the model for our He-Ne laser beam. Also, the effect of a lens on a Gaussian beam will be tested, and the Gaussian beam model will be compared with predictions from the simpler ray theory. Lastly, the Gaussian beam theory can be used to describe the minimum possible focus size for a beam and a lens.
+
+## Measuring the Beam Profile Without Any Lenses
+
+There is a straightforward reason that a He-Ne laser should produce a Gaussian beam. The laser light builds up between two mirrors, and the electromagnetic mode that best matches the shape of the mirrors is the Gaussian beam.
+
+1. Considering the Gaussian beam equations from Week 3's prelab (the electric field, beam width $w(z)$, radius of curvature $R(z)$, and Gouy phase $\zeta(z)$), which aspects of the Gaussian beam model can you test? Are there any parts of the model you cannot test?
+
+2. Measure the beam width $w$ at various distances from the laser. Consider carefully:
+   - What distance should be varying: laser to razor, razor to photodetector, or laser to photodetector?
+   - How did you decide what positions $z$ to measure the width at?
+   - Use meter sticks and other measurement tools available in the lab.
+
+3. Fit the data to $w(z)$, the predicted expression for a Gaussian beam:
+   $$w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$$
+
+4. What is the value of the beam waist $w_0$ (including uncertainty)? Where does the beam waist $z_w$ occur relative to the laser?
+
+### Tips for Good Measurements
+
+1. **Starting Position**: Position the razor so the beam is fully unblocked. Use the manual jog controls on the KST101 to find a good starting point.
+
+2. **Scan Range**: Make sure your scan covers the full transition from unblocked to fully blocked. Include some data before and after the transition.
+
+3. **Real-Time Monitoring**: Watch the live plot as data comes in. You can press Ctrl+C to stop early if something looks wrong.
+
+4. **File Organization**: Consider adding descriptive prefixes to filenames to help organize your data (e.g., "z=50cm_beam_profile_...").
+
+## How Does a Lens Change a Gaussian Beam?
+
+Pick a non-compound lens (not the fancy camera lenses) with focal length in the range 100-200 mm and assemble it in a lens mount with a retaining ring (see Figure @fig:mount-assembley). Recall that it's very important that you **do not handle optical components** (lenses, mirrors, polarizers, wave plates, beam splitters, etc.) **with your bare hands**. The oils on your skin can damage the optics and degrade the light in your experiment. Always handle these components while using **latex/nitrile gloves or finger cots**.
+
+Design and carry out an experiment to quantitatively answer the questions below. Consider carefully where to put the lens. Your data for this section can be used in the next section.
+
+1. Insert a lens (after the mirrors) into the beam path to change the divergence/convergence of the beam but keep its propagation direction the same.
+2. When this condition (the beam propagation direction is unchanged) is met, where does the beam intersect the lens? *Note: This is the preferred method of adding a lens to an optical setup.*
+3. Does the beam retain a Gaussian profile after the lens?
+4. What is the new beam waist $w_0$ and where does it occur?
+5. What factors affect the beam profile after the lens?
+6. Does the measured $w(z)$ match the Gaussian beam prediction $w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$?
+
+![Mounting assemblies for a mirror (left) and a lens (right).](../resources/lab-guides/gaussian-laser-beams/mount-assembly.png){#fig:mount-assembley width="15cm"}
+
+## Quantitatively Modeling the Effect of a Lens
+
+One of the simplest ways to model the effect of a lens is the thin lens equation, which is based on a ray model of light (see Figure @fig:ray-diagram).
+
+$$ \frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}$$
+
+1. Redraw Figure @fig:ray-diagram to show how it would change when the light is modeled as a Gaussian beam, rather than rays. In particular, where should the beam waists occur? What determines the relative width of the beam waist?
+
+2. Experimentally test the accuracy of the thin lens equation for the imaging of Gaussian beams. Your data from the previous question can probably be used. Is the agreement within the estimated uncertainties?
+
+3. Systematic errors: Under what conditions should the thin lens equation be most valid? How do these conditions compare to conditions of your actual measurements? Can you get better agreement?
+
+![Diagram showing the focusing of light by a thin lens in the ray approximation. The diagram identifies the quantities in the thin lens equation: image distance, object distance, and focal length.](../resources/lab-guides/gaussian-laser-beams/ray-diagram.png){#fig:ray-diagram width="15cm"}
+
+## Advanced Investigation: Minimum Spot Size
+
+If time permits, investigate the following:
+
+1. What determines the minimum spot size you can achieve with a lens?
+2. How does this relate to the concept of the "diffraction limit"?
+3. Try using a lens with shorter focal length. Does it produce a smaller spot? What are the tradeoffs?
+
+# Appendix: Understanding the Beam Profiler Code
+
+The beam profiler script uses a class-based structure. Understanding the code will help you modify it if needed and troubleshoot issues.
+
+## The `BeamProfiler` Class
 
 ```python
 class BeamProfiler:
@@ -244,7 +219,7 @@ class BeamProfiler:
         """Execute the automated scan with real-time plotting."""
 ```
 
-### The Main Measurement Loop
+## The Main Measurement Loop
 
 The core logic in `run_scan()` follows this pattern:
 
@@ -271,80 +246,25 @@ for step_num in range(max_steps):
 
 This is essentially the same logic you would use when taking data manually, just automated.
 
-## Customizing the Script
-
-### Changing the DAQ Channel
-
-If your photodetector is connected to a different channel (e.g., AI1):
-
-```python
-profiler = BeamProfiler(serial_number, daq_channel="ai1")
-```
-
-### Modifying Velocity Settings
-
-The default velocity is 1 mm/s with 1 mm/s² acceleration. To change this, modify the `connect()` method:
-
-```python
-vel_params.MaxVelocity = Decimal(2.0)  # 2 mm/s
-vel_params.Acceleration = Decimal(2.0)  # 2 mm/s²
-```
-
-### Adding Averaging
-
-For noisy signals, you can modify `read_voltage()` to average multiple samples:
-
-```python
-def read_voltage(self, num_samples=10):
-    """Read averaged voltage from DAQ."""
-    with nidaqmx.Task() as task:
-        task.ai_channels.add_ai_voltage_chan(
-            f"{self.daq_device}/{self.daq_channel}"
-        )
-        voltages = task.read(number_of_samples_per_channel=num_samples)
-        return np.mean(voltages)
-```
-
 ## Troubleshooting
 
 ### "Device not found" Error
-
 - Check USB connection
 - Verify serial number matches the display on the KST101
 - Make sure no other software (APT User, Kinesis) is using the motor
 
 ### Motor Doesn't Move
-
 - Ensure power is connected to the KST101
 - Check that the stage isn't at a travel limit
 - Verify the stage type is configured correctly in Kinesis (ZST225B)
 
 ### Voltage Reads Zero
-
 - Check photodetector power
 - Verify BNC cable connections to DAQ
 - Make sure the beam actually hits the photodetector
 
-### Python Import Errors
-
-- **pythonnet error**: Ensure Kinesis SDK is installed and matches Python architecture (32/64-bit)
-- **nidaqmx error**: Install NI-DAQmx drivers from NI website
-
 ### Noisy Data
-
 - Increase wait time between steps
 - Check for mechanical vibrations in your setup
 - Shield the photodetector from ambient light
-- Average multiple DAQ readings per point
-
-## Tips for Good Measurements
-
-1. **Starting Position**: Position the razor so the beam is fully unblocked. Use the manual jog controls on the KST101 to find a good starting point.
-
-2. **Scan Range**: Make sure your scan covers the full transition from unblocked to fully blocked. Include some data before and after the transition.
-
-3. **Real-Time Monitoring**: Watch the live plot as data comes in. You can press Ctrl+C to stop early if something looks wrong.
-
-4. **Data Validation**: Before collecting many profiles, take one measurement manually and one with automation. Compare results to ensure consistency.
-
-5. **File Organization**: The script includes timestamps in filenames, but consider adding descriptive prefixes (e.g., by modifying the `filename` variable) to help organize your data.
+- Average multiple DAQ readings per point (see "Adding Averaging" above)

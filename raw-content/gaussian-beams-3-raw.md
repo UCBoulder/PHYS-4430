@@ -4,7 +4,7 @@ title: "Gaussian Beams - Week 3"
 
 # Overview
 
-The third week of the Gaussian Beams lab builds upon the Python data acquisition skills you developed last week. This week's prelab covers error propagation (how uncertainties in measured quantities affect derived quantities) and introduces the theoretical foundation for Gaussian laser beams, deriving the equations you'll use in Week 4's experiments. In the lab portion, we will focus on understanding digital sampling and using spectral analysis tools to perform Fourier Transforms in real time. This will allow you to quickly vary parameters and observe how they affect the frequency spectrum. Be sure to document all of your work in your lab notebook.
+The third week of the Gaussian Beams lab builds upon the Python data acquisition skills you developed last week. This week's prelab covers error propagation (how uncertainties in measured quantities affect derived quantities) and introduces the theoretical foundation for Gaussian laser beams, deriving the equations you'll use in Week 4's experiments. In the lab portion, you will use spectral analysis tools to perform Fourier Transforms and analyze signals in the frequency domain. Be sure to document all of your work in your lab notebook.
 
 # Goals
 
@@ -15,19 +15,13 @@ In this week's prelab, you will…
 3. …understand the Gaussian beam solution and its key parameters ($w_0$, $w(z)$, $R(z)$, $\zeta(z)$).
 4. …fit Gaussian beam data to extract beam waist and position.
 
-In the first part of this week's lab, you will…
+In this week's lab, you will…
 
-1. …extend your previously developed Python script to add functionality.
-2. …be able to appropriately choose DAQ parameters like sample rate.
-3. …explain what the DAQ measures when the sample rate is chosen differently.
-
-The primary objectives of the second part of this week's lab are to gain a conceptual and computational knowledge of Fourier Transforms. Python's NumPy library provides efficient FFT (Fast Fourier Transform) functions for spectral analysis. This lab focuses on methods commonly used in research.
-
-You will gain an understanding of Fourier Transforms by…
-
-1. …connecting mathematical formalism to basic concepts of Fourier Transforms.
-2. …adding spectral analysis to your Python script to compute Fourier Transforms in real time.
-3. …computing Fourier Transforms using NumPy's FFT functions.
+1. …connect mathematical formalism to basic concepts of Fourier Transforms.
+2. …compute Fourier Transforms using NumPy's FFT functions.
+3. …build a real-time spectral analysis tool.
+4. …analyze waveforms in both time and frequency domains.
+5. …revisit and refine your beam width measurement from Week 1.
 
 # Prelab
 
@@ -206,110 +200,11 @@ The Gaussian beam equations given in Equations @eq:8 -@eq:11 assume the beam com
     3. Is it a linear or nonlinear fit function? Why?
 6.  You should get that a beam waist of $w_0=(93.9\pm0.1)\times10^{-6}\ m$ and occurs at a position $z_w=0.3396\pm0.0003\ m$.
 
-# Digital Sampling of Data
-
-## Improving your Python data acquisition script
-
-1. Modify the Python script you created last week so that the *Number of Samples* and *Sample Rate* are easily configurable variables at the top of your script (or as function parameters).
-
-   ```python
-   import nidaqmx
-   import numpy as np
-   import matplotlib.pyplot as plt
-   from nidaqmx.constants import AcquisitionType
-
-   # Configuration - easily adjustable
-   SAMPLE_RATE = 500     # Samples per second
-   NUM_SAMPLES = 500     # Total samples (1 second of data)
-   DAQ_CHANNEL = "Dev1/ai0"
-
-   def acquire_data(sample_rate, num_samples, channel):
-       """Acquire data from DAQ with specified parameters."""
-       with nidaqmx.Task() as task:
-           task.ai_channels.add_ai_voltage_chan(channel)
-           task.timing.cfg_samp_clk_timing(
-               rate=sample_rate,
-               sample_mode=AcquisitionType.FINITE,
-               samps_per_chan=num_samples
-           )
-           data = task.read(number_of_samples_per_channel=num_samples)
-       return np.array(data)
-   ```
-
-2. Set up a function generator to produce a 1 kHz sine wave.
-3. Connect the function generator's output to both the oscilloscope and the DAQ to record data.
-
-## Initial measurements
-
-1. Set the sample rate in your Python script to 500 samples per second and the number of samples such that it records 1 second of data.
-
-2. Record and plot a dataset with both the oscilloscope and the DAQ. Make sure that the time range on the oscilloscope is set such that it is on the same order as the data being recorded by the DAQ.
-
-   ```python
-   # Acquire and plot data
-   data = acquire_data(SAMPLE_RATE, NUM_SAMPLES, DAQ_CHANNEL)
-   time = np.arange(NUM_SAMPLES) / SAMPLE_RATE
-
-   plt.figure(figsize=(10, 6))
-   plt.plot(time, data)
-   plt.xlabel('Time (s)')
-   plt.ylabel('Voltage (V)')
-   plt.title(f'Acquired Signal ({SAMPLE_RATE} Hz sample rate)')
-   plt.grid(True, alpha=0.3)
-   plt.show()
-   ```
-
-3. Compare the two plots. What are the major differences between the two?
-4. Why might one or both of these plots be giving an incorrect result? Think about the wave you are measuring and the result you are getting. How do they relate?
-
-## Enhanced understanding
-
-This section will guide you to understanding of Nyquist's theorem and a more appropriate sample rate for digital data collection.
-
-1. Why do you think the data from the DAQ produced a wave of lower frequency?
-2. Adjust the sample rate in a way you think might provide a more accurate measurement of the wave. What do you think the measured waveform will look like this time?
-3. Take a dataset, record and plot it. Did it match your predictions?
-4. Now record another dataset with the function generator set to the same parameters but the sample rate set to 3000 samples per second and the number of samples set to record 1 second of data.
-5. Plot this new dataset. What is the frequency of the new dataset?
-6. What are the fundamental differences between the first, second, and third datasets?
-
-## Nyquist frequency
-
-The discrepancies between the sampled waveforms can be explained by Nyquist's theorem. It states that to accurately measure a signal by discrete sampling methods (like the DAQ) the sampling rate must be at least twice that of the measured signal. If this were not the case, a measurement might not be taken at every interval of oscillation, a situation called "undersampling." Sampling the signal at least twice as fast as the maximum frequency of interest ensures that at least two data points are recorded each period.
-
-**Definition:**
-
-The *Nyquist Frequency* is defined to be half the sample rate.
-
-1. **Predict** the *apparent* period (in Hz) of the signal recorded by the DAQ. **Observe** what really happens using your waveform generator, DAQ, and Python script. **Explain** the result. Suppose the DAQ is set to 1 kS/s sample rate in all of the cases, while the waveform generator is set to:
-
-   1. 1000 Hz
-   2. 998 Hz
-   3. 1004 Hz
-   4. 1500 Hz
-   5. 2000 Hz
-   6. 1997 Hz
-   7. 2005 Hz
-
-   In understanding what is going on, it may help to draw a few periods of the wave and then indicate where the DAQ will sample the waveform.
-
-2. You *want* to measure the random fluctuations (noise) in a signal from 0-100 Hz.
-
-   1. If you set the sample rate at 200 Hz, what set of frequency ranges will contribute to the noise measurement?
-   2. If you set the sample rate at 1000 Hz, what set of frequency ranges will contribute to the noise measurement?
-   3. How could you help achieve the desired measurement in 2.1 using a combination of changing the sample rate and adding filtering? Explain why your choice of sample rate and signal filter would work better.
-
-3. **Undersampling on the oscilloscope.** Undersampling is an issue with any device that samples data at regular discrete time intervals. This question requires the use of a Rigol DS1052E oscilloscope and a waveform generator.
-
-   1. Figure @fig:scope-menu is copied from the Rigol Oscilloscope manual. The Horizontal menu allows you to view the actual sample rate "Sa Rate" of the digital acquisition on the scope.
-   2. Predict what should you observe if you set the waveform generator to the same frequency as the sample rate? Try it out, compare with your prediction, and explain your observations.
-   3. What happens if you change the oscilloscope time scale? Or change the waveform generator frequency slightly? Try to explain what you observe.
-
-![The horizontal menu on the Rigol DS1052E Oscilloscope.](../resources/lab-guides/gaussian-laser-beams/scope-menu.png){#fig:scope-menu width="20cm"}
-
 # Fourier Analysis Techniques
 
-## Fourier Transforms
+In Week 2, you learned about the Nyquist frequency and how sample rate affects your ability to accurately capture signals. This week, we'll analyze signals in the **frequency domain** using Fourier Transforms. This is a powerful technique used throughout physics and engineering.
+
+## Introduction to Fourier Transforms
 
 The discrete Fourier Transform of a set of data $\{y_0,y_1, ... , y_{N-1}\}$ is given by
 
@@ -317,18 +212,16 @@ $$Y_m=\displaystyle \sum_{n=0}^{N-1}y_n\cdot e^{-2\pi i \frac{m}{N}n}$$
 
 The basic idea is that a Fourier Transform decomposes the data into a set of different frequency components, so the amplitude of $Y_m$ tells you how much of your signal was formed by an oscillation at the $m$-th frequency.
 
-### Basic Fourier concepts {#sec:basic-fourier}
+### Basic Fourier Concepts {#sec:basic-fourier}
 
 1. How do the units of the Fourier Transform array $Y_m$ relate to the units of the data $y_n$?
 2. Does the data $y_n$ have to be taken at equally spaced intervals?
 3. Is it possible for two different sets of data to have the same Fourier Transform?
-4. If data set has $N$ elements, how long is the discrete Fourier Transform?
+4. If a data set has $N$ elements, how long is the discrete Fourier Transform?
 
-## Adding Spectral Analysis to Your Python Script
+## Computing the Power Spectrum in Python
 
-Now we want to modify our Python script to provide real-time spectral analysis using NumPy's FFT functions.
-
-### Computing the Power Spectrum
+NumPy provides efficient FFT (Fast Fourier Transform) functions for spectral analysis:
 
 ```python
 import numpy as np
@@ -362,21 +255,39 @@ def compute_spectrum(data, sample_rate):
     return frequencies, power
 ```
 
-### Setting up real-time spectral analysis
+### Frequency Resolution and Maximum Frequency
 
-Create a script with the following functionality:
+The relationship between your acquisition parameters and the spectrum is:
 
-1. Takes N samples inside a loop (continuous acquisition)
-2. Has configurable sample rate and number of samples
-3. Performs spectral analysis on each acquired dataset
-4. Has keyboard interrupt (Ctrl+C) to stop
-5. Saves the last dataset after stopping
+```python
+# Frequency resolution and maximum frequency
+freq_resolution = sample_rate / num_samples  # Hz per bin
+max_frequency = sample_rate / 2  # Nyquist frequency
+
+print(f"Frequency resolution: {freq_resolution} Hz")
+print(f"Maximum frequency: {max_frequency} Hz")
+```
+
+**Key relationships:**
+
+- **Frequency resolution** = Sample Rate / Number of Samples
+- **Maximum frequency** (Nyquist) = Sample Rate / 2
+
+If the data is sampled for 2 seconds at 100 Hz sample rate:
+- Number of samples = 200
+- Frequency resolution = 100 Hz / 200 = 0.5 Hz
+- Maximum frequency = 100 Hz / 2 = 50 Hz
+
+## Building a Real-Time Spectral Analyzer
+
+Create a script that acquires data and displays both time-domain and frequency-domain views simultaneously:
 
 ```python
 import nidaqmx
 import numpy as np
 import matplotlib.pyplot as plt
 from nidaqmx.constants import AcquisitionType
+from IPython.display import display, clear_output
 
 # Configuration
 SAMPLE_RATE = 10000  # Hz
@@ -393,8 +304,7 @@ def compute_spectrum(data, sample_rate):
     power[1:-1] *= 2
     return frequencies, power
 
-# Set up real-time plotting
-plt.ion()
+# Set up plots
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
 
 # Time domain plot
@@ -412,6 +322,8 @@ ax2.set_title('Frequency Domain (Power Spectrum)')
 ax2.grid(True, alpha=0.3)
 ax2.set_xlim(0, SAMPLE_RATE / 2)
 
+plt.tight_layout()
+
 last_data = None
 
 with nidaqmx.Task() as task:
@@ -422,31 +334,34 @@ with nidaqmx.Task() as task:
     )
     task.start()
 
-    print("Acquiring data... Press Ctrl+C to stop")
+    print("Acquiring data... Press Ctrl+C (or Interrupt Kernel) to stop")
 
     try:
         while True:
-            # Acquire data
-            data = task.read(number_of_samples_per_channel=NUM_SAMPLES)
-            last_data = np.array(data)
+            # Drain buffer to prevent overflow
+            samples_available = task.in_stream.avail_samp_per_chan
+            if samples_available >= NUM_SAMPLES:
+                data = task.read(number_of_samples_per_channel=samples_available)
+                # Use most recent samples
+                data = data[-NUM_SAMPLES:]
+                last_data = np.array(data)
 
-            # Update time domain plot
-            time_ms = np.arange(len(data)) / SAMPLE_RATE * 1000
-            line1.set_data(time_ms, data)
-            ax1.set_xlim(0, time_ms[-1])
-            ax1.set_ylim(np.min(data) - 0.1, np.max(data) + 0.1)
+                # Update time domain plot
+                time_ms = np.arange(len(data)) / SAMPLE_RATE * 1000
+                line1.set_data(time_ms, data)
+                ax1.set_xlim(0, time_ms[-1])
+                ax1.set_ylim(np.min(data) - 0.1, np.max(data) + 0.1)
 
-            # Update frequency domain plot
-            frequencies, power = compute_spectrum(np.array(data), SAMPLE_RATE)
-            line2.set_data(frequencies, power)
-            ax2.set_ylim(0, np.max(power) * 1.1 + 0.001)
+                # Update frequency domain plot
+                frequencies, power = compute_spectrum(np.array(data), SAMPLE_RATE)
+                line2.set_data(frequencies, power)
+                ax2.set_ylim(0, np.max(power) * 1.1 + 0.001)
 
-            plt.pause(0.05)
+                clear_output(wait=True)
+                display(fig)
 
     except KeyboardInterrupt:
         print("\nStopped by user")
-
-plt.ioff()
 
 # Save last dataset
 if last_data is not None:
@@ -455,42 +370,36 @@ if last_data is not None:
                delimiter=',', header='Time (s), Voltage (V)', comments='')
     print("Last dataset saved to 'last_acquisition.csv'")
 
-plt.show()
+plt.close(fig)
 ```
 
-## Using your spectral analysis script
+## Exercises: Spectral Analysis
 
-This section will familiarize you with your script's capabilities and help you understand how different parameters relate to the Fourier Transform.
-
-### Spectral analysis basics
+### Understanding Frequency Resolution
 
 1. Use a waveform generator to output a waveform of your choice at a frequency in the tens of Hz to kHz range and view the output on the oscilloscope and in your Python script.
 
-2. Look at the spectral analysis. How do the **frequency resolution** (frequency step size between data in the spectrum) and **maximum frequency** relate to the **sample rate** and **number of samples**? Try to find an algebraic relationship.
-
-   ```python
-   # Frequency resolution and maximum frequency
-   freq_resolution = sample_rate / num_samples  # Hz per bin
-   max_frequency = sample_rate / 2  # Nyquist frequency
-
-   print(f"Frequency resolution: {freq_resolution} Hz")
-   print(f"Maximum frequency: {max_frequency} Hz")
-   ```
+2. Look at the spectral analysis. How do the **frequency resolution** (frequency step size between data in the spectrum) and **maximum frequency** relate to the **sample rate** and **number of samples**? Verify the algebraic relationship experimentally.
 
 3. If the data is sampled for 2 seconds at 100 Hz sample rate, what frequency does the $m$-th component of the Fourier Transform correspond to?
 
-4. How many points are shown in the spectral analysis plot? How does this compare to the number of points you expected in the Fourier transform (see Section @sec:basic-fourier\.4)? **Note**: The data acquired from the DAQ is always a sequence of real numbers $\{y_n\}$. Under the condition that the signal is only real numbers, it can be proved that $Y_m=Y_{N-M}^*$ so $|Y_M|=|Y_{N-m}|$, meaning the spectrum is symmetric about the $N/2$-th data point, which corresponds to the Nyquist frequency. For this reason, we typically only plot the first half of the Fourier spectrum up to the Nyquist frequency.
+4. How many points are shown in the spectral analysis plot? How does this compare to the number of points you expected in the Fourier transform (see Section @sec:basic-fourier\.4)?
 
-### Real-time spectral analysis of different waveforms
+   **Note**: The data acquired from the DAQ is always a sequence of real numbers $\{y_n\}$. Under the condition that the signal is only real numbers, it can be proved that $Y_m=Y_{N-M}^*$ so $|Y_M|=|Y_{N-m}|$, meaning the spectrum is symmetric about the $N/2$-th data point, which corresponds to the Nyquist frequency. For this reason, we typically only plot the first half of the Fourier spectrum up to the Nyquist frequency.
 
-1. How do you expect the spectrum of a sine wave to look? How should it change as you vary the amplitude and frequency on the waveform generator? Try it.
-2. How do you expect the spectrum of a square wave to look? How should it change as you vary the amplitude and frequency on the waveform generator? Try it.
+### Analyzing Different Waveforms
 
-(Hint: you can look up or calculate the Fourier Series of a square wave to see if the observed amplitudes agree with the mathematical prediction.)
+1. How do you expect the spectrum of a **sine wave** to look? How should it change as you vary the amplitude and frequency on the waveform generator? Try it.
 
-## Fourier Analysis of Saved Data
+2. How do you expect the spectrum of a **square wave** to look? How should it change as you vary the amplitude and frequency on the waveform generator? Try it.
 
-While it is convenient to use real-time spectral analysis, sometimes you may want to analyze data after it is saved. Here's how to compute the Fourier Transform of saved data:
+   (Hint: you can look up or calculate the Fourier Series of a square wave to see if the observed amplitudes agree with the mathematical prediction.)
+
+3. Generate a signal with **two frequencies** (if your function generator supports this, or use the sum of two signals). Can you identify both frequencies in the spectrum?
+
+### Analyzing Saved Data
+
+Sometimes you may want to analyze data after it is saved rather than in real-time:
 
 ```python
 import numpy as np
@@ -526,11 +435,13 @@ plt.grid(True, alpha=0.3)
 plt.show()
 ```
 
-### Exercises
+### Exercises with Saved Data
 
 1. Import any saved data set of a periodic function saved from the DAQ or the oscilloscope.
+
 2. Use NumPy's `fft` function to compute the discrete Fourier Transform of the signal.
    1. Do you expect the FFT output to be real-valued or complex-valued?
+
 3. Plot the output of the FFT function. Since the output is complex-valued, plot `np.abs()` or `np.abs()**2`.
    1. What is the x-axis range and step-size in the plot?
    2. What frequency range and step size should be displayed on the x-axis?
@@ -573,4 +484,13 @@ plt.show()
 
 # Revisit Measuring the Beam Width
 
-Next week you will be implementing automation into measuring the beam width of He-Ne lasers. To be prepared for this endeavor, you now should go back and review (and complete) [section 7](/PHYS-4430/lab-guides/gaussian-beams-1#measuring-the-beam-width) from week 1.
+Next week you will be using the motor controller you set up last week to automate beam profile measurements. To be prepared for this endeavor, you should now go back and review (and complete) [section 7](/PHYS-4430/lab-guides/gaussian-beams-1#measuring-the-beam-width) from Week 1.
+
+Make sure you can:
+
+1. Take a complete beam profile measurement manually
+2. Fit the data using the error function model
+3. Extract the beam width $w$ with uncertainty
+4. Create a plot showing the data and fit
+
+This will serve as your baseline for comparison with the automated measurements next week.

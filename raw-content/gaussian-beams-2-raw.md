@@ -4,7 +4,7 @@ title: "Gaussian Beams - Week 2"
 
 # Overview
 
-The second week of the Gaussian Beams lab introduces you to Python for data acquisition and guides you through interfacing Python with the instrumentation and data acquisition systems used in this course.
+The second week of the Gaussian Beams lab introduces you to Python for data acquisition and guides you through interfacing Python with the instrumentation and data acquisition systems used in this course. You will also learn about digital sampling theory and set up the motor controller hardware for next week's automated measurements.
 
 This week's lab is divided into two parts. In part 1 (Prelab), you will learn essential curve fitting techniques that you'll use throughout this course. In part 2 (Lab), you will learn Python programming for data acquisition using a National Instruments DAQ device, the [NI USB-6009](http://sine.ni.com/nips/cds/view/p/lang/en/nid/201987). This multifunction USB powered device has 4 (differential) analog inputs (14-bit, 48 kS/s), 2 analog outputs (12-bit, 150 S/s), 12 digital I/O channels, and a 32-bit counter.
 
@@ -36,10 +36,10 @@ After completing the lab, you will be able to:
 1. Connect a USB DAQ device to a computer and confirm the analog inputs are working correctly.
 2. Write a Python script to read analog voltage measurements.
 3. Configure sample rate and number of samples for data acquisition.
-4. Visualize acquired data using Matplotlib.
-5. Perform spectral analysis using NumPy's FFT functions.
-6. Save acquired data to a CSV file.
-7. Understand the basics of real-time data plotting.
+4. Explain Nyquist's theorem and choose appropriate sample rates.
+5. Recognize aliasing and understand its causes.
+6. Set up and verify the motor controller for automated measurements.
+7. Save acquired data to a CSV file.
 
 # Prelab
 
@@ -573,118 +573,288 @@ plt.show()
 4. Run the acquisition and compare the Python plot with the oscilloscope display. Are they compatible?
 5. Add to your notebook: the Python code, the resulting plot, and the oscilloscope output. Explain how they all make sense together.
 
-## Continuous Data Acquisition
+# Digital Sampling and Nyquist Frequency
 
-For continuous monitoring, you can read data in a loop and display a live view. The following code is designed to **visualize** continuous data in real-time—it shows the most recent samples as they arrive, but does not store every sample for later analysis. This is useful for monitoring signals, checking connections, or observing behavior before running a more careful finite acquisition.
+Now that you can acquire data with the DAQ, it's important to understand how the choice of sample rate affects your measurements. This section explores what happens when you sample a signal too slowly.
 
-Note: In Jupyter notebooks, we use `clear_output()` and `display()` to update the plot. The display updates are slower than the data acquisition rate, so we drain all available samples from the buffer each iteration to prevent overflow errors.
+## Exploring Sample Rate Effects
 
-```python
-import nidaqmx
-import numpy as np
-import matplotlib.pyplot as plt
-from nidaqmx.constants import AcquisitionType
-from IPython.display import display, clear_output
-
-sample_rate = 10000
-display_samples = 1000  # Number of most recent samples to show
-
-fig, ax = plt.subplots(figsize=(10, 6))
-line, = ax.plot([], [])
-ax.set_xlabel('Sample')
-ax.set_ylabel('Voltage (V)')
-ax.set_title('Continuous Acquisition')
-
-with nidaqmx.Task() as task:
-    task.ai_channels.add_ai_voltage_chan("Dev1/ai0")
-    task.timing.cfg_samp_clk_timing(
-        rate=sample_rate,
-        sample_mode=AcquisitionType.CONTINUOUS
-    )
-
-    task.start()
-
-    try:
-        while True:
-            # Read ALL available samples to drain the buffer
-            samples_available = task.in_stream.avail_samp_per_chan
-            if samples_available > 0:
-                data = task.read(number_of_samples_per_channel=samples_available)
-
-                # Display only the most recent samples
-                display_data = data[-display_samples:] if len(data) > display_samples else data
-
-                line.set_data(range(len(display_data)), display_data)
-                ax.set_xlim(0, len(display_data))
-                ax.set_ylim(min(display_data) - 0.1, max(display_data) + 0.1)
-                clear_output(wait=True)
-                display(fig)
-    except KeyboardInterrupt:
-        print("Stopped by user")
-
-plt.close(fig)
-```
-
-## Spectral Analysis with FFT
-
-Python's NumPy library provides powerful FFT (Fast Fourier Transform) functions for spectral analysis.
-
-### Computing the Power Spectrum
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-
-def compute_power_spectrum(data, sample_rate):
-    """Compute the one-sided power spectrum."""
-    n = len(data)
-
-    # Compute FFT
-    fft_result = np.fft.fft(data)
-
-    # Get positive frequencies only
-    n_unique = n // 2 + 1
-    frequencies = np.fft.fftfreq(n, d=1/sample_rate)[:n_unique]
-    frequencies = np.abs(frequencies)
-
-    # Power spectrum (magnitude squared, normalized)
-    power = (np.abs(fft_result[:n_unique]) / n) ** 2
-    power[1:-1] *= 2  # Account for negative frequencies
-
-    return frequencies, power
-```
-
-### Exercise: Spectral Analysis
-
-1. Acquire a signal from your waveform generator at a known frequency (e.g., 500 Hz).
-2. Compute and plot the power spectrum:
+1. Modify your Python script so that the *Number of Samples* and *Sample Rate* are easily configurable variables at the top:
 
    ```python
-   # Acquire data
-   with nidaqmx.Task() as task:
-       task.ai_channels.add_ai_voltage_chan("Dev1/ai0")
-       task.timing.cfg_samp_clk_timing(
-           rate=10000,
-           sample_mode=AcquisitionType.FINITE,
-           samps_per_chan=10000
-       )
-       data = task.read(number_of_samples_per_channel=10000)
+   import nidaqmx
+   import numpy as np
+   import matplotlib.pyplot as plt
+   from nidaqmx.constants import AcquisitionType
 
-   # Compute and plot spectrum
-   frequencies, power = compute_power_spectrum(np.array(data), 10000)
+   # Configuration - easily adjustable
+   SAMPLE_RATE = 500     # Samples per second
+   NUM_SAMPLES = 500     # Total samples (1 second of data)
+   DAQ_CHANNEL = "Dev1/ai0"
+
+   def acquire_data(sample_rate, num_samples, channel):
+       """Acquire data from DAQ with specified parameters."""
+       with nidaqmx.Task() as task:
+           task.ai_channels.add_ai_voltage_chan(channel)
+           task.timing.cfg_samp_clk_timing(
+               rate=sample_rate,
+               sample_mode=AcquisitionType.FINITE,
+               samps_per_chan=num_samples
+           )
+           data = task.read(number_of_samples_per_channel=num_samples)
+       return np.array(data)
+   ```
+
+2. Set up a function generator to produce a **1 kHz sine wave**.
+
+3. Connect the function generator's output to both the oscilloscope and the DAQ.
+
+## Initial Measurements
+
+1. Set the sample rate in your Python script to **500 samples per second** and the number of samples such that it records 1 second of data.
+
+2. Record and plot a dataset with both the oscilloscope and the DAQ. Make sure that the time range on the oscilloscope is set such that it is on the same order as the data being recorded by the DAQ.
+
+   ```python
+   # Acquire and plot data
+   data = acquire_data(SAMPLE_RATE, NUM_SAMPLES, DAQ_CHANNEL)
+   time = np.arange(NUM_SAMPLES) / SAMPLE_RATE
 
    plt.figure(figsize=(10, 6))
-   plt.plot(frequencies, power)
-   plt.xlabel('Frequency (Hz)')
-   plt.ylabel('Power')
-   plt.title('Power Spectrum')
-   plt.xlim(0, 2000)  # Show up to 2 kHz
+   plt.plot(time, data)
+   plt.xlabel('Time (s)')
+   plt.ylabel('Voltage (V)')
+   plt.title(f'Acquired Signal ({SAMPLE_RATE} Hz sample rate)')
    plt.grid(True, alpha=0.3)
    plt.show()
    ```
 
-3. Verify that the peak in the spectrum appears at the expected frequency.
-4. Try adding a second frequency component from the waveform generator and observe the spectrum.
+3. Compare the two plots. What are the major differences between the two?
+
+4. Why might one or both of these plots be giving an incorrect result? Think about the wave you are measuring and the result you are getting. How do they relate?
+
+## Enhanced Understanding
+
+This section will guide you to an understanding of Nyquist's theorem and a more appropriate sample rate for digital data collection.
+
+1. Why do you think the data from the DAQ produced a wave of lower frequency?
+
+2. Adjust the sample rate in a way you think might provide a more accurate measurement of the wave. What do you think the measured waveform will look like this time?
+
+3. Take a dataset, record and plot it. Did it match your predictions?
+
+4. Now record another dataset with the function generator set to the same parameters but the sample rate set to **3000 samples per second** and the number of samples set to record 1 second of data.
+
+5. Plot this new dataset. What is the frequency of the new dataset?
+
+6. What are the fundamental differences between the first, second, and third datasets?
+
+## Nyquist Frequency
+
+The discrepancies between the sampled waveforms can be explained by **Nyquist's theorem**. It states that to accurately measure a signal by discrete sampling methods (like the DAQ) the sampling rate must be at least twice that of the measured signal. If this were not the case, a measurement might not be taken at every interval of oscillation, a situation called "undersampling." Sampling the signal at least twice as fast as the maximum frequency of interest ensures that at least two data points are recorded each period.
+
+**Definition:**
+
+The *Nyquist Frequency* is defined to be half the sample rate.
+
+### Aliasing Exercises
+
+1. **Predict** the *apparent* frequency (in Hz) of the signal recorded by the DAQ. **Observe** what really happens using your waveform generator, DAQ, and Python script. **Explain** the result. Suppose the DAQ is set to 1 kS/s sample rate in all of the cases, while the waveform generator is set to:
+
+   1. 1000 Hz
+   2. 998 Hz
+   3. 1004 Hz
+   4. 1500 Hz
+   5. 2000 Hz
+   6. 1997 Hz
+   7. 2005 Hz
+
+   In understanding what is going on, it may help to draw a few periods of the wave and then indicate where the DAQ will sample the waveform.
+
+2. You *want* to measure the random fluctuations (noise) in a signal from 0-100 Hz.
+
+   1. If you set the sample rate at 200 Hz, what set of frequency ranges will contribute to the noise measurement?
+   2. If you set the sample rate at 1000 Hz, what set of frequency ranges will contribute to the noise measurement?
+   3. How could you help achieve the desired measurement in 2.1 using a combination of changing the sample rate and adding filtering? Explain why your choice of sample rate and signal filter would work better.
+
+3. **Undersampling on the oscilloscope.** Undersampling is an issue with any device that samples data at regular discrete time intervals. This question requires the use of a Rigol DS1052E oscilloscope and a waveform generator.
+
+   1. Figure @fig:scope-menu is copied from the Rigol Oscilloscope manual. The Horizontal menu allows you to view the actual sample rate "Sa Rate" of the digital acquisition on the scope.
+   2. Predict what should you observe if you set the waveform generator to the same frequency as the sample rate? Try it out, compare with your prediction, and explain your observations.
+   3. What happens if you change the oscilloscope time scale? Or change the waveform generator frequency slightly? Try to explain what you observe.
+
+![The horizontal menu on the Rigol DS1052E Oscilloscope.](../resources/lab-guides/gaussian-laser-beams/scope-menu.png){#fig:scope-menu width="20cm"}
+
+# Setting Up the Motor Controller
+
+In Week 4, you will use Python to automate beam profile measurements by controlling a motorized translation stage. This section guides you through setting up and verifying the motor controller hardware. Getting this working now will save significant time later.
+
+## Hardware Overview
+
+The Thorlabs KST101 is a stepper motor controller that can precisely position a translation stage. You will use it to move a razor blade across the laser beam while the DAQ records the photodetector signal.
+
+The physical connections are:
+
+1. **Motor Controller (KST101)**:
+   - Connect the USB cable from the KST101 cube to your computer
+   - Connect the power supply to the KST101
+   - The motor should already be mechanically connected to the translation stage with the razor
+
+2. **Optical Setup** (for testing):
+   - Position the photodetector after the knife-edge in the beam path
+   - Ensure the beam passes cleanly through when the razor is fully retracted
+
+## Software Prerequisites
+
+### 1. Thorlabs Kinesis SDK
+
+Download and install from the Thorlabs website:
+[https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control)
+
+**Important**: Choose the correct version:
+- If you have 32-bit Python: Install the 32-bit Kinesis software
+- If you have 64-bit Python: Install the 64-bit Kinesis software
+
+To check your Python version, run:
+
+```python
+import sys
+print(sys.maxsize > 2**32)  # True = 64-bit, False = 32-bit
+```
+
+### 2. Python Packages
+
+Install the required packages:
+
+```bash
+pip install pythonnet
+```
+
+(You should already have `nidaqmx`, `numpy`, and `matplotlib` from earlier in this lab.)
+
+## Verifying the Motor Connection
+
+### Test that Windows Recognizes the Device
+
+1. Connect the USB to the KST101, then turn on power
+2. Open **Device Manager** and look for the device under "USB devices" or "Thorlabs APT Device"
+3. Note the serial number (displayed on the KST101 screen)
+
+If you get a driver error, you may need to disable Memory Integrity in Windows Security (ask technical staff for help if this occurs on a lab computer).
+
+### Test Basic Motor Communication
+
+Run this test script to verify Python can communicate with the motor:
+
+```python
+import clr
+import sys
+import time
+
+# Add Kinesis .NET assemblies
+sys.path.append(r"C:\Program Files\Thorlabs\Kinesis")
+clr.AddReference("Thorlabs.MotionControl.DeviceManagerCLI")
+clr.AddReference("Thorlabs.MotionControl.KCube.StepperMotorCLI")
+
+from Thorlabs.MotionControl.DeviceManagerCLI import DeviceManagerCLI
+from Thorlabs.MotionControl.KCube.StepperMotorCLI import KCubeStepper
+
+# Build device list
+DeviceManagerCLI.BuildDeviceList()
+
+# Get list of connected devices
+device_list = DeviceManagerCLI.GetDeviceList()
+print(f"Found {len(device_list)} device(s):")
+for serial in device_list:
+    print(f"  Serial: {serial}")
+```
+
+If this shows your device serial number, the connection is working.
+
+### Test Motor Movement
+
+**Caution**: Make sure the translation stage has room to move before running this test. Check that nothing is blocking the stage mechanically.
+
+```python
+import clr
+import sys
+import time
+from decimal import Decimal
+
+sys.path.append(r"C:\Program Files\Thorlabs\Kinesis")
+clr.AddReference("Thorlabs.MotionControl.DeviceManagerCLI")
+clr.AddReference("Thorlabs.MotionControl.KCube.StepperMotorCLI")
+clr.AddReference("Thorlabs.MotionControl.GenericMotorCLI")
+
+from Thorlabs.MotionControl.DeviceManagerCLI import DeviceManagerCLI
+from Thorlabs.MotionControl.KCube.StepperMotorCLI import KCubeStepper
+
+# Replace with your serial number
+SERIAL_NUMBER = "26004813"  # Check the display on your KST101
+
+DeviceManagerCLI.BuildDeviceList()
+device = KCubeStepper.CreateKCubeStepper(SERIAL_NUMBER)
+
+try:
+    device.Connect(SERIAL_NUMBER)
+    print("Connected!")
+
+    # Wait for settings to initialize
+    device.WaitForSettingsInitialized(5000)
+    device.StartPolling(50)
+    time.sleep(0.5)
+    device.EnableDevice()
+    time.sleep(0.5)
+
+    # Load motor configuration
+    config = device.LoadMotorConfiguration(SERIAL_NUMBER)
+
+    # Get current position
+    pos = device.Position
+    print(f"Current position: {pos} mm")
+
+    # Move relative (small test movement)
+    print("Moving 0.5 mm...")
+    device.SetMoveRelativeDistance(Decimal(0.5))
+    device.MoveRelative(60000)  # 60 second timeout
+
+    new_pos = device.Position
+    print(f"New position: {new_pos} mm")
+
+finally:
+    device.StopPolling()
+    device.Disconnect()
+    print("Disconnected")
+```
+
+### Troubleshooting
+
+**"Device not found" Error:**
+- Check USB connection
+- Verify serial number matches the display on the KST101
+- Make sure no other software (APT User, Kinesis) is using the motor
+
+**Motor Doesn't Move:**
+- Ensure power is connected to the KST101
+- Check that the stage isn't at a travel limit
+- Verify the stage type is configured correctly in Kinesis (ZST225B)
+
+**Python Import Errors:**
+- Ensure Kinesis SDK is installed and matches Python architecture (32/64-bit)
+- Check that the path to Kinesis DLLs is correct
+
+## Exercise: Verify Your Setup
+
+Before leaving lab today, verify that:
+
+1. [ ] The DAQ can read voltages from the photodetector
+2. [ ] Python can connect to the motor controller
+3. [ ] The motor moves when commanded
+4. [ ] You have noted your motor's serial number: ____________
+
+This setup will be essential for the automated measurements in Week 4.
+
+# Saving Data and Additional DAQ Features
 
 ## Saving Data to a File
 
@@ -782,17 +952,18 @@ except DaqError as e:
     print("  - NI-DAQmx drivers are installed")
 ```
 
-## Summary
+# Summary
 
 In this lab, you learned to:
 
 1. Connect and verify a USB DAQ device
 2. Read single and multiple voltage samples
 3. Configure sample rate and acquisition timing
-4. Visualize data in real-time
-5. Perform spectral analysis using FFT
-6. Save data to CSV files
-7. Generate analog output voltages
-8. Handle common errors
+4. Explain Nyquist's theorem and recognize aliasing
+5. Choose appropriate sample rates for your signals
+6. Set up and verify the motor controller hardware
+7. Save data to CSV files
+8. Generate analog output voltages
+9. Handle common errors
 
-These skills form the foundation for the automated measurements you'll perform in the coming weeks. See the [Python Resources](/PHYS-4430/python-resources) page and the example scripts in the `python/` folder for more detailed examples.
+These skills form the foundation for the automated measurements you'll perform in Week 4. See the [Python Resources](/PHYS-4430/python-resources) page and the example scripts in the `python/` folder for more detailed examples.
