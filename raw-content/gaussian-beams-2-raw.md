@@ -575,18 +575,20 @@ plt.show()
 
 ## Continuous Data Acquisition
 
-For continuous monitoring, you can read data in a loop:
+For continuous monitoring, you can read data in a loop and display a live view. The following code is designed to **visualize** continuous data in real-time—it shows the most recent samples as they arrive, but does not store every sample for later analysis. This is useful for monitoring signals, checking connections, or observing behavior before running a more careful finite acquisition.
+
+Note: In Jupyter notebooks, we use `clear_output()` and `display()` to update the plot. The display updates are slower than the data acquisition rate, so we drain all available samples from the buffer each iteration to prevent overflow errors.
 
 ```python
 import nidaqmx
 import numpy as np
 import matplotlib.pyplot as plt
 from nidaqmx.constants import AcquisitionType
+from IPython.display import display, clear_output
 
 sample_rate = 10000
-samples_per_read = 1000
+display_samples = 1000  # Number of most recent samples to show
 
-plt.ion()  # Enable interactive mode
 fig, ax = plt.subplots(figsize=(10, 6))
 line, = ax.plot([], [])
 ax.set_xlabel('Sample')
@@ -604,16 +606,23 @@ with nidaqmx.Task() as task:
 
     try:
         while True:
-            data = task.read(number_of_samples_per_channel=samples_per_read)
-            line.set_data(range(len(data)), data)
-            ax.set_xlim(0, len(data))
-            ax.set_ylim(min(data) - 0.1, max(data) + 0.1)
-            plt.pause(0.01)
+            # Read ALL available samples to drain the buffer
+            samples_available = task.in_stream.avail_samp_per_chan
+            if samples_available > 0:
+                data = task.read(number_of_samples_per_channel=samples_available)
+
+                # Display only the most recent samples
+                display_data = data[-display_samples:] if len(data) > display_samples else data
+
+                line.set_data(range(len(display_data)), display_data)
+                ax.set_xlim(0, len(display_data))
+                ax.set_ylim(min(display_data) - 0.1, max(display_data) + 0.1)
+                clear_output(wait=True)
+                display(fig)
     except KeyboardInterrupt:
         print("Stopped by user")
 
-plt.ioff()
-plt.show()
+plt.close(fig)
 ```
 
 ## Spectral Analysis with FFT
