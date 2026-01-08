@@ -738,15 +738,15 @@ print(f"Data saved to {filename}")
 
 ## Generating an Analog Output
 
-The USB-6009 can also generate analog voltages (though at a limited rate of 150 S/s):
+The USB-6009 can also generate analog voltages (though at a limited rate of 150 S/s). Note that the USB-6009's analog outputs have a range of 0-5V only, so we must specify this range explicitly:
 
 ```python
 import nidaqmx
 
 # Output a DC voltage
 with nidaqmx.Task() as task:
-    task.ao_channels.add_ao_voltage_chan("Dev1/ao0")
-    task.write(2.5)  # Output 2.5 V
+    task.ao_channels.add_ao_voltage_chan("Dev1/ao0", min_val=0.0, max_val=5.0)
+    task.write(2.5, auto_start=True)  # Output 2.5 V
     print("Outputting 2.5 V on AO0")
     input("Press Enter to stop...")
 ```
