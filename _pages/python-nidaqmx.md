@@ -94,6 +94,39 @@ print(f"Voltage: {voltage:.4f} V")
 
 ---
 
+# Single-Ended vs Differential Inputs
+
+The USB-6009 supports two input modes:
+
+**Single-ended (RSE):** Measures voltage between the input pin and ground. This gives you 8 independent channels (AI0-AI7). Use this for most measurements where your signal is already referenced to ground.
+
+```python
+from nidaqmx.constants import TerminalConfiguration
+
+task.ai_channels.add_ai_voltage_chan(
+    "Dev1/ai0",
+    terminal_config=TerminalConfiguration.RSE
+)
+```
+
+**Differential (DIFF):** Measures voltage between two input pins (e.g., AI0+ and AI0-). This gives you 4 channels but rejects common-mode noise. Use this for small signals, long cable runs, or noisy environments.
+
+```python
+task.ai_channels.add_ai_voltage_chan(
+    "Dev1/ai0",
+    terminal_config=TerminalConfiguration.DIFF
+)
+```
+
+| Mode | Channels | Best for |
+|------|----------|----------|
+| RSE (single-ended) | 8 (AI0-AI7) | Most bench measurements, signals referenced to ground |
+| DIFF (differential) | 4 (AI0-AI3) | Small signals, noisy environments, floating sources |
+
+**Common gotcha:** If you don't specify `terminal_config`, the USB-6009 may default to differential mode. If your signal's negative terminal isn't connected properly, you'll get unexpected readings (often about half the expected value).
+
+---
+
 # Reading Multiple Samples
 
 To characterize noise or capture time-varying signals, acquire multiple samples:
@@ -138,106 +171,56 @@ print(f"Std deviation: {np.std(voltages):.4f} V")
 
 ---
 
-# Sample Rate and Nyquist
-
-The **Nyquist theorem** states that to accurately capture a signal at frequency $f$, you must sample at least $2f$ Hz. In practice, sample at 5-10x your highest frequency of interest.
-
-```python
-import nidaqmx
-import numpy as np
-import matplotlib.pyplot as plt
-
-def demonstrate_nyquist(signal_freq, sample_rates):
-    """
-    Show how sample rate affects signal reconstruction.
-
-    In the lab, use a function generator to create the input signal
-    and observe how different sample rates affect measurement.
-    """
-    duration = 0.1  # 100 ms
-
-    fig, axes = plt.subplots(len(sample_rates), 1, figsize=(12, 3*len(sample_rates)))
-
-    for ax, fs in zip(axes, sample_rates):
-        n = int(duration * fs)
-        t = np.arange(n) / fs
-
-        # This simulates what you'd see - in lab, use actual DAQ
-        # The signal generator output would be: signal_freq Hz sine wave
-        measured = np.sin(2 * np.pi * signal_freq * t)
-
-        ax.plot(t * 1000, measured, 'o-', markersize=3)
-        ax.set_ylabel('Voltage (V)')
-        ax.set_title(f'Sample rate: {fs} Hz (Nyquist: {fs/2} Hz)')
-        ax.grid(True)
-
-        if signal_freq > fs / 2:
-            ax.set_title(f'Sample rate: {fs} Hz - ALIASED!')
-
-    axes[-1].set_xlabel('Time (ms)')
-    plt.tight_layout()
-    plt.show()
-
-# Example: 100 Hz signal sampled at different rates
-demonstrate_nyquist(100, [50, 100, 200, 1000])
-```
-
----
-
 # Continuous Acquisition
 
-For long-duration measurements or real-time monitoring:
+For continuous monitoring, you can read data in a loop and display a live view. The following code is designed to **visualize** continuous data in real-time—it shows the most recent samples as they arrive, but does not store every sample for later analysis. This is useful for monitoring signals, checking connections, or observing behavior before running a more careful finite acquisition.
+
+**Note:** In Jupyter notebooks, we use `clear_output()` and `display()` to update the plot. The display updates are slower than the data acquisition rate, so we drain all available samples from the buffer each iteration to prevent overflow errors.
 
 ```python
 import nidaqmx
 import numpy as np
 import matplotlib.pyplot as plt
+from nidaqmx.constants import AcquisitionType
+from IPython.display import display, clear_output
 
-def continuous_acquisition(duration=10, sample_rate=1000):
-    """
-    Acquire data continuously and plot in real-time.
+sample_rate = 10000
+display_samples = 1000  # Number of most recent samples to show
 
-    Parameters:
-        duration: Total acquisition time in seconds
-        sample_rate: Samples per second
-    """
-    plt.ion()  # Enable interactive mode
-    fig, ax = plt.subplots(figsize=(10, 6))
-    line, = ax.plot([], [])
-    ax.set_xlabel('Time (s)')
-    ax.set_ylabel('Voltage (V)')
-    ax.set_title('Real-Time Data Acquisition')
-    ax.grid(True)
+fig, ax = plt.subplots(figsize=(10, 6))
+line, = ax.plot([], [])
+ax.set_xlabel('Sample')
+ax.set_ylabel('Voltage (V)')
+ax.set_title('Continuous Acquisition')
 
-    all_data = []
-    samples_per_read = 100
+with nidaqmx.Task() as task:
+    task.ai_channels.add_ai_voltage_chan("Dev1/ai0")
+    task.timing.cfg_samp_clk_timing(
+        rate=sample_rate,
+        sample_mode=AcquisitionType.CONTINUOUS
+    )
 
-    with nidaqmx.Task() as task:
-        task.ai_channels.add_ai_voltage_chan("Dev1/ai0")
-        task.timing.cfg_samp_clk_timing(
-            rate=sample_rate,
-            sample_mode=nidaqmx.constants.AcquisitionType.CONTINUOUS
-        )
-        task.start()
+    task.start()
 
-        total_samples = int(duration * sample_rate)
-        while len(all_data) < total_samples:
-            data = task.read(number_of_samples_per_channel=samples_per_read)
-            all_data.extend(data)
+    try:
+        while True:
+            # Read ALL available samples to drain the buffer
+            samples_available = task.in_stream.avail_samp_per_chan
+            if samples_available > 0:
+                data = task.read(number_of_samples_per_channel=samples_available)
 
-            # Update plot
-            times = np.arange(len(all_data)) / sample_rate
-            line.set_data(times, all_data)
-            ax.set_xlim(0, max(times[-1], 1))
-            ax.set_ylim(min(all_data) - 0.5, max(all_data) + 0.5)
-            plt.pause(0.01)
+                # Display only the most recent samples
+                display_data = data[-display_samples:] if len(data) > display_samples else data
 
-    plt.ioff()
-    plt.show()
-    return np.array(all_data)
+                line.set_data(range(len(display_data)), display_data)
+                ax.set_xlim(0, len(display_data))
+                ax.set_ylim(min(display_data) - 0.1, max(display_data) + 0.1)
+                clear_output(wait=True)
+                display(fig)
+    except KeyboardInterrupt:
+        print("Stopped by user")
 
-# Run for 10 seconds
-data = continuous_acquisition(duration=10, sample_rate=1000)
+plt.close(fig)
 ```
 
 ---
@@ -282,6 +265,48 @@ print(f"Channel 1 mean: {np.mean(data[1]):.4f} V")
 
 ---
 
+# Analog Output
+
+The USB-6009 can generate analog voltages on two output channels (ao0, ao1).
+
+**Important:** The USB-6009's analog outputs only support **0-5V** (not ±10V like the inputs). You must specify this range explicitly or you'll get an error.
+
+```python
+import nidaqmx
+import time
+
+# Output a DC voltage for 5 seconds
+with nidaqmx.Task() as task:
+    task.ao_channels.add_ao_voltage_chan("Dev1/ao0", min_val=0.0, max_val=5.0)
+    task.write(2.5, auto_start=True)  # Output 2.5 V
+    print("Outputting 2.5 V on AO0 for 5 seconds...")
+    time.sleep(5)
+    print("Done - output returns to 0V when task closes")
+```
+
+**Loopback test:** Connect AO0 to AI0 with a wire, then verify the output by reading it back:
+
+```python
+import nidaqmx
+from nidaqmx.constants import TerminalConfiguration
+
+# Write voltage
+with nidaqmx.Task() as ao_task:
+    ao_task.ao_channels.add_ao_voltage_chan("Dev1/ao0", min_val=0.0, max_val=5.0)
+    ao_task.write(3.3, auto_start=True)
+
+    # Read it back (use RSE for single-ended measurement)
+    with nidaqmx.Task() as ai_task:
+        ai_task.ai_channels.add_ai_voltage_chan(
+            "Dev1/ai0",
+            terminal_config=TerminalConfiguration.RSE
+        )
+        voltage = ai_task.read()
+        print(f"Set: 3.3 V, Read: {voltage:.4f} V")
+```
+
+---
+
 # Saving Data to CSV
 
 ```python
@@ -322,6 +347,28 @@ save_acquisition(times, voltages, "measurement.csv", metadata)
 ---
 
 # Troubleshooting
+
+## Error Handling Pattern
+
+Always include error handling in your data acquisition code:
+
+```python
+import nidaqmx
+from nidaqmx.errors import DaqError
+
+try:
+    with nidaqmx.Task() as task:
+        task.ai_channels.add_ai_voltage_chan("Dev1/ai0")
+        voltage = task.read()
+        print(f"Voltage: {voltage:.4f} V")
+
+except DaqError as e:
+    print(f"DAQ Error: {e}")
+    print("Check that:")
+    print("  - The DAQ device is connected")
+    print("  - The device name is correct (try 'Dev1', 'Dev2', etc.)")
+    print("  - NI-DAQmx drivers are installed")
+```
 
 ## Device Not Found
 

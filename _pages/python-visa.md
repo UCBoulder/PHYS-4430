@@ -474,13 +474,13 @@ A **frequency response** (or Bode plot) shows how a circuit or system responds t
 ## Test Setup
 
 ```
-┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
-│  Function       │      │  Device Under   │      │  Oscilloscope   │
-│  Generator      │─────▶│  Test (DUT)     │─────▶│  (CH1)          │
-│  (Keysight)     │      │  e.g., filter   │      │  (Tektronix)    │
-└─────────────────┘      └─────────────────┘      └─────────────────┘
-        │                                                  │
-        └──────────────── USB to Computer ─────────────────┘
++---------------+      +---------------+      +---------------+
+|   Function    |      | Device Under  |      |  Oscilloscope |
+|   Generator   |----->|  Test (DUT)   |----->|     (CH1)     |
+|   (Keysight)  |      | e.g., filter  |      |  (Tektronix)  |
++---------------+      +---------------+      +---------------+
+        |                                             |
+        +------------ USB to Computer ----------------+
 ```
 
 **Connections:**
