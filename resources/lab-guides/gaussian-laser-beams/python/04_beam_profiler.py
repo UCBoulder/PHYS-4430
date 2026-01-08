@@ -9,7 +9,7 @@ This script automates the knife-edge beam profile measurement using:
 
 Hardware Requirements:
 - Thorlabs KST101 Stepper Motor Controller
-- Thorlabs ZST225B Linear Stage (or compatible stepper actuator)
+- Thorlabs ZST225 Linear Stage (or compatible stepper actuator)
 - NI USB-6009 DAQ (or compatible NI DAQ)
 - Photodetector connected to DAQ analog input (default: AI0)
 
@@ -22,19 +22,29 @@ FIRST-TIME SETUP (Required):
 -----------------------------
 Before using this script, the KST101 must be configured with the correct
 stage/actuator type. This is a one-time setup that stores settings in the
-controller's memory.
+controller's internal memory.
 
-Option 1 - Using the KST101 front panel:
-    1. Power on the KST101
-    2. Press the Menu button
-    3. Navigate to "Motor" settings
-    4. Select your actuator type (e.g., ZST225B)
-    5. Save and exit
+IMPORTANT: The stage type MUST be configured via the KST101 front panel
+or Thorlabs Kinesis software. Python cannot write to the controller's
+internal settings memory.
+
+Option 1 - Using the KST101 front panel (RECOMMENDED):
+    1. Power on the KST101 (USB can be connected or not)
+    2. Press the Menu button on the KST101
+    3. Navigate to "Motor" or "Stage" settings
+    4. Select your actuator type (e.g., ZST225)
+    5. Save and exit the menu
+    6. Power cycle the KST101 (disconnect and reconnect power)
 
 Option 2 - Using Thorlabs Kinesis software:
     1. Open Kinesis and connect to the KST101
     2. When prompted, select your actuator type
     3. Close Kinesis (settings are saved to the controller)
+
+VERIFYING CONFIGURATION:
+When you run this script, it will display the detected stage configuration.
+If the position shown by Python doesn't match the KST101 front panel display,
+the stage type is misconfigured - use Option 1 above to fix it.
 
 If the stage type is not configured, you will see an error:
 "Object reference not set to an instance of an object"
@@ -170,6 +180,49 @@ class BeamProfiler:
         self.positions = []
         self.voltages = []
 
+    def get_stage_configuration(self):
+        """
+        Query the controller to get the current stage configuration.
+
+        Returns:
+            dict with 'settings_name', 'device_name', and other config info,
+            or None if configuration cannot be read.
+        """
+        if self.device is None:
+            return None
+
+        try:
+            # Try to get current configuration from device
+            motor_config = self.device.LoadMotorConfiguration(
+                self.serial_number,
+                DeviceConfiguration.DeviceSettingsUseOptionType.UseDeviceSettings
+            )
+
+            if motor_config is not None:
+                return {
+                    'settings_name': str(motor_config.DeviceSettingsName),
+                    'description': str(motor_config.Description) if hasattr(motor_config, 'Description') else 'N/A',
+                }
+        except Exception as e:
+            print(f"Could not read device settings: {e}")
+
+        # Fall back to file settings
+        try:
+            motor_config = self.device.LoadMotorConfiguration(
+                self.serial_number,
+                DeviceConfiguration.DeviceSettingsUseOptionType.UseFileSettings
+            )
+            if motor_config is not None:
+                return {
+                    'settings_name': str(motor_config.DeviceSettingsName),
+                    'description': str(motor_config.Description) if hasattr(motor_config, 'Description') else 'N/A',
+                    'source': 'file'
+                }
+        except Exception:
+            pass
+
+        return None
+
     def connect(self):
         """
         Connect to the motor controller.
@@ -182,7 +235,8 @@ class BeamProfiler:
 
         The motor configuration contains stage-specific parameters like
         steps per revolution, gear ratio, and travel limits. These must
-        be configured on the KST101 before this script will work.
+        be configured on the KST101 (via front panel menu) before this
+        script will work correctly.
         """
         if not THORLABS_AVAILABLE:
             raise RuntimeError("Thorlabs Kinesis SDK not available")
@@ -202,27 +256,24 @@ class BeamProfiler:
         # Create and connect device
         self.device = KCubeStepper.CreateKCubeStepper(self.serial_number)
         self.device.Connect(self.serial_number)
-        time.sleep(0.25)
+        time.sleep(0.5)
 
-        # Start polling and enable
+        # Wait for settings to initialize
+        if not self.device.IsSettingsInitialized():
+            print("Waiting for settings to initialize...")
+            self.device.WaitForSettingsInitialized(5000)
+
+        # Start polling
         self.device.StartPolling(250)
         time.sleep(0.25)
 
-        # Enable device first
+        # Enable device
         self.device.EnableDevice()
-        time.sleep(0.25)
+        time.sleep(0.5)
 
         # Load motor configuration
         # The configuration contains stage-specific parameters (steps/rev,
         # gear ratio, pitch) that convert between device units and real units.
-        #
-        # UseDeviceSettings: Loads from controller's internal memory
-        #   - Works if stage was configured via front panel or Kinesis
-        #   - Preferred method - doesn't require config files on PC
-        #
-        # UseFileSettings: Loads from Kinesis XML config files on PC
-        #   - Files located in C:\ProgramData\Thorlabs\MotionControl\
-        #   - Created when device is configured in Kinesis software
         try:
             use_device_settings = (
                 DeviceConfiguration.DeviceSettingsUseOptionType.UseDeviceSettings
@@ -249,7 +300,7 @@ class BeamProfiler:
             except Exception as e2:
                 print(f"Warning: Could not load motor configuration: {e2}")
                 print("Motor may not move correctly without configuration.")
-                print("Consider configuring the device in Thorlabs Kinesis software.")
+                print("Configure the stage type via the KST101 front panel menu.")
 
         # Set velocity parameters
         try:
@@ -265,6 +316,11 @@ class BeamProfiler:
         info = self.device.GetDeviceInfo()
         print(f"Connected to: {info.Description}")
         print(f"Serial Number: {info.SerialNumber}")
+
+        # Display current stage configuration
+        stage_config = self.get_stage_configuration()
+        if stage_config:
+            print(f"Stage configuration: {stage_config['settings_name']}")
 
     def disconnect(self):
         """Disconnect from the motor controller."""
