@@ -290,7 +290,9 @@ If the data is sampled for 2 seconds at 100 Hz sample rate:
 
 ## Building a Real-Time Spectral Analyzer
 
-Create a script that acquires data and displays both time-domain and frequency-domain views simultaneously:
+The following script acquires data and displays both time-domain and frequency-domain views simultaneously. **This code is provided for you**—the learning goal is to *use and interpret* spectral analysis, not to write real-time plotting code from scratch.
+
+Run this script, then complete the exercises that follow. You will modify specific aspects of the code to deepen your understanding.
 
 ```python
 import nidaqmx
@@ -382,6 +384,33 @@ if last_data is not None:
 
 plt.close(fig)
 ```
+
+### Code Modification Exercises
+
+These exercises help you understand spectral analysis by making targeted modifications to the code above. For each modification, **predict the result before running the code**.
+
+1. **Change the sample rate.** Modify `SAMPLE_RATE` from 10000 Hz to 2000 Hz.
+   - **Before running:** Predict what will change in the frequency-domain plot. What will be the new maximum frequency? What will happen to frequency resolution?
+   - **After running:** Was your prediction correct? If not, explain what you learned.
+
+2. **Change the number of samples.** Reset `SAMPLE_RATE` to 10000 Hz, then change `NUM_SAMPLES` from 2000 to 500.
+   - **Before running:** How will this affect the frequency resolution? Will the maximum frequency change?
+   - **After running:** Compare the spectrum to the original. Is it easier or harder to identify frequency peaks? Why?
+
+3. **Add a deliberate bug.** Modify the `compute_spectrum` function to remove the line `power[1:-1] *= 2`:
+   ```python
+   # power[1:-1] *= 2  # Comment this out
+   ```
+   - **Before running:** What do you predict will happen to the displayed power values?
+   - **After running:** Compare the magnitude of peaks to the original. Research why this factor of 2 is needed for a one-sided spectrum.
+
+4. **Document a wrong prediction.** In your notebook, record at least one case where your prediction was incorrect. Explain:
+   - What you predicted
+   - What actually happened
+   - Why your mental model was wrong
+   - What you now understand better
+
+**Note:** Whether you generated these modifications yourself or with AI assistance, the learning comes from making predictions and comparing to results. Always restore the original code before moving to the next exercise.
 
 ## Exercises: Spectral Analysis
 
@@ -689,6 +718,8 @@ Before leaving lab today, verify that:
 4. [ ] You have noted your motor's serial number: ____________
 
 This setup will be essential for the automated measurements in Week 4.
+
+**Note on AI assistance:** The motor control code involves interfacing with hardware libraries that have specific requirements (correct DLL paths, serial numbers, initialization sequences). You may use AI to help generate this boilerplate code. What matters is that you can (1) verify the hardware is responding correctly, (2) diagnose common connection failures, and (3) modify parameters like movement distance and velocity. The Troubleshooting Reflection below tests these skills.
 
 ## Troubleshooting Reflection
 

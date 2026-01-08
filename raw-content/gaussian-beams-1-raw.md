@@ -290,6 +290,8 @@ See the [Python Resources](/PHYS-4430/python-resources) page if you need help ge
 
 These exercises directly support your beam width measurement and are **essential preparation** for Week 2.
 
+**Note on AI assistance:** You may use AI tools to help write your curve fitting code. However, the learning goal is to understand what the code does and why. For each exercise, be prepared to explain: (1) what the fit parameters mean physically, (2) why the error function is the appropriate model, and (3) how to interpret the uncertainties reported by `curve_fit`.
+
 5. **Error function fitting practice.** Download [Test_Profile_Data.csv](../resources/lab-guides/gaussian-laser-beams/Test_Profile_Data.csv) and:
 
    1. Plot the data (position vs. voltage).

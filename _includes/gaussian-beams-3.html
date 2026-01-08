@@ -87,7 +87,12 @@
             </ul></li>
             <li><a href="#building-a-real-time-spectral-analyzer"><span
             class="toc-section-number">5.3</span> Building a Real-Time
-            Spectral Analyzer</a></li>
+            Spectral Analyzer</a>
+            <ul>
+            <li><a href="#code-modification-exercises"><span
+            class="toc-section-number">5.3.1</span> Code Modification
+            Exercises</a></li>
+            </ul></li>
             <li><a href="#exercises-spectral-analysis"><span
             class="toc-section-number">5.4</span> Exercises: Spectral
             Analysis</a>
@@ -676,8 +681,14 @@
          id="building-a-real-time-spectral-analyzer"><span
          class="header-section-number">5.3</span> Building a Real-Time
          Spectral Analyzer</h2>
-         <p>Create a script that acquires data and displays both
-         time-domain and frequency-domain views simultaneously:</p>
+         <p>The following script acquires data and displays both
+         time-domain and frequency-domain views simultaneously.
+         <strong>This code is provided for you</strong>—the learning
+         goal is to <em>use and interpret</em> spectral analysis, not to
+         write real-time plotting code from scratch.</p>
+         <p>Run this script, then complete the exercises that follow.
+         You will modify specific aspects of the code to deepen your
+         understanding.</p>
          <div class="sourceCode" id="cb6"><pre
          class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -767,6 +778,60 @@
 <span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Last dataset saved to &#39;last_acquisition.csv&#39;&quot;</span>)</span>
 <span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>plt.close(fig)</span></code></pre></div>
+         <h3 data-number="5.3.1" id="code-modification-exercises"><span
+         class="header-section-number">5.3.1</span> Code Modification
+         Exercises</h3>
+         <p>These exercises help you understand spectral analysis by
+         making targeted modifications to the code above. For each
+         modification, <strong>predict the result before running the
+         code</strong>.</p>
+         <ol type="1">
+         <li><p><strong>Change the sample rate.</strong> Modify
+         <code>SAMPLE_RATE</code> from 10000 Hz to 2000 Hz.</p>
+         <ul>
+         <li><strong>Before running:</strong> Predict what will change
+         in the frequency-domain plot. What will be the new maximum
+         frequency? What will happen to frequency resolution?</li>
+         <li><strong>After running:</strong> Was your prediction
+         correct? If not, explain what you learned.</li>
+         </ul></li>
+         <li><p><strong>Change the number of samples.</strong> Reset
+         <code>SAMPLE_RATE</code> to 10000 Hz, then change
+         <code>NUM_SAMPLES</code> from 2000 to 500.</p>
+         <ul>
+         <li><strong>Before running:</strong> How will this affect the
+         frequency resolution? Will the maximum frequency change?</li>
+         <li><strong>After running:</strong> Compare the spectrum to the
+         original. Is it easier or harder to identify frequency peaks?
+         Why?</li>
+         </ul></li>
+         <li><p><strong>Add a deliberate bug.</strong> Modify the
+         <code>compute_spectrum</code> function to remove the line
+         <code>power[1:-1] *= 2</code>:</p>
+         <div class="sourceCode" id="cb7"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># power[1:-1] *= 2  # Comment this out</span></span></code></pre></div>
+         <ul>
+         <li><strong>Before running:</strong> What do you predict will
+         happen to the displayed power values?</li>
+         <li><strong>After running:</strong> Compare the magnitude of
+         peaks to the original. Research why this factor of 2 is needed
+         for a one-sided spectrum.</li>
+         </ul></li>
+         <li><p><strong>Document a wrong prediction.</strong> In your
+         notebook, record at least one case where your prediction was
+         incorrect. Explain:</p>
+         <ul>
+         <li>What you predicted</li>
+         <li>What actually happened</li>
+         <li>Why your mental model was wrong</li>
+         <li>What you now understand better</li>
+         </ul></li>
+         </ol>
+         <p><strong>Note:</strong> Whether you generated these
+         modifications yourself or with AI assistance, the learning
+         comes from making predictions and comparing to results. Always
+         restore the original code before moving to the next
+         exercise.</p>
          <h2 data-number="5.4" id="exercises-spectral-analysis"><span
          class="header-section-number">5.4</span> Exercises: Spectral
          Analysis</h2>
@@ -888,38 +953,38 @@
          Data</h3>
          <p>Sometimes you may want to analyze data after it is saved
          rather than in real-time:</p>
-         <div class="sourceCode" id="cb7"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load saved data</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;saved_waveform.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine sample rate from time data</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (time[<span class="dv">1</span>] <span class="op">-</span> time[<span class="dv">0</span>])</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute FFT</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(signal)</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>fft_result <span class="op">=</span> np.fft.fft(signal)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create frequency axis</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Get positive frequencies only</span></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>positive_mask <span class="op">=</span> frequencies <span class="op">&gt;=</span> <span class="dv">0</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>freq_positive <span class="op">=</span> frequencies[positive_mask]</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(fft_result[positive_mask]) <span class="op">/</span> n</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot spectrum</span></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.plot(freq_positive, magnitude)</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Magnitude&#39;</span>)</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Fourier Transform of Saved Data&#39;</span>)</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+         <div class="sourceCode" id="cb8"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load saved data</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;saved_waveform.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine sample rate from time data</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (time[<span class="dv">1</span>] <span class="op">-</span> time[<span class="dv">0</span>])</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute FFT</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(signal)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>fft_result <span class="op">=</span> np.fft.fft(signal)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create frequency axis</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Get positive frequencies only</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>positive_mask <span class="op">=</span> frequencies <span class="op">&gt;=</span> <span class="dv">0</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>freq_positive <span class="op">=</span> frequencies[positive_mask]</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(fft_result[positive_mask]) <span class="op">/</span> n</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot spectrum</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>plt.plot(freq_positive, magnitude)</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Magnitude&#39;</span>)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Fourier Transform of Saved Data&#39;</span>)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
          <h3 data-number="5.4.5" id="exercises-with-saved-data"><span
          class="header-section-number">5.4.5</span> Exercises with Saved
          Data</h3>
@@ -942,35 +1007,35 @@
          </ol></li>
          <li><p>Make sure to add the frequency column to create a proper
          plot of spectrum vs. frequency:</p>
-         <div class="sourceCode" id="cb8"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Complete example</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(signal)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">10000</span>  <span class="co"># Adjust to your actual sample rate</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute FFT and frequencies</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>fft_result <span class="op">=</span> np.fft.fft(signal)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sided spectrum (positive frequencies)</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>n_half <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>freq_pos <span class="op">=</span> frequencies[:n_half]</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(fft_result[:n_half]) <span class="op">*</span> <span class="dv">2</span> <span class="op">/</span> n  <span class="co"># Normalize and account for one-sided</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>magnitude[<span class="dv">0</span>] <span class="op">/=</span> <span class="dv">2</span>  <span class="co"># DC component doesn&#39;t double</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>plt.plot(freq_pos, magnitude)</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Magnitude&#39;</span>)</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, sample_rate<span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <div class="sourceCode" id="cb9"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Complete example</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(signal)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">10000</span>  <span class="co"># Adjust to your actual sample rate</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute FFT and frequencies</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>fft_result <span class="op">=</span> np.fft.fft(signal)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sided spectrum (positive frequencies)</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>n_half <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>freq_pos <span class="op">=</span> frequencies[:n_half]</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(fft_result[:n_half]) <span class="op">*</span> <span class="dv">2</span> <span class="op">/</span> n  <span class="co"># Normalize and account for one-sided</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>magnitude[<span class="dv">0</span>] <span class="op">/=</span> <span class="dv">2</span>  <span class="co"># DC component doesn&#39;t double</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>plt.plot(freq_pos, magnitude)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Magnitude&#39;</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, sample_rate<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          <li><p>Does the spectral analysis show the same spectrum at the
          same frequencies that you expect from the waveform generator
          settings?</p></li>
          <li><p>NumPy’s FFT uses specific conventions. You can check the
          documentation with:</p>
-         <div class="sourceCode" id="cb9"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(np.fft.fft)</span></code></pre></div>
+         <div class="sourceCode" id="cb10"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(np.fft.fft)</span></code></pre></div>
          <p>The convention used is: <span class="math inline">\(Y_k =
          \sum_{n=0}^{N-1} y_n e^{-2\pi i k n / N}\)</span></p></li>
          </ol>
@@ -1019,15 +1084,15 @@
          If you have 64-bit Python: Install the 64-bit Kinesis
          software</p>
          <p>To check your Python version, run:</p>
-         <div class="sourceCode" id="cb10"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.maxsize <span class="op">&gt;</span> <span class="dv">2</span><span class="op">**</span><span class="dv">32</span>)  <span class="co"># True = 64-bit, False = 32-bit</span></span></code></pre></div>
+         <div class="sourceCode" id="cb11"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.maxsize <span class="op">&gt;</span> <span class="dv">2</span><span class="op">**</span><span class="dv">32</span>)  <span class="co"># True = 64-bit, False = 32-bit</span></span></code></pre></div>
          <h3 data-number="6.2.2" id="python-packages"><span
          class="header-section-number">6.2.2</span> 2. Python
          Packages</h3>
          <p>Install the required packages:</p>
-         <div class="sourceCode" id="cb11"><pre
-         class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pythonnet</span></code></pre></div>
+         <div class="sourceCode" id="cb12"><pre
+         class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pythonnet</span></code></pre></div>
          <p>(You should already have <code>nidaqmx</code>,
          <code>numpy</code>, and <code>matplotlib</code> from Week
          2.)</p>
@@ -1054,27 +1119,27 @@
          Communication</h3>
          <p>Run this test script to verify Python can communicate with
          the motor:</p>
-         <div class="sourceCode" id="cb12"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> clr</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Kinesis .NET assemblies</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:\Program Files\Thorlabs\Kinesis&quot;</span>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.DeviceManagerCLI&quot;</span>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.KCube.StepperMotorCLI&quot;</span>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.DeviceManagerCLI <span class="im">import</span> DeviceManagerCLI</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.KCube.StepperMotorCLI <span class="im">import</span> KCubeStepper</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Build device list</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>DeviceManagerCLI.BuildDeviceList()</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Get list of connected devices</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>device_list <span class="op">=</span> DeviceManagerCLI.GetDeviceList()</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Found </span><span class="sc">{</span><span class="bu">len</span>(device_list)<span class="sc">}</span><span class="ss"> device(s):&quot;</span>)</span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> serial <span class="kw">in</span> device_list:</span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  Serial: </span><span class="sc">{</span>serial<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb13"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> clr</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Kinesis .NET assemblies</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:\Program Files\Thorlabs\Kinesis&quot;</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.DeviceManagerCLI&quot;</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.KCube.StepperMotorCLI&quot;</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.DeviceManagerCLI <span class="im">import</span> DeviceManagerCLI</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.KCube.StepperMotorCLI <span class="im">import</span> KCubeStepper</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Build device list</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>DeviceManagerCLI.BuildDeviceList()</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Get list of connected devices</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>device_list <span class="op">=</span> DeviceManagerCLI.GetDeviceList()</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Found </span><span class="sc">{</span><span class="bu">len</span>(device_list)<span class="sc">}</span><span class="ss"> device(s):&quot;</span>)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> serial <span class="kw">in</span> device_list:</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  Serial: </span><span class="sc">{</span>serial<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
          <p>If this shows your device serial number, the connection is
          working.</p>
          <h3 data-number="6.3.3" id="test-motor-movement"><span
@@ -1083,56 +1148,56 @@
          <p><strong>Caution</strong>: Make sure the translation stage
          has room to move before running this test. Check that nothing
          is blocking the stage mechanically.</p>
-         <div class="sourceCode" id="cb13"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> clr</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> decimal <span class="im">import</span> Decimal</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:\Program Files\Thorlabs\Kinesis&quot;</span>)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.DeviceManagerCLI&quot;</span>)</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.KCube.StepperMotorCLI&quot;</span>)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.GenericMotorCLI&quot;</span>)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.DeviceManagerCLI <span class="im">import</span> DeviceManagerCLI</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.KCube.StepperMotorCLI <span class="im">import</span> KCubeStepper</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace with your serial number</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>SERIAL_NUMBER <span class="op">=</span> <span class="st">&quot;26004813&quot;</span>  <span class="co"># Check the display on your KST101</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>DeviceManagerCLI.BuildDeviceList()</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> KCubeStepper.CreateKCubeStepper(SERIAL_NUMBER)</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    device.Connect(SERIAL_NUMBER)</span>
-<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Connected!&quot;</span>)</span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Wait for settings to initialize</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    device.WaitForSettingsInitialized(<span class="dv">5000</span>)</span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    device.StartPolling(<span class="dv">50</span>)</span>
-<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.5</span>)</span>
-<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    device.EnableDevice()</span>
-<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.5</span>)</span>
-<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load motor configuration</span></span>
-<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    config <span class="op">=</span> device.LoadMotorConfiguration(SERIAL_NUMBER)</span>
-<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get current position</span></span>
-<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> device.Position</span>
-<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Current position: </span><span class="sc">{</span>pos<span class="sc">}</span><span class="ss"> mm&quot;</span>)</span>
-<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Move relative (small test movement)</span></span>
-<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Moving 0.5 mm...&quot;</span>)</span>
-<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>    device.SetMoveRelativeDistance(Decimal(<span class="fl">0.5</span>))</span>
-<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>    device.MoveRelative(<span class="dv">60000</span>)  <span class="co"># 60 second timeout</span></span>
-<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>    new_pos <span class="op">=</span> device.Position</span>
-<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;New position: </span><span class="sc">{</span>new_pos<span class="sc">}</span><span class="ss"> mm&quot;</span>)</span>
-<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
-<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>    device.StopPolling()</span>
-<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    device.Disconnect()</span>
-<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Disconnected&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb14"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> clr</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> decimal <span class="im">import</span> Decimal</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:\Program Files\Thorlabs\Kinesis&quot;</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.DeviceManagerCLI&quot;</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.KCube.StepperMotorCLI&quot;</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.GenericMotorCLI&quot;</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.DeviceManagerCLI <span class="im">import</span> DeviceManagerCLI</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.KCube.StepperMotorCLI <span class="im">import</span> KCubeStepper</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace with your serial number</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>SERIAL_NUMBER <span class="op">=</span> <span class="st">&quot;26004813&quot;</span>  <span class="co"># Check the display on your KST101</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>DeviceManagerCLI.BuildDeviceList()</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> KCubeStepper.CreateKCubeStepper(SERIAL_NUMBER)</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    device.Connect(SERIAL_NUMBER)</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Connected!&quot;</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Wait for settings to initialize</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>    device.WaitForSettingsInitialized(<span class="dv">5000</span>)</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    device.StartPolling(<span class="dv">50</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.5</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    device.EnableDevice()</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.5</span>)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load motor configuration</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>    config <span class="op">=</span> device.LoadMotorConfiguration(SERIAL_NUMBER)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get current position</span></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> device.Position</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Current position: </span><span class="sc">{</span>pos<span class="sc">}</span><span class="ss"> mm&quot;</span>)</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Move relative (small test movement)</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Moving 0.5 mm...&quot;</span>)</span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>    device.SetMoveRelativeDistance(Decimal(<span class="fl">0.5</span>))</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>    device.MoveRelative(<span class="dv">60000</span>)  <span class="co"># 60 second timeout</span></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>    new_pos <span class="op">=</span> device.Position</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;New position: </span><span class="sc">{</span>new_pos<span class="sc">}</span><span class="ss"> mm&quot;</span>)</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>    device.StopPolling()</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>    device.Disconnect()</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Disconnected&quot;</span>)</span></code></pre></div>
          <h2 data-number="6.4"
          id="motor-controller-troubleshooting"><span
          class="header-section-number">6.4</span> Motor Controller
@@ -1164,6 +1229,15 @@
          </ol>
          <p>This setup will be essential for the automated measurements
          in Week 4.</p>
+         <p><strong>Note on AI assistance:</strong> The motor control
+         code involves interfacing with hardware libraries that have
+         specific requirements (correct DLL paths, serial numbers,
+         initialization sequences). You may use AI to help generate this
+         boilerplate code. What matters is that you can (1) verify the
+         hardware is responding correctly, (2) diagnose common
+         connection failures, and (3) modify parameters like movement
+         distance and velocity. The Troubleshooting Reflection below
+         tests these skills.</p>
          <h2 data-number="6.6" id="troubleshooting-reflection"><span
          class="header-section-number">6.6</span> Troubleshooting
          Reflection</h2>
