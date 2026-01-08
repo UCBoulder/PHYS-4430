@@ -25,92 +25,175 @@
                   <h1 class="title">Contents</h1>
         <nav id="TOC">
             <ul>
+            <li><a href="#where-we-are-in-the-sequence"><span
+            class="toc-section-number">1</span> Where We Are in the
+            Sequence</a></li>
             <li><a href="#overview"><span
-            class="toc-section-number">1</span> Overview</a></li>
-            <li><a href="#goals"><span
-            class="toc-section-number">2</span> Goals</a></li>
+            class="toc-section-number">2</span> Overview</a></li>
+            <li><a href="#learning-goals"><span
+            class="toc-section-number">3</span> Learning Goals</a></li>
             <li><a href="#prelab"><span
-            class="toc-section-number">3</span> Prelab</a>
+            class="toc-section-number">4</span> Prelab</a>
             <ul>
             <li><a
             href="#error-propagation---from-measured-to-derived-quantities"><span
-            class="toc-section-number">3.1</span> Error propagation -
+            class="toc-section-number">4.1</span> Error propagation -
             from measured to derived quantities</a></li>
             <li><a href="#error-propagation-in-python"><span
-            class="toc-section-number">3.2</span> Error propagation in
+            class="toc-section-number">4.2</span> Error propagation in
             Python</a>
             <ul>
             <li><a href="#approach-1-manual-calculation"><span
-            class="toc-section-number">3.2.1</span> Approach 1: Manual
+            class="toc-section-number">4.2.1</span> Approach 1: Manual
             calculation</a></li>
             <li><a
             href="#approach-2-using-the-uncertainties-package"><span
-            class="toc-section-number">3.2.2</span> Approach 2: Using
+            class="toc-section-number">4.2.2</span> Approach 2: Using
             the <code>uncertainties</code> package</a></li>
             <li><a href="#exercise-beam-width-uncertainty"><span
-            class="toc-section-number">3.2.3</span> Exercise: Beam width
+            class="toc-section-number">4.2.3</span> Exercise: Beam width
             uncertainty</a></li>
             </ul></li>
             <li><a href="#gaussian-beam-theory"><span
-            class="toc-section-number">3.3</span> Gaussian beam
+            class="toc-section-number">4.3</span> Gaussian beam
             theory</a></li>
             <li><a href="#sec:wave-eqn"><span
-            class="toc-section-number">3.4</span> Paraxial wave
+            class="toc-section-number">4.4</span> Paraxial wave
             equation</a></li>
             <li><a href="#trying-out-the-gaussian-beam-model"><span
-            class="toc-section-number">3.5</span> Trying out the
+            class="toc-section-number">4.5</span> Trying out the
             Gaussian beam model</a></li>
             </ul></li>
             <li><a href="#fourier-analysis-techniques"><span
-            class="toc-section-number">4</span> Fourier Analysis
+            class="toc-section-number">5</span> Fourier Analysis
             Techniques</a>
             <ul>
             <li><a href="#introduction-to-fourier-transforms"><span
-            class="toc-section-number">4.1</span> Introduction to
+            class="toc-section-number">5.1</span> Introduction to
             Fourier Transforms</a>
             <ul>
             <li><a href="#sec:basic-fourier"><span
-            class="toc-section-number">4.1.1</span> Basic Fourier
+            class="toc-section-number">5.1.1</span> Basic Fourier
             Concepts</a></li>
             </ul></li>
             <li><a href="#computing-the-power-spectrum-in-python"><span
-            class="toc-section-number">4.2</span> Computing the Power
+            class="toc-section-number">5.2</span> Computing the Power
             Spectrum in Python</a>
             <ul>
             <li><a
             href="#frequency-resolution-and-maximum-frequency"><span
-            class="toc-section-number">4.2.1</span> Frequency Resolution
+            class="toc-section-number">5.2.1</span> Frequency Resolution
             and Maximum Frequency</a></li>
             </ul></li>
             <li><a href="#building-a-real-time-spectral-analyzer"><span
-            class="toc-section-number">4.3</span> Building a Real-Time
+            class="toc-section-number">5.3</span> Building a Real-Time
             Spectral Analyzer</a></li>
             <li><a href="#exercises-spectral-analysis"><span
-            class="toc-section-number">4.4</span> Exercises: Spectral
+            class="toc-section-number">5.4</span> Exercises: Spectral
             Analysis</a>
             <ul>
             <li><a href="#understanding-frequency-resolution"><span
-            class="toc-section-number">4.4.1</span> Understanding
+            class="toc-section-number">5.4.1</span> Understanding
             Frequency Resolution</a></li>
             <li><a href="#analyzing-different-waveforms"><span
-            class="toc-section-number">4.4.2</span> Analyzing Different
+            class="toc-section-number">5.4.2</span> Analyzing Different
             Waveforms</a></li>
+            <li><a
+            href="#connecting-fft-to-your-gaussian-beams-experiment"><span
+            class="toc-section-number">5.4.3</span> Connecting FFT to
+            Your Gaussian Beams Experiment</a></li>
             <li><a href="#analyzing-saved-data"><span
-            class="toc-section-number">4.4.3</span> Analyzing Saved
+            class="toc-section-number">5.4.4</span> Analyzing Saved
             Data</a></li>
             <li><a href="#exercises-with-saved-data"><span
-            class="toc-section-number">4.4.4</span> Exercises with Saved
+            class="toc-section-number">5.4.5</span> Exercises with Saved
             Data</a></li>
             </ul></li>
             </ul></li>
+            <li><a href="#setting-up-the-motor-controller"><span
+            class="toc-section-number">6</span> Setting Up the Motor
+            Controller</a>
+            <ul>
+            <li><a href="#hardware-overview"><span
+            class="toc-section-number">6.1</span> Hardware
+            Overview</a></li>
+            <li><a href="#software-prerequisites"><span
+            class="toc-section-number">6.2</span> Software
+            Prerequisites</a>
+            <ul>
+            <li><a href="#thorlabs-kinesis-sdk"><span
+            class="toc-section-number">6.2.1</span> 1. Thorlabs Kinesis
+            SDK</a></li>
+            <li><a href="#python-packages"><span
+            class="toc-section-number">6.2.2</span> 2. Python
+            Packages</a></li>
+            </ul></li>
+            <li><a href="#verifying-the-motor-connection"><span
+            class="toc-section-number">6.3</span> Verifying the Motor
+            Connection</a>
+            <ul>
+            <li><a href="#test-that-windows-recognizes-the-device"><span
+            class="toc-section-number">6.3.1</span> Test that Windows
+            Recognizes the Device</a></li>
+            <li><a href="#test-basic-motor-communication"><span
+            class="toc-section-number">6.3.2</span> Test Basic Motor
+            Communication</a></li>
+            <li><a href="#test-motor-movement"><span
+            class="toc-section-number">6.3.3</span> Test Motor
+            Movement</a></li>
+            </ul></li>
+            <li><a href="#motor-controller-troubleshooting"><span
+            class="toc-section-number">6.4</span> Motor Controller
+            Troubleshooting</a></li>
+            <li><a href="#exercise-verify-your-setup"><span
+            class="toc-section-number">6.5</span> Exercise: Verify Your
+            Setup</a></li>
+            <li><a href="#troubleshooting-reflection"><span
+            class="toc-section-number">6.6</span> Troubleshooting
+            Reflection</a></li>
+            </ul></li>
             <li><a href="#revisit-measuring-the-beam-width"><span
-            class="toc-section-number">5</span> Revisit Measuring the
+            class="toc-section-number">7</span> Revisit Measuring the
             Beam Width</a></li>
+            <li><a href="#deliverables-and-assessment"><span
+            class="toc-section-number">8</span> Deliverables and
+            Assessment</a>
+            <ul>
+            <li><a href="#prelab-complete-before-lab"><span
+            class="toc-section-number">8.1</span> Prelab (complete
+            before lab)</a></li>
+            <li><a href="#in-lab-documentation"><span
+            class="toc-section-number">8.2</span> In-Lab
+            Documentation</a></li>
+            <li><a href="#code-deliverables"><span
+            class="toc-section-number">8.3</span> Code
+            Deliverables</a></li>
+            <li><a href="#reflection-questions"><span
+            class="toc-section-number">8.4</span> Reflection
+            Questions</a></li>
+            </ul></li>
             </ul>
         </nav>
         <hr/>
-         <h1 data-number="1" id="overview"><span
-         class="header-section-number">1</span> Overview</h1>
+         <h1 data-number="1" id="where-we-are-in-the-sequence"><span
+         class="header-section-number">1</span> Where We Are in the
+         Sequence</h1>
+         <p><strong>Week 3 of 4: Theory and Preparation for
+         Automation</strong></p>
+         <p>Last week you characterized your photodetector’s noise and
+         chose an optimal gain setting. This week you’ll learn the
+         theoretical foundation for Gaussian beams (which you’ll test
+         next week), develop spectral analysis skills to understand
+         noise sources, and set up the motor controller for automated
+         measurements.</p>
+         <p><strong>Last week:</strong> Learned DAQ programming,
+         characterized noise, chose gain setting <strong>This
+         week:</strong> Learn Gaussian beam theory → Analyze noise
+         spectra → Set up motor controller <strong>Next week:</strong>
+         Automated measurements → Test Gaussian beam model → Investigate
+         lens effects</p>
+         <h1 data-number="2" id="overview"><span
+         class="header-section-number">2</span> Overview</h1>
          <p>The third week of the Gaussian Beams lab builds upon the
          Python data acquisition skills you developed last week. This
          week’s prelab covers error propagation (how uncertainties in
@@ -118,42 +201,49 @@
          the theoretical foundation for Gaussian laser beams, deriving
          the equations you’ll use in Week 4’s experiments. In the lab
          portion, you will use spectral analysis tools to perform
-         Fourier Transforms and analyze signals in the frequency domain.
-         Be sure to document all of your work in your lab notebook.</p>
-         <h1 data-number="2" id="goals"><span
-         class="header-section-number">2</span> Goals</h1>
-         <p>In this week’s prelab, you will…</p>
+         Fourier Transforms, set up the motor controller hardware for
+         automated measurements, and revisit your beam width
+         measurement. Be sure to document all of your work in your lab
+         notebook.</p>
+         <h1 data-number="3" id="learning-goals"><span
+         class="header-section-number">3</span> Learning Goals</h1>
+         <p>After completing the prelab, you will be able to:</p>
          <ol type="1">
-         <li>…learn to propagate uncertainties from measured to derived
-         quantities.</li>
-         <li>…derive the paraxial wave equation from Maxwell’s
-         equations.</li>
-         <li>…understand the Gaussian beam solution and its key
-         parameters (<span class="math inline">\(w_0\)</span>, <span
+         <li>Propagate uncertainties from measured quantities to derived
+         quantities using partial derivatives.</li>
+         <li>Derive the paraxial wave equation from Maxwell’s equations
+         by applying the slowly-varying envelope approximation.</li>
+         <li>Explain the physical meaning of Gaussian beam parameters
+         (<span class="math inline">\(w_0\)</span>, <span
          class="math inline">\(w(z)\)</span>, <span
          class="math inline">\(R(z)\)</span>, <span
-         class="math inline">\(\zeta(z)\)</span>).</li>
-         <li>…fit Gaussian beam data to extract beam waist and
-         position.</li>
+         class="math inline">\(\zeta(z)\)</span>) and how they relate to
+         observable properties.</li>
+         <li>Fit experimental beam width data to extract beam waist
+         <span class="math inline">\(w_0\)</span> and waist position
+         <span class="math inline">\(z_w\)</span> with
+         uncertainties.</li>
          </ol>
-         <p>In this week’s lab, you will…</p>
+         <p>After completing the lab, you will be able to:</p>
          <ol type="1">
-         <li>…connect mathematical formalism to basic concepts of
-         Fourier Transforms.</li>
-         <li>…compute Fourier Transforms using NumPy’s FFT
-         functions.</li>
-         <li>…build a real-time spectral analysis tool.</li>
-         <li>…analyze waveforms in both time and frequency domains.</li>
-         <li>…revisit and refine your beam width measurement from Week
-         1.</li>
+         <li>Explain what a Fourier Transform reveals about a signal and
+         interpret a power spectrum.</li>
+         <li>Compute and plot the power spectrum of a measured signal
+         using NumPy’s FFT functions.</li>
+         <li>Identify frequency components in experimental data and
+         relate them to physical sources.</li>
+         <li>Set up and verify the motor controller for automated
+         measurements.</li>
+         <li>Measure beam width using the knife-edge technique and
+         compare automated vs. manual methods.</li>
          </ol>
-         <h1 data-number="3" id="prelab"><span
-         class="header-section-number">3</span> Prelab</h1>
+         <h1 data-number="4" id="prelab"><span
+         class="header-section-number">4</span> Prelab</h1>
          <p>This week’s prelab covers two topics: error propagation and
          the theoretical foundation for Gaussian laser beams.</p>
-         <h2 data-number="3.1"
+         <h2 data-number="4.1"
          id="error-propagation---from-measured-to-derived-quantities"><span
-         class="header-section-number">3.1</span> Error propagation -
+         class="header-section-number">4.1</span> Error propagation -
          from measured to derived quantities</h2>
          <p>The quantity of interest in an experiment is often derived
          from other measured quantities. An example is estimating the
@@ -200,14 +290,14 @@
          introductory physics lab for the error in the sum, difference,
          product, quotient. These are all easily derived from this
          general formula.</p>
-         <h2 data-number="3.2" id="error-propagation-in-python"><span
-         class="header-section-number">3.2</span> Error propagation in
+         <h2 data-number="4.2" id="error-propagation-in-python"><span
+         class="header-section-number">4.2</span> Error propagation in
          Python</h2>
          <p>There are two main approaches to error propagation in
          Python:</p>
-         <h3 data-number="3.2.1"
+         <h3 data-number="4.2.1"
          id="approach-1-manual-calculation"><span
-         class="header-section-number">3.2.1</span> Approach 1: Manual
+         class="header-section-number">4.2.1</span> Approach 1: Manual
          calculation</h3>
          <p>For simple cases, you can compute partial derivatives
          manually:</p>
@@ -232,9 +322,9 @@
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>sigma_R <span class="op">=</span> np.sqrt((dR_dV <span class="op">*</span> sigma_V)<span class="op">**</span><span class="dv">2</span> <span class="op">+</span> (dR_dI <span class="op">*</span> sigma_I)<span class="op">**</span><span class="dv">2</span>)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;R = </span><span class="sc">{</span>R<span class="sc">:.2f}</span><span class="ss"> ± </span><span class="sc">{</span>sigma_R<span class="sc">:.2f}</span><span class="ss"> Ω&quot;</span>)</span></code></pre></div>
-         <h3 data-number="3.2.2"
+         <h3 data-number="4.2.2"
          id="approach-2-using-the-uncertainties-package"><span
-         class="header-section-number">3.2.2</span> Approach 2: Using
+         class="header-section-number">4.2.2</span> Approach 2: Using
          the <code>uncertainties</code> package</h3>
          <p>For more complex calculations, the
          <code>uncertainties</code> package automatically tracks error
@@ -251,9 +341,9 @@
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> V <span class="op">/</span> I</span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;R = </span><span class="sc">{</span>R<span class="sc">}</span><span class="ss">&quot;</span>)  <span class="co"># Shows value ± uncertainty</span></span></code></pre></div>
-         <h3 data-number="3.2.3"
+         <h3 data-number="4.2.3"
          id="exercise-beam-width-uncertainty"><span
-         class="header-section-number">3.2.3</span> Exercise: Beam width
+         class="header-section-number">4.2.3</span> Exercise: Beam width
          uncertainty</h3>
          <p>Later in this prelab, we will model a Gaussian beam’s width
          <span class="math inline">\(w(z)\)</span> as:</p>
@@ -294,8 +384,8 @@
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;w(z) = </span><span class="sc">{</span>w<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
          </ol>
-         <h2 data-number="3.3" id="gaussian-beam-theory"><span
-         class="header-section-number">3.3</span> Gaussian beam
+         <h2 data-number="4.3" id="gaussian-beam-theory"><span
+         class="header-section-number">4.3</span> Gaussian beam
          theory</h2>
          <p>Light is a propagating oscillation of the electromagnetic
          field. The general principles which govern electromagnetic
@@ -320,8 +410,8 @@
          profile beams exist, they must be solutions of the wave
          equation. The next section will discuss how we derive the
          Gaussian beam electric field, and give a few key results.</p>
-         <h2 data-number="3.4" id="sec:wave-eqn"><span
-         class="header-section-number">3.4</span> Paraxial wave
+         <h2 data-number="4.4" id="sec:wave-eqn"><span
+         class="header-section-number">4.4</span> Paraxial wave
          equation</h2>
          <p>One important thing to note about the beam output from most
          lasers is that the width of the beam changes very slowly
@@ -442,9 +532,9 @@
          width, <span class="math inline">\(w\)</span>.</figcaption>
          </figure>
          </div>
-         <h2 data-number="3.5"
+         <h2 data-number="4.5"
          id="trying-out-the-gaussian-beam-model"><span
-         class="header-section-number">3.5</span> Trying out the
+         class="header-section-number">4.5</span> Trying out the
          Gaussian beam model</h2>
          <p>In the first week of the lab, we assumed the intensity
          profile of the Gaussian beam was given by <span
@@ -487,17 +577,17 @@
          and occurs at a position <span
          class="math inline">\(z_w=0.3396\pm0.0003\ m\)</span>.</li>
          </ol>
-         <h1 data-number="4" id="fourier-analysis-techniques"><span
-         class="header-section-number">4</span> Fourier Analysis
+         <h1 data-number="5" id="fourier-analysis-techniques"><span
+         class="header-section-number">5</span> Fourier Analysis
          Techniques</h1>
          <p>In Week 2, you learned about the Nyquist frequency and how
          sample rate affects your ability to accurately capture signals.
          This week, we’ll analyze signals in the <strong>frequency
          domain</strong> using Fourier Transforms. This is a powerful
          technique used throughout physics and engineering.</p>
-         <h2 data-number="4.1"
+         <h2 data-number="5.1"
          id="introduction-to-fourier-transforms"><span
-         class="header-section-number">4.1</span> Introduction to
+         class="header-section-number">5.1</span> Introduction to
          Fourier Transforms</h2>
          <p>The discrete Fourier Transform of a set of data <span
          class="math inline">\(\{y_0,y_1, ... , y_{N-1}\}\)</span> is
@@ -509,8 +599,8 @@
          amplitude of <span class="math inline">\(Y_m\)</span> tells you
          how much of your signal was formed by an oscillation at the
          <span class="math inline">\(m\)</span>-th frequency.</p>
-         <h3 data-number="4.1.1" id="sec:basic-fourier"><span
-         class="header-section-number">4.1.1</span> Basic Fourier
+         <h3 data-number="5.1.1" id="sec:basic-fourier"><span
+         class="header-section-number">5.1.1</span> Basic Fourier
          Concepts</h3>
          <ol type="1">
          <li>How do the units of the Fourier Transform array <span
@@ -523,9 +613,9 @@
          <li>If a data set has <span class="math inline">\(N\)</span>
          elements, how long is the discrete Fourier Transform?</li>
          </ol>
-         <h2 data-number="4.2"
+         <h2 data-number="5.2"
          id="computing-the-power-spectrum-in-python"><span
-         class="header-section-number">4.2</span> Computing the Power
+         class="header-section-number">5.2</span> Computing the Power
          Spectrum in Python</h2>
          <p>NumPy provides efficient FFT (Fast Fourier Transform)
          functions for spectral analysis:</p>
@@ -559,9 +649,9 @@
 <span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    power[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">*=</span> <span class="dv">2</span>  <span class="co"># Double power for frequencies with both +/- components</span></span>
 <span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> frequencies, power</span></code></pre></div>
-         <h3 data-number="4.2.1"
+         <h3 data-number="5.2.1"
          id="frequency-resolution-and-maximum-frequency"><span
-         class="header-section-number">4.2.1</span> Frequency Resolution
+         class="header-section-number">5.2.1</span> Frequency Resolution
          and Maximum Frequency</h3>
          <p>The relationship between your acquisition parameters and the
          spectrum is:</p>
@@ -582,9 +672,9 @@
          <p>If the data is sampled for 2 seconds at 100 Hz sample rate:
          - Number of samples = 200 - Frequency resolution = 100 Hz / 200
          = 0.5 Hz - Maximum frequency = 100 Hz / 2 = 50 Hz</p>
-         <h2 data-number="4.3"
+         <h2 data-number="5.3"
          id="building-a-real-time-spectral-analyzer"><span
-         class="header-section-number">4.3</span> Building a Real-Time
+         class="header-section-number">5.3</span> Building a Real-Time
          Spectral Analyzer</h2>
          <p>Create a script that acquires data and displays both
          time-domain and frequency-domain views simultaneously:</p>
@@ -677,12 +767,12 @@
 <span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Last dataset saved to &#39;last_acquisition.csv&#39;&quot;</span>)</span>
 <span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>plt.close(fig)</span></code></pre></div>
-         <h2 data-number="4.4" id="exercises-spectral-analysis"><span
-         class="header-section-number">4.4</span> Exercises: Spectral
+         <h2 data-number="5.4" id="exercises-spectral-analysis"><span
+         class="header-section-number">5.4</span> Exercises: Spectral
          Analysis</h2>
-         <h3 data-number="4.4.1"
+         <h3 data-number="5.4.1"
          id="understanding-frequency-resolution"><span
-         class="header-section-number">4.4.1</span> Understanding
+         class="header-section-number">5.4.1</span> Understanding
          Frequency Resolution</h3>
          <ol type="1">
          <li><p>Use a waveform generator to output a waveform of your
@@ -702,7 +792,7 @@
          <li><p>How many points are shown in the spectral analysis plot?
          How does this compare to the number of points you expected in
          the Fourier transform (see Section <a
-         href="#sec:basic-fourier">4.1.1</a>.4)?</p>
+         href="#sec:basic-fourier">5.1.1</a>.4)?</p>
          <p><strong>Note</strong>: The data acquired from the DAQ is
          always a sequence of real numbers <span
          class="math inline">\(\{y_n\}\)</span>. Under the condition
@@ -715,9 +805,9 @@
          typically only plot the first half of the Fourier spectrum up
          to the Nyquist frequency.</p></li>
          </ol>
-         <h3 data-number="4.4.2"
+         <h3 data-number="5.4.2"
          id="analyzing-different-waveforms"><span
-         class="header-section-number">4.4.2</span> Analyzing Different
+         class="header-section-number">5.4.2</span> Analyzing Different
          Waveforms</h3>
          <ol type="1">
          <li><p>How do you expect the spectrum of a <strong>sine
@@ -735,8 +825,66 @@
          two signals). Can you identify both frequencies in the
          spectrum?</p></li>
          </ol>
-         <h3 data-number="4.4.3" id="analyzing-saved-data"><span
-         class="header-section-number">4.4.3</span> Analyzing Saved
+         <h3 data-number="5.4.3"
+         id="connecting-fft-to-your-gaussian-beams-experiment"><span
+         class="header-section-number">5.4.3</span> Connecting FFT to
+         Your Gaussian Beams Experiment</h3>
+         <p>The spectral analysis techniques you’ve learned have direct
+         applications to your beam profiling work. In this section,
+         you’ll analyze the photodetector signal to understand noise
+         sources that could affect your Week 4 measurements.</p>
+         <ol type="1">
+         <li><p><strong>Photodetector noise spectrum.</strong> Connect
+         your photodetector to the DAQ (as in Week 2) with the beam
+         blocked.</p>
+         <ol type="1">
+         <li>Acquire 1-2 seconds of data at 10 kHz sample rate.</li>
+         <li>Compute and plot the power spectrum.</li>
+         <li>Are there any peaks at specific frequencies? If so, what
+         are likely physical sources? (Common culprits: 60 Hz power
+         line, 120 Hz rectified power, computer switching frequencies,
+         room lighting)</li>
+         <li>How does the noise spectrum change when you change the
+         photodetector gain setting?</li>
+         </ol></li>
+         <li><p><strong>Signal spectrum with laser.</strong> Now unblock
+         the beam so light hits the photodetector.</p>
+         <ol type="1">
+         <li>Acquire data and compute the power spectrum.</li>
+         <li>Compare to the dark noise spectrum. What changed?</li>
+         <li>If you see new peaks, what might cause periodic variations
+         in laser intensity?</li>
+         </ol></li>
+         <li><p><strong>Implications for beam profiling.</strong>
+         Consider your Week 4 automated measurements.</p>
+         <ol type="1">
+         <li>Your beam profiler waits 500 ms between steps and takes a
+         single voltage reading. Based on your noise spectrum, what
+         frequencies could affect your measurement?</li>
+         <li>If you wanted to reduce the effect of 60 Hz noise, how long
+         should you average each measurement? (Hint: averaging over an
+         integer number of periods cancels periodic noise)</li>
+         <li>Would it be better to average many fast samples or take one
+         slow measurement? Justify your answer using your spectral
+         analysis.</li>
+         </ol></li>
+         <li><p><strong>Quantitative prediction for Week 4.</strong>
+         Based on your noise spectrum analysis:</p>
+         <ol type="1">
+         <li>Calculate the RMS noise you expect in a 100-sample average
+         at 10 kHz sample rate. (Hint: if your single-sample RMS noise
+         is <span class="math inline">\(\sigma\)</span>, the RMS of an
+         N-sample average is <span
+         class="math inline">\(\sigma/\sqrt{N}\)</span>, assuming white
+         noise.)</li>
+         <li>Record this prediction in your notebook: “Predicted RMS
+         noise with 100-sample averaging: ______ mV”</li>
+         <li>You will test this prediction in Week 4 by examining the
+         scatter in your beam profile data.</li>
+         </ol></li>
+         </ol>
+         <h3 data-number="5.4.4" id="analyzing-saved-data"><span
+         class="header-section-number">5.4.4</span> Analyzing Saved
          Data</h3>
          <p>Sometimes you may want to analyze data after it is saved
          rather than in real-time:</p>
@@ -772,8 +920,8 @@
 <span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Fourier Transform of Saved Data&#39;</span>)</span>
 <span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
 <span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-         <h3 data-number="4.4.4" id="exercises-with-saved-data"><span
-         class="header-section-number">4.4.4</span> Exercises with Saved
+         <h3 data-number="5.4.5" id="exercises-with-saved-data"><span
+         class="header-section-number">5.4.5</span> Exercises with Saved
          Data</h3>
          <ol type="1">
          <li><p>Import any saved data set of a periodic function saved
@@ -826,13 +974,218 @@
          <p>The convention used is: <span class="math inline">\(Y_k =
          \sum_{n=0}^{N-1} y_n e^{-2\pi i k n / N}\)</span></p></li>
          </ol>
-         <h1 data-number="5" id="revisit-measuring-the-beam-width"><span
-         class="header-section-number">5</span> Revisit Measuring the
+         <h1 data-number="6" id="setting-up-the-motor-controller"><span
+         class="header-section-number">6</span> Setting Up the Motor
+         Controller</h1>
+         <p>In Week 4, you will use Python to automate beam profile
+         measurements by controlling a motorized translation stage. This
+         section guides you through setting up and verifying the motor
+         controller hardware. Getting this working now will save
+         significant time later.</p>
+         <h2 data-number="6.1" id="hardware-overview"><span
+         class="header-section-number">6.1</span> Hardware Overview</h2>
+         <p>The Thorlabs KST101 is a stepper motor controller that can
+         precisely position a translation stage. You will use it to move
+         a razor blade across the laser beam while the DAQ records the
+         photodetector signal.</p>
+         <p>The physical connections are:</p>
+         <ol type="1">
+         <li><strong>Motor Controller (KST101)</strong>:
+         <ul>
+         <li>Connect the USB cable from the KST101 cube to your
+         computer</li>
+         <li>Connect the power supply to the KST101</li>
+         <li>The motor should already be mechanically connected to the
+         translation stage with the razor</li>
+         </ul></li>
+         <li><strong>Optical Setup</strong> (for testing):
+         <ul>
+         <li>Position the photodetector after the knife-edge in the beam
+         path</li>
+         <li>Ensure the beam passes cleanly through when the razor is
+         fully retracted</li>
+         </ul></li>
+         </ol>
+         <h2 data-number="6.2" id="software-prerequisites"><span
+         class="header-section-number">6.2</span> Software
+         Prerequisites</h2>
+         <h3 data-number="6.2.1" id="thorlabs-kinesis-sdk"><span
+         class="header-section-number">6.2.1</span> 1. Thorlabs Kinesis
+         SDK</h3>
+         <p>Download and install from the Thorlabs website: <a
+         href="https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control">https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control</a></p>
+         <p><strong>Important</strong>: Choose the correct version: - If
+         you have 32-bit Python: Install the 32-bit Kinesis software -
+         If you have 64-bit Python: Install the 64-bit Kinesis
+         software</p>
+         <p>To check your Python version, run:</p>
+         <div class="sourceCode" id="cb10"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.maxsize <span class="op">&gt;</span> <span class="dv">2</span><span class="op">**</span><span class="dv">32</span>)  <span class="co"># True = 64-bit, False = 32-bit</span></span></code></pre></div>
+         <h3 data-number="6.2.2" id="python-packages"><span
+         class="header-section-number">6.2.2</span> 2. Python
+         Packages</h3>
+         <p>Install the required packages:</p>
+         <div class="sourceCode" id="cb11"><pre
+         class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pythonnet</span></code></pre></div>
+         <p>(You should already have <code>nidaqmx</code>,
+         <code>numpy</code>, and <code>matplotlib</code> from Week
+         2.)</p>
+         <h2 data-number="6.3" id="verifying-the-motor-connection"><span
+         class="header-section-number">6.3</span> Verifying the Motor
+         Connection</h2>
+         <h3 data-number="6.3.1"
+         id="test-that-windows-recognizes-the-device"><span
+         class="header-section-number">6.3.1</span> Test that Windows
+         Recognizes the Device</h3>
+         <ol type="1">
+         <li>Connect the USB to the KST101, then turn on power</li>
+         <li>Open <strong>Device Manager</strong> and look for the
+         device under “USB devices” or “Thorlabs APT Device”</li>
+         <li>Note the serial number (displayed on the KST101
+         screen)</li>
+         </ol>
+         <p>If you get a driver error, you may need to disable Memory
+         Integrity in Windows Security (ask technical staff for help if
+         this occurs on a lab computer).</p>
+         <h3 data-number="6.3.2"
+         id="test-basic-motor-communication"><span
+         class="header-section-number">6.3.2</span> Test Basic Motor
+         Communication</h3>
+         <p>Run this test script to verify Python can communicate with
+         the motor:</p>
+         <div class="sourceCode" id="cb12"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> clr</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Kinesis .NET assemblies</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:\Program Files\Thorlabs\Kinesis&quot;</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.DeviceManagerCLI&quot;</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.KCube.StepperMotorCLI&quot;</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.DeviceManagerCLI <span class="im">import</span> DeviceManagerCLI</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.KCube.StepperMotorCLI <span class="im">import</span> KCubeStepper</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Build device list</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>DeviceManagerCLI.BuildDeviceList()</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Get list of connected devices</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>device_list <span class="op">=</span> DeviceManagerCLI.GetDeviceList()</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Found </span><span class="sc">{</span><span class="bu">len</span>(device_list)<span class="sc">}</span><span class="ss"> device(s):&quot;</span>)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> serial <span class="kw">in</span> device_list:</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  Serial: </span><span class="sc">{</span>serial<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+         <p>If this shows your device serial number, the connection is
+         working.</p>
+         <h3 data-number="6.3.3" id="test-motor-movement"><span
+         class="header-section-number">6.3.3</span> Test Motor
+         Movement</h3>
+         <p><strong>Caution</strong>: Make sure the translation stage
+         has room to move before running this test. Check that nothing
+         is blocking the stage mechanically.</p>
+         <div class="sourceCode" id="cb13"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> clr</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> decimal <span class="im">import</span> Decimal</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:\Program Files\Thorlabs\Kinesis&quot;</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.DeviceManagerCLI&quot;</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.KCube.StepperMotorCLI&quot;</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.GenericMotorCLI&quot;</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.DeviceManagerCLI <span class="im">import</span> DeviceManagerCLI</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.KCube.StepperMotorCLI <span class="im">import</span> KCubeStepper</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace with your serial number</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>SERIAL_NUMBER <span class="op">=</span> <span class="st">&quot;26004813&quot;</span>  <span class="co"># Check the display on your KST101</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>DeviceManagerCLI.BuildDeviceList()</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> KCubeStepper.CreateKCubeStepper(SERIAL_NUMBER)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    device.Connect(SERIAL_NUMBER)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Connected!&quot;</span>)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Wait for settings to initialize</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    device.WaitForSettingsInitialized(<span class="dv">5000</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    device.StartPolling(<span class="dv">50</span>)</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.5</span>)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>    device.EnableDevice()</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.5</span>)</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load motor configuration</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>    config <span class="op">=</span> device.LoadMotorConfiguration(SERIAL_NUMBER)</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get current position</span></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> device.Position</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Current position: </span><span class="sc">{</span>pos<span class="sc">}</span><span class="ss"> mm&quot;</span>)</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Move relative (small test movement)</span></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Moving 0.5 mm...&quot;</span>)</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>    device.SetMoveRelativeDistance(Decimal(<span class="fl">0.5</span>))</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>    device.MoveRelative(<span class="dv">60000</span>)  <span class="co"># 60 second timeout</span></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>    new_pos <span class="op">=</span> device.Position</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;New position: </span><span class="sc">{</span>new_pos<span class="sc">}</span><span class="ss"> mm&quot;</span>)</span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
+<span id="cb13-47"><a href="#cb13-47" aria-hidden="true" tabindex="-1"></a>    device.StopPolling()</span>
+<span id="cb13-48"><a href="#cb13-48" aria-hidden="true" tabindex="-1"></a>    device.Disconnect()</span>
+<span id="cb13-49"><a href="#cb13-49" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Disconnected&quot;</span>)</span></code></pre></div>
+         <h2 data-number="6.4"
+         id="motor-controller-troubleshooting"><span
+         class="header-section-number">6.4</span> Motor Controller
+         Troubleshooting</h2>
+         <p><strong>“Device not found” Error:</strong> - Check USB
+         connection - Verify serial number matches the display on the
+         KST101 - Make sure no other software (APT User, Kinesis) is
+         using the motor</p>
+         <p><strong>Motor Doesn’t Move:</strong> - Ensure power is
+         connected to the KST101 - Check that the stage isn’t at a
+         travel limit - Verify the stage type is configured correctly in
+         Kinesis (ZST225B)</p>
+         <p><strong>Python Import Errors:</strong> - Ensure Kinesis SDK
+         is installed and matches Python architecture (32/64-bit) -
+         Check that the path to Kinesis DLLs is correct</p>
+         <h2 data-number="6.5" id="exercise-verify-your-setup"><span
+         class="header-section-number">6.5</span> Exercise: Verify Your
+         Setup</h2>
+         <p>Before leaving lab today, verify that:</p>
+         <ol type="1">
+         <li><input type="checkbox" disabled="" />
+         The DAQ can read voltages from the photodetector</li>
+         <li><input type="checkbox" disabled="" />
+         Python can connect to the motor controller</li>
+         <li><input type="checkbox" disabled="" />
+         The motor moves when commanded</li>
+         <li><input type="checkbox" disabled="" />
+         You have noted your motor’s serial number: ____________</li>
+         </ol>
+         <p>This setup will be essential for the automated measurements
+         in Week 4.</p>
+         <h2 data-number="6.6" id="troubleshooting-reflection"><span
+         class="header-section-number">6.6</span> Troubleshooting
+         Reflection</h2>
+         <p>Developing systematic troubleshooting skills is essential
+         for experimental physics. Answer this question in your
+         notebook:</p>
+         <p><strong>If the motor doesn’t respond to Python commands,
+         what troubleshooting steps would you take?</strong></p>
+         <p>List at least three things you would check, <em>in order of
+         likelihood</em>, and explain your reasoning. Consider: - What
+         are the most common failure modes? - What’s the quickest way to
+         isolate hardware vs. software issues? - How would you determine
+         if the problem is with Python, the USB connection, or the motor
+         itself?</p>
+         <p>This systematic approach to troubleshooting will serve you
+         well in Week 4 and beyond.</p>
+         <h1 data-number="7" id="revisit-measuring-the-beam-width"><span
+         class="header-section-number">7</span> Revisit Measuring the
          Beam Width</h1>
-         <p>Next week you will be using the motor controller you set up
-         last week to automate beam profile measurements. To be prepared
-         for this endeavor, you should now go back and review (and
-         complete) <a
+         <p>Now that you have the motor controller working, you’re ready
+         to prepare for Week 4’s automated measurements. Review (and
+         complete if necessary) <a
          href="/PHYS-4430/lab-guides/gaussian-beams-1#measuring-the-beam-width">section
          7</a> from Week 1.</p>
          <p>Make sure you can:</p>
@@ -844,7 +1197,79 @@
          <li>Create a plot showing the data and fit</li>
          </ol>
          <p>This will serve as your baseline for comparison with the
-         automated measurements next week.</p>
+         automated measurements next week. If time permits, try using
+         the motor controller to take a few data points—this will give
+         you confidence that your setup is ready for Week 4.</p>
+         <h1 data-number="8" id="deliverables-and-assessment"><span
+         class="header-section-number">8</span> Deliverables and
+         Assessment</h1>
+         <p>Your lab notebook should include the following for this
+         week:</p>
+         <h2 data-number="8.1" id="prelab-complete-before-lab"><span
+         class="header-section-number">8.1</span> Prelab (complete
+         before lab)</h2>
+         <ol type="1">
+         <li><strong>Error propagation exercise</strong>: calculation of
+         <span class="math inline">\(w(z)\)</span> uncertainty using the
+         <code>uncertainties</code> package</li>
+         <li><strong>Paraxial wave equation derivation</strong>: show
+         the key steps from Maxwell’s equations to Equation 7</li>
+         <li><strong>Gaussian beam model questions</strong>: answers to
+         questions 1-4 in “Trying out the Gaussian beam model”</li>
+         <li><strong>Beam waist fitting</strong>: fit results for the
+         test data set with <span class="math inline">\(w_0\)</span> and
+         <span class="math inline">\(z_w\)</span> values</li>
+         </ol>
+         <h2 data-number="8.2" id="in-lab-documentation"><span
+         class="header-section-number">8.2</span> In-Lab
+         Documentation</h2>
+         <ol type="1">
+         <li><strong>FFT exercises</strong>:
+         <ul>
+         <li>Plots comparing time-domain and frequency-domain
+         representations</li>
+         <li>Answers to frequency resolution questions</li>
+         <li>Analysis of sine wave, square wave, and multi-frequency
+         signals</li>
+         <li><strong>Photodetector noise spectrum</strong> (new
+         section): dark noise and signal spectra with analysis of
+         implications for beam profiling</li>
+         </ul></li>
+         <li><strong>Motor controller verification</strong>:
+         <ul>
+         <li>Completed setup checklist (DAQ, motor connection, movement
+         test)</li>
+         <li>Motor serial number recorded</li>
+         </ul></li>
+         <li><strong>Beam width measurement</strong> (from Week 1 or
+         new):
+         <ul>
+         <li>Data table: position vs. voltage</li>
+         <li>Fit plot with extracted beam width and uncertainty</li>
+         </ul></li>
+         </ol>
+         <h2 data-number="8.3" id="code-deliverables"><span
+         class="header-section-number">8.3</span> Code Deliverables</h2>
+         <ol type="1">
+         <li>Working spectral analysis script</li>
+         <li>Motor communication test script</li>
+         </ol>
+         <h2 data-number="8.4" id="reflection-questions"><span
+         class="header-section-number">8.4</span> Reflection
+         Questions</h2>
+         <ol type="1">
+         <li><p>Your FFT shows an unexpected peak at 120 Hz that wasn’t
+         present in your function generator signal. List three possible
+         physical sources for this frequency and describe how you would
+         determine which is responsible.</p></li>
+         <li><p>You measure a beam width of <span
+         class="math inline">\(w = 0.52 \pm 0.03\)</span> mm at position
+         <span class="math inline">\(z = 1.5\)</span> m. Using the
+         Gaussian beam equations, predict <span
+         class="math inline">\(w\)</span> at <span
+         class="math inline">\(z = 2.0\)</span> m, including the
+         propagated uncertainty. Show your calculation.</p></li>
+         </ol>
                </div>
             <!-- Mathjax -->
       <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
