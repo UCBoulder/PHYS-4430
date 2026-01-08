@@ -4,7 +4,7 @@ title: "Gaussian Beams - Week 3"
 
 # Overview
 
-The third week of the Gaussian Beams lab builds upon the Python data acquisition skills you developed last week. This week's prelab covers error propagation (how uncertainties in measured quantities affect derived quantities) and introduces the theoretical foundation for Gaussian laser beams, deriving the equations you'll use in Week 4's experiments. In the lab portion, you will use spectral analysis tools to perform Fourier Transforms and analyze signals in the frequency domain. Be sure to document all of your work in your lab notebook.
+The third week of the Gaussian Beams lab builds upon the Python data acquisition skills you developed last week. This week's prelab covers error propagation (how uncertainties in measured quantities affect derived quantities) and introduces the theoretical foundation for Gaussian laser beams, deriving the equations you'll use in Week 4's experiments. In the lab portion, you will use spectral analysis tools to perform Fourier Transforms, set up the motor controller hardware for automated measurements, and revisit your beam width measurement. Be sure to document all of your work in your lab notebook.
 
 # Goals
 
@@ -21,7 +21,8 @@ In this week's lab, you will…
 2. …compute Fourier Transforms using NumPy's FFT functions.
 3. …build a real-time spectral analysis tool.
 4. …analyze waveforms in both time and frequency domains.
-5. …revisit and refine your beam width measurement from Week 1.
+5. …set up and verify the motor controller for automated measurements.
+6. …revisit and refine your beam width measurement from Week 1.
 
 # Prelab
 
@@ -482,9 +483,178 @@ plt.show()
 
    The convention used is: $Y_k = \sum_{n=0}^{N-1} y_n e^{-2\pi i k n / N}$
 
+# Setting Up the Motor Controller
+
+In Week 4, you will use Python to automate beam profile measurements by controlling a motorized translation stage. This section guides you through setting up and verifying the motor controller hardware. Getting this working now will save significant time later.
+
+## Hardware Overview
+
+The Thorlabs KST101 is a stepper motor controller that can precisely position a translation stage. You will use it to move a razor blade across the laser beam while the DAQ records the photodetector signal.
+
+The physical connections are:
+
+1. **Motor Controller (KST101)**:
+   - Connect the USB cable from the KST101 cube to your computer
+   - Connect the power supply to the KST101
+   - The motor should already be mechanically connected to the translation stage with the razor
+
+2. **Optical Setup** (for testing):
+   - Position the photodetector after the knife-edge in the beam path
+   - Ensure the beam passes cleanly through when the razor is fully retracted
+
+## Software Prerequisites
+
+### 1. Thorlabs Kinesis SDK
+
+Download and install from the Thorlabs website:
+[https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control)
+
+**Important**: Choose the correct version:
+- If you have 32-bit Python: Install the 32-bit Kinesis software
+- If you have 64-bit Python: Install the 64-bit Kinesis software
+
+To check your Python version, run:
+
+```python
+import sys
+print(sys.maxsize > 2**32)  # True = 64-bit, False = 32-bit
+```
+
+### 2. Python Packages
+
+Install the required packages:
+
+```bash
+pip install pythonnet
+```
+
+(You should already have `nidaqmx`, `numpy`, and `matplotlib` from Week 2.)
+
+## Verifying the Motor Connection
+
+### Test that Windows Recognizes the Device
+
+1. Connect the USB to the KST101, then turn on power
+2. Open **Device Manager** and look for the device under "USB devices" or "Thorlabs APT Device"
+3. Note the serial number (displayed on the KST101 screen)
+
+If you get a driver error, you may need to disable Memory Integrity in Windows Security (ask technical staff for help if this occurs on a lab computer).
+
+### Test Basic Motor Communication
+
+Run this test script to verify Python can communicate with the motor:
+
+```python
+import clr
+import sys
+import time
+
+# Add Kinesis .NET assemblies
+sys.path.append(r"C:\Program Files\Thorlabs\Kinesis")
+clr.AddReference("Thorlabs.MotionControl.DeviceManagerCLI")
+clr.AddReference("Thorlabs.MotionControl.KCube.StepperMotorCLI")
+
+from Thorlabs.MotionControl.DeviceManagerCLI import DeviceManagerCLI
+from Thorlabs.MotionControl.KCube.StepperMotorCLI import KCubeStepper
+
+# Build device list
+DeviceManagerCLI.BuildDeviceList()
+
+# Get list of connected devices
+device_list = DeviceManagerCLI.GetDeviceList()
+print(f"Found {len(device_list)} device(s):")
+for serial in device_list:
+    print(f"  Serial: {serial}")
+```
+
+If this shows your device serial number, the connection is working.
+
+### Test Motor Movement
+
+**Caution**: Make sure the translation stage has room to move before running this test. Check that nothing is blocking the stage mechanically.
+
+```python
+import clr
+import sys
+import time
+from decimal import Decimal
+
+sys.path.append(r"C:\Program Files\Thorlabs\Kinesis")
+clr.AddReference("Thorlabs.MotionControl.DeviceManagerCLI")
+clr.AddReference("Thorlabs.MotionControl.KCube.StepperMotorCLI")
+clr.AddReference("Thorlabs.MotionControl.GenericMotorCLI")
+
+from Thorlabs.MotionControl.DeviceManagerCLI import DeviceManagerCLI
+from Thorlabs.MotionControl.KCube.StepperMotorCLI import KCubeStepper
+
+# Replace with your serial number
+SERIAL_NUMBER = "26004813"  # Check the display on your KST101
+
+DeviceManagerCLI.BuildDeviceList()
+device = KCubeStepper.CreateKCubeStepper(SERIAL_NUMBER)
+
+try:
+    device.Connect(SERIAL_NUMBER)
+    print("Connected!")
+
+    # Wait for settings to initialize
+    device.WaitForSettingsInitialized(5000)
+    device.StartPolling(50)
+    time.sleep(0.5)
+    device.EnableDevice()
+    time.sleep(0.5)
+
+    # Load motor configuration
+    config = device.LoadMotorConfiguration(SERIAL_NUMBER)
+
+    # Get current position
+    pos = device.Position
+    print(f"Current position: {pos} mm")
+
+    # Move relative (small test movement)
+    print("Moving 0.5 mm...")
+    device.SetMoveRelativeDistance(Decimal(0.5))
+    device.MoveRelative(60000)  # 60 second timeout
+
+    new_pos = device.Position
+    print(f"New position: {new_pos} mm")
+
+finally:
+    device.StopPolling()
+    device.Disconnect()
+    print("Disconnected")
+```
+
+## Motor Controller Troubleshooting
+
+**"Device not found" Error:**
+- Check USB connection
+- Verify serial number matches the display on the KST101
+- Make sure no other software (APT User, Kinesis) is using the motor
+
+**Motor Doesn't Move:**
+- Ensure power is connected to the KST101
+- Check that the stage isn't at a travel limit
+- Verify the stage type is configured correctly in Kinesis (ZST225B)
+
+**Python Import Errors:**
+- Ensure Kinesis SDK is installed and matches Python architecture (32/64-bit)
+- Check that the path to Kinesis DLLs is correct
+
+## Exercise: Verify Your Setup
+
+Before leaving lab today, verify that:
+
+1. [ ] The DAQ can read voltages from the photodetector
+2. [ ] Python can connect to the motor controller
+3. [ ] The motor moves when commanded
+4. [ ] You have noted your motor's serial number: ____________
+
+This setup will be essential for the automated measurements in Week 4.
+
 # Revisit Measuring the Beam Width
 
-Next week you will be using the motor controller you set up last week to automate beam profile measurements. To be prepared for this endeavor, you should now go back and review (and complete) [section 7](/PHYS-4430/lab-guides/gaussian-beams-1#measuring-the-beam-width) from Week 1.
+Now that you have the motor controller working, you're ready to prepare for Week 4's automated measurements. Review (and complete if necessary) [section 7](/PHYS-4430/lab-guides/gaussian-beams-1#measuring-the-beam-width) from Week 1.
 
 Make sure you can:
 
@@ -493,4 +663,4 @@ Make sure you can:
 3. Extract the beam width $w$ with uncertainty
 4. Create a plot showing the data and fit
 
-This will serve as your baseline for comparison with the automated measurements next week.
+This will serve as your baseline for comparison with the automated measurements next week. If time permits, try using the motor controller to take a few data points—this will give you confidence that your setup is ready for Week 4.

@@ -4,7 +4,7 @@ title: "Gaussian Beams - Week 4"
 
 # Goals
 
-In Week 1, we measured the profile of the laser and found it to be Gaussian to a good approximation. In Week 3, we derived the Gaussian beam model and learned how the profile changes as the beam propagates. This week, we will apply automation to more rapidly take data and test the model experimentally. Since you already set up and verified the motor controller in Week 2, we can focus on the physics.
+In Week 1, we measured the profile of the laser and found it to be Gaussian to a good approximation. In Week 3, we derived the Gaussian beam model and learned how the profile changes as the beam propagates. This week, we will apply automation to more rapidly take data and test the model experimentally. Since you already set up and verified the motor controller in Week 3, we can focus on the physics.
 
 The full set of learning goals includes:
 
@@ -34,13 +34,24 @@ You will use this model to analyze your automated measurements.
 
 # Verify Your Setup
 
-In Week 2, you set up and verified the motor controller and DAQ. Before starting the experiments, confirm everything is still working:
+In Week 3, you set up and verified the motor controller. In Week 2, you learned to use the DAQ and characterized your photodetector's noise. Before starting the experiments, confirm everything is still working:
 
 1. [ ] DAQ can read voltages from the photodetector
 2. [ ] Python can connect to the motor controller (check your serial number: ____________)
 3. [ ] Motor moves when commanded
 
-If you encounter issues, refer back to the troubleshooting section in Week 2's lab guide.
+If you encounter issues, refer back to the troubleshooting section in Week 3's lab guide.
+
+## Validate Your Gain Setting
+
+Before your first automated scan, complete the **Week 4 Validation** section from Week 2's noise characterization (Part 5). This closes the loop on your photodetector characterization:
+
+1. With the beam fully blocked, acquire 100 samples and record the mean and RMS
+2. With the beam fully exposed, acquire 100 samples and record the mean and RMS
+3. Calculate your actual SNR and compare to your Week 2 prediction
+4. If the SNR differs significantly from your prediction, decide whether to adjust your gain setting
+
+**Your selected gain setting from Week 2:** _______ dB
 
 # Automation of the Measurement
 
