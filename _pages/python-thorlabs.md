@@ -48,28 +48,25 @@ C:\Program Files\Thorlabs\Kinesis\
 
 **Important:** Before using Python, the KST101 must be configured with the correct stage type. This is a one-time setup stored in the controller's memory.
 
-**Option 1: Using the KST101 front panel (Recommended)**
 1. Power on the KST101
 2. Press the Menu button
-3. Navigate to "Motor" or "Stage" settings
-4. Select your actuator type (ZST225)
-5. Save and exit
-6. Power cycle the controller
-
-**Option 2: Using Kinesis software**
-1. Open Kinesis and connect to the KST101
-2. When prompted, select your actuator type
-3. Close Kinesis (settings are saved to the controller)
+3. Use the wheel to navigate to "10 Select Stage"
+4. Press the Menu button again
+4. Select your actuator type (ZST225) by using the wheel to navigate
+5. Press the Menu button again to save and exit
+6. Power cycle the controller using the power switch (unplugging it will not save the settings)
 
 ---
 
 # Finding Your Serial Number
 
-The motor serial number is displayed on the **KST101 front panel LCD** (e.g., "26004813"). This 8-digit number is required to connect.
+The motor controller serial number is displayed on the **KST101 front panel LCD** (e.g., "26004813"). This 8-digit number is required to connect. We don't want the motor serial number that is on the motor connecter.
 
 ---
 
 # Basic Connection
+
+**Important for Jupyter users:** Run this connection code once at the start of your session. The `device` object stays connected until you explicitly disconnect. Don't disconnect until you're completely done—subsequent cells (reading position, moving, etc.) all require an active connection.
 
 ```python
 import clr
@@ -108,6 +105,9 @@ time.sleep(0.5)
 if not device.IsSettingsInitialized():
     device.WaitForSettingsInitialized(5000)
 
+# Load motor configuration (required before position/movement commands)
+device.LoadMotorConfiguration(serial_no)
+
 # Start polling (required for position updates)
 device.StartPolling(250)
 time.sleep(0.25)
@@ -120,10 +120,17 @@ time.sleep(0.5)
 info = device.GetDeviceInfo()
 print(f"Connected to: {info.Description}")
 print(f"Serial Number: {info.SerialNumber}")
+```
 
-# Clean up when done
+## Disconnecting
+
+When you're completely done with the motor, clean up the connection:
+
+```python
+# Run this only when finished with all motor operations
 device.StopPolling()
 device.Disconnect()
+print("Disconnected")
 ```
 
 ---
@@ -224,15 +231,33 @@ set_velocity(device, 2.0)
 
 # Complete Example: Position Scan
 
-This example moves through a series of positions and could be combined with DAQ readings:
+This example moves through a series of positions and could be combined with DAQ readings. Copy and paste the entire block—it's self-contained.
+
+**Note:** If you already have a connection open from testing the examples above, disconnect first:
+
+```python
+device.StopPolling()
+device.Disconnect()
+```
 
 ```python
 import clr
 import time
 import numpy as np
 
-# Add Thorlabs libraries (see Basic Connection section)
-# ... clr.AddReference calls ...
+# Add Thorlabs Kinesis .NET libraries
+clr.AddReference(
+    "C:\\Program Files\\Thorlabs\\Kinesis\\"
+    "Thorlabs.MotionControl.DeviceManagerCLI.dll"
+)
+clr.AddReference(
+    "C:\\Program Files\\Thorlabs\\Kinesis\\"
+    "Thorlabs.MotionControl.GenericMotorCLI.dll"
+)
+clr.AddReference(
+    "C:\\Program Files\\Thorlabs\\Kinesis\\"
+    "Thorlabs.MotionControl.KCube.StepperMotorCLI.dll"
+)
 
 from Thorlabs.MotionControl.DeviceManagerCLI import DeviceManagerCLI
 from Thorlabs.MotionControl.KCube.StepperMotorCLI import KCubeStepper
@@ -258,6 +283,7 @@ def run_position_scan(serial_no, start_mm, end_mm, step_mm):
     time.sleep(0.5)
 
     device.WaitForSettingsInitialized(5000)
+    device.LoadMotorConfiguration(serial_no)
     device.StartPolling(250)
     time.sleep(0.25)
     device.EnableDevice()
@@ -298,45 +324,7 @@ positions = run_position_scan("26004813", 0, 10, 0.5)
 
 # Integrating with DAQ
 
-For the beam profiler (Week 4), you combine motor control with DAQ voltage readings. See the complete `04_beam_profiler.py` script in the lab resources.
-
-Key pattern:
-
-```python
-import nidaqmx
-
-def measure_at_positions(device, daq_device, positions):
-    """
-    Move to each position and measure voltage.
-
-    Returns:
-        positions: Actual positions (mm)
-        voltages: Measured voltages (V)
-    """
-    measured_positions = []
-    voltages = []
-
-    for target in positions:
-        # Move motor
-        device.MoveTo(Decimal(float(target)), 60000)
-        while device.Status.IsMoving:
-            time.sleep(0.01)
-        time.sleep(0.5)  # Wait for vibrations
-
-        # Get actual position
-        actual_pos = float(str(device.Position))
-        measured_positions.append(actual_pos)
-
-        # Read voltage
-        with nidaqmx.Task() as task:
-            task.ai_channels.add_ai_voltage_chan(f"{daq_device}/ai0")
-            voltage = task.read()
-        voltages.append(voltage)
-
-        print(f"Position: {actual_pos:.4f} mm, Voltage: {voltage:.4f} V")
-
-    return measured_positions, voltages
-```
+For the beam profiler (Week 4), you combine motor control with DAQ voltage readings. See the complete [`04_beam_profiler.py`](/PHYS-4430/resources/lab-guides/gaussian-laser-beams/python/04_beam_profiler.py) script which demonstrates moving the motor through positions while recording photodetector voltages.
 
 ---
 
@@ -359,6 +347,20 @@ def measure_at_positions(device, daq_device, positions):
 **Cause:** Stage type not configured on the controller
 
 **Solution:** Configure via the KST101 front panel menu (see First-Time Hardware Setup above)
+
+## Device Settings Not Initialized
+
+**Problem:** `DeviceSettingsException: Device settings not initialized`
+
+**Cause:** Motor configuration not loaded after connecting
+
+**Solution:** Add `device.LoadMotorConfiguration(serial_no)` after waiting for settings:
+
+```python
+device.WaitForSettingsInitialized(5000)
+device.LoadMotorConfiguration(serial_no)  # Add this line
+device.StartPolling(250)
+```
 
 ## Wrong Position Units
 
