@@ -22,142 +22,120 @@
             class="toc-section-number">1</span> Goals</a></li>
             <li><a href="#prelab"><span
             class="toc-section-number">2</span> Prelab</a></li>
-            <li><a href="#automation-of-the-measurement"><span
-            class="toc-section-number">3</span> Automation of the
-            Measurement</a></li>
-            <li><a href="#the-experiment"><span
-            class="toc-section-number">4</span> The Experiment</a>
-            <ul>
-            <li><a
-            href="#measuring-the-beam-profile-of-your-he-ne-laser-without-any-lenses"><span
-            class="toc-section-number">4.1</span> Measuring the beam
-            profile of your He-Ne laser without any lenses</a></li>
-            <li><a href="#how-does-a-lens-change-a-gaussian-beam"><span
-            class="toc-section-number">4.2</span> How does a lens change
-            a Gaussian beam?</a></li>
-            <li><a
-            href="#quantitatively-modeling-the-effect-of-a-lens"><span
-            class="toc-section-number">4.3</span> Quantitatively
-            modeling the effect of a lens</a></li>
-            </ul></li>
-            <li><a href="#sec:python-automation"><span
-            class="toc-section-number">5</span> Appendix: Python
-            Automation Guide</a>
-            <ul>
-            <li><a href="#hardware-setup"><span
-            class="toc-section-number">5.1</span> Hardware
+            <li><a href="#verify-your-setup"><span
+            class="toc-section-number">3</span> Verify Your
             Setup</a></li>
-            <li><a href="#software-prerequisites"><span
-            class="toc-section-number">5.2</span> Software
-            Prerequisites</a>
+            <li><a href="#automation-of-the-measurement"><span
+            class="toc-section-number">4</span> Automation of the
+            Measurement</a>
             <ul>
-            <li><a href="#thorlabs-kinesis-sdk"><span
-            class="toc-section-number">5.2.1</span> 1. Thorlabs Kinesis
-            SDK</a></li>
-            <li><a href="#python-packages"><span
-            class="toc-section-number">5.2.2</span> 2. Python
-            Packages</a></li>
-            <li><a href="#ni-daqmx-drivers"><span
-            class="toc-section-number">5.2.3</span> 3. NI-DAQmx
-            Drivers</a></li>
-            </ul></li>
-            <li><a href="#verifying-the-setup"><span
-            class="toc-section-number">5.3</span> Verifying the
-            Setup</a>
-            <ul>
-            <li><a href="#test-the-motor-connection"><span
-            class="toc-section-number">5.3.1</span> Test the Motor
-            Connection</a></li>
-            <li><a href="#test-the-daq-connection"><span
-            class="toc-section-number">5.3.2</span> Test the DAQ
-            Connection</a></li>
-            </ul></li>
             <li><a href="#running-the-beam-profiler"><span
-            class="toc-section-number">5.4</span> Running the Beam
+            class="toc-section-number">4.1</span> Running the Beam
             Profiler</a>
             <ul>
             <li><a href="#basic-usage"><span
-            class="toc-section-number">5.4.1</span> Basic Usage</a></li>
+            class="toc-section-number">4.1.1</span> Basic Usage</a></li>
             <li><a href="#choosing-parameters"><span
-            class="toc-section-number">5.4.2</span> Choosing
+            class="toc-section-number">4.1.2</span> Choosing
             Parameters</a></li>
             <li><a href="#output-files"><span
-            class="toc-section-number">5.4.3</span> Output
+            class="toc-section-number">4.1.3</span> Output
             Files</a></li>
+            <li><a href="#validating-the-automation"><span
+            class="toc-section-number">4.1.4</span> Validating the
+            Automation</a></li>
             </ul></li>
-            <li><a href="#understanding-the-code-structure"><span
-            class="toc-section-number">5.5</span> Understanding the Code
-            Structure</a>
-            <ul>
-            <li><a href="#the-beamprofiler-class"><span
-            class="toc-section-number">5.5.1</span> The
-            <code>BeamProfiler</code> Class</a></li>
-            <li><a href="#the-main-measurement-loop"><span
-            class="toc-section-number">5.5.2</span> The Main Measurement
-            Loop</a></li>
-            </ul></li>
-            <li><a href="#customizing-the-script"><span
-            class="toc-section-number">5.6</span> Customizing the
-            Script</a>
+            <li><a href="#customizing-the-script-optional"><span
+            class="toc-section-number">4.2</span> Customizing the Script
+            (Optional)</a>
             <ul>
             <li><a href="#changing-the-daq-channel"><span
-            class="toc-section-number">5.6.1</span> Changing the DAQ
+            class="toc-section-number">4.2.1</span> Changing the DAQ
             Channel</a></li>
-            <li><a href="#modifying-velocity-settings"><span
-            class="toc-section-number">5.6.2</span> Modifying Velocity
-            Settings</a></li>
             <li><a href="#adding-averaging"><span
-            class="toc-section-number">5.6.3</span> Adding
+            class="toc-section-number">4.2.2</span> Adding
             Averaging</a></li>
             </ul></li>
+            </ul></li>
+            <li><a href="#the-experiment"><span
+            class="toc-section-number">5</span> The Experiment</a>
+            <ul>
+            <li><a
+            href="#measuring-the-beam-profile-without-any-lenses"><span
+            class="toc-section-number">5.1</span> Measuring the Beam
+            Profile Without Any Lenses</a>
+            <ul>
+            <li><a href="#tips-for-good-measurements"><span
+            class="toc-section-number">5.1.1</span> Tips for Good
+            Measurements</a></li>
+            </ul></li>
+            <li><a href="#how-does-a-lens-change-a-gaussian-beam"><span
+            class="toc-section-number">5.2</span> How Does a Lens Change
+            a Gaussian Beam?</a></li>
+            <li><a
+            href="#quantitatively-modeling-the-effect-of-a-lens"><span
+            class="toc-section-number">5.3</span> Quantitatively
+            Modeling the Effect of a Lens</a></li>
+            <li><a
+            href="#advanced-investigation-minimum-spot-size"><span
+            class="toc-section-number">5.4</span> Advanced
+            Investigation: Minimum Spot Size</a></li>
+            </ul></li>
+            <li><a
+            href="#appendix-understanding-the-beam-profiler-code"><span
+            class="toc-section-number">6</span> Appendix: Understanding
+            the Beam Profiler Code</a>
+            <ul>
+            <li><a href="#the-beamprofiler-class"><span
+            class="toc-section-number">6.1</span> The
+            <code>BeamProfiler</code> Class</a></li>
+            <li><a href="#the-main-measurement-loop"><span
+            class="toc-section-number">6.2</span> The Main Measurement
+            Loop</a></li>
             <li><a href="#troubleshooting"><span
-            class="toc-section-number">5.7</span> Troubleshooting</a>
+            class="toc-section-number">6.3</span> Troubleshooting</a>
             <ul>
             <li><a href="#device-not-found-error"><span
-            class="toc-section-number">5.7.1</span> “Device not found”
+            class="toc-section-number">6.3.1</span> “Device not found”
             Error</a></li>
             <li><a href="#motor-doesnt-move"><span
-            class="toc-section-number">5.7.2</span> Motor Doesn’t
+            class="toc-section-number">6.3.2</span> Motor Doesn’t
             Move</a></li>
             <li><a href="#voltage-reads-zero"><span
-            class="toc-section-number">5.7.3</span> Voltage Reads
+            class="toc-section-number">6.3.3</span> Voltage Reads
             Zero</a></li>
-            <li><a href="#python-import-errors"><span
-            class="toc-section-number">5.7.4</span> Python Import
-            Errors</a></li>
             <li><a href="#noisy-data"><span
-            class="toc-section-number">5.7.5</span> Noisy Data</a></li>
+            class="toc-section-number">6.3.4</span> Noisy Data</a></li>
             </ul></li>
-            <li><a href="#tips-for-good-measurements"><span
-            class="toc-section-number">5.8</span> Tips for Good
-            Measurements</a></li>
             </ul></li>
             </ul>
         </nav>
         <hr/>
          <h1 data-number="1" id="goals"><span
          class="header-section-number">1</span> Goals</h1>
-         <p>In week one, we measured the profile of the laser and found
-         it to be Gaussian to a good approximation. Last week, we
-         derived the Gaussian beam model and learned how the profile
-         changes as the beam propagates. This week, we will apply
-         automation to more rapidly take data and test the model
-         experimentally. The full set of learning goals includes:</p>
+         <p>In Week 1, we measured the profile of the laser and found it
+         to be Gaussian to a good approximation. In Week 3, we derived
+         the Gaussian beam model and learned how the profile changes as
+         the beam propagates. This week, we will apply automation to
+         more rapidly take data and test the model experimentally. Since
+         you already set up and verified the motor controller in Week 2,
+         we can focus on the physics.</p>
+         <p>The full set of learning goals includes:</p>
          <ol type="1">
-         <li>Automated data acquisition.
+         <li><p>Automated data acquisition</p>
          <ul>
          <li>Python with Thorlabs Kinesis SDK</li>
          <li>USB DAQ (NI USB-6009) with nidaqmx</li>
          </ul></li>
-         <li>Fitting and analysis of data in Python</li>
-         <li>Using the predictive model of Gaussian laser beams from
-         Week 3
+         <li><p>Fitting and analysis of data in Python</p></li>
+         <li><p>Using the predictive model of Gaussian laser beams from
+         Week 3</p>
          <ul>
          <li>Contrast Gaussian beams with geometric optics</li>
          </ul></li>
-         <li>Measure profiles of a Gaussian beam, and extract the
-         Gaussian beam parameters</li>
-         <li>Effect of a lens on Gaussian beams.
+         <li><p>Measure profiles of a Gaussian beam, and extract the
+         Gaussian beam parameters</p></li>
+         <li><p>Effect of a lens on Gaussian beams</p>
          <ul>
          <li>Is it still Gaussian?</li>
          <li>Does the thin lens equation apply to Gaussian beams?</li>
@@ -174,43 +152,128 @@
          z}{\pi w_0^2}\right)^2}\text{.}\]</span></p>
          <p>You will use this model to analyze your automated
          measurements.</p>
-         <h1 data-number="3" id="automation-of-the-measurement"><span
-         class="header-section-number">3</span> Automation of the
+         <h1 data-number="3" id="verify-your-setup"><span
+         class="header-section-number">3</span> Verify Your Setup</h1>
+         <p>In Week 2, you set up and verified the motor controller and
+         DAQ. Before starting the experiments, confirm everything is
+         still working:</p>
+         <ol type="1">
+         <li><input type="checkbox" disabled="" />
+         DAQ can read voltages from the photodetector</li>
+         <li><input type="checkbox" disabled="" />
+         Python can connect to the motor controller (check your serial
+         number: ____________)</li>
+         <li><input type="checkbox" disabled="" />
+         Motor moves when commanded</li>
+         </ol>
+         <p>If you encounter issues, refer back to the troubleshooting
+         section in Week 2’s lab guide.</p>
+         <h1 data-number="4" id="automation-of-the-measurement"><span
+         class="header-section-number">4</span> Automation of the
          Measurement</h1>
          <p>Before we begin this week’s lab, reflect on your experience
-         from week one (and perhaps refer to your lab notebook entry to
+         from Week 1 (and perhaps refer to your lab notebook entry to
          help guide your memory).</p>
          <ol type="1">
-         <li>In week one, how long did the total process of data taking
+         <li>In Week 1, how long did the total process of data taking
          through analysis take to make a measurement of the beam width
          <span class="math inline">\(w\)</span>?</li>
          <li>In this lab, you may have to take 20-30 beam profiles in
          order to measure <span class="math inline">\(w_0\)</span> and
          <span class="math inline">\(z_w\)</span>. How long would this
-         take with your current method?</li>
-         <li>What are the most time consuming portions of the process?
-         Which parts of the process would benefit from automation?</li>
+         take with your manual method?</li>
+         <li>What are the most time-consuming portions of the process?
+         Which parts benefit most from automation?</li>
          </ol>
-         <p>In the next step, you will use Python and your NI USB-6009
-         data acquisition device to automate the procedure for measuring
-         the width of the laser beam. You can do this with your own
-         laptop or with the laptops in the lab.</p>
-         <p>In order to set up your measurement automation you will use
-         a Python script that controls the motor and reads the
-         photodetector. Instructions can be found in the Appendix <a
-         href="#sec:python-automation">5</a>.</p>
+         <h2 data-number="4.1" id="running-the-beam-profiler"><span
+         class="header-section-number">4.1</span> Running the Beam
+         Profiler</h2>
+         <p>The automation script is available at:
+         <code>resources/lab-guides/gaussian-laser-beams/python/04_beam_profiler.py</code></p>
+         <h3 data-number="4.1.1" id="basic-usage"><span
+         class="header-section-number">4.1.1</span> Basic Usage</h3>
+         <p>Navigate to the script directory and run:</p>
+         <div class="sourceCode" id="cb1"><pre
+         class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> 04_beam_profiler.py</span></code></pre></div>
+         <p>The script will prompt you for:</p>
+         <ol type="1">
+         <li><strong>Motor serial number</strong>: Found on the KST101
+         display (e.g., “26004813”)</li>
+         <li><strong>Step size (mm)</strong>: How far to move between
+         measurements (recommend 0.05 mm)</li>
+         <li><strong>Wait time (ms)</strong>: Delay after each step
+         (recommend 500 ms)</li>
+         <li><strong>Direction</strong>: “forward” or “backward”</li>
+         </ol>
+         <h3 data-number="4.1.2" id="choosing-parameters"><span
+         class="header-section-number">4.1.2</span> Choosing
+         Parameters</h3>
+         <p><strong>Step Size</strong>: Smaller step sizes give higher
+         resolution but take longer: - 0.05 mm is a good starting point
+         for most beams - Use smaller steps (0.02-0.03 mm) for tightly
+         focused beams - You can use larger steps (0.1 mm) for initial
+         alignment</p>
+         <p><strong>Wait Time</strong>: This ensures measurements are
+         taken after vibrations settle: - 500 ms is usually sufficient -
+         Increase if you see noisy data</p>
+         <h3 data-number="4.1.3" id="output-files"><span
+         class="header-section-number">4.1.3</span> Output Files</h3>
+         <p>The script automatically generates two files with
+         timestamps:</p>
+         <ol type="1">
+         <li><strong>CSV data file</strong>:
+         <code>beam_profile_YYYYMMDD_HHMMSS.csv</code>
+         <ul>
+         <li>Two columns: Position (mm), Voltage (V)</li>
+         <li>Ready for analysis with your fitting code from Week 1</li>
+         </ul></li>
+         <li><strong>Plot image</strong>:
+         <code>beam_profile_YYYYMMDD_HHMMSS.png</code>
+         <ul>
+         <li>Quick visualization of the measured profile</li>
+         </ul></li>
+         </ol>
+         <h3 data-number="4.1.4" id="validating-the-automation"><span
+         class="header-section-number">4.1.4</span> Validating the
+         Automation</h3>
          <ol start="4" type="1">
          <li>Test and run the automated Python program and evaluate the
-         result using the same Python analysis from week one.</li>
+         result using the same Python analysis from Week 1.</li>
          <li>Before you go on, make sure the automated acquisition and
          analysis routine gives the same result as the method you used
-         in week one.</li>
+         in Week 1.</li>
          <li>How long does your new measurement method take? (2-3
          minutes per <span class="math inline">\(w\)</span> measurement
          is very good.)</li>
          </ol>
-         <h1 data-number="4" id="the-experiment"><span
-         class="header-section-number">4</span> The Experiment</h1>
+         <h2 data-number="4.2"
+         id="customizing-the-script-optional"><span
+         class="header-section-number">4.2</span> Customizing the Script
+         (Optional)</h2>
+         <p>If you need to modify the script behavior:</p>
+         <h3 data-number="4.2.1" id="changing-the-daq-channel"><span
+         class="header-section-number">4.2.1</span> Changing the DAQ
+         Channel</h3>
+         <p>If your photodetector is connected to a different channel
+         (e.g., AI1):</p>
+         <div class="sourceCode" id="cb2"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>profiler <span class="op">=</span> BeamProfiler(serial_number, daq_channel<span class="op">=</span><span class="st">&quot;ai1&quot;</span>)</span></code></pre></div>
+         <h3 data-number="4.2.2" id="adding-averaging"><span
+         class="header-section-number">4.2.2</span> Adding
+         Averaging</h3>
+         <p>For noisy signals, you can modify
+         <code>read_voltage()</code> to average multiple samples:</p>
+         <div class="sourceCode" id="cb3"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_voltage(<span class="va">self</span>, num_samples<span class="op">=</span><span class="dv">10</span>):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Read averaged voltage from DAQ.&quot;&quot;&quot;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>daq_device<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>daq_channel<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        voltages <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>num_samples)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.mean(voltages)</span></code></pre></div>
+         <h1 data-number="5" id="the-experiment"><span
+         class="header-section-number">5</span> The Experiment</h1>
          <p>The Gaussian beam model of light is useful because it often
          describes the beam of light created by lasers. This section
          will test the validity of the model for our He-Ne laser beam.
@@ -219,45 +282,65 @@
          from the simpler ray theory. Lastly, the Gaussian beam theory
          can be used to describe the minimum possible focus size for a
          beam and a lens.</p>
-         <h2 data-number="4.1"
-         id="measuring-the-beam-profile-of-your-he-ne-laser-without-any-lenses"><span
-         class="header-section-number">4.1</span> Measuring the beam
-         profile of your He-Ne laser without any lenses</h2>
-         <p>There is a straight-forward reason that a He-Ne laser should
+         <h2 data-number="5.1"
+         id="measuring-the-beam-profile-without-any-lenses"><span
+         class="header-section-number">5.1</span> Measuring the Beam
+         Profile Without Any Lenses</h2>
+         <p>There is a straightforward reason that a He-Ne laser should
          produce a Gaussian beam. The laser light builds up between two
          mirrors, and the electromagnetic mode that best matches the
          shape of the mirrors is the Gaussian beam.</p>
          <ol type="1">
-         <li>Considering the Gaussian beam equations from Week 3’s
+         <li><p>Considering the Gaussian beam equations from Week 3’s
          prelab (the electric field, beam width <span
          class="math inline">\(w(z)\)</span>, radius of curvature <span
          class="math inline">\(R(z)\)</span>, and Gouy phase <span
          class="math inline">\(\zeta(z)\)</span>), which aspects of the
          Gaussian beam model can you test? Are there any parts of the
-         model you cannot test?</li>
-         <li>Measure the beam width <span
+         model you cannot test?</p></li>
+         <li><p>Measure the beam width <span
          class="math inline">\(w\)</span> at various distances from the
-         laser. Consider carefully what distance should be varying. Is
-         it the distance from laser to razor, the distance from razor to
-         photodetector, or the distance from laser to photodetector? How
-         did you decide what positions <span
-         class="math inline">\(z\)</span> to measure the width at (meter
-         sticks and other measurement tools are available in the
-         lab)?</li>
-         <li>Fit the data to <span class="math inline">\(w(z)\)</span>,
-         the predicted expression for a Gaussian beam: <span
-         class="math inline">\(w(z)=w_0\sqrt{1+\left(\frac{\lambda
-         z}{\pi w_0^2}\right)^2}\)</span>.</li>
-         <li>What is the value of the beam waist <span
+         laser. Consider carefully:</p>
+         <ul>
+         <li>What distance should be varying: laser to razor, razor to
+         photodetector, or laser to photodetector?</li>
+         <li>How did you decide what positions <span
+         class="math inline">\(z\)</span> to measure the width at?</li>
+         <li>Use meter sticks and other measurement tools available in
+         the lab.</li>
+         </ul></li>
+         <li><p>Fit the data to <span
+         class="math inline">\(w(z)\)</span>, the predicted expression
+         for a Gaussian beam: <span
+         class="math display">\[w(z)=w_0\sqrt{1+\left(\frac{\lambda
+         z}{\pi w_0^2}\right)^2}\]</span></p></li>
+         <li><p>What is the value of the beam waist <span
          class="math inline">\(w_0\)</span> (including uncertainty)?
          Where does the beam waist <span
          class="math inline">\(z_w\)</span> occur relative to the
-         laser?</li>
+         laser?</p></li>
          </ol>
-         <h2 data-number="4.2"
+         <h3 data-number="5.1.1" id="tips-for-good-measurements"><span
+         class="header-section-number">5.1.1</span> Tips for Good
+         Measurements</h3>
+         <ol type="1">
+         <li><p><strong>Starting Position</strong>: Position the razor
+         so the beam is fully unblocked. Use the manual jog controls on
+         the KST101 to find a good starting point.</p></li>
+         <li><p><strong>Scan Range</strong>: Make sure your scan covers
+         the full transition from unblocked to fully blocked. Include
+         some data before and after the transition.</p></li>
+         <li><p><strong>Real-Time Monitoring</strong>: Watch the live
+         plot as data comes in. You can press Ctrl+C to stop early if
+         something looks wrong.</p></li>
+         <li><p><strong>File Organization</strong>: Consider adding
+         descriptive prefixes to filenames to help organize your data
+         (e.g., “z=50cm_beam_profile_…”).</p></li>
+         </ol>
+         <h2 data-number="5.2"
          id="how-does-a-lens-change-a-gaussian-beam"><span
-         class="header-section-number">4.2</span> How does a lens change
-         a Gaussian beam?</h2>
+         class="header-section-number">5.2</span> How Does a Lens Change
+         a Gaussian Beam?</h2>
          <p>Pick a non-compound lens (not the fancy camera lenses) with
          focal length in the range 100-200 mm and assemble it in a lens
          mount with a retaining ring (see Figure <a
@@ -278,7 +361,7 @@
          <li>When this condition (the beam propagation direction is
          unchanged) is met, where does the beam intersect the lens?
          <em>Note: This is the preferred method of adding a lens to an
-         optical set up.</em></li>
+         optical setup.</em></li>
          <li>Does the beam retain a Gaussian profile after the
          lens?</li>
          <li>What is the new beam waist <span
@@ -300,29 +383,29 @@
          assemblies for a mirror (left) and a lens (right).</figcaption>
          </figure>
          </div>
-         <h2 data-number="4.3"
+         <h2 data-number="5.3"
          id="quantitatively-modeling-the-effect-of-a-lens"><span
-         class="header-section-number">4.3</span> Quantitatively
-         modeling the effect of a lens</h2>
+         class="header-section-number">5.3</span> Quantitatively
+         Modeling the Effect of a Lens</h2>
          <p>One of the simplest ways to model the effect of a lens is
          the thin lens equation, which is based on a ray model of light
          (see Figure <a href="#fig:ray-diagram">2</a>).</p>
          <p><span class="math display">\[
          \frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}\]</span></p>
          <ol type="1">
-         <li>Redraw Figure <a href="#fig:ray-diagram">2</a> to show how
-         it would change when the light is modeled as a Gaussian beam,
-         rather than rays. In particular, where should the beam waists
-         occur? What determines the relative width of the beam
-         waist?</li>
-         <li>Experimentally test the accuracy of the thin lens equation
-         for the imaging of Gaussian beams. Your data from the previous
-         question can probably be used. Is the agreement within the
-         estimated uncertainties?</li>
-         <li>Systematic errors: Under what conditions should the thin
+         <li><p>Redraw Figure <a href="#fig:ray-diagram">2</a> to show
+         how it would change when the light is modeled as a Gaussian
+         beam, rather than rays. In particular, where should the beam
+         waists occur? What determines the relative width of the beam
+         waist?</p></li>
+         <li><p>Experimentally test the accuracy of the thin lens
+         equation for the imaging of Gaussian beams. Your data from the
+         previous question can probably be used. Is the agreement within
+         the estimated uncertainties?</p></li>
+         <li><p>Systematic errors: Under what conditions should the thin
          lens equation be most valid? How do these conditions compare to
          conditions of your actual measurements? Can you get better
-         agreement?</li>
+         agreement?</p></li>
          </ol>
          <div id="fig:ray-diagram" class="fignos">
          <figure>
@@ -337,252 +420,78 @@
          length.</figcaption>
          </figure>
          </div>
-         <h1 data-number="5" id="sec:python-automation"><span
-         class="header-section-number">5</span> Appendix: Python
-         Automation Guide</h1>
-         <p>This appendix guides you through setting up and running the
-         automated beam profile measurement using Python. The script
-         controls the Thorlabs KST101 motor controller to move the
-         knife-edge while simultaneously reading voltage from the
-         photodetector via the NI-DAQmx.</p>
-         <h2 data-number="5.1" id="hardware-setup"><span
-         class="header-section-number">5.1</span> Hardware Setup</h2>
-         <p>The physical connections are:</p>
+         <h2 data-number="5.4"
+         id="advanced-investigation-minimum-spot-size"><span
+         class="header-section-number">5.4</span> Advanced
+         Investigation: Minimum Spot Size</h2>
+         <p>If time permits, investigate the following:</p>
          <ol type="1">
-         <li><strong>Motor Controller (KST101)</strong>:
-         <ul>
-         <li>Connect the USB cable from the KST101 cube to your
-         computer</li>
-         <li>Connect the power supply to the KST101</li>
-         <li>The motor should already be mechanically connected to the
-         translation stage with the razor</li>
-         </ul></li>
-         <li><strong>Data Acquisition (NI USB-6009)</strong>:
-         <ul>
-         <li>Connect the USB cable from the DAQ to your computer</li>
-         <li>Connect the photodetector BNC output to the analog input
-         terminals:
-         <ul>
-         <li>Positive signal to AI0+ (pin 2)</li>
-         <li>Ground to AI0- (pin 1 or GND)</li>
-         </ul></li>
-         </ul></li>
-         <li><strong>Optical Setup</strong>:
-         <ul>
-         <li>Position the photodetector after the knife-edge in the beam
-         path</li>
-         <li>Ensure the beam passes cleanly through when the razor is
-         fully retracted</li>
-         </ul></li>
+         <li>What determines the minimum spot size you can achieve with
+         a lens?</li>
+         <li>How does this relate to the concept of the “diffraction
+         limit”?</li>
+         <li>Try using a lens with shorter focal length. Does it produce
+         a smaller spot? What are the tradeoffs?</li>
          </ol>
-         <h2 data-number="5.2" id="software-prerequisites"><span
-         class="header-section-number">5.2</span> Software
-         Prerequisites</h2>
-         <p>Before running the automation script, you need to
-         install:</p>
-         <h3 data-number="5.2.1" id="thorlabs-kinesis-sdk"><span
-         class="header-section-number">5.2.1</span> 1. Thorlabs Kinesis
-         SDK</h3>
-         <p>Download and install from the Thorlabs website: <a
-         href="https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control">https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control</a></p>
-         <p><strong>Important</strong>: Choose the correct version: - If
-         you have 32-bit Python: Install the 32-bit Kinesis software -
-         If you have 64-bit Python: Install the 64-bit Kinesis
-         software</p>
-         <p>To check your Python version, run:</p>
-         <div class="sourceCode" id="cb1"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.maxsize <span class="op">&gt;</span> <span class="dv">2</span><span class="op">**</span><span class="dv">32</span>)  <span class="co"># True = 64-bit, False = 32-bit</span></span></code></pre></div>
-         <h3 data-number="5.2.2" id="python-packages"><span
-         class="header-section-number">5.2.2</span> 2. Python
-         Packages</h3>
-         <p>Install the required packages:</p>
-         <div class="sourceCode" id="cb2"><pre
-         class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pythonnet nidaqmx numpy matplotlib</span></code></pre></div>
-         <h3 data-number="5.2.3" id="ni-daqmx-drivers"><span
-         class="header-section-number">5.2.3</span> 3. NI-DAQmx
-         Drivers</h3>
-         <p>If not already installed, download from: <a
-         href="https://www.ni.com/en-us/support/downloads/drivers/download.ni-daq-mx.html">https://www.ni.com/en-us/support/downloads/drivers/download.ni-daq-mx.html</a></p>
-         <h2 data-number="5.3" id="verifying-the-setup"><span
-         class="header-section-number">5.3</span> Verifying the
-         Setup</h2>
-         <h3 data-number="5.3.1" id="test-the-motor-connection"><span
-         class="header-section-number">5.3.1</span> Test the Motor
-         Connection</h3>
-         <p>First, verify that Windows recognizes the motor
-         controller:</p>
-         <ol type="1">
-         <li>Connect the USB to the KST101, then turn on power</li>
-         <li>Open <strong>Device Manager</strong> and look for the
-         device under “USB devices” or “Thorlabs APT Device”</li>
-         <li>Note the serial number (displayed on the KST101
-         screen)</li>
-         </ol>
-         <p>If you get a driver error, you may need to disable Memory
-         Integrity in Windows Security (ask technical staff for help if
-         this occurs on a lab computer).</p>
-         <h3 data-number="5.3.2" id="test-the-daq-connection"><span
-         class="header-section-number">5.3.2</span> Test the DAQ
-         Connection</h3>
-         <p>Run this quick test to verify DAQ communication:</p>
-         <div class="sourceCode" id="cb3"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># List available devices</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>system <span class="op">=</span> nidaqmx.system.System.local()</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> device <span class="kw">in</span> system.devices:</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Found: </span><span class="sc">{</span>device<span class="sc">.</span>name<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Test reading a voltage</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    voltage <span class="op">=</span> task.read()</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span></code></pre></div>
-         <p>If no device is found, check the USB connection and ensure
-         NI-DAQmx drivers are installed.</p>
-         <h2 data-number="5.4" id="running-the-beam-profiler"><span
-         class="header-section-number">5.4</span> Running the Beam
-         Profiler</h2>
-         <p>The automation script is available at:
-         <code>resources/lab-guides/gaussian-laser-beams/python/04_beam_profiler.py</code></p>
-         <h3 data-number="5.4.1" id="basic-usage"><span
-         class="header-section-number">5.4.1</span> Basic Usage</h3>
-         <p>Navigate to the script directory and run:</p>
+         <h1 data-number="6"
+         id="appendix-understanding-the-beam-profiler-code"><span
+         class="header-section-number">6</span> Appendix: Understanding
+         the Beam Profiler Code</h1>
+         <p>The beam profiler script uses a class-based structure.
+         Understanding the code will help you modify it if needed and
+         troubleshoot issues.</p>
+         <h2 data-number="6.1" id="the-beamprofiler-class"><span
+         class="header-section-number">6.1</span> The
+         <code>BeamProfiler</code> Class</h2>
          <div class="sourceCode" id="cb4"><pre
-         class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> 04_beam_profiler.py</span></code></pre></div>
-         <p>The script will prompt you for:</p>
-         <ol type="1">
-         <li><strong>Motor serial number</strong>: Found on the KST101
-         display (e.g., “26004813”)</li>
-         <li><strong>Step size (mm)</strong>: How far to move between
-         measurements (recommend 0.05 mm)</li>
-         <li><strong>Wait time (ms)</strong>: Delay after each step
-         (recommend 500 ms)</li>
-         <li><strong>Direction</strong>: “forward” or “backward”</li>
-         </ol>
-         <h3 data-number="5.4.2" id="choosing-parameters"><span
-         class="header-section-number">5.4.2</span> Choosing
-         Parameters</h3>
-         <p><strong>Step Size</strong>: Smaller step sizes give higher
-         resolution but take longer: - 0.05 mm is a good starting point
-         for most beams - Use smaller steps (0.02-0.03 mm) for tightly
-         focused beams - You can use larger steps (0.1 mm) for initial
-         alignment</p>
-         <p><strong>Wait Time</strong>: This ensures measurements are
-         taken after vibrations settle: - Use kinematic equation to
-         estimate: <span class="math inline">\(x =
-         \frac{1}{2}at^2\)</span> - For 0.05 mm step and 1 mm/s²
-         acceleration: <span class="math inline">\(t = \sqrt{2 \times
-         0.05/1} \approx 316\)</span> ms - Add safety margin: 500 ms is
-         usually sufficient - Increase if you see noisy data</p>
-         <h3 data-number="5.4.3" id="output-files"><span
-         class="header-section-number">5.4.3</span> Output Files</h3>
-         <p>The script automatically generates two files with
-         timestamps:</p>
-         <ol type="1">
-         <li><strong>CSV data file</strong>:
-         <code>beam_profile_YYYYMMDD_HHMMSS.csv</code>
-         <ul>
-         <li>Two columns: Position (mm), Voltage (V)</li>
-         <li>Ready for analysis with your fitting code from Week 1</li>
-         </ul></li>
-         <li><strong>Plot image</strong>:
-         <code>beam_profile_YYYYMMDD_HHMMSS.png</code>
-         <ul>
-         <li>Quick visualization of the measured profile</li>
-         </ul></li>
-         </ol>
-         <h2 data-number="5.5"
-         id="understanding-the-code-structure"><span
-         class="header-section-number">5.5</span> Understanding the Code
-         Structure</h2>
-         <p>The beam profiler script uses a class-based structure. Here
-         are the key components:</p>
-         <h3 data-number="5.5.1" id="the-beamprofiler-class"><span
-         class="header-section-number">5.5.1</span> The
-         <code>BeamProfiler</code> Class</h3>
-         <div class="sourceCode" id="cb5"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BeamProfiler:</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, serial_number, daq_device<span class="op">=</span><span class="st">&quot;Dev1&quot;</span>, daq_channel<span class="op">=</span><span class="st">&quot;ai0&quot;</span>):</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Initialize with motor serial number and DAQ settings.&quot;&quot;&quot;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="ex">connect</span>(<span class="va">self</span>):</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Connect to motor controller, configure velocity.&quot;&quot;&quot;</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_position(<span class="va">self</span>):</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Read current position in mm.&quot;&quot;&quot;</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> move_to(<span class="va">self</span>, position_mm):</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Move to absolute position.&quot;&quot;&quot;</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> read_voltage(<span class="va">self</span>):</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Read single voltage from DAQ.&quot;&quot;&quot;</span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> run_scan(<span class="va">self</span>, step_size_mm, wait_time_ms, direction, max_steps):</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Execute the automated scan with real-time plotting.&quot;&quot;&quot;</span></span></code></pre></div>
-         <h3 data-number="5.5.2" id="the-main-measurement-loop"><span
-         class="header-section-number">5.5.2</span> The Main Measurement
-         Loop</h3>
+         class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BeamProfiler:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, serial_number, daq_device<span class="op">=</span><span class="st">&quot;Dev1&quot;</span>, daq_channel<span class="op">=</span><span class="st">&quot;ai0&quot;</span>):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Initialize with motor serial number and DAQ settings.&quot;&quot;&quot;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="ex">connect</span>(<span class="va">self</span>):</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Connect to motor controller, configure velocity.&quot;&quot;&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_position(<span class="va">self</span>):</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Read current position in mm.&quot;&quot;&quot;</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> move_to(<span class="va">self</span>, position_mm):</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Move to absolute position.&quot;&quot;&quot;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> read_voltage(<span class="va">self</span>):</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Read single voltage from DAQ.&quot;&quot;&quot;</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> run_scan(<span class="va">self</span>, step_size_mm, wait_time_ms, direction, max_steps):</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Execute the automated scan with real-time plotting.&quot;&quot;&quot;</span></span></code></pre></div>
+         <h2 data-number="6.2" id="the-main-measurement-loop"><span
+         class="header-section-number">6.2</span> The Main Measurement
+         Loop</h2>
          <p>The core logic in <code>run_scan()</code> follows this
          pattern:</p>
-         <div class="sourceCode" id="cb6"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step_num <span class="kw">in</span> <span class="bu">range</span>(max_steps):</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1. Read current position</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    position <span class="op">=</span> <span class="va">self</span>.get_position()</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2. Read photodetector voltage</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    voltage <span class="op">=</span> <span class="va">self</span>.read_voltage()</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3. Save data point immediately</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    writer.writerow([position, voltage])</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 4. Update real-time plot</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (matplotlib code)</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 5. Move to next position</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.move_to(position <span class="op">+</span> step)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 6. Wait for vibrations to settle</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    time.sleep(wait_time_ms <span class="op">/</span> <span class="dv">1000</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb5"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step_num <span class="kw">in</span> <span class="bu">range</span>(max_steps):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1. Read current position</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    position <span class="op">=</span> <span class="va">self</span>.get_position()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2. Read photodetector voltage</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    voltage <span class="op">=</span> <span class="va">self</span>.read_voltage()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3. Save data point immediately</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    writer.writerow([position, voltage])</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 4. Update real-time plot</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (matplotlib code)</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 5. Move to next position</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.move_to(position <span class="op">+</span> step)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 6. Wait for vibrations to settle</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    time.sleep(wait_time_ms <span class="op">/</span> <span class="dv">1000</span>)</span></code></pre></div>
          <p>This is essentially the same logic you would use when taking
          data manually, just automated.</p>
-         <h2 data-number="5.6" id="customizing-the-script"><span
-         class="header-section-number">5.6</span> Customizing the
-         Script</h2>
-         <h3 data-number="5.6.1" id="changing-the-daq-channel"><span
-         class="header-section-number">5.6.1</span> Changing the DAQ
-         Channel</h3>
-         <p>If your photodetector is connected to a different channel
-         (e.g., AI1):</p>
-         <div class="sourceCode" id="cb7"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>profiler <span class="op">=</span> BeamProfiler(serial_number, daq_channel<span class="op">=</span><span class="st">&quot;ai1&quot;</span>)</span></code></pre></div>
-         <h3 data-number="5.6.2" id="modifying-velocity-settings"><span
-         class="header-section-number">5.6.2</span> Modifying Velocity
-         Settings</h3>
-         <p>The default velocity is 1 mm/s with 1 mm/s² acceleration. To
-         change this, modify the <code>connect()</code> method:</p>
-         <div class="sourceCode" id="cb8"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>vel_params.MaxVelocity <span class="op">=</span> Decimal(<span class="fl">2.0</span>)  <span class="co"># 2 mm/s</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>vel_params.Acceleration <span class="op">=</span> Decimal(<span class="fl">2.0</span>)  <span class="co"># 2 mm/s²</span></span></code></pre></div>
-         <h3 data-number="5.6.3" id="adding-averaging"><span
-         class="header-section-number">5.6.3</span> Adding
-         Averaging</h3>
-         <p>For noisy signals, you can modify
-         <code>read_voltage()</code> to average multiple samples:</p>
-         <div class="sourceCode" id="cb9"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_voltage(<span class="va">self</span>, num_samples<span class="op">=</span><span class="dv">10</span>):</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Read averaged voltage from DAQ.&quot;&quot;&quot;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>daq_device<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>daq_channel<span class="sc">}</span><span class="ss">&quot;</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        voltages <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>num_samples)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.mean(voltages)</span></code></pre></div>
-         <h2 data-number="5.7" id="troubleshooting"><span
-         class="header-section-number">5.7</span> Troubleshooting</h2>
-         <h3 data-number="5.7.1" id="device-not-found-error"><span
-         class="header-section-number">5.7.1</span> “Device not found”
+         <h2 data-number="6.3" id="troubleshooting"><span
+         class="header-section-number">6.3</span> Troubleshooting</h2>
+         <h3 data-number="6.3.1" id="device-not-found-error"><span
+         class="header-section-number">6.3.1</span> “Device not found”
          Error</h3>
          <ul>
          <li>Check USB connection</li>
@@ -590,8 +499,8 @@
          <li>Make sure no other software (APT User, Kinesis) is using
          the motor</li>
          </ul>
-         <h3 data-number="5.7.2" id="motor-doesnt-move"><span
-         class="header-section-number">5.7.2</span> Motor Doesn’t
+         <h3 data-number="6.3.2" id="motor-doesnt-move"><span
+         class="header-section-number">6.3.2</span> Motor Doesn’t
          Move</h3>
          <ul>
          <li>Ensure power is connected to the KST101</li>
@@ -599,52 +508,23 @@
          <li>Verify the stage type is configured correctly in Kinesis
          (ZST225B)</li>
          </ul>
-         <h3 data-number="5.7.3" id="voltage-reads-zero"><span
-         class="header-section-number">5.7.3</span> Voltage Reads
+         <h3 data-number="6.3.3" id="voltage-reads-zero"><span
+         class="header-section-number">6.3.3</span> Voltage Reads
          Zero</h3>
          <ul>
          <li>Check photodetector power</li>
          <li>Verify BNC cable connections to DAQ</li>
          <li>Make sure the beam actually hits the photodetector</li>
          </ul>
-         <h3 data-number="5.7.4" id="python-import-errors"><span
-         class="header-section-number">5.7.4</span> Python Import
-         Errors</h3>
-         <ul>
-         <li><strong>pythonnet error</strong>: Ensure Kinesis SDK is
-         installed and matches Python architecture (32/64-bit)</li>
-         <li><strong>nidaqmx error</strong>: Install NI-DAQmx drivers
-         from NI website</li>
-         </ul>
-         <h3 data-number="5.7.5" id="noisy-data"><span
-         class="header-section-number">5.7.5</span> Noisy Data</h3>
+         <h3 data-number="6.3.4" id="noisy-data"><span
+         class="header-section-number">6.3.4</span> Noisy Data</h3>
          <ul>
          <li>Increase wait time between steps</li>
          <li>Check for mechanical vibrations in your setup</li>
          <li>Shield the photodetector from ambient light</li>
-         <li>Average multiple DAQ readings per point</li>
+         <li>Average multiple DAQ readings per point (see “Adding
+         Averaging” above)</li>
          </ul>
-         <h2 data-number="5.8" id="tips-for-good-measurements"><span
-         class="header-section-number">5.8</span> Tips for Good
-         Measurements</h2>
-         <ol type="1">
-         <li><p><strong>Starting Position</strong>: Position the razor
-         so the beam is fully unblocked. Use the manual jog controls on
-         the KST101 to find a good starting point.</p></li>
-         <li><p><strong>Scan Range</strong>: Make sure your scan covers
-         the full transition from unblocked to fully blocked. Include
-         some data before and after the transition.</p></li>
-         <li><p><strong>Real-Time Monitoring</strong>: Watch the live
-         plot as data comes in. You can press Ctrl+C to stop early if
-         something looks wrong.</p></li>
-         <li><p><strong>Data Validation</strong>: Before collecting many
-         profiles, take one measurement manually and one with
-         automation. Compare results to ensure consistency.</p></li>
-         <li><p><strong>File Organization</strong>: The script includes
-         timestamps in filenames, but consider adding descriptive
-         prefixes (e.g., by modifying the <code>filename</code>
-         variable) to help organize your data.</p></li>
-         </ol>
                </div>
             <!-- Mathjax -->
       <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>

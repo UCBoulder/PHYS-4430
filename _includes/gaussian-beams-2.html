@@ -120,42 +120,93 @@
             class="toc-section-number">3.3.3</span> Exercise: Capture a
             Waveform</a></li>
             </ul></li>
-            <li><a href="#continuous-data-acquisition"><span
-            class="toc-section-number">3.4</span> Continuous Data
-            Acquisition</a></li>
-            <li><a href="#spectral-analysis-with-fft"><span
-            class="toc-section-number">3.5</span> Spectral Analysis with
-            FFT</a>
-            <ul>
-            <li><a href="#computing-the-power-spectrum"><span
-            class="toc-section-number">3.5.1</span> Computing the Power
-            Spectrum</a></li>
-            <li><a href="#exercise-spectral-analysis"><span
-            class="toc-section-number">3.5.2</span> Exercise: Spectral
-            Analysis</a></li>
             </ul></li>
+            <li><a href="#digital-sampling-and-nyquist-frequency"><span
+            class="toc-section-number">4</span> Digital Sampling and
+            Nyquist Frequency</a>
+            <ul>
+            <li><a href="#exploring-sample-rate-effects"><span
+            class="toc-section-number">4.1</span> Exploring Sample Rate
+            Effects</a></li>
+            <li><a href="#initial-measurements"><span
+            class="toc-section-number">4.2</span> Initial
+            Measurements</a></li>
+            <li><a href="#enhanced-understanding"><span
+            class="toc-section-number">4.3</span> Enhanced
+            Understanding</a></li>
+            <li><a href="#nyquist-frequency"><span
+            class="toc-section-number">4.4</span> Nyquist Frequency</a>
+            <ul>
+            <li><a href="#aliasing-exercises"><span
+            class="toc-section-number">4.4.1</span> Aliasing
+            Exercises</a></li>
+            </ul></li>
+            </ul></li>
+            <li><a href="#setting-up-the-motor-controller"><span
+            class="toc-section-number">5</span> Setting Up the Motor
+            Controller</a>
+            <ul>
+            <li><a href="#hardware-overview"><span
+            class="toc-section-number">5.1</span> Hardware
+            Overview</a></li>
+            <li><a href="#software-prerequisites"><span
+            class="toc-section-number">5.2</span> Software
+            Prerequisites</a>
+            <ul>
+            <li><a href="#thorlabs-kinesis-sdk"><span
+            class="toc-section-number">5.2.1</span> 1. Thorlabs Kinesis
+            SDK</a></li>
+            <li><a href="#python-packages"><span
+            class="toc-section-number">5.2.2</span> 2. Python
+            Packages</a></li>
+            </ul></li>
+            <li><a href="#verifying-the-motor-connection"><span
+            class="toc-section-number">5.3</span> Verifying the Motor
+            Connection</a>
+            <ul>
+            <li><a href="#test-that-windows-recognizes-the-device"><span
+            class="toc-section-number">5.3.1</span> Test that Windows
+            Recognizes the Device</a></li>
+            <li><a href="#test-basic-motor-communication"><span
+            class="toc-section-number">5.3.2</span> Test Basic Motor
+            Communication</a></li>
+            <li><a href="#test-motor-movement"><span
+            class="toc-section-number">5.3.3</span> Test Motor
+            Movement</a></li>
+            <li><a href="#troubleshooting"><span
+            class="toc-section-number">5.3.4</span>
+            Troubleshooting</a></li>
+            </ul></li>
+            <li><a href="#exercise-verify-your-setup"><span
+            class="toc-section-number">5.4</span> Exercise: Verify Your
+            Setup</a></li>
+            </ul></li>
+            <li><a href="#saving-data-and-additional-daq-features"><span
+            class="toc-section-number">6</span> Saving Data and
+            Additional DAQ Features</a>
+            <ul>
             <li><a href="#saving-data-to-a-file"><span
-            class="toc-section-number">3.6</span> Saving Data to a
+            class="toc-section-number">6.1</span> Saving Data to a
             File</a>
             <ul>
             <li><a href="#exercise-save-and-reload-data"><span
-            class="toc-section-number">3.6.1</span> Exercise: Save and
+            class="toc-section-number">6.1.1</span> Exercise: Save and
             Reload Data</a></li>
             </ul></li>
             <li><a href="#generating-an-analog-output"><span
-            class="toc-section-number">3.7</span> Generating an Analog
+            class="toc-section-number">6.2</span> Generating an Analog
             Output</a>
             <ul>
             <li><a href="#exercise-test-analog-output"><span
-            class="toc-section-number">3.7.1</span> Exercise: Test
+            class="toc-section-number">6.2.1</span> Exercise: Test
             Analog Output</a></li>
             </ul></li>
             <li><a href="#error-handling"><span
-            class="toc-section-number">3.8</span> Error
+            class="toc-section-number">6.3</span> Error
             Handling</a></li>
-            <li><a href="#summary"><span
-            class="toc-section-number">3.9</span> Summary</a></li>
             </ul></li>
+            <li><a href="#summary"><span
+            class="toc-section-number">7</span> Summary</a></li>
             </ul>
         </nav>
         <hr/>
@@ -164,7 +215,9 @@
          <p>The second week of the Gaussian Beams lab introduces you to
          Python for data acquisition and guides you through interfacing
          Python with the instrumentation and data acquisition systems
-         used in this course.</p>
+         used in this course. You will also learn about digital sampling
+         theory and set up the motor controller hardware for next week’s
+         automated measurements.</p>
          <p>This week’s lab is divided into two parts. In part 1
          (Prelab), you will learn essential curve fitting techniques
          that you’ll use throughout this course. In part 2 (Lab), you
@@ -216,10 +269,12 @@
          measurements.</li>
          <li>Configure sample rate and number of samples for data
          acquisition.</li>
-         <li>Visualize acquired data using Matplotlib.</li>
-         <li>Perform spectral analysis using NumPy’s FFT functions.</li>
+         <li>Explain Nyquist’s theorem and choose appropriate sample
+         rates.</li>
+         <li>Recognize aliasing and understand its causes.</li>
+         <li>Set up and verify the motor controller for automated
+         measurements.</li>
          <li>Save acquired data to a CSV file.</li>
-         <li>Understand the basics of real-time data plotting.</li>
          </ol>
          <h1 data-number="2" id="prelab"><span
          class="header-section-number">2</span> Prelab</h1>
@@ -1056,176 +1111,437 @@
          and the oscilloscope output. Explain how they all make sense
          together.</li>
          </ol>
-         <h2 data-number="3.4" id="continuous-data-acquisition"><span
-         class="header-section-number">3.4</span> Continuous Data
-         Acquisition</h2>
-         <p>For continuous monitoring, you can read data in a loop:</p>
+         <h1 data-number="4"
+         id="digital-sampling-and-nyquist-frequency"><span
+         class="header-section-number">4</span> Digital Sampling and
+         Nyquist Frequency</h1>
+         <p>Now that you can acquire data with the DAQ, it’s important
+         to understand how the choice of sample rate affects your
+         measurements. This section explores what happens when you
+         sample a signal too slowly.</p>
+         <h2 data-number="4.1" id="exploring-sample-rate-effects"><span
+         class="header-section-number">4.1</span> Exploring Sample Rate
+         Effects</h2>
+         <ol type="1">
+         <li><p>Modify your Python script so that the <em>Number of
+         Samples</em> and <em>Sample Rate</em> are easily configurable
+         variables at the top:</p>
          <div class="sourceCode" id="cb19"><pre
          class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">10000</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>samples_per_read <span class="op">=</span> <span class="dv">1000</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>plt.ion()  <span class="co"># Enable interactive mode</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>line, <span class="op">=</span> ax.plot([], [])</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">&#39;Sample&#39;</span>)</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">&#39;Continuous Acquisition&#39;</span>)</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    task.timing.cfg_samp_clk_timing(</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>        rate<span class="op">=</span>sample_rate,</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>        sample_mode<span class="op">=</span>AcquisitionType.CONTINUOUS</span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    task.start()</span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>samples_per_read)</span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a>            line.set_data(<span class="bu">range</span>(<span class="bu">len</span>(data)), data)</span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>            ax.set_xlim(<span class="dv">0</span>, <span class="bu">len</span>(data))</span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>            ax.set_ylim(<span class="bu">min</span>(data) <span class="op">-</span> <span class="fl">0.1</span>, <span class="bu">max</span>(data) <span class="op">+</span> <span class="fl">0.1</span>)</span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>            plt.pause(<span class="fl">0.01</span>)</span>
-<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Stopped by user&quot;</span>)</span>
-<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>plt.ioff()</span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-         <h2 data-number="3.5" id="spectral-analysis-with-fft"><span
-         class="header-section-number">3.5</span> Spectral Analysis with
-         FFT</h2>
-         <p>Python’s NumPy library provides powerful FFT (Fast Fourier
-         Transform) functions for spectral analysis.</p>
-         <h3 data-number="3.5.1" id="computing-the-power-spectrum"><span
-         class="header-section-number">3.5.1</span> Computing the Power
-         Spectrum</h3>
-         <div class="sourceCode" id="cb20"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_power_spectrum(data, sample_rate):</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Compute the one-sided power spectrum.&quot;&quot;&quot;</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(data)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute FFT</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    fft_result <span class="op">=</span> np.fft.fft(data)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get positive frequencies only</span></span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    n_unique <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)[:n_unique]</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.<span class="bu">abs</span>(frequencies)</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Power spectrum (magnitude squared, normalized)</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    power <span class="op">=</span> (np.<span class="bu">abs</span>(fft_result[:n_unique]) <span class="op">/</span> n) <span class="op">**</span> <span class="dv">2</span></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    power[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">*=</span> <span class="dv">2</span>  <span class="co"># Account for negative frequencies</span></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> frequencies, power</span></code></pre></div>
-         <h3 data-number="3.5.2" id="exercise-spectral-analysis"><span
-         class="header-section-number">3.5.2</span> Exercise: Spectral
-         Analysis</h3>
-         <ol type="1">
-         <li><p>Acquire a signal from your waveform generator at a known
-         frequency (e.g., 500 Hz).</p></li>
-         <li><p>Compute and plot the power spectrum:</p>
-         <div class="sourceCode" id="cb21"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire data</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    task.timing.cfg_samp_clk_timing(</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        rate<span class="op">=</span><span class="dv">10000</span>,</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>        sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        samps_per_chan<span class="op">=</span><span class="dv">10000</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span><span class="dv">10000</span>)</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute and plot spectrum</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>frequencies, power <span class="op">=</span> compute_power_spectrum(np.array(data), <span class="dv">10000</span>)</span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>plt.plot(frequencies, power)</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Power&#39;</span>)</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Power Spectrum&#39;</span>)</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, <span class="dv">2000</span>)  <span class="co"># Show up to 2 kHz</span></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
-         <li><p>Verify that the peak in the spectrum appears at the
-         expected frequency.</p></li>
-         <li><p>Try adding a second frequency component from the
-         waveform generator and observe the spectrum.</p></li>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration - easily adjustable</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>SAMPLE_RATE <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Samples per second</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>NUM_SAMPLES <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Total samples (1 second of data)</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>DAQ_CHANNEL <span class="op">=</span> <span class="st">&quot;Dev1/ai0&quot;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> acquire_data(sample_rate, num_samples, channel):</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Acquire data from DAQ with specified parameters.&quot;&quot;&quot;</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(channel)</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>num_samples)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array(data)</span></code></pre></div></li>
+         <li><p>Set up a function generator to produce a <strong>1 kHz
+         sine wave</strong>.</p></li>
+         <li><p>Connect the function generator’s output to both the
+         oscilloscope and the DAQ.</p></li>
          </ol>
-         <h2 data-number="3.6" id="saving-data-to-a-file"><span
-         class="header-section-number">3.6</span> Saving Data to a
+         <h2 data-number="4.2" id="initial-measurements"><span
+         class="header-section-number">4.2</span> Initial
+         Measurements</h2>
+         <ol type="1">
+         <li><p>Set the sample rate in your Python script to <strong>500
+         samples per second</strong> and the number of samples such that
+         it records 1 second of data.</p></li>
+         <li><p>Record and plot a dataset with both the oscilloscope and
+         the DAQ. Make sure that the time range on the oscilloscope is
+         set such that it is on the same order as the data being
+         recorded by the DAQ.</p>
+         <div class="sourceCode" id="cb20"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire and plot data</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> acquire_data(SAMPLE_RATE, NUM_SAMPLES, DAQ_CHANNEL)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(NUM_SAMPLES) <span class="op">/</span> SAMPLE_RATE</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>plt.plot(time, data)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (s)&#39;</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f&#39;Acquired Signal (</span><span class="sc">{</span>SAMPLE_RATE<span class="sc">}</span><span class="ss"> Hz sample rate)&#39;</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <li><p>Compare the two plots. What are the major differences
+         between the two?</p></li>
+         <li><p>Why might one or both of these plots be giving an
+         incorrect result? Think about the wave you are measuring and
+         the result you are getting. How do they relate?</p></li>
+         </ol>
+         <h2 data-number="4.3" id="enhanced-understanding"><span
+         class="header-section-number">4.3</span> Enhanced
+         Understanding</h2>
+         <p>This section will guide you to an understanding of Nyquist’s
+         theorem and a more appropriate sample rate for digital data
+         collection.</p>
+         <ol type="1">
+         <li><p>Why do you think the data from the DAQ produced a wave
+         of lower frequency?</p></li>
+         <li><p>Adjust the sample rate in a way you think might provide
+         a more accurate measurement of the wave. What do you think the
+         measured waveform will look like this time?</p></li>
+         <li><p>Take a dataset, record and plot it. Did it match your
+         predictions?</p></li>
+         <li><p>Now record another dataset with the function generator
+         set to the same parameters but the sample rate set to
+         <strong>3000 samples per second</strong> and the number of
+         samples set to record 1 second of data.</p></li>
+         <li><p>Plot this new dataset. What is the frequency of the new
+         dataset?</p></li>
+         <li><p>What are the fundamental differences between the first,
+         second, and third datasets?</p></li>
+         </ol>
+         <h2 data-number="4.4" id="nyquist-frequency"><span
+         class="header-section-number">4.4</span> Nyquist Frequency</h2>
+         <p>The discrepancies between the sampled waveforms can be
+         explained by <strong>Nyquist’s theorem</strong>. It states that
+         to accurately measure a signal by discrete sampling methods
+         (like the DAQ) the sampling rate must be at least twice that of
+         the measured signal. If this were not the case, a measurement
+         might not be taken at every interval of oscillation, a
+         situation called “undersampling.” Sampling the signal at least
+         twice as fast as the maximum frequency of interest ensures that
+         at least two data points are recorded each period.</p>
+         <p><strong>Definition:</strong></p>
+         <p>The <em>Nyquist Frequency</em> is defined to be half the
+         sample rate.</p>
+         <h3 data-number="4.4.1" id="aliasing-exercises"><span
+         class="header-section-number">4.4.1</span> Aliasing
+         Exercises</h3>
+         <ol type="1">
+         <li><p><strong>Predict</strong> the <em>apparent</em> frequency
+         (in Hz) of the signal recorded by the DAQ.
+         <strong>Observe</strong> what really happens using your
+         waveform generator, DAQ, and Python script.
+         <strong>Explain</strong> the result. Suppose the DAQ is set to
+         1 kS/s sample rate in all of the cases, while the waveform
+         generator is set to:</p>
+         <ol type="1">
+         <li>1000 Hz</li>
+         <li>998 Hz</li>
+         <li>1004 Hz</li>
+         <li>1500 Hz</li>
+         <li>2000 Hz</li>
+         <li>1997 Hz</li>
+         <li>2005 Hz</li>
+         </ol>
+         <p>In understanding what is going on, it may help to draw a few
+         periods of the wave and then indicate where the DAQ will sample
+         the waveform.</p></li>
+         <li><p>You <em>want</em> to measure the random fluctuations
+         (noise) in a signal from 0-100 Hz.</p>
+         <ol type="1">
+         <li>If you set the sample rate at 200 Hz, what set of frequency
+         ranges will contribute to the noise measurement?</li>
+         <li>If you set the sample rate at 1000 Hz, what set of
+         frequency ranges will contribute to the noise measurement?</li>
+         <li>How could you help achieve the desired measurement in 2.1
+         using a combination of changing the sample rate and adding
+         filtering? Explain why your choice of sample rate and signal
+         filter would work better.</li>
+         </ol></li>
+         <li><p><strong>Undersampling on the oscilloscope.</strong>
+         Undersampling is an issue with any device that samples data at
+         regular discrete time intervals. This question requires the use
+         of a Rigol DS1052E oscilloscope and a waveform generator.</p>
+         <ol type="1">
+         <li>Figure <a href="#fig:scope-menu">4</a> is copied from the
+         Rigol Oscilloscope manual. The Horizontal menu allows you to
+         view the actual sample rate “Sa Rate” of the digital
+         acquisition on the scope.</li>
+         <li>Predict what should you observe if you set the waveform
+         generator to the same frequency as the sample rate? Try it out,
+         compare with your prediction, and explain your
+         observations.</li>
+         <li>What happens if you change the oscilloscope time scale? Or
+         change the waveform generator frequency slightly? Try to
+         explain what you observe.</li>
+         </ol></li>
+         </ol>
+         <div id="fig:scope-menu" class="fignos">
+         <figure>
+         <img
+         src="../resources/lab-guides/gaussian-laser-beams/scope-menu.png"
+         style="width:20cm"
+         alt="Figure 4: The horizontal menu on the Rigol DS1052E Oscilloscope." />
+         <figcaption aria-hidden="true"><span>Figure 4:</span> The
+         horizontal menu on the Rigol DS1052E Oscilloscope.</figcaption>
+         </figure>
+         </div>
+         <h1 data-number="5" id="setting-up-the-motor-controller"><span
+         class="header-section-number">5</span> Setting Up the Motor
+         Controller</h1>
+         <p>In Week 4, you will use Python to automate beam profile
+         measurements by controlling a motorized translation stage. This
+         section guides you through setting up and verifying the motor
+         controller hardware. Getting this working now will save
+         significant time later.</p>
+         <h2 data-number="5.1" id="hardware-overview"><span
+         class="header-section-number">5.1</span> Hardware Overview</h2>
+         <p>The Thorlabs KST101 is a stepper motor controller that can
+         precisely position a translation stage. You will use it to move
+         a razor blade across the laser beam while the DAQ records the
+         photodetector signal.</p>
+         <p>The physical connections are:</p>
+         <ol type="1">
+         <li><strong>Motor Controller (KST101)</strong>:
+         <ul>
+         <li>Connect the USB cable from the KST101 cube to your
+         computer</li>
+         <li>Connect the power supply to the KST101</li>
+         <li>The motor should already be mechanically connected to the
+         translation stage with the razor</li>
+         </ul></li>
+         <li><strong>Optical Setup</strong> (for testing):
+         <ul>
+         <li>Position the photodetector after the knife-edge in the beam
+         path</li>
+         <li>Ensure the beam passes cleanly through when the razor is
+         fully retracted</li>
+         </ul></li>
+         </ol>
+         <h2 data-number="5.2" id="software-prerequisites"><span
+         class="header-section-number">5.2</span> Software
+         Prerequisites</h2>
+         <h3 data-number="5.2.1" id="thorlabs-kinesis-sdk"><span
+         class="header-section-number">5.2.1</span> 1. Thorlabs Kinesis
+         SDK</h3>
+         <p>Download and install from the Thorlabs website: <a
+         href="https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control">https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control</a></p>
+         <p><strong>Important</strong>: Choose the correct version: - If
+         you have 32-bit Python: Install the 32-bit Kinesis software -
+         If you have 64-bit Python: Install the 64-bit Kinesis
+         software</p>
+         <p>To check your Python version, run:</p>
+         <div class="sourceCode" id="cb21"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(sys.maxsize <span class="op">&gt;</span> <span class="dv">2</span><span class="op">**</span><span class="dv">32</span>)  <span class="co"># True = 64-bit, False = 32-bit</span></span></code></pre></div>
+         <h3 data-number="5.2.2" id="python-packages"><span
+         class="header-section-number">5.2.2</span> 2. Python
+         Packages</h3>
+         <p>Install the required packages:</p>
+         <div class="sourceCode" id="cb22"><pre
+         class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pythonnet</span></code></pre></div>
+         <p>(You should already have <code>nidaqmx</code>,
+         <code>numpy</code>, and <code>matplotlib</code> from earlier in
+         this lab.)</p>
+         <h2 data-number="5.3" id="verifying-the-motor-connection"><span
+         class="header-section-number">5.3</span> Verifying the Motor
+         Connection</h2>
+         <h3 data-number="5.3.1"
+         id="test-that-windows-recognizes-the-device"><span
+         class="header-section-number">5.3.1</span> Test that Windows
+         Recognizes the Device</h3>
+         <ol type="1">
+         <li>Connect the USB to the KST101, then turn on power</li>
+         <li>Open <strong>Device Manager</strong> and look for the
+         device under “USB devices” or “Thorlabs APT Device”</li>
+         <li>Note the serial number (displayed on the KST101
+         screen)</li>
+         </ol>
+         <p>If you get a driver error, you may need to disable Memory
+         Integrity in Windows Security (ask technical staff for help if
+         this occurs on a lab computer).</p>
+         <h3 data-number="5.3.2"
+         id="test-basic-motor-communication"><span
+         class="header-section-number">5.3.2</span> Test Basic Motor
+         Communication</h3>
+         <p>Run this test script to verify Python can communicate with
+         the motor:</p>
+         <div class="sourceCode" id="cb23"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> clr</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Kinesis .NET assemblies</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:\Program Files\Thorlabs\Kinesis&quot;</span>)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.DeviceManagerCLI&quot;</span>)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.KCube.StepperMotorCLI&quot;</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.DeviceManagerCLI <span class="im">import</span> DeviceManagerCLI</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.KCube.StepperMotorCLI <span class="im">import</span> KCubeStepper</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Build device list</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>DeviceManagerCLI.BuildDeviceList()</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Get list of connected devices</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>device_list <span class="op">=</span> DeviceManagerCLI.GetDeviceList()</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Found </span><span class="sc">{</span><span class="bu">len</span>(device_list)<span class="sc">}</span><span class="ss"> device(s):&quot;</span>)</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> serial <span class="kw">in</span> device_list:</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  Serial: </span><span class="sc">{</span>serial<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+         <p>If this shows your device serial number, the connection is
+         working.</p>
+         <h3 data-number="5.3.3" id="test-motor-movement"><span
+         class="header-section-number">5.3.3</span> Test Motor
+         Movement</h3>
+         <p><strong>Caution</strong>: Make sure the translation stage
+         has room to move before running this test. Check that nothing
+         is blocking the stage mechanically.</p>
+         <div class="sourceCode" id="cb24"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> clr</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> decimal <span class="im">import</span> Decimal</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:\Program Files\Thorlabs\Kinesis&quot;</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.DeviceManagerCLI&quot;</span>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.KCube.StepperMotorCLI&quot;</span>)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.GenericMotorCLI&quot;</span>)</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.DeviceManagerCLI <span class="im">import</span> DeviceManagerCLI</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.KCube.StepperMotorCLI <span class="im">import</span> KCubeStepper</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace with your serial number</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>SERIAL_NUMBER <span class="op">=</span> <span class="st">&quot;26004813&quot;</span>  <span class="co"># Check the display on your KST101</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>DeviceManagerCLI.BuildDeviceList()</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>device <span class="op">=</span> KCubeStepper.CreateKCubeStepper(SERIAL_NUMBER)</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>    device.Connect(SERIAL_NUMBER)</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Connected!&quot;</span>)</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Wait for settings to initialize</span></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>    device.WaitForSettingsInitialized(<span class="dv">5000</span>)</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>    device.StartPolling(<span class="dv">50</span>)</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.5</span>)</span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>    device.EnableDevice()</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.5</span>)</span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load motor configuration</span></span>
+<span id="cb24-32"><a href="#cb24-32" aria-hidden="true" tabindex="-1"></a>    config <span class="op">=</span> device.LoadMotorConfiguration(SERIAL_NUMBER)</span>
+<span id="cb24-33"><a href="#cb24-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-34"><a href="#cb24-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get current position</span></span>
+<span id="cb24-35"><a href="#cb24-35" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> device.Position</span>
+<span id="cb24-36"><a href="#cb24-36" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Current position: </span><span class="sc">{</span>pos<span class="sc">}</span><span class="ss"> mm&quot;</span>)</span>
+<span id="cb24-37"><a href="#cb24-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-38"><a href="#cb24-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Move relative (small test movement)</span></span>
+<span id="cb24-39"><a href="#cb24-39" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Moving 0.5 mm...&quot;</span>)</span>
+<span id="cb24-40"><a href="#cb24-40" aria-hidden="true" tabindex="-1"></a>    device.SetMoveRelativeDistance(Decimal(<span class="fl">0.5</span>))</span>
+<span id="cb24-41"><a href="#cb24-41" aria-hidden="true" tabindex="-1"></a>    device.MoveRelative(<span class="dv">60000</span>)  <span class="co"># 60 second timeout</span></span>
+<span id="cb24-42"><a href="#cb24-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-43"><a href="#cb24-43" aria-hidden="true" tabindex="-1"></a>    new_pos <span class="op">=</span> device.Position</span>
+<span id="cb24-44"><a href="#cb24-44" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;New position: </span><span class="sc">{</span>new_pos<span class="sc">}</span><span class="ss"> mm&quot;</span>)</span>
+<span id="cb24-45"><a href="#cb24-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-46"><a href="#cb24-46" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
+<span id="cb24-47"><a href="#cb24-47" aria-hidden="true" tabindex="-1"></a>    device.StopPolling()</span>
+<span id="cb24-48"><a href="#cb24-48" aria-hidden="true" tabindex="-1"></a>    device.Disconnect()</span>
+<span id="cb24-49"><a href="#cb24-49" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Disconnected&quot;</span>)</span></code></pre></div>
+         <h3 data-number="5.3.4" id="troubleshooting"><span
+         class="header-section-number">5.3.4</span> Troubleshooting</h3>
+         <p><strong>“Device not found” Error:</strong> - Check USB
+         connection - Verify serial number matches the display on the
+         KST101 - Make sure no other software (APT User, Kinesis) is
+         using the motor</p>
+         <p><strong>Motor Doesn’t Move:</strong> - Ensure power is
+         connected to the KST101 - Check that the stage isn’t at a
+         travel limit - Verify the stage type is configured correctly in
+         Kinesis (ZST225B)</p>
+         <p><strong>Python Import Errors:</strong> - Ensure Kinesis SDK
+         is installed and matches Python architecture (32/64-bit) -
+         Check that the path to Kinesis DLLs is correct</p>
+         <h2 data-number="5.4" id="exercise-verify-your-setup"><span
+         class="header-section-number">5.4</span> Exercise: Verify Your
+         Setup</h2>
+         <p>Before leaving lab today, verify that:</p>
+         <ol type="1">
+         <li><input type="checkbox" disabled="" />
+         The DAQ can read voltages from the photodetector</li>
+         <li><input type="checkbox" disabled="" />
+         Python can connect to the motor controller</li>
+         <li><input type="checkbox" disabled="" />
+         The motor moves when commanded</li>
+         <li><input type="checkbox" disabled="" />
+         You have noted your motor’s serial number: ____________</li>
+         </ol>
+         <p>This setup will be essential for the automated measurements
+         in Week 4.</p>
+         <h1 data-number="6"
+         id="saving-data-and-additional-daq-features"><span
+         class="header-section-number">6</span> Saving Data and
+         Additional DAQ Features</h1>
+         <h2 data-number="6.1" id="saving-data-to-a-file"><span
+         class="header-section-number">6.1</span> Saving Data to a
          File</h2>
          <p>Save your acquired data to a CSV file for later
          analysis:</p>
-         <div class="sourceCode" id="cb22"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># After acquiring data...</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a timestamp for the filename</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>timestamp <span class="op">=</span> datetime.now().strftime(<span class="st">&quot;%Y%m</span><span class="sc">%d</span><span class="st">_%H%M%S&quot;</span>)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="ss">f&quot;data_</span><span class="sc">{</span>timestamp<span class="sc">}</span><span class="ss">.csv&quot;</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="bu">len</span>(data)) <span class="op">/</span> sample_rate</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Save to CSV</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>np.savetxt(</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    filename,</span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    np.column_stack([time, data]),</span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>,</span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    header<span class="op">=</span><span class="st">&#39;Time (s), Voltage (V)&#39;</span>,</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    comments<span class="op">=</span><span class="st">&#39;&#39;</span></span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Data saved to </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
-         <h3 data-number="3.6.1"
+         <div class="sourceCode" id="cb25"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># After acquiring data...</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a timestamp for the filename</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>timestamp <span class="op">=</span> datetime.now().strftime(<span class="st">&quot;%Y%m</span><span class="sc">%d</span><span class="st">_%H%M%S&quot;</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="ss">f&quot;data_</span><span class="sc">{</span>timestamp<span class="sc">}</span><span class="ss">.csv&quot;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="bu">len</span>(data)) <span class="op">/</span> sample_rate</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Save to CSV</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>np.savetxt(</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    filename,</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    np.column_stack([time, data]),</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    header<span class="op">=</span><span class="st">&#39;Time (s), Voltage (V)&#39;</span>,</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    comments<span class="op">=</span><span class="st">&#39;&#39;</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Data saved to </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+         <h3 data-number="6.1.1"
          id="exercise-save-and-reload-data"><span
-         class="header-section-number">3.6.1</span> Exercise: Save and
+         class="header-section-number">6.1.1</span> Exercise: Save and
          Reload Data</h3>
          <ol type="1">
          <li><p>Acquire a waveform and save it to a CSV file.</p></li>
          <li><p>Load the data back and plot it:</p>
-         <div class="sourceCode" id="cb23"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>loaded_data <span class="op">=</span> np.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>time_loaded <span class="op">=</span> loaded_data[:, <span class="dv">0</span>]</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>voltage_loaded <span class="op">=</span> loaded_data[:, <span class="dv">1</span>]</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>plt.plot(time_loaded <span class="op">*</span> <span class="dv">1000</span>, voltage_loaded)</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Loaded Data&#39;</span>)</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <div class="sourceCode" id="cb26"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>loaded_data <span class="op">=</span> np.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>time_loaded <span class="op">=</span> loaded_data[:, <span class="dv">0</span>]</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>voltage_loaded <span class="op">=</span> loaded_data[:, <span class="dv">1</span>]</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plt.plot(time_loaded <span class="op">*</span> <span class="dv">1000</span>, voltage_loaded)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Loaded Data&#39;</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          <li><p>Verify the loaded data matches your original
          acquisition.</p></li>
          </ol>
-         <h2 data-number="3.7" id="generating-an-analog-output"><span
-         class="header-section-number">3.7</span> Generating an Analog
+         <h2 data-number="6.2" id="generating-an-analog-output"><span
+         class="header-section-number">6.2</span> Generating an Analog
          Output</h2>
          <p>The USB-6009 can also generate analog voltages (though at a
-         limited rate of 150 S/s):</p>
-         <div class="sourceCode" id="cb24"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Output a DC voltage</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    task.ao_channels.add_ao_voltage_chan(<span class="st">&quot;Dev1/ao0&quot;</span>)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    task.write(<span class="fl">2.5</span>)  <span class="co"># Output 2.5 V</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Outputting 2.5 V on AO0&quot;</span>)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>(<span class="st">&quot;Press Enter to stop...&quot;</span>)</span></code></pre></div>
-         <h3 data-number="3.7.1" id="exercise-test-analog-output"><span
-         class="header-section-number">3.7.1</span> Exercise: Test
+         limited rate of 150 S/s). Note that the USB-6009’s analog
+         outputs have a range of 0-5V only, so we must specify this
+         range explicitly:</p>
+         <div class="sourceCode" id="cb27"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Output a DC voltage</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    task.ao_channels.add_ao_voltage_chan(<span class="st">&quot;Dev1/ao0&quot;</span>, min_val<span class="op">=</span><span class="fl">0.0</span>, max_val<span class="op">=</span><span class="fl">5.0</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    task.write(<span class="fl">2.5</span>, auto_start<span class="op">=</span><span class="va">True</span>)  <span class="co"># Output 2.5 V</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Outputting 2.5 V on AO0&quot;</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>(<span class="st">&quot;Press Enter to stop...&quot;</span>)</span></code></pre></div>
+         <h3 data-number="6.2.1" id="exercise-test-analog-output"><span
+         class="header-section-number">6.2.1</span> Exercise: Test
          Analog Output</h3>
          <ol type="1">
          <li>Configure your DAQ to output a voltage on
@@ -1239,41 +1555,42 @@
          <li>Verifies they match</li>
          </ul></li>
          </ol>
-         <h2 data-number="3.8" id="error-handling"><span
-         class="header-section-number">3.8</span> Error Handling</h2>
+         <h2 data-number="6.3" id="error-handling"><span
+         class="header-section-number">6.3</span> Error Handling</h2>
          <p>Always include error handling in your data acquisition
          code:</p>
-         <div class="sourceCode" id="cb25"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.errors <span class="im">import</span> DaqError</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        voltage <span class="op">=</span> task.read()</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> DaqError <span class="im">as</span> e:</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;DAQ Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Check that:&quot;</span>)</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The DAQ device is connected&quot;</span>)</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The device name is correct (try &#39;Dev1&#39;, &#39;Dev2&#39;, etc.)&quot;</span>)</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - NI-DAQmx drivers are installed&quot;</span>)</span></code></pre></div>
-         <h2 data-number="3.9" id="summary"><span
-         class="header-section-number">3.9</span> Summary</h2>
+         <div class="sourceCode" id="cb28"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.errors <span class="im">import</span> DaqError</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        voltage <span class="op">=</span> task.read()</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> DaqError <span class="im">as</span> e:</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;DAQ Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Check that:&quot;</span>)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The DAQ device is connected&quot;</span>)</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The device name is correct (try &#39;Dev1&#39;, &#39;Dev2&#39;, etc.)&quot;</span>)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - NI-DAQmx drivers are installed&quot;</span>)</span></code></pre></div>
+         <h1 data-number="7" id="summary"><span
+         class="header-section-number">7</span> Summary</h1>
          <p>In this lab, you learned to:</p>
          <ol type="1">
          <li>Connect and verify a USB DAQ device</li>
          <li>Read single and multiple voltage samples</li>
          <li>Configure sample rate and acquisition timing</li>
-         <li>Visualize data in real-time</li>
-         <li>Perform spectral analysis using FFT</li>
+         <li>Explain Nyquist’s theorem and recognize aliasing</li>
+         <li>Choose appropriate sample rates for your signals</li>
+         <li>Set up and verify the motor controller hardware</li>
          <li>Save data to CSV files</li>
          <li>Generate analog output voltages</li>
          <li>Handle common errors</li>
          </ol>
          <p>These skills form the foundation for the automated
-         measurements you’ll perform in the coming weeks. See the <a
+         measurements you’ll perform in Week 4. See the <a
          href="/PHYS-4430/python-resources">Python Resources</a> page
          and the example scripts in the <code>python/</code> folder for
          more detailed examples.</p>

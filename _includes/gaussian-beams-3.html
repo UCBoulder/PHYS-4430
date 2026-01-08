@@ -61,69 +61,50 @@
             class="toc-section-number">3.5</span> Trying out the
             Gaussian beam model</a></li>
             </ul></li>
-            <li><a href="#digital-sampling-of-data"><span
-            class="toc-section-number">4</span> Digital Sampling of
-            Data</a>
-            <ul>
-            <li><a
-            href="#improving-your-python-data-acquisition-script"><span
-            class="toc-section-number">4.1</span> Improving your Python
-            data acquisition script</a></li>
-            <li><a href="#initial-measurements"><span
-            class="toc-section-number">4.2</span> Initial
-            measurements</a></li>
-            <li><a href="#enhanced-understanding"><span
-            class="toc-section-number">4.3</span> Enhanced
-            understanding</a></li>
-            <li><a href="#nyquist-frequency"><span
-            class="toc-section-number">4.4</span> Nyquist
-            frequency</a></li>
-            </ul></li>
             <li><a href="#fourier-analysis-techniques"><span
-            class="toc-section-number">5</span> Fourier Analysis
+            class="toc-section-number">4</span> Fourier Analysis
             Techniques</a>
             <ul>
-            <li><a href="#fourier-transforms"><span
-            class="toc-section-number">5.1</span> Fourier Transforms</a>
+            <li><a href="#introduction-to-fourier-transforms"><span
+            class="toc-section-number">4.1</span> Introduction to
+            Fourier Transforms</a>
             <ul>
             <li><a href="#sec:basic-fourier"><span
-            class="toc-section-number">5.1.1</span> Basic Fourier
-            concepts</a></li>
+            class="toc-section-number">4.1.1</span> Basic Fourier
+            Concepts</a></li>
             </ul></li>
+            <li><a href="#computing-the-power-spectrum-in-python"><span
+            class="toc-section-number">4.2</span> Computing the Power
+            Spectrum in Python</a>
+            <ul>
             <li><a
-            href="#adding-spectral-analysis-to-your-python-script"><span
-            class="toc-section-number">5.2</span> Adding Spectral
-            Analysis to Your Python Script</a>
-            <ul>
-            <li><a href="#computing-the-power-spectrum"><span
-            class="toc-section-number">5.2.1</span> Computing the Power
-            Spectrum</a></li>
-            <li><a href="#setting-up-real-time-spectral-analysis"><span
-            class="toc-section-number">5.2.2</span> Setting up real-time
-            spectral analysis</a></li>
+            href="#frequency-resolution-and-maximum-frequency"><span
+            class="toc-section-number">4.2.1</span> Frequency Resolution
+            and Maximum Frequency</a></li>
             </ul></li>
-            <li><a href="#using-your-spectral-analysis-script"><span
-            class="toc-section-number">5.3</span> Using your spectral
-            analysis script</a>
+            <li><a href="#building-a-real-time-spectral-analyzer"><span
+            class="toc-section-number">4.3</span> Building a Real-Time
+            Spectral Analyzer</a></li>
+            <li><a href="#exercises-spectral-analysis"><span
+            class="toc-section-number">4.4</span> Exercises: Spectral
+            Analysis</a>
             <ul>
-            <li><a href="#spectral-analysis-basics"><span
-            class="toc-section-number">5.3.1</span> Spectral analysis
-            basics</a></li>
-            <li><a
-            href="#real-time-spectral-analysis-of-different-waveforms"><span
-            class="toc-section-number">5.3.2</span> Real-time spectral
-            analysis of different waveforms</a></li>
-            </ul></li>
-            <li><a href="#fourier-analysis-of-saved-data"><span
-            class="toc-section-number">5.4</span> Fourier Analysis of
-            Saved Data</a>
-            <ul>
-            <li><a href="#exercises"><span
-            class="toc-section-number">5.4.1</span> Exercises</a></li>
+            <li><a href="#understanding-frequency-resolution"><span
+            class="toc-section-number">4.4.1</span> Understanding
+            Frequency Resolution</a></li>
+            <li><a href="#analyzing-different-waveforms"><span
+            class="toc-section-number">4.4.2</span> Analyzing Different
+            Waveforms</a></li>
+            <li><a href="#analyzing-saved-data"><span
+            class="toc-section-number">4.4.3</span> Analyzing Saved
+            Data</a></li>
+            <li><a href="#exercises-with-saved-data"><span
+            class="toc-section-number">4.4.4</span> Exercises with Saved
+            Data</a></li>
             </ul></li>
             </ul></li>
             <li><a href="#revisit-measuring-the-beam-width"><span
-            class="toc-section-number">6</span> Revisit Measuring the
+            class="toc-section-number">5</span> Revisit Measuring the
             Beam Width</a></li>
             </ul>
         </nav>
@@ -136,11 +117,9 @@
          measured quantities affect derived quantities) and introduces
          the theoretical foundation for Gaussian laser beams, deriving
          the equations you’ll use in Week 4’s experiments. In the lab
-         portion, we will focus on understanding digital sampling and
-         using spectral analysis tools to perform Fourier Transforms in
-         real time. This will allow you to quickly vary parameters and
-         observe how they affect the frequency spectrum. Be sure to
-         document all of your work in your lab notebook.</p>
+         portion, you will use spectral analysis tools to perform
+         Fourier Transforms and analyze signals in the frequency domain.
+         Be sure to document all of your work in your lab notebook.</p>
          <h1 data-number="2" id="goals"><span
          class="header-section-number">2</span> Goals</h1>
          <p>In this week’s prelab, you will…</p>
@@ -157,28 +136,16 @@
          <li>…fit Gaussian beam data to extract beam waist and
          position.</li>
          </ol>
-         <p>In the first part of this week’s lab, you will…</p>
+         <p>In this week’s lab, you will…</p>
          <ol type="1">
-         <li>…extend your previously developed Python script to add
-         functionality.</li>
-         <li>…be able to appropriately choose DAQ parameters like sample
-         rate.</li>
-         <li>…explain what the DAQ measures when the sample rate is
-         chosen differently.</li>
-         </ol>
-         <p>The primary objectives of the second part of this week’s lab
-         are to gain a conceptual and computational knowledge of Fourier
-         Transforms. Python’s NumPy library provides efficient FFT (Fast
-         Fourier Transform) functions for spectral analysis. This lab
-         focuses on methods commonly used in research.</p>
-         <p>You will gain an understanding of Fourier Transforms by…</p>
-         <ol type="1">
-         <li>…connecting mathematical formalism to basic concepts of
+         <li>…connect mathematical formalism to basic concepts of
          Fourier Transforms.</li>
-         <li>…adding spectral analysis to your Python script to compute
-         Fourier Transforms in real time.</li>
-         <li>…computing Fourier Transforms using NumPy’s FFT
+         <li>…compute Fourier Transforms using NumPy’s FFT
          functions.</li>
+         <li>…build a real-time spectral analysis tool.</li>
+         <li>…analyze waveforms in both time and frequency domains.</li>
+         <li>…revisit and refine your beam width measurement from Week
+         1.</li>
          </ol>
          <h1 data-number="3" id="prelab"><span
          class="header-section-number">3</span> Prelab</h1>
@@ -520,177 +487,18 @@
          and occurs at a position <span
          class="math inline">\(z_w=0.3396\pm0.0003\ m\)</span>.</li>
          </ol>
-         <h1 data-number="4" id="digital-sampling-of-data"><span
-         class="header-section-number">4</span> Digital Sampling of
-         Data</h1>
-         <h2 data-number="4.1"
-         id="improving-your-python-data-acquisition-script"><span
-         class="header-section-number">4.1</span> Improving your Python
-         data acquisition script</h2>
-         <ol type="1">
-         <li><p>Modify the Python script you created last week so that
-         the <em>Number of Samples</em> and <em>Sample Rate</em> are
-         easily configurable variables at the top of your script (or as
-         function parameters).</p>
-         <div class="sourceCode" id="cb4"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration - easily adjustable</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>SAMPLE_RATE <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Samples per second</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>NUM_SAMPLES <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Total samples (1 second of data)</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>DAQ_CHANNEL <span class="op">=</span> <span class="st">&quot;Dev1/ai0&quot;</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> acquire_data(sample_rate, num_samples, channel):</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Acquire data from DAQ with specified parameters.&quot;&quot;&quot;</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(channel)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>num_samples)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array(data)</span></code></pre></div></li>
-         <li><p>Set up a function generator to produce a 1 kHz sine
-         wave.</p></li>
-         <li><p>Connect the function generator’s output to both the
-         oscilloscope and the DAQ to record data.</p></li>
-         </ol>
-         <h2 data-number="4.2" id="initial-measurements"><span
-         class="header-section-number">4.2</span> Initial
-         measurements</h2>
-         <ol type="1">
-         <li><p>Set the sample rate in your Python script to 500 samples
-         per second and the number of samples such that it records 1
-         second of data.</p></li>
-         <li><p>Record and plot a dataset with both the oscilloscope and
-         the DAQ. Make sure that the time range on the oscilloscope is
-         set such that it is on the same order as the data being
-         recorded by the DAQ.</p>
-         <div class="sourceCode" id="cb5"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire and plot data</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> acquire_data(SAMPLE_RATE, NUM_SAMPLES, DAQ_CHANNEL)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(NUM_SAMPLES) <span class="op">/</span> SAMPLE_RATE</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.plot(time, data)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (s)&#39;</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f&#39;Acquired Signal (</span><span class="sc">{</span>SAMPLE_RATE<span class="sc">}</span><span class="ss"> Hz sample rate)&#39;</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
-         <li><p>Compare the two plots. What are the major differences
-         between the two?</p></li>
-         <li><p>Why might one or both of these plots be giving an
-         incorrect result? Think about the wave you are measuring and
-         the result you are getting. How do they relate?</p></li>
-         </ol>
-         <h2 data-number="4.3" id="enhanced-understanding"><span
-         class="header-section-number">4.3</span> Enhanced
-         understanding</h2>
-         <p>This section will guide you to understanding of Nyquist’s
-         theorem and a more appropriate sample rate for digital data
-         collection.</p>
-         <ol type="1">
-         <li>Why do you think the data from the DAQ produced a wave of
-         lower frequency?</li>
-         <li>Adjust the sample rate in a way you think might provide a
-         more accurate measurement of the wave. What do you think the
-         measured waveform will look like this time?</li>
-         <li>Take a dataset, record and plot it. Did it match your
-         predictions?</li>
-         <li>Now record another dataset with the function generator set
-         to the same parameters but the sample rate set to 3000 samples
-         per second and the number of samples set to record 1 second of
-         data.</li>
-         <li>Plot this new dataset. What is the frequency of the new
-         dataset?</li>
-         <li>What are the fundamental differences between the first,
-         second, and third datasets?</li>
-         </ol>
-         <h2 data-number="4.4" id="nyquist-frequency"><span
-         class="header-section-number">4.4</span> Nyquist frequency</h2>
-         <p>The discrepancies between the sampled waveforms can be
-         explained by Nyquist’s theorem. It states that to accurately
-         measure a signal by discrete sampling methods (like the DAQ)
-         the sampling rate must be at least twice that of the measured
-         signal. If this were not the case, a measurement might not be
-         taken at every interval of oscillation, a situation called
-         “undersampling.” Sampling the signal at least twice as fast as
-         the maximum frequency of interest ensures that at least two
-         data points are recorded each period.</p>
-         <p><strong>Definition:</strong></p>
-         <p>The <em>Nyquist Frequency</em> is defined to be half the
-         sample rate.</p>
-         <ol type="1">
-         <li><p><strong>Predict</strong> the <em>apparent</em> period
-         (in Hz) of the signal recorded by the DAQ.
-         <strong>Observe</strong> what really happens using your
-         waveform generator, DAQ, and Python script.
-         <strong>Explain</strong> the result. Suppose the DAQ is set to
-         1 kS/s sample rate in all of the cases, while the waveform
-         generator is set to:</p>
-         <ol type="1">
-         <li>1000 Hz</li>
-         <li>998 Hz</li>
-         <li>1004 Hz</li>
-         <li>1500 Hz</li>
-         <li>2000 Hz</li>
-         <li>1997 Hz</li>
-         <li>2005 Hz</li>
-         </ol>
-         <p>In understanding what is going on, it may help to draw a few
-         periods of the wave and then indicate where the DAQ will sample
-         the waveform.</p></li>
-         <li><p>You <em>want</em> to measure the random fluctuations
-         (noise) in a signal from 0-100 Hz.</p>
-         <ol type="1">
-         <li>If you set the sample rate at 200 Hz, what set of frequency
-         ranges will contribute to the noise measurement?</li>
-         <li>If you set the sample rate at 1000 Hz, what set of
-         frequency ranges will contribute to the noise measurement?</li>
-         <li>How could you help achieve the desired measurement in 2.1
-         using a combination of changing the sample rate and adding
-         filtering? Explain why your choice of sample rate and signal
-         filter would work better.</li>
-         </ol></li>
-         <li><p><strong>Undersampling on the oscilloscope.</strong>
-         Undersampling is an issue with any device that samples data at
-         regular discrete time intervals. This question requires the use
-         of a Rigol DS1052E oscilloscope and a waveform generator.</p>
-         <ol type="1">
-         <li>Figure <a href="#fig:scope-menu">2</a> is copied from the
-         Rigol Oscilloscope manual. The Horizontal menu allows you to
-         view the actual sample rate “Sa Rate” of the digital
-         acquisition on the scope.</li>
-         <li>Predict what should you observe if you set the waveform
-         generator to the same frequency as the sample rate? Try it out,
-         compare with your prediction, and explain your
-         observations.</li>
-         <li>What happens if you change the oscilloscope time scale? Or
-         change the waveform generator frequency slightly? Try to
-         explain what you observe.</li>
-         </ol></li>
-         </ol>
-         <div id="fig:scope-menu" class="fignos">
-         <figure>
-         <img
-         src="../resources/lab-guides/gaussian-laser-beams/scope-menu.png"
-         style="width:20cm"
-         alt="Figure 2: The horizontal menu on the Rigol DS1052E Oscilloscope." />
-         <figcaption aria-hidden="true"><span>Figure 2:</span> The
-         horizontal menu on the Rigol DS1052E Oscilloscope.</figcaption>
-         </figure>
-         </div>
-         <h1 data-number="5" id="fourier-analysis-techniques"><span
-         class="header-section-number">5</span> Fourier Analysis
+         <h1 data-number="4" id="fourier-analysis-techniques"><span
+         class="header-section-number">4</span> Fourier Analysis
          Techniques</h1>
-         <h2 data-number="5.1" id="fourier-transforms"><span
-         class="header-section-number">5.1</span> Fourier
-         Transforms</h2>
+         <p>In Week 2, you learned about the Nyquist frequency and how
+         sample rate affects your ability to accurately capture signals.
+         This week, we’ll analyze signals in the <strong>frequency
+         domain</strong> using Fourier Transforms. This is a powerful
+         technique used throughout physics and engineering.</p>
+         <h2 data-number="4.1"
+         id="introduction-to-fourier-transforms"><span
+         class="header-section-number">4.1</span> Introduction to
+         Fourier Transforms</h2>
          <p>The discrete Fourier Transform of a set of data <span
          class="math inline">\(\{y_0,y_1, ... , y_{N-1}\}\)</span> is
          given by</p>
@@ -701,9 +509,9 @@
          amplitude of <span class="math inline">\(Y_m\)</span> tells you
          how much of your signal was formed by an oscillation at the
          <span class="math inline">\(m\)</span>-th frequency.</p>
-         <h3 data-number="5.1.1" id="sec:basic-fourier"><span
-         class="header-section-number">5.1.1</span> Basic Fourier
-         concepts</h3>
+         <h3 data-number="4.1.1" id="sec:basic-fourier"><span
+         class="header-section-number">4.1.1</span> Basic Fourier
+         Concepts</h3>
          <ol type="1">
          <li>How do the units of the Fourier Transform array <span
          class="math inline">\(Y_m\)</span> relate to the units of the
@@ -712,154 +520,170 @@
          to be taken at equally spaced intervals?</li>
          <li>Is it possible for two different sets of data to have the
          same Fourier Transform?</li>
-         <li>If data set has <span class="math inline">\(N\)</span>
+         <li>If a data set has <span class="math inline">\(N\)</span>
          elements, how long is the discrete Fourier Transform?</li>
          </ol>
-         <h2 data-number="5.2"
-         id="adding-spectral-analysis-to-your-python-script"><span
-         class="header-section-number">5.2</span> Adding Spectral
-         Analysis to Your Python Script</h2>
-         <p>Now we want to modify our Python script to provide real-time
-         spectral analysis using NumPy’s FFT functions.</p>
-         <h3 data-number="5.2.1" id="computing-the-power-spectrum"><span
-         class="header-section-number">5.2.1</span> Computing the Power
-         Spectrum</h3>
+         <h2 data-number="4.2"
+         id="computing-the-power-spectrum-in-python"><span
+         class="header-section-number">4.2</span> Computing the Power
+         Spectrum in Python</h2>
+         <p>NumPy provides efficient FFT (Fast Fourier Transform)
+         functions for spectral analysis:</p>
+         <div class="sourceCode" id="cb4"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_spectrum(data, sample_rate):</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Compute the one-sided power spectrum of a signal.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">        data: 1D array of signal values</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">        sample_rate: Sample rate in Hz</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">        frequencies: Array of frequency values</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">        power: Power spectrum (magnitude squared)</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(data)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute FFT</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    fft_result <span class="op">=</span> np.fft.fft(data)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get positive frequencies only (real signal has symmetric spectrum)</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    n_unique <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)[:n_unique]</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.<span class="bu">abs</span>(frequencies)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Power spectrum (magnitude squared, normalized)</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    power <span class="op">=</span> (np.<span class="bu">abs</span>(fft_result[:n_unique]) <span class="op">/</span> n) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    power[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">*=</span> <span class="dv">2</span>  <span class="co"># Double power for frequencies with both +/- components</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> frequencies, power</span></code></pre></div>
+         <h3 data-number="4.2.1"
+         id="frequency-resolution-and-maximum-frequency"><span
+         class="header-section-number">4.2.1</span> Frequency Resolution
+         and Maximum Frequency</h3>
+         <p>The relationship between your acquisition parameters and the
+         spectrum is:</p>
+         <div class="sourceCode" id="cb5"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency resolution and maximum frequency</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>freq_resolution <span class="op">=</span> sample_rate <span class="op">/</span> num_samples  <span class="co"># Hz per bin</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>max_frequency <span class="op">=</span> sample_rate <span class="op">/</span> <span class="dv">2</span>  <span class="co"># Nyquist frequency</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Frequency resolution: </span><span class="sc">{</span>freq_resolution<span class="sc">}</span><span class="ss"> Hz&quot;</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Maximum frequency: </span><span class="sc">{</span>max_frequency<span class="sc">}</span><span class="ss"> Hz&quot;</span>)</span></code></pre></div>
+         <p><strong>Key relationships:</strong></p>
+         <ul>
+         <li><strong>Frequency resolution</strong> = Sample Rate /
+         Number of Samples</li>
+         <li><strong>Maximum frequency</strong> (Nyquist) = Sample Rate
+         / 2</li>
+         </ul>
+         <p>If the data is sampled for 2 seconds at 100 Hz sample rate:
+         - Number of samples = 200 - Frequency resolution = 100 Hz / 200
+         = 0.5 Hz - Maximum frequency = 100 Hz / 2 = 50 Hz</p>
+         <h2 data-number="4.3"
+         id="building-a-real-time-spectral-analyzer"><span
+         class="header-section-number">4.3</span> Building a Real-Time
+         Spectral Analyzer</h2>
+         <p>Create a script that acquires data and displays both
+         time-domain and frequency-domain views simultaneously:</p>
          <div class="sourceCode" id="cb6"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_spectrum(data, sample_rate):</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Compute the one-sided power spectrum of a signal.</span></span>
+         class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, clear_output</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">        data: 1D array of signal values</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">        sample_rate: Sample rate in Hz</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">        frequencies: Array of frequency values</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">        power: Power spectrum (magnitude squared)</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(data)</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Compute FFT</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    fft_result <span class="op">=</span> np.fft.fft(data)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get positive frequencies only (real signal has symmetric spectrum)</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    n_unique <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)[:n_unique]</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.<span class="bu">abs</span>(frequencies)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>SAMPLE_RATE <span class="op">=</span> <span class="dv">10000</span>  <span class="co"># Hz</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>NUM_SAMPLES <span class="op">=</span> <span class="dv">2000</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>DAQ_CHANNEL <span class="op">=</span> <span class="st">&quot;Dev1/ai0&quot;</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_spectrum(data, sample_rate):</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Compute one-sided power spectrum.&quot;&quot;&quot;</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(data)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    fft_result <span class="op">=</span> np.fft.fft(data)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    n_unique <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.<span class="bu">abs</span>(np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)[:n_unique])</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    power <span class="op">=</span> (np.<span class="bu">abs</span>(fft_result[:n_unique]) <span class="op">/</span> n) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    power[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">*=</span> <span class="dv">2</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> frequencies, power</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up plots</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
 <span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Power spectrum (magnitude squared, normalized)</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    power <span class="op">=</span> (np.<span class="bu">abs</span>(fft_result[:n_unique]) <span class="op">/</span> n) <span class="op">**</span> <span class="dv">2</span></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    power[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">*=</span> <span class="dv">2</span>  <span class="co"># Double power for frequencies with both +/- components</span></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> frequencies, power</span></code></pre></div>
-         <h3 data-number="5.2.2"
-         id="setting-up-real-time-spectral-analysis"><span
-         class="header-section-number">5.2.2</span> Setting up real-time
-         spectral analysis</h3>
-         <p>Create a script with the following functionality:</p>
-         <ol type="1">
-         <li>Takes N samples inside a loop (continuous acquisition)</li>
-         <li>Has configurable sample rate and number of samples</li>
-         <li>Performs spectral analysis on each acquired dataset</li>
-         <li>Has keyboard interrupt (Ctrl+C) to stop</li>
-         <li>Saves the last dataset after stopping</li>
-         </ol>
-         <div class="sourceCode" id="cb7"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>SAMPLE_RATE <span class="op">=</span> <span class="dv">10000</span>  <span class="co"># Hz</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>NUM_SAMPLES <span class="op">=</span> <span class="dv">2000</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>DAQ_CHANNEL <span class="op">=</span> <span class="st">&quot;Dev1/ai0&quot;</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_spectrum(data, sample_rate):</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Compute one-sided power spectrum.&quot;&quot;&quot;</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(data)</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    fft_result <span class="op">=</span> np.fft.fft(data)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    n_unique <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    frequencies <span class="op">=</span> np.<span class="bu">abs</span>(np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)[:n_unique])</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    power <span class="op">=</span> (np.<span class="bu">abs</span>(fft_result[:n_unique]) <span class="op">/</span> n) <span class="op">**</span> <span class="dv">2</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    power[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">*=</span> <span class="dv">2</span></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> frequencies, power</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up real-time plotting</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>plt.ion()</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">8</span>))</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Time domain plot</span></span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>line1, <span class="op">=</span> ax1.plot([], [], <span class="st">&#39;b-&#39;</span>)</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">&#39;Time Domain&#39;</span>)</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>ax1.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency domain plot</span></span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>line2, <span class="op">=</span> ax2.plot([], [], <span class="st">&#39;r-&#39;</span>)</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">&#39;Power&#39;</span>)</span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">&#39;Frequency Domain (Power Spectrum)&#39;</span>)</span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>ax2.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(<span class="dv">0</span>, SAMPLE_RATE <span class="op">/</span> <span class="dv">2</span>)</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>last_data <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(DAQ_CHANNEL)</span>
-<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    task.timing.cfg_samp_clk_timing(</span>
-<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>        rate<span class="op">=</span>SAMPLE_RATE,</span>
-<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>        sample_mode<span class="op">=</span>AcquisitionType.CONTINUOUS</span>
-<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>    task.start()</span>
-<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Acquiring data... Press Ctrl+C to stop&quot;</span>)</span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="va">True</span>:</span>
-<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Acquire data</span></span>
-<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>NUM_SAMPLES)</span>
-<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>            last_data <span class="op">=</span> np.array(data)</span>
-<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update time domain plot</span></span>
-<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>            time_ms <span class="op">=</span> np.arange(<span class="bu">len</span>(data)) <span class="op">/</span> SAMPLE_RATE <span class="op">*</span> <span class="dv">1000</span></span>
-<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>            line1.set_data(time_ms, data)</span>
-<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>            ax1.set_xlim(<span class="dv">0</span>, time_ms[<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>            ax1.set_ylim(np.<span class="bu">min</span>(data) <span class="op">-</span> <span class="fl">0.1</span>, np.<span class="bu">max</span>(data) <span class="op">+</span> <span class="fl">0.1</span>)</span>
-<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Update frequency domain plot</span></span>
-<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>            frequencies, power <span class="op">=</span> compute_spectrum(np.array(data), SAMPLE_RATE)</span>
-<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>            line2.set_data(frequencies, power)</span>
-<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>            ax2.set_ylim(<span class="dv">0</span>, np.<span class="bu">max</span>(power) <span class="op">*</span> <span class="fl">1.1</span> <span class="op">+</span> <span class="fl">0.001</span>)</span>
-<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>            plt.pause(<span class="fl">0.05</span>)</span>
-<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
-<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Stopped by user&quot;</span>)</span>
-<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>plt.ioff()</span>
-<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Save last dataset</span></span>
-<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> last_data <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>    np.savetxt(<span class="st">&#39;last_acquisition.csv&#39;</span>,</span>
-<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>               np.column_stack([np.arange(<span class="bu">len</span>(last_data))<span class="op">/</span>SAMPLE_RATE, last_data]),</span>
-<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>               delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, header<span class="op">=</span><span class="st">&#39;Time (s), Voltage (V)&#39;</span>, comments<span class="op">=</span><span class="st">&#39;&#39;</span>)</span>
-<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Last dataset saved to &#39;last_acquisition.csv&#39;&quot;</span>)</span>
-<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-         <h2 data-number="5.3"
-         id="using-your-spectral-analysis-script"><span
-         class="header-section-number">5.3</span> Using your spectral
-         analysis script</h2>
-         <p>This section will familiarize you with your script’s
-         capabilities and help you understand how different parameters
-         relate to the Fourier Transform.</p>
-         <h3 data-number="5.3.1" id="spectral-analysis-basics"><span
-         class="header-section-number">5.3.1</span> Spectral analysis
-         basics</h3>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Time domain plot</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>line1, <span class="op">=</span> ax1.plot([], [], <span class="st">&#39;b-&#39;</span>)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>ax1.set_xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>ax1.set_ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>ax1.set_title(<span class="st">&#39;Time Domain&#39;</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>ax1.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency domain plot</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>line2, <span class="op">=</span> ax2.plot([], [], <span class="st">&#39;r-&#39;</span>)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>ax2.set_xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>ax2.set_ylabel(<span class="st">&#39;Power&#39;</span>)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>ax2.set_title(<span class="st">&#39;Frequency Domain (Power Spectrum)&#39;</span>)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>ax2.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>ax2.set_xlim(<span class="dv">0</span>, SAMPLE_RATE <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>last_data <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(DAQ_CHANNEL)</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    task.timing.cfg_samp_clk_timing(</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>        rate<span class="op">=</span>SAMPLE_RATE,</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>        sample_mode<span class="op">=</span>AcquisitionType.CONTINUOUS</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>    task.start()</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Acquiring data... Press Ctrl+C (or Interrupt Kernel) to stop&quot;</span>)</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>        <span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Drain buffer to prevent overflow</span></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>            samples_available <span class="op">=</span> task.in_stream.avail_samp_per_chan</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> samples_available <span class="op">&gt;=</span> NUM_SAMPLES:</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>                data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>samples_available)</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Use most recent samples</span></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>                data <span class="op">=</span> data[<span class="op">-</span>NUM_SAMPLES:]</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>                last_data <span class="op">=</span> np.array(data)</span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Update time domain plot</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>                time_ms <span class="op">=</span> np.arange(<span class="bu">len</span>(data)) <span class="op">/</span> SAMPLE_RATE <span class="op">*</span> <span class="dv">1000</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>                line1.set_data(time_ms, data)</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>                ax1.set_xlim(<span class="dv">0</span>, time_ms[<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>                ax1.set_ylim(np.<span class="bu">min</span>(data) <span class="op">-</span> <span class="fl">0.1</span>, np.<span class="bu">max</span>(data) <span class="op">+</span> <span class="fl">0.1</span>)</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>                <span class="co"># Update frequency domain plot</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>                frequencies, power <span class="op">=</span> compute_spectrum(np.array(data), SAMPLE_RATE)</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>                line2.set_data(frequencies, power)</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>                ax2.set_ylim(<span class="dv">0</span>, np.<span class="bu">max</span>(power) <span class="op">*</span> <span class="fl">1.1</span> <span class="op">+</span> <span class="fl">0.001</span>)</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>                clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>                display(fig)</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">KeyboardInterrupt</span>:</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Stopped by user&quot;</span>)</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a><span class="co"># Save last dataset</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> last_data <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>    np.savetxt(<span class="st">&#39;last_acquisition.csv&#39;</span>,</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>               np.column_stack([np.arange(<span class="bu">len</span>(last_data))<span class="op">/</span>SAMPLE_RATE, last_data]),</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>               delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, header<span class="op">=</span><span class="st">&#39;Time (s), Voltage (V)&#39;</span>, comments<span class="op">=</span><span class="st">&#39;&#39;</span>)</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Last dataset saved to &#39;last_acquisition.csv&#39;&quot;</span>)</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>plt.close(fig)</span></code></pre></div>
+         <h2 data-number="4.4" id="exercises-spectral-analysis"><span
+         class="header-section-number">4.4</span> Exercises: Spectral
+         Analysis</h2>
+         <h3 data-number="4.4.1"
+         id="understanding-frequency-resolution"><span
+         class="header-section-number">4.4.1</span> Understanding
+         Frequency Resolution</h3>
          <ol type="1">
          <li><p>Use a waveform generator to output a waveform of your
          choice at a frequency in the tens of Hz to kHz range and view
@@ -869,15 +693,8 @@
          <strong>frequency resolution</strong> (frequency step size
          between data in the spectrum) and <strong>maximum
          frequency</strong> relate to the <strong>sample rate</strong>
-         and <strong>number of samples</strong>? Try to find an
-         algebraic relationship.</p>
-         <div class="sourceCode" id="cb8"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency resolution and maximum frequency</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>freq_resolution <span class="op">=</span> sample_rate <span class="op">/</span> num_samples  <span class="co"># Hz per bin</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>max_frequency <span class="op">=</span> sample_rate <span class="op">/</span> <span class="dv">2</span>  <span class="co"># Nyquist frequency</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Frequency resolution: </span><span class="sc">{</span>freq_resolution<span class="sc">}</span><span class="ss"> Hz&quot;</span>)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Maximum frequency: </span><span class="sc">{</span>max_frequency<span class="sc">}</span><span class="ss"> Hz&quot;</span>)</span></code></pre></div></li>
+         and <strong>number of samples</strong>? Verify the algebraic
+         relationship experimentally.</p></li>
          <li><p>If the data is sampled for 2 seconds at 100 Hz sample
          rate, what frequency does the <span
          class="math inline">\(m\)</span>-th component of the Fourier
@@ -885,73 +702,79 @@
          <li><p>How many points are shown in the spectral analysis plot?
          How does this compare to the number of points you expected in
          the Fourier transform (see Section <a
-         href="#sec:basic-fourier">5.1.1</a>.4)? <strong>Note</strong>:
-         The data acquired from the DAQ is always a sequence of real
-         numbers <span class="math inline">\(\{y_n\}\)</span>. Under the
-         condition that the signal is only real numbers, it can be
-         proved that <span class="math inline">\(Y_m=Y_{N-M}^*\)</span>
-         so <span class="math inline">\(|Y_M|=|Y_{N-m}|\)</span>,
-         meaning the spectrum is symmetric about the <span
+         href="#sec:basic-fourier">4.1.1</a>.4)?</p>
+         <p><strong>Note</strong>: The data acquired from the DAQ is
+         always a sequence of real numbers <span
+         class="math inline">\(\{y_n\}\)</span>. Under the condition
+         that the signal is only real numbers, it can be proved that
+         <span class="math inline">\(Y_m=Y_{N-M}^*\)</span> so <span
+         class="math inline">\(|Y_M|=|Y_{N-m}|\)</span>, meaning the
+         spectrum is symmetric about the <span
          class="math inline">\(N/2\)</span>-th data point, which
          corresponds to the Nyquist frequency. For this reason, we
          typically only plot the first half of the Fourier spectrum up
          to the Nyquist frequency.</p></li>
          </ol>
-         <h3 data-number="5.3.2"
-         id="real-time-spectral-analysis-of-different-waveforms"><span
-         class="header-section-number">5.3.2</span> Real-time spectral
-         analysis of different waveforms</h3>
+         <h3 data-number="4.4.2"
+         id="analyzing-different-waveforms"><span
+         class="header-section-number">4.4.2</span> Analyzing Different
+         Waveforms</h3>
          <ol type="1">
-         <li>How do you expect the spectrum of a sine wave to look? How
-         should it change as you vary the amplitude and frequency on the
-         waveform generator? Try it.</li>
-         <li>How do you expect the spectrum of a square wave to look?
-         How should it change as you vary the amplitude and frequency on
-         the waveform generator? Try it.</li>
-         </ol>
+         <li><p>How do you expect the spectrum of a <strong>sine
+         wave</strong> to look? How should it change as you vary the
+         amplitude and frequency on the waveform generator? Try
+         it.</p></li>
+         <li><p>How do you expect the spectrum of a <strong>square
+         wave</strong> to look? How should it change as you vary the
+         amplitude and frequency on the waveform generator? Try it.</p>
          <p>(Hint: you can look up or calculate the Fourier Series of a
          square wave to see if the observed amplitudes agree with the
-         mathematical prediction.)</p>
-         <h2 data-number="5.4" id="fourier-analysis-of-saved-data"><span
-         class="header-section-number">5.4</span> Fourier Analysis of
-         Saved Data</h2>
-         <p>While it is convenient to use real-time spectral analysis,
-         sometimes you may want to analyze data after it is saved.
-         Here’s how to compute the Fourier Transform of saved data:</p>
-         <div class="sourceCode" id="cb9"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load saved data</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;saved_waveform.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine sample rate from time data</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (time[<span class="dv">1</span>] <span class="op">-</span> time[<span class="dv">0</span>])</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute FFT</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(signal)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>fft_result <span class="op">=</span> np.fft.fft(signal)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create frequency axis</span></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Get positive frequencies only</span></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>positive_mask <span class="op">=</span> frequencies <span class="op">&gt;=</span> <span class="dv">0</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>freq_positive <span class="op">=</span> frequencies[positive_mask]</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(fft_result[positive_mask]) <span class="op">/</span> n</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot spectrum</span></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>plt.plot(freq_positive, magnitude)</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Magnitude&#39;</span>)</span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Fourier Transform of Saved Data&#39;</span>)</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-         <h3 data-number="5.4.1" id="exercises"><span
-         class="header-section-number">5.4.1</span> Exercises</h3>
+         mathematical prediction.)</p></li>
+         <li><p>Generate a signal with <strong>two frequencies</strong>
+         (if your function generator supports this, or use the sum of
+         two signals). Can you identify both frequencies in the
+         spectrum?</p></li>
+         </ol>
+         <h3 data-number="4.4.3" id="analyzing-saved-data"><span
+         class="header-section-number">4.4.3</span> Analyzing Saved
+         Data</h3>
+         <p>Sometimes you may want to analyze data after it is saved
+         rather than in real-time:</p>
+         <div class="sourceCode" id="cb7"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load saved data</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;saved_waveform.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>signal <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Determine sample rate from time data</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> (time[<span class="dv">1</span>] <span class="op">-</span> time[<span class="dv">0</span>])</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute FFT</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(signal)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>fft_result <span class="op">=</span> np.fft.fft(signal)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Create frequency axis</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Get positive frequencies only</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>positive_mask <span class="op">=</span> frequencies <span class="op">&gt;=</span> <span class="dv">0</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>freq_positive <span class="op">=</span> frequencies[positive_mask]</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(fft_result[positive_mask]) <span class="op">/</span> n</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot spectrum</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.plot(freq_positive, magnitude)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Magnitude&#39;</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Fourier Transform of Saved Data&#39;</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+         <h3 data-number="4.4.4" id="exercises-with-saved-data"><span
+         class="header-section-number">4.4.4</span> Exercises with Saved
+         Data</h3>
          <ol type="1">
          <li><p>Import any saved data set of a periodic function saved
          from the DAQ or the oscilloscope.</p></li>
@@ -971,46 +794,57 @@
          </ol></li>
          <li><p>Make sure to add the frequency column to create a proper
          plot of spectrum vs. frequency:</p>
-         <div class="sourceCode" id="cb10"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Complete example</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(signal)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">10000</span>  <span class="co"># Adjust to your actual sample rate</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute FFT and frequencies</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>fft_result <span class="op">=</span> np.fft.fft(signal)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sided spectrum (positive frequencies)</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>n_half <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>freq_pos <span class="op">=</span> frequencies[:n_half]</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(fft_result[:n_half]) <span class="op">*</span> <span class="dv">2</span> <span class="op">/</span> n  <span class="co"># Normalize and account for one-sided</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>magnitude[<span class="dv">0</span>] <span class="op">/=</span> <span class="dv">2</span>  <span class="co"># DC component doesn&#39;t double</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>plt.plot(freq_pos, magnitude)</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Magnitude&#39;</span>)</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, sample_rate<span class="op">/</span><span class="dv">2</span>)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <div class="sourceCode" id="cb8"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Complete example</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(signal)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">10000</span>  <span class="co"># Adjust to your actual sample rate</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute FFT and frequencies</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>fft_result <span class="op">=</span> np.fft.fft(signal)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>frequencies <span class="op">=</span> np.fft.fftfreq(n, d<span class="op">=</span><span class="dv">1</span><span class="op">/</span>sample_rate)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># One-sided spectrum (positive frequencies)</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>n_half <span class="op">=</span> n <span class="op">//</span> <span class="dv">2</span> <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>freq_pos <span class="op">=</span> frequencies[:n_half]</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>magnitude <span class="op">=</span> np.<span class="bu">abs</span>(fft_result[:n_half]) <span class="op">*</span> <span class="dv">2</span> <span class="op">/</span> n  <span class="co"># Normalize and account for one-sided</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>magnitude[<span class="dv">0</span>] <span class="op">/=</span> <span class="dv">2</span>  <span class="co"># DC component doesn&#39;t double</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>plt.plot(freq_pos, magnitude)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Frequency (Hz)&#39;</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Magnitude&#39;</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="dv">0</span>, sample_rate<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          <li><p>Does the spectral analysis show the same spectrum at the
          same frequencies that you expect from the waveform generator
          settings?</p></li>
          <li><p>NumPy’s FFT uses specific conventions. You can check the
          documentation with:</p>
-         <div class="sourceCode" id="cb11"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(np.fft.fft)</span></code></pre></div>
+         <div class="sourceCode" id="cb9"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">help</span>(np.fft.fft)</span></code></pre></div>
          <p>The convention used is: <span class="math inline">\(Y_k =
          \sum_{n=0}^{N-1} y_n e^{-2\pi i k n / N}\)</span></p></li>
          </ol>
-         <h1 data-number="6" id="revisit-measuring-the-beam-width"><span
-         class="header-section-number">6</span> Revisit Measuring the
+         <h1 data-number="5" id="revisit-measuring-the-beam-width"><span
+         class="header-section-number">5</span> Revisit Measuring the
          Beam Width</h1>
-         <p>Next week you will be implementing automation into measuring
-         the beam width of He-Ne lasers. To be prepared for this
-         endeavor, you now should go back and review (and complete) <a
+         <p>Next week you will be using the motor controller you set up
+         last week to automate beam profile measurements. To be prepared
+         for this endeavor, you should now go back and review (and
+         complete) <a
          href="/PHYS-4430/lab-guides/gaussian-beams-1#measuring-the-beam-width">section
-         7</a> from week 1.</p>
+         7</a> from Week 1.</p>
+         <p>Make sure you can:</p>
+         <ol type="1">
+         <li>Take a complete beam profile measurement manually</li>
+         <li>Fit the data using the error function model</li>
+         <li>Extract the beam width <span
+         class="math inline">\(w\)</span> with uncertainty</li>
+         <li>Create a plot showing the data and fit</li>
+         </ol>
+         <p>This will serve as your baseline for comparison with the
+         automated measurements next week.</p>
                </div>
             <!-- Mathjax -->
       <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
