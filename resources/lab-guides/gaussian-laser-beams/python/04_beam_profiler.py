@@ -9,28 +9,80 @@ This script automates the knife-edge beam profile measurement using:
 
 Hardware Requirements:
 - Thorlabs KST101 Stepper Motor Controller
-- Thorlabs ZST225B Linear Stage (or compatible)
-- NI USB-6009 DAQ
-- Photodetector connected to DAQ AI0
+- Thorlabs ZST225B Linear Stage (or compatible stepper actuator)
+- NI USB-6009 DAQ (or compatible NI DAQ)
+- Photodetector connected to DAQ analog input (default: AI0)
 
 Software Requirements:
-- Thorlabs Kinesis SDK (must be installed separately)
-- NI-DAQmx drivers
+- Thorlabs Kinesis SDK (https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control)
+- NI-DAQmx drivers (https://www.ni.com/en-us/support/downloads/drivers/download.ni-daq-mx.html)
 - Python packages: pythonnet, nidaqmx, numpy, matplotlib
+
+FIRST-TIME SETUP (Required):
+-----------------------------
+Before using this script, the KST101 must be configured with the correct
+stage/actuator type. This is a one-time setup that stores settings in the
+controller's memory.
+
+Option 1 - Using the KST101 front panel:
+    1. Power on the KST101
+    2. Press the Menu button
+    3. Navigate to "Motor" settings
+    4. Select your actuator type (e.g., ZST225B)
+    5. Save and exit
+
+Option 2 - Using Thorlabs Kinesis software:
+    1. Open Kinesis and connect to the KST101
+    2. When prompted, select your actuator type
+    3. Close Kinesis (settings are saved to the controller)
+
+If the stage type is not configured, you will see an error:
+"Object reference not set to an instance of an object"
+
+FINDING YOUR SERIAL NUMBER:
+---------------------------
+The motor serial number is displayed on the KST101 front panel LCD
+(e.g., "26002448"). This 8-digit number is needed to connect.
+
+DAQ DEVICE DETECTION:
+---------------------
+The script automatically detects connected NI DAQ devices. If multiple
+devices are found, you will be prompted to select one. Device names
+(e.g., "Dev1", "Dev2") can be verified in NI MAX (Measurement &
+Automation Explorer).
 
 Usage:
     python 04_beam_profiler.py
 
 The script will prompt for:
-1. Motor serial number
-2. Step size (mm)
-3. Wait time after each step (ms)
-4. Scan direction
+1. Motor serial number (from KST101 display)
+2. Step size in mm (default: 0.05 mm)
+3. Wait time after each step in ms (default: 500 ms)
+4. Scan direction (forward/backward)
 
 Output:
-- CSV file with position and voltage data
-- PNG plot of the beam profile
-- Real-time visualization during measurement
+- CSV file: beam_profile_YYYYMMDD_HHMMSS.csv (position and voltage data)
+- PNG plot: beam_profile_YYYYMMDD_HHMMSS.png (beam profile visualization)
+- Real-time plot during measurement
+
+TROUBLESHOOTING:
+----------------
+"Device not found" error:
+    - Check USB connection
+    - Verify serial number matches the KST101 display
+    - Ensure no other software (Kinesis, APT) is using the controller
+
+"Object reference not set" error:
+    - Stage type not configured - see FIRST-TIME SETUP above
+
+"No NI DAQ devices found" error:
+    - Check DAQ USB connection
+    - Verify device appears in NI MAX
+    - Try unplugging and reconnecting the DAQ
+
+Motor positions in wrong units:
+    - Stage type may be misconfigured
+    - Reconfigure using Kinesis or the KST101 front panel
 
 Author: PHYS 4430
 """
@@ -59,6 +111,7 @@ try:
         "Thorlabs.MotionControl.KCube.StepperMotorCLI.dll"
     )
     from Thorlabs.MotionControl.DeviceManagerCLI import DeviceManagerCLI
+    from Thorlabs.MotionControl.DeviceManagerCLI import DeviceConfiguration
     from Thorlabs.MotionControl.GenericMotorCLI import MotorDirection
     from Thorlabs.MotionControl.KCube.StepperMotorCLI import KCubeStepper
     from System import Decimal
@@ -81,8 +134,24 @@ class BeamProfiler:
     """
     Automated beam profile measurement system.
 
-    This class handles motor control, data acquisition, and real-time
-    visualization for knife-edge beam profile measurements.
+    This class coordinates the Thorlabs motor controller and NI DAQ to
+    perform automated knife-edge beam profile measurements. It handles:
+    - Motor connection, homing, and positioning
+    - Voltage acquisition from the photodetector
+    - Real-time visualization during scanning
+    - Data export to CSV and PNG files
+
+    The knife-edge method works by translating a razor blade across the
+    beam while measuring transmitted power. The resulting S-curve can be
+    differentiated to obtain the Gaussian beam profile, from which the
+    beam width w can be extracted.
+
+    Example usage:
+        profiler = BeamProfiler("26002448", daq_device="Dev2")
+        profiler.connect()
+        profiler.home()
+        positions, voltages = profiler.run_scan(step_size_mm=0.05)
+        profiler.disconnect()
     """
 
     def __init__(self, serial_number, daq_device="Dev1", daq_channel="ai0"):
@@ -102,13 +171,25 @@ class BeamProfiler:
         self.voltages = []
 
     def connect(self):
-        """Connect to the motor controller."""
+        """
+        Connect to the motor controller.
+
+        This method:
+        1. Builds the device list to discover connected controllers
+        2. Creates a KCubeStepper object for the specified serial number
+        3. Loads motor configuration from device memory (or file settings)
+        4. Sets velocity parameters for smooth motion
+
+        The motor configuration contains stage-specific parameters like
+        steps per revolution, gear ratio, and travel limits. These must
+        be configured on the KST101 before this script will work.
+        """
         if not THORLABS_AVAILABLE:
             raise RuntimeError("Thorlabs Kinesis SDK not available")
 
         print(f"Connecting to motor controller {self.serial_number}...")
 
-        # Build device list
+        # Build device list - discovers all connected Thorlabs controllers
         DeviceManagerCLI.BuildDeviceList()
 
         # Check if device is connected
@@ -127,18 +208,58 @@ class BeamProfiler:
         self.device.StartPolling(250)
         time.sleep(0.25)
 
-        # Load motor configuration
-        self.device.LoadMotorConfiguration(self.serial_number)
-
-        # Enable device
+        # Enable device first
         self.device.EnableDevice()
         time.sleep(0.25)
 
+        # Load motor configuration
+        # The configuration contains stage-specific parameters (steps/rev,
+        # gear ratio, pitch) that convert between device units and real units.
+        #
+        # UseDeviceSettings: Loads from controller's internal memory
+        #   - Works if stage was configured via front panel or Kinesis
+        #   - Preferred method - doesn't require config files on PC
+        #
+        # UseFileSettings: Loads from Kinesis XML config files on PC
+        #   - Files located in C:\ProgramData\Thorlabs\MotionControl\
+        #   - Created when device is configured in Kinesis software
+        try:
+            use_device_settings = (
+                DeviceConfiguration.DeviceSettingsUseOptionType.UseDeviceSettings
+            )
+            motor_config = self.device.LoadMotorConfiguration(
+                self.serial_number, use_device_settings
+            )
+            if motor_config is None:
+                raise ValueError("Device settings not available")
+            print("Loaded motor configuration from device")
+        except Exception as e:
+            print(f"Could not load device settings: {e}")
+            print("Trying file settings...")
+            try:
+                use_file_settings = (
+                    DeviceConfiguration.DeviceSettingsUseOptionType.UseFileSettings
+                )
+                motor_config = self.device.LoadMotorConfiguration(
+                    self.serial_number, use_file_settings
+                )
+                if motor_config is None:
+                    raise ValueError("File settings not available")
+                print("Loaded motor configuration from file")
+            except Exception as e2:
+                print(f"Warning: Could not load motor configuration: {e2}")
+                print("Motor may not move correctly without configuration.")
+                print("Consider configuring the device in Thorlabs Kinesis software.")
+
         # Set velocity parameters
-        vel_params = self.device.GetVelocityParams()
-        vel_params.MaxVelocity = Decimal(1.0)  # 1 mm/s
-        vel_params.Acceleration = Decimal(1.0)  # 1 mm/s²
-        self.device.SetVelocityParams(vel_params)
+        try:
+            vel_params = self.device.GetVelocityParams()
+            vel_params.MaxVelocity = Decimal(1.0)  # 1 mm/s
+            vel_params.Acceleration = Decimal(1.0)  # 1 mm/s²
+            self.device.SetVelocityParams(vel_params)
+            print("Velocity set to 1 mm/s")
+        except Exception as e:
+            print(f"Warning: Could not set velocity parameters: {e}")
 
         # Get device info
         info = self.device.GetDeviceInfo()
@@ -317,6 +438,26 @@ class BeamProfiler:
         return self.positions, self.voltages
 
 
+def get_available_daq_devices():
+    """
+    Get list of available NI DAQ devices.
+
+    Queries the NI-DAQmx system to find all connected DAQ devices.
+    Device names (e.g., "Dev1", "Dev2") can be used to specify which
+    DAQ to use for measurements.
+
+    Returns:
+        List of device name strings, or empty list if none found.
+    """
+    if not NIDAQMX_AVAILABLE:
+        return []
+    try:
+        system = nidaqmx.system.System.local()
+        return [device.name for device in system.devices]
+    except Exception:
+        return []
+
+
 def main():
     """Main function for interactive beam profile measurement."""
 
@@ -335,6 +476,23 @@ def main():
         print("Please install from: https://www.ni.com/en-us/support/downloads/drivers/download.ni-daq-mx.html")
         return
 
+    # Detect DAQ devices
+    daq_devices = get_available_daq_devices()
+    if not daq_devices:
+        print("ERROR: No NI DAQ devices found.")
+        print("Check USB connection and NI MAX.")
+        return
+
+    if len(daq_devices) == 1:
+        daq_device = daq_devices[0]
+        print(f"DAQ device detected: {daq_device}")
+    else:
+        print(f"Available DAQ devices: {', '.join(daq_devices)}")
+        daq_device = input(f"Enter DAQ device name (default {daq_devices[0]}): ").strip()
+        if not daq_device or daq_device not in daq_devices:
+            daq_device = daq_devices[0]
+            print(f"Using: {daq_device}")
+
     # Get user input
     serial_number = input("Enter motor serial number (e.g., 26004813): ").strip()
     if not serial_number:
@@ -351,8 +509,8 @@ def main():
     if direction not in ['forward', 'backward']:
         direction = 'forward'
 
-    # Create profiler
-    profiler = BeamProfiler(serial_number)
+    # Create profiler with detected DAQ device
+    profiler = BeamProfiler(serial_number, daq_device=daq_device)
 
     try:
         # Connect to motor
