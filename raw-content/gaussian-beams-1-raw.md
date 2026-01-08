@@ -2,9 +2,28 @@
 title: "Gaussian Beams - Week 1"
 ---
 
-# Goals
+# Where We Are in the Sequence
 
-In the first week of the guided Gaussian Beams lab, you learn about mounting optics and photodetectors and try out some techniques that are generally useful in optics labs and elsewhere. In particular, you will set up a simple optics system for measuring the width of a laser beam and in the process will have to mount and align the laser and optics. 
+**Week 1 of 4: Foundations**
+
+This week you build the foundational skills for the entire Gaussian Beams sequence: optical alignment, photodetector operation, uncertainty estimation, and beam width measurement. The calibration data and measurement techniques you develop this week will be used directly in Weeks 2-4.
+
+**This week:** Align optics → Calibrate photodetector → Learn uncertainty methods → Measure beam width
+**Next week:** Learn data acquisition → Characterize noise → Choose optimal gain setting
+
+# Learning Goals
+
+After completing this week's lab, you will be able to:
+
+1. Mount and align optical components (mirrors, lenses) using standard optomechanical hardware.
+2. Walk a laser beam to achieve parallel propagation using two mirrors.
+3. Explain how a photodiode converts photons to current via the photoelectric effect.
+4. Calculate expected photodetector output voltage given incident power, responsivity, and gain setting.
+5. Calibrate a photodetector's offset and gain and compare to manufacturer specifications.
+6. Compare eyeball, statistical sampling, and instrument specification methods for estimating measurement uncertainty.
+7. Report measurements with appropriate significant figures and uncertainty.
+8. Set up a knife-edge measurement and derive the theoretical model (error function).
+9. Perform a nonlinear curve fit to extract beam width from experimental data. 
 
 # Lab Notebook
 
@@ -98,7 +117,23 @@ Calibrating the photodetector is especially important when you take a data set t
 
 ## Follow up
 
-1. Write mathematical expressions that converts the incident power (the light) $P_{in}$ to the photodetector voltage $V$ and the photodetector voltage $V$ to input power $P_{in}$. Take into account all relevant parameters such as the photodetector gain setting (in $dB$) and offsets. 
+1. Write mathematical expressions that converts the incident power (the light) $P_{in}$ to the photodetector voltage $V$ and the photodetector voltage $V$ to input power $P_{in}$. Take into account all relevant parameters such as the photodetector gain setting (in $dB$) and offsets.
+
+## Reflection: Using Your Calibration
+
+In Week 4, you will use this photodetector to measure beam profiles. Before moving on, consider how you will use your calibration results:
+
+1. Based on your calibration, would you trust the datasheet gain values, or would you use your measured values? Under what conditions might the datasheet values be inadequate?
+
+2. If your measured offset voltage differed significantly from the datasheet (say, by more than 50%), what would you do before proceeding?
+   - (a) Repeat the measurement
+   - (b) Accept the datasheet value
+   - (c) Investigate the cause of the discrepancy
+   - (d) Use your measured value and note the discrepancy
+
+   There is no single correct answer—justify your choice in 2-3 sentences.
+
+3. You will use this photodetector at a single gain setting for most of Week 4's measurements. Which gain setting would you tentatively choose based on your calibration? (You will refine this choice in Week 2 after characterizing noise.) 
 
 # Review of Measurement Uncertainty
 
@@ -170,7 +205,15 @@ $$b=2.2700000000000005 \pm 0.2035517952102936$$
 
 # Measuring the Beam Width
 
-The goal of this section is to develop a measurement technique and analysis scheme to measure the width of a laser beam. The scheme will let you measure the width in one dimension. The technique is most useful for beams that have an approximately Gaussian intensity profile. You will improve and refine this technique in the upcoming weeks of this lab. *Note: You may or may not find that completing this section during your lab time this week is challenging due to time constraints. This is okay - get as far as you can now. You'll have an opportunity to revisit this section during week 3. However, don't just skip it now as you'll find the outcomes to be useful in the upcoming weeks.*
+The goal of this section is to develop a measurement technique and analysis scheme to measure the width of a laser beam. The scheme will let you measure the width in one dimension. The technique is most useful for beams that have an approximately Gaussian intensity profile. You will improve and refine this technique in the upcoming weeks of this lab.
+
+**Time management note:** This section has multiple parts with different priorities:
+
+1. **Essential (must complete):** Derive the error function model (Section 7.1) and complete the curve fitting practice (Section 7.2). This analysis is critical preparation for Week 2.
+
+2. **Important (complete if time allows):** Build the setup and take data (Sections 7.3-7.5). If you don't finish in Week 1, you will revisit this in Week 3.
+
+3. **Good practice:** If you take data, complete the analysis (Section 7.6). This validates your fitting code on real data.
 
 The basic scheme involves measuring the power in the laser beam as the beam is gradually blocked by a knife edge (razor blade) using a setup similar to Figure @fig:knife-assembley.
 
@@ -213,9 +256,15 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
 
 # Postlab
 
-Please use Python for this assignment. See the [Python Resources](/PHYS-4430/python-resources) page if you need help getting started. You will need NumPy for numerical calculations and Matplotlib for plotting. You must submit both your code and results.
+The postlab exercises are divided into two parts: Python prerequisite skills and lab-specific analysis. Complete both parts before Week 2.
 
-1. Evaluate the following math expressions (use NumPy):
+## Part A: Python Prerequisite Skills
+
+*If you are already comfortable with Python, NumPy, and Matplotlib, you may skip exercises you can confidently complete. Focus your time on the lab-specific analysis in Part B.*
+
+See the [Python Resources](/PHYS-4430/python-resources) page if you need help getting started. You will need NumPy for numerical calculations and Matplotlib for plotting.
+
+1. **Basic NumPy calculations.** Evaluate the following math expressions:
 
    1. $e^{1.6\pi j}$
    2. $4i\pi+e^{7\pi /4}$
@@ -223,35 +272,69 @@ Please use Python for this assignment. See the [Python Resources](/PHYS-4430/pyt
    4. $log(3+\sqrt{3})$
    5. $|3+4i|^{2/3}$
 
-2. Plot the following functions at the given ranges. Make sure to add appropriate $x$ and $y$-axis ticks and numeric labels at the ticks locations.
+2. **Function plotting.** Plot the following functions with appropriate axis labels and ticks:
 
-   1.  Plot $sin^2~\theta$ vs. $\theta$ in the range $0\le\theta\le 6\pi$. Add the legend that indicate the name of the function used.
-   2. Plot $sin~2t$ and $cos~5t$ together (using different colored lines) on the sample for $t$ in the range of $0\le t \le 10$.
+   1. Plot $sin^2~\theta$ vs. $\theta$ in the range $0\le\theta\le 6\pi$. Add a legend.
+   2. Plot $sin~2t$ and $cos~5t$ together (different colors) for $0\le t \le 10$.
 
-3. Plot the following data set (wavelength, $\lambda$, and the corresponding index of refraction, $n$, of a particular type of glass): 
+3. **Data plotting and linear fitting.** Using the wavelength ($\lambda$) and index of refraction ($n$) data below:
 
    $$ \lambda~ [{\rm \mu m}]: 0.375, ~ 0.419,~0.558,~ 0.612,~0.744,~0.821 \\ n:1.553,~1.531,~1.521,~1.516,~1.513,~1.511 $$
 
-   1. Make a plot of $n$ vs. $\lambda$. Which variable would you choose for $x$-axis? Please make sure to add the axes names and appropriate ticks for each axis. 
-   2. Add lines to connect each points. What can you tell about the relation between the wavelength and the index of refraction from this plot? 
-   3. Provide your code to make your plot from 8.3.1 including the following:
-      1. Title of "Refraction index as a function of $\lambda$".
-      2. Add the linear fitting line $ y= ax +b$, where $y$ corresponds to $n$ and $x$ to $\lambda$ on the data. 
-      3. Include the fitting linear equation on the plot. 
-   4. If you would like to display the $x$-axis only below $0.6\mu m$ (i.e. $\lambda \le 0.6~ \mu m$), how can you do that? 
+   1. Make a plot of $n$ vs. $\lambda$ with proper axis labels.
+   2. Add a linear fit $y = ax + b$ and display the equation on the plot.
 
-4. Familiarize yourself with Python's built-in `help()` function and documentation. Perform the following tasks and answer the questions.
+4. **File I/O.** Download [this data set](../resources/lab-guides/gaussian-laser-beams/BoulderDailyTemp.txt) and create an appropriate plot using `np.loadtxt()`.
 
-   1. Make a contour plot of any function of $z=f(y,x)$ of your choice using `plt.contour()` or `plt.contourf()`.
-   2. What are the NumPy function names for:
-      1. Inverse sine function ($\sin^{-1} x$)
-      2. Hyperbolic functions (e.g. $\sinh x$, $\cosh x$ etc.)
-      3. Natural log and base-10 log function
+## Part B: Lab-Specific Analysis (Required)
 
-5. We would like to evaluate a function, $f(x)$, at $x= \frac{\pi}{10}, \frac{2\pi}{10}, ~\cdots~,\frac{9\pi}{10}, \frac{10\pi}{10}$.
+These exercises directly support your beam width measurement and are **essential preparation** for Week 2.
 
-   1. How can we create these $x$ points using NumPy? (Hint: look at `np.linspace()` or `np.arange()`). What should we modify in order to make the increment of $x$ be $\frac{\pi}{100}$, instead of $\frac{\pi}{10}$?
-   2. Now, define a function that represents $y= f(x) = \frac{\sin x}{x}$ and evaluate $y$ at the given $x$ with increment of $\frac{\pi}{10}$.
-   3. Export your $(x,y)$ data created in 5.2 as a .csv file using `np.savetxt()`.
+5. **Error function fitting practice.** Download [Test_Profile_Data.csv](../resources/lab-guides/gaussian-laser-beams/Test_Profile_Data.csv) and:
 
-6. Download [this data set](../resources/lab-guides/gaussian-laser-beams/BoulderDailyTemp.txt) (in .txt format), where the temperature of Boulder was recorded at approximately every hour ($\approx 0.04$ days) since January 1st. Load this data using `np.loadtxt()` and create an appropriate plot (make sure to include labels, ticks, titles, etc.). 
+   1. Plot the data (position vs. voltage).
+   2. Fit to the error function model: $y(x) = a \cdot \text{erf}\left(\frac{\sqrt{2}}{w}(x-b)\right) + c$
+   3. Verify you get $w = 4.52 \times 10^{-4}$ m. Report the uncertainty.
+   4. Plot the fit with the data to verify it looks reasonable.
+
+   *This is the same analysis you will use for your own beam width data. Getting it working now will save time later.*
+
+6. **Apply to your data** (if you completed Section 7 in lab). Analyze your own knife-edge measurement data:
+
+   1. Fit your data using the error function model.
+   2. Extract the beam width $w$ with uncertainty.
+   3. Create a publication-quality plot showing data and fit.
+   4. Compare your uncertainty to the test data—is yours larger or smaller? Why?
+
+# Deliverables and Assessment
+
+Your lab notebook should include the following for this week:
+
+## In-Lab Documentation (recorded during lab)
+
+1. **Optical setup diagram** showing laser, mirrors, alignment discs, and photodetector positions
+2. **Photodetector calibration data**: offset voltage vs. gain setting, relative gain measurements
+3. **Uncertainty measurement tables** from both multimeter and oscilloscope methods
+4. **Knife-edge measurement data**: position vs. voltage (if completed)
+
+## Analysis and Questions (can be completed after lab)
+
+1. **Photodetector physics explanation** (Section 3.1): diagram and written explanation of how the photodetector converts light to voltage
+2. **Calibration comparison** (Section 3.2-3.3): quantitative comparison of your measurements to datasheet values
+3. **Uncertainty method comparison** (Section 5): completed tables and answers to summary questions
+4. **Beam width measurement** (Section 7, if completed): fit plot, extracted beam width with uncertainty
+
+## Postlab Exercises
+
+1. **Part A** (Python prerequisites): Complete exercises 1-4 unless you are already proficient
+2. **Part B** (Required): Complete exercise 5 (error function fitting practice) and exercise 6 if you have your own data
+
+## Reflection Questions
+
+Before moving to Week 2, answer these questions:
+
+1. Your photodetector offset voltage differs from the datasheet by 15%. What would you do before using this detector for precision measurements?
+   - Options: (a) Repeat the measurement, (b) Accept the datasheet value, (c) Investigate the cause, (d) Use your measured value
+   - Justify your choice in 2-3 sentences.
+
+2. If your uncertainty estimates from the oscilloscope RMS function and your manual sampling method disagree by a factor of 2, which would you trust more for your beam width measurement? Why? 

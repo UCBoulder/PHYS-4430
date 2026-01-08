@@ -2,27 +2,36 @@
 title: "Gaussian Beams - Week 3"
 ---
 
+# Where We Are in the Sequence
+
+**Week 3 of 4: Theory and Preparation for Automation**
+
+Last week you characterized your photodetector's noise and chose an optimal gain setting. This week you'll learn the theoretical foundation for Gaussian beams (which you'll test next week), develop spectral analysis skills to understand noise sources, and set up the motor controller for automated measurements.
+
+**Last week:** Learned DAQ programming, characterized noise, chose gain setting
+**This week:** Learn Gaussian beam theory → Analyze noise spectra → Set up motor controller
+**Next week:** Automated measurements → Test Gaussian beam model → Investigate lens effects
+
 # Overview
 
 The third week of the Gaussian Beams lab builds upon the Python data acquisition skills you developed last week. This week's prelab covers error propagation (how uncertainties in measured quantities affect derived quantities) and introduces the theoretical foundation for Gaussian laser beams, deriving the equations you'll use in Week 4's experiments. In the lab portion, you will use spectral analysis tools to perform Fourier Transforms, set up the motor controller hardware for automated measurements, and revisit your beam width measurement. Be sure to document all of your work in your lab notebook.
 
-# Goals
+# Learning Goals
 
-In this week's prelab, you will…
+After completing the prelab, you will be able to:
 
-1. …learn to propagate uncertainties from measured to derived quantities.
-2. …derive the paraxial wave equation from Maxwell's equations.
-3. …understand the Gaussian beam solution and its key parameters ($w_0$, $w(z)$, $R(z)$, $\zeta(z)$).
-4. …fit Gaussian beam data to extract beam waist and position.
+1. Propagate uncertainties from measured quantities to derived quantities using partial derivatives.
+2. Derive the paraxial wave equation from Maxwell's equations by applying the slowly-varying envelope approximation.
+3. Explain the physical meaning of Gaussian beam parameters ($w_0$, $w(z)$, $R(z)$, $\zeta(z)$) and how they relate to observable properties.
+4. Fit experimental beam width data to extract beam waist $w_0$ and waist position $z_w$ with uncertainties.
 
-In this week's lab, you will…
+After completing the lab, you will be able to:
 
-1. …connect mathematical formalism to basic concepts of Fourier Transforms.
-2. …compute Fourier Transforms using NumPy's FFT functions.
-3. …build a real-time spectral analysis tool.
-4. …analyze waveforms in both time and frequency domains.
-5. …set up and verify the motor controller for automated measurements.
-6. …revisit and refine your beam width measurement from Week 1.
+1. Explain what a Fourier Transform reveals about a signal and interpret a power spectrum.
+2. Compute and plot the power spectrum of a measured signal using NumPy's FFT functions.
+3. Identify frequency components in experimental data and relate them to physical sources.
+4. Set up and verify the motor controller for automated measurements.
+5. Measure beam width using the knife-edge technique and compare automated vs. manual methods.
 
 # Prelab
 
@@ -398,6 +407,35 @@ plt.close(fig)
 
 3. Generate a signal with **two frequencies** (if your function generator supports this, or use the sum of two signals). Can you identify both frequencies in the spectrum?
 
+### Connecting FFT to Your Gaussian Beams Experiment
+
+The spectral analysis techniques you've learned have direct applications to your beam profiling work. In this section, you'll analyze the photodetector signal to understand noise sources that could affect your Week 4 measurements.
+
+1. **Photodetector noise spectrum.** Connect your photodetector to the DAQ (as in Week 2) with the beam blocked.
+
+   1. Acquire 1-2 seconds of data at 10 kHz sample rate.
+   2. Compute and plot the power spectrum.
+   3. Are there any peaks at specific frequencies? If so, what are likely physical sources? (Common culprits: 60 Hz power line, 120 Hz rectified power, computer switching frequencies, room lighting)
+   4. How does the noise spectrum change when you change the photodetector gain setting?
+
+2. **Signal spectrum with laser.** Now unblock the beam so light hits the photodetector.
+
+   1. Acquire data and compute the power spectrum.
+   2. Compare to the dark noise spectrum. What changed?
+   3. If you see new peaks, what might cause periodic variations in laser intensity?
+
+3. **Implications for beam profiling.** Consider your Week 4 automated measurements.
+
+   1. Your beam profiler waits 500 ms between steps and takes a single voltage reading. Based on your noise spectrum, what frequencies could affect your measurement?
+   2. If you wanted to reduce the effect of 60 Hz noise, how long should you average each measurement? (Hint: averaging over an integer number of periods cancels periodic noise)
+   3. Would it be better to average many fast samples or take one slow measurement? Justify your answer using your spectral analysis.
+
+4. **Quantitative prediction for Week 4.** Based on your noise spectrum analysis:
+
+   1. Calculate the RMS noise you expect in a 100-sample average at 10 kHz sample rate. (Hint: if your single-sample RMS noise is $\sigma$, the RMS of an N-sample average is $\sigma/\sqrt{N}$, assuming white noise.)
+   2. Record this prediction in your notebook: "Predicted RMS noise with 100-sample averaging: ______ mV"
+   3. You will test this prediction in Week 4 by examining the scatter in your beam profile data.
+
 ### Analyzing Saved Data
 
 Sometimes you may want to analyze data after it is saved rather than in real-time:
@@ -652,6 +690,19 @@ Before leaving lab today, verify that:
 
 This setup will be essential for the automated measurements in Week 4.
 
+## Troubleshooting Reflection
+
+Developing systematic troubleshooting skills is essential for experimental physics. Answer this question in your notebook:
+
+**If the motor doesn't respond to Python commands, what troubleshooting steps would you take?**
+
+List at least three things you would check, *in order of likelihood*, and explain your reasoning. Consider:
+- What are the most common failure modes?
+- What's the quickest way to isolate hardware vs. software issues?
+- How would you determine if the problem is with Python, the USB connection, or the motor itself?
+
+This systematic approach to troubleshooting will serve you well in Week 4 and beyond.
+
 # Revisit Measuring the Beam Width
 
 Now that you have the motor controller working, you're ready to prepare for Week 4's automated measurements. Review (and complete if necessary) [section 7](/PHYS-4430/lab-guides/gaussian-beams-1#measuring-the-beam-width) from Week 1.
@@ -664,3 +715,39 @@ Make sure you can:
 4. Create a plot showing the data and fit
 
 This will serve as your baseline for comparison with the automated measurements next week. If time permits, try using the motor controller to take a few data points—this will give you confidence that your setup is ready for Week 4.
+
+# Deliverables and Assessment
+
+Your lab notebook should include the following for this week:
+
+## Prelab (complete before lab)
+
+1. **Error propagation exercise**: calculation of $w(z)$ uncertainty using the `uncertainties` package
+2. **Paraxial wave equation derivation**: show the key steps from Maxwell's equations to Equation 7
+3. **Gaussian beam model questions**: answers to questions 1-4 in "Trying out the Gaussian beam model"
+4. **Beam waist fitting**: fit results for the test data set with $w_0$ and $z_w$ values
+
+## In-Lab Documentation
+
+1. **FFT exercises**:
+   - Plots comparing time-domain and frequency-domain representations
+   - Answers to frequency resolution questions
+   - Analysis of sine wave, square wave, and multi-frequency signals
+   - **Photodetector noise spectrum** (new section): dark noise and signal spectra with analysis of implications for beam profiling
+2. **Motor controller verification**:
+   - Completed setup checklist (DAQ, motor connection, movement test)
+   - Motor serial number recorded
+3. **Beam width measurement** (from Week 1 or new):
+   - Data table: position vs. voltage
+   - Fit plot with extracted beam width and uncertainty
+
+## Code Deliverables
+
+1. Working spectral analysis script
+2. Motor communication test script
+
+## Reflection Questions
+
+1. Your FFT shows an unexpected peak at 120 Hz that wasn't present in your function generator signal. List three possible physical sources for this frequency and describe how you would determine which is responsible.
+
+2. You measure a beam width of $w = 0.52 \pm 0.03$ mm at position $z = 1.5$ m. Using the Gaussian beam equations, predict $w$ at $z = 2.0$ m, including the propagated uncertainty. Show your calculation.

@@ -2,6 +2,16 @@
 title: "Gaussian Beams - Week 2"
 ---
 
+# Where We Are in the Sequence
+
+**Week 2 of 4: Instrumentation and Noise Characterization**
+
+Last week you calibrated your photodetector and learned to measure beam width manually. This week you'll learn Python-based data acquisition and—critically—characterize your photodetector's noise performance. Your goal: make a quantitative, evidence-based decision about which gain setting to use for Week 4's automated measurements.
+
+**Last week:** Aligned optics, calibrated photodetector, measured beam width manually
+**This week:** Learn DAQ programming → Characterize noise → Choose optimal gain setting
+**Next week:** Learn FFT analysis → Set up motor controller → Prepare for automation
+
 # Overview
 
 The second week of the Gaussian Beams lab introduces you to Python for data acquisition and guides you through interfacing Python with the instrumentation and data acquisition systems used in this course. You will also learn about digital sampling theory and characterize the noise performance of your photodetector—a critical step for making informed measurement decisions in Week 4.
@@ -376,6 +386,36 @@ popt, pcov = curve_fit(
 1. Why can overestimating the uncertainty make your fit appear good (i.e., $\frac{\chi^2}{N-n}\approx 1$)?
 
 Overestimating the uncertainties makes the fit seem good (according to a $\chi^2$ test), even when it might be obviously a bad fit. It is best to do the $\chi^2$ test using an honest estimate of your uncertainties. If the $\chi^2$ is larger than expected $(\chi^2>𝑁−𝑛)$, then you should consider both the possibility of systematic error sources and the quality of your estimates of the uncertainties. On the other hand, if the $\chi^2$ test is good $(\chi^2\approx 𝑁−𝑛)$, then it shows you have a good handle on the model of your system, and your sources of uncertainty. Finally, if $\chi^2\ll (𝑁−𝑛)$, this likely indicates overestimated uncertainties.
+
+### When does `curve_fit` underestimate the true uncertainty?
+
+The uncertainty reported by `curve_fit` comes from the covariance matrix and assumes:
+
+1. The only source of error is random noise in your voltage measurements
+2. This noise is independent for each data point
+3. Your model perfectly describes the underlying physics
+
+In real experiments, these assumptions often fail. Consider these scenarios relevant to your beam width measurements:
+
+**Systematic errors in position:**
+- If your micrometer has a 0.01 mm systematic offset, this affects all measurements the same way
+- `curve_fit` doesn't know about this, so it can't include it in the parameter uncertainty
+- The true uncertainty in beam width includes uncertainty in position calibration
+
+**Model limitations:**
+- The error function model assumes a perfectly Gaussian beam
+- Real laser beams may have slight deviations from Gaussian
+- The fit uncertainty assumes the model is exact
+
+**Correlated noise:**
+- If 60 Hz interference affects multiple adjacent points similarly, they're not independent
+- `curve_fit` assumes independent errors, so it underestimates uncertainty
+
+**Reflection questions:**
+
+1. Under what conditions might the `curve_fit` uncertainty be a good estimate of your true measurement uncertainty?
+
+2. In Week 4, you'll extract beam waist $w_0$ from fits at multiple positions. Besides random noise in voltage measurements, what other sources of uncertainty should you consider? List at least two.
 
 ## Error bars
 
@@ -1090,3 +1130,49 @@ In this lab, you learned to:
 11. Handle common errors
 
 These skills form the foundation for the automated measurements you'll perform in Week 4. Your gain setting decision, based on your noise characterization, will directly impact the quality of your beam profile data. See the [Python Resources](/PHYS-4430/python-resources) page and the example scripts in the `python/` folder for more detailed examples.
+
+# Deliverables and Assessment
+
+Your lab notebook should include the following for this week:
+
+## Prelab (complete before lab)
+
+1. **Least-squares fitting exercises**: contour plot of $\chi^2$, graphical minimization results
+2. **Residuals analysis**: plot of residuals, answers to goodness-of-fit questions
+3. **Weighted fit**: results using data with uncertainties, $\chi^2$ test calculation
+4. **Error bars plot**: reproduction of the example plot with error bars
+
+## In-Lab Documentation
+
+1. **DAQ verification**: screenshot or plot showing successful voltage reading
+2. **Waveform capture**: comparison of Python plot vs. oscilloscope display
+3. **Aliasing exercises**: completed prediction-observation-explanation for all frequency cases
+4. **Noise characterization tables** (Parts 1-4):
+   - Dark noise measurements at each gain setting
+   - Signal-to-noise predictions AND measurements
+   - DAQ intrinsic noise measurement
+5. **Gain setting decision**: your selected gain with written justification
+
+## Key Data Tables
+
+Make sure these tables are completed in your notebook:
+
+| Gain | Datasheet Noise | Measured Noise | Ratio |
+|------|-----------------|----------------|-------|
+| 0 dB | _______ | _______ | _______ |
+| ... | ... | ... | ... |
+
+| Gain | Predicted SNR | Measured SNR | Agreement? |
+|------|---------------|--------------|------------|
+| ... | ... | ... | ... |
+
+## Code Deliverables
+
+1. Working `measure_noise()` function with your chosen parameters
+2. Python script for waveform acquisition and plotting
+
+## Reflection Questions
+
+1. Your measured noise at 70 dB is 2× higher than the datasheet value. List two possible causes and describe how you would test each hypothesis.
+
+2. Based on your noise characterization, at what light level (in mV at 0 dB) would you switch from 0 dB to 30 dB gain to maintain SNR > 100?
