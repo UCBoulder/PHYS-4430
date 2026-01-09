@@ -120,7 +120,72 @@ The goal of this part of the lab is to understand a lot about the specifications
 ## Calibrating the photodetector offset and gain
 Calibrating the photodetector is especially important when you take a data set that uses multiple gain settings. Having an accurate calibration of the gain and offset will let you stitch the data together accurately.
 
-1. Here you will encounter gain values that are presented on a logarithmic $dB$ (decibel) scale, which is obtained by taking $20×log(V_{out}/V_{in})$. For example, $20\ dB$ of gain corresponds to electronic voltage amplification by a factor of 10. A $dB$ scale could also be defined as $10×log(P_{out}/P_{in})$, where $P$ is the power. Explain the conversion between these two scales and why this makes sense. 
+1. The photodetector gain is specified in **decibels (dB)**, a logarithmic scale commonly used in electronics. Here's how it works:
+
+   **The definition:** For voltage gain,
+   $$dB = 20 \times \log_{10}\left(\frac{V_{out}}{V_{in}}\right)$$
+
+   **What does log₁₀ mean?** The function $\log_{10}(x)$ asks: "10 raised to what power equals $x$?" For example:
+   - $\log_{10}(10) = 1$ because $10^1 = 10$
+   - $\log_{10}(100) = 2$ because $10^2 = 100$
+   - $\log_{10}(1000) = 3$ because $10^3 = 1000$
+
+   <br>
+
+   **Converting dB to linear gain:** To find the actual gain from a dB value, invert the formula:
+   $$\text{voltage gain} = 10^{dB/20}$$
+
+   For example, 20 dB corresponds to $10^{20/20} = 10^1 = 10\times$ gain.
+
+   **Use this tool to check your understanding:**
+
+<div id="db-gain-interactive" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 20px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 400px;">
+<div style="margin-bottom: 15px;">
+<label for="db-slider" style="font-weight: bold; display: block; margin-bottom: 8px;">Gain Setting: <span id="db-value">20</span> dB</label>
+<input type="range" id="db-slider" min="0" max="70" value="20" step="10" style="width: 100%; cursor: pointer;">
+<div style="display: flex; justify-content: space-between; font-size: 12px; color: #666; margin-top: 4px;">
+<span>0 dB</span>
+<span>70 dB</span>
+</div>
+</div>
+<div style="background: #e7f3ff; padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 12px;">
+<div style="font-size: 14px; color: #666; margin-bottom: 5px;">Voltage Gain</div>
+<div id="voltage-gain" style="font-size: 28px; font-weight: bold; color: #0066cc;">10×</div>
+</div>
+<div style="background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #ddd; font-size: 13px;">
+<div id="calculation" style="color: #666; font-family: monospace;">20 dB → 10^(20/20) = 10×</div>
+</div>
+</div>
+
+<script>
+(function() {
+    var slider = document.getElementById('db-slider');
+    var dbValue = document.getElementById('db-value');
+    var voltageGain = document.getElementById('voltage-gain');
+    var calculation = document.getElementById('calculation');
+    function formatGain(value) {
+        if (value >= 1000) return Math.round(value).toLocaleString() + '×';
+        if (value >= 100) return Math.round(value) + '×';
+        if (value >= 10) return value.toFixed(1) + '×';
+        return value.toFixed(2) + '×';
+    }
+    function updateDisplay() {
+        var db = parseFloat(slider.value);
+        var vGain = Math.pow(10, db / 20);
+        dbValue.textContent = db;
+        voltageGain.textContent = formatGain(vGain);
+        var vStr = vGain >= 100 ? Math.round(vGain) : vGain.toFixed(1);
+        calculation.textContent = db + ' dB → 10^(' + db + '/20) = ' + vStr + '×';
+    }
+    slider.addEventListener('input', updateDisplay);
+    updateDisplay();
+})();
+</script>
+
+   **Think about it:** The dB scale can also be defined for power: $dB = 10 \times \log_{10}(P_{out}/P_{in})$. Notice the factor is 10 instead of 20. Why does this make sense? *(Hint: How is power related to voltage in a resistive circuit?)*
+
+   *You might not get this immediately—that's fine. Discuss with your partner or revisit after completing the calibration.*
+
 2. Calibrating the offset voltage (the output of the photodetector when no light is incident upon the device).
    1. Calibrate the offset of the photodetector as a function of gain setting. 
    2. Quantitatively compare it to the specifications given in the table. Is your measured value within the specified range given on the PDA36A or PDA36A2 photodetector data sheet?

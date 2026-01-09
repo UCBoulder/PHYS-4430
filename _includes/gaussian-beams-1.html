@@ -425,18 +425,97 @@
          accurate calibration of the gain and offset will let you stitch
          the data together accurately.</p>
          <ol type="1">
-         <li>Here you will encounter gain values that are presented on a
-         logarithmic <span class="math inline">\(dB\)</span> (decibel)
-         scale, which is obtained by taking <span
-         class="math inline">\(20×log(V_{out}/V_{in})\)</span>. For
-         example, <span class="math inline">\(20\ dB\)</span> of gain
-         corresponds to electronic voltage amplification by a factor of
-         10. A <span class="math inline">\(dB\)</span> scale could also
-         be defined as <span
-         class="math inline">\(10×log(P_{out}/P_{in})\)</span>, where
-         <span class="math inline">\(P\)</span> is the power. Explain
-         the conversion between these two scales and why this makes
-         sense.</li>
+         <li><p>The photodetector gain is specified in <strong>decibels
+         (dB)</strong>, a logarithmic scale commonly used in
+         electronics. Here’s how it works:</p>
+         <p><strong>The definition:</strong> For voltage gain, <span
+         class="math display">\[dB = 20 \times
+         \log_{10}\left(\frac{V_{out}}{V_{in}}\right)\]</span></p>
+         <p><strong>What does log₁₀ mean?</strong> The function <span
+         class="math inline">\(\log_{10}(x)\)</span> asks: “10 raised to
+         what power equals <span class="math inline">\(x\)</span>?” For
+         example:</p>
+         <ul>
+         <li><span class="math inline">\(\log_{10}(10) = 1\)</span>
+         because <span class="math inline">\(10^1 = 10\)</span></li>
+         <li><span class="math inline">\(\log_{10}(100) = 2\)</span>
+         because <span class="math inline">\(10^2 = 100\)</span></li>
+         <li><span class="math inline">\(\log_{10}(1000) = 3\)</span>
+         because <span class="math inline">\(10^3 = 1000\)</span></li>
+         </ul>
+         <p><br></p>
+         <p><strong>Converting dB to linear gain:</strong> To find the
+         actual gain from a dB value, invert the formula: <span
+         class="math display">\[\text{voltage gain} =
+         10^{dB/20}\]</span></p>
+         <p>For example, 20 dB corresponds to <span
+         class="math inline">\(10^{20/20} = 10^1 = 10\times\)</span>
+         gain.</p>
+         <p><strong>Use this tool to check your
+         understanding:</strong></p></li>
+         </ol>
+         <div id="db-gain-interactive"
+         style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 20px auto; font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, sans-serif; max-width: 400px;">
+         <div style="margin-bottom: 15px;">
+         <label for="db-slider" style="font-weight: bold; display: block; margin-bottom: 8px;">Gain
+         Setting: <span id="db-value">20</span> dB</label>
+         <input type="range" id="db-slider" min="0" max="70" value="20" step="10" style="width: 100%; cursor: pointer;">
+         <div
+         style="display: flex; justify-content: space-between; font-size: 12px; color: #666; margin-top: 4px;">
+         <p><span>0 dB</span> <span>70 dB</span></p>
+         </div>
+         </div>
+         <div
+         style="background: #e7f3ff; padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 12px;">
+         <div style="font-size: 14px; color: #666; margin-bottom: 5px;">
+         Voltage Gain
+         </div>
+         <div id="voltage-gain"
+         style="font-size: 28px; font-weight: bold; color: #0066cc;">
+         10×
+         </div>
+         </div>
+         <div
+         style="background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #ddd; font-size: 13px;">
+         <div id="calculation"
+         style="color: #666; font-family: monospace;">
+         20 dB → 10^(20/20) = 10×
+         </div>
+         </div>
+         </div>
+         <script>
+         (function() {
+             var slider = document.getElementById('db-slider');
+             var dbValue = document.getElementById('db-value');
+             var voltageGain = document.getElementById('voltage-gain');
+             var calculation = document.getElementById('calculation');
+             function formatGain(value) {
+                 if (value >= 1000) return Math.round(value).toLocaleString() + '×';
+                 if (value >= 100) return Math.round(value) + '×';
+                 if (value >= 10) return value.toFixed(1) + '×';
+                 return value.toFixed(2) + '×';
+             }
+             function updateDisplay() {
+                 var db = parseFloat(slider.value);
+                 var vGain = Math.pow(10, db / 20);
+                 dbValue.textContent = db;
+                 voltageGain.textContent = formatGain(vGain);
+                 var vStr = vGain >= 100 ? Math.round(vGain) : vGain.toFixed(1);
+                 calculation.textContent = db + ' dB → 10^(' + db + '/20) = ' + vStr + '×';
+             }
+             slider.addEventListener('input', updateDisplay);
+             updateDisplay();
+         })();
+         </script>
+         <p><strong>Think about it:</strong> The dB scale can also be
+         defined for power: <span class="math inline">\(dB = 10 \times
+         \log_{10}(P_{out}/P_{in})\)</span>. Notice the factor is 10
+         instead of 20. Why does this make sense? <em>(Hint: How is
+         power related to voltage in a resistive circuit?)</em></p>
+         <p><em>You might not get this immediately—that’s fine. Discuss
+         with your partner or revisit after completing the
+         calibration.</em></p>
+         <ol start="2" type="1">
          <li>Calibrating the offset voltage (the output of the
          photodetector when no light is incident upon the device).
          <ol type="1">
