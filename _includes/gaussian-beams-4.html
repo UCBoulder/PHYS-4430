@@ -26,7 +26,23 @@
             <li><a href="#learning-goals"><span
             class="toc-section-number">3</span> Learning Goals</a></li>
             <li><a href="#prelab"><span
-            class="toc-section-number">4</span> Prelab</a></li>
+            class="toc-section-number">4</span> Prelab</a>
+            <ul>
+            <li><a
+            href="#prediction-exercise-1-beam-width-vs.-position"><span
+            class="toc-section-number">4.1</span> Prediction Exercise 1:
+            Beam Width vs. Position</a></li>
+            <li><a href="#prediction-exercise-2-lens-effects"><span
+            class="toc-section-number">4.2</span> Prediction Exercise 2:
+            Lens Effects</a></li>
+            <li><a
+            href="#prediction-exercise-3-uncertainty-budget"><span
+            class="toc-section-number">4.3</span> Prediction Exercise 3:
+            Uncertainty Budget</a></li>
+            <li><a href="#connecting-your-previous-work"><span
+            class="toc-section-number">4.4</span> Connecting Your
+            Previous Work</a></li>
+            </ul></li>
             <li><a href="#verify-your-setup"><span
             class="toc-section-number">5</span> Verify Your Setup</a>
             <ul>
@@ -88,9 +104,12 @@
             href="#quantitatively-modeling-the-effect-of-a-lens"><span
             class="toc-section-number">7.3</span> Quantitatively
             Modeling the Effect of a Lens</a></li>
+            <li><a href="#peer-discussion-comparing-results"><span
+            class="toc-section-number">7.4</span> Peer Discussion:
+            Comparing Results</a></li>
             <li><a
             href="#advanced-investigation-minimum-spot-size"><span
-            class="toc-section-number">7.4</span> Advanced
+            class="toc-section-number">7.5</span> Advanced
             Investigation: Minimum Spot Size</a></li>
             </ul></li>
             <li><a
@@ -193,14 +212,127 @@
          </ol>
          <h1 data-number="4" id="prelab"><span
          class="header-section-number">4</span> Prelab</h1>
-         <p>This week’s prelab focuses on preparing for automated data
-         acquisition. Review the Gaussian beam theory from Week 3’s
-         prelab, particularly the beam width equation:</p>
+         <p>This week you’ll test the Gaussian beam model with automated
+         measurements. Before collecting data, make quantitative
+         predictions—this transforms the lab from “taking data” to
+         “testing your understanding.”</p>
+         <h2 data-number="4.1"
+         id="prediction-exercise-1-beam-width-vs.-position"><span
+         class="header-section-number">4.1</span> Prediction Exercise 1:
+         Beam Width vs. Position</h2>
+         <p>In Week 3, you calculated expected beam widths at several
+         positions. Now refine those predictions using the full Gaussian
+         beam model:</p>
          <p><span
          class="math display">\[w(z)=w_0\sqrt{1+\left(\frac{\lambda
-         z}{\pi w_0^2}\right)^2}\text{.}\]</span></p>
-         <p>You will use this model to analyze your automated
-         measurements.</p>
+         z}{\pi w_0^2}\right)^2}\]</span></p>
+         <p><strong>Using your Week 1 beam width measurement</strong>
+         (if available) or assuming <span class="math inline">\(w_0
+         \approx 0.5\)</span> mm at <span class="math inline">\(z_w
+         \approx 0\)</span>:</p>
+         <table>
+         <thead>
+         <tr class="header">
+         <th>Position <span class="math inline">\(z\)</span> (m)</th>
+         <th>Predicted <span class="math inline">\(w(z)\)</span>
+         (mm)</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="odd">
+         <td>0.5</td>
+         <td>_______</td>
+         </tr>
+         <tr class="even">
+         <td>1.0</td>
+         <td>_______</td>
+         </tr>
+         <tr class="odd">
+         <td>1.5</td>
+         <td>_______</td>
+         </tr>
+         <tr class="even">
+         <td>2.0</td>
+         <td>_______</td>
+         </tr>
+         </tbody>
+         </table>
+         <p>Show your calculation for at least one position. Record
+         these predictions—you will compare to measurements during
+         lab.</p>
+         <h2 data-number="4.2"
+         id="prediction-exercise-2-lens-effects"><span
+         class="header-section-number">4.2</span> Prediction Exercise 2:
+         Lens Effects</h2>
+         <p>Before adding a lens to your beam path, predict what will
+         happen using the thin lens equation:</p>
+         <p><span
+         class="math display">\[\frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}\]</span></p>
+         <p>For a lens with focal length $f = $ _______ mm placed at
+         distance $S_1 = $ _______ m from the laser:</p>
+         <ol type="1">
+         <li><strong>Predicted image position</strong> <span
+         class="math inline">\(S_2\)</span> = _______ m (from lens)</li>
+         <li><strong>Predicted new beam waist</strong> location relative
+         to laser: _______ m</li>
+         </ol>
+         <p>Show your calculation. If you need to estimate <span
+         class="math inline">\(S_1\)</span> (the distance from laser to
+         lens), use a reasonable value based on your optical table
+         layout.</p>
+         <h2 data-number="4.3"
+         id="prediction-exercise-3-uncertainty-budget"><span
+         class="header-section-number">4.3</span> Prediction Exercise 3:
+         Uncertainty Budget</h2>
+         <p>List the sources of uncertainty that will affect your <span
+         class="math inline">\(w_0\)</span> and <span
+         class="math inline">\(z_w\)</span> measurements:</p>
+         <table>
+         <thead>
+         <tr class="header">
+         <th>Source</th>
+         <th>Estimated magnitude</th>
+         <th>Random or Systematic?</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="odd">
+         <td>Voltage noise (from Week 2)</td>
+         <td>_______ mV</td>
+         <td>Random</td>
+         </tr>
+         <tr class="even">
+         <td>Position measurement</td>
+         <td>_______ mm</td>
+         <td>_______</td>
+         </tr>
+         <tr class="odd">
+         <td>_______</td>
+         <td>_______</td>
+         <td>_______</td>
+         </tr>
+         <tr class="even">
+         <td>_______</td>
+         <td>_______</td>
+         <td>_______</td>
+         </tr>
+         </tbody>
+         </table>
+         <p>Which source do you expect to dominate the uncertainty in
+         <span class="math inline">\(w_0\)</span>? Justify your answer
+         briefly.</p>
+         <h2 data-number="4.4" id="connecting-your-previous-work"><span
+         class="header-section-number">4.4</span> Connecting Your
+         Previous Work</h2>
+         <p>This lab brings together everything from the sequence: -
+         <strong>Week 1:</strong> Optical alignment, photodetector
+         calibration, knife-edge technique - <strong>Week 2:</strong>
+         Noise characterization, gain selection, curve fitting -
+         <strong>Week 3:</strong> Error propagation, Gaussian beam
+         theory, motor control</p>
+         <p>Your predictions above use results from all three previous
+         weeks. If any predictions seem unreasonable, review the
+         relevant material before lab.</p>
          <h1 data-number="5" id="verify-your-setup"><span
          class="header-section-number">5</span> Verify Your Setup</h1>
          <p>In Week 3, you set up and verified the motor controller. In
@@ -546,8 +678,74 @@
          </figure>
          </div>
          <h2 data-number="7.4"
+         id="peer-discussion-comparing-results"><span
+         class="header-section-number">7.4</span> Peer Discussion:
+         Comparing Results</h2>
+         <p>If time permits, compare your thin lens test results with
+         another group. This comparison helps identify systematic
+         effects and builds confidence in your conclusions.</p>
+         <ol type="1">
+         <li><p><strong>Compare measured image positions.</strong>
+         Record each group’s values:</p>
+         <table>
+         <colgroup>
+         <col style="width: 8%" />
+         <col style="width: 29%" />
+         <col style="width: 22%" />
+         <col style="width: 23%" />
+         <col style="width: 16%" />
+         </colgroup>
+         <thead>
+         <tr class="header">
+         <th>Group</th>
+         <th><span class="math inline">\(S_1\)</span> (object
+         distance)</th>
+         <th><span class="math inline">\(S_2\)</span> (measured)</th>
+         <th><span class="math inline">\(S_2\)</span> (predicted)</th>
+         <th>Discrepancy</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="odd">
+         <td>Yours</td>
+         <td>_______</td>
+         <td>_______</td>
+         <td>_______</td>
+         <td>_______</td>
+         </tr>
+         <tr class="even">
+         <td>Other</td>
+         <td>_______</td>
+         <td>_______</td>
+         <td>_______</td>
+         <td>_______</td>
+         </tr>
+         </tbody>
+         </table></li>
+         <li><p><strong>Investigate discrepancies:</strong> If results
+         differ significantly, consider:</p>
+         <ul>
+         <li>Did you use different lenses or object distances?</li>
+         <li>How did you each define “beam waist position”? (Peak
+         intensity? Best fit location?)</li>
+         <li>What systematic error sources might differ between
+         setups?</li>
+         </ul></li>
+         <li><p><strong>Synthesize:</strong> What does the comparison
+         tell you about the accuracy of the thin lens equation for
+         Gaussian beams? If both groups found discrepancies in the same
+         direction (e.g., both measured <span
+         class="math inline">\(S_2\)</span> shorter than predicted),
+         what might that indicate about the model?</p></li>
+         <li><p><strong>Document briefly</strong> in your notebook:</p>
+         <ul>
+         <li>Whether results agreed within uncertainties</li>
+         <li>Key insight from the comparison</li>
+         </ul></li>
+         </ol>
+         <h2 data-number="7.5"
          id="advanced-investigation-minimum-spot-size"><span
-         class="header-section-number">7.4</span> Advanced
+         class="header-section-number">7.5</span> Advanced
          Investigation: Minimum Spot Size</h2>
          <p>If time permits, investigate the following:</p>
          <ol type="1">

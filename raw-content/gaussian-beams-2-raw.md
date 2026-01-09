@@ -55,7 +55,7 @@ After completing the lab, you will be able to:
 
 # Prelab
 
-This week's prelab continues the measurement uncertainty and error analysis exploration from last week. This is a "user's guide" to least-squares fitting and determining the goodness of your fits. At the end of the prelab you will be able to:
+This week's prelab builds on the uncertainty concepts you learned in the Week 1 prelab. Now we move from estimating uncertainties in individual measurements to fitting data and propagating those uncertainties to derived quantities. This is a "user's guide" to least-squares fitting and determining the goodness of your fits. At the end of the prelab you will be able to:
 
 1. Explain why we minimize the sum of squares to get the best fit.
 2. Carry out a least-squares minimization graphically.
@@ -521,6 +521,72 @@ plt.show()
 ```
 
 ![Plot of the provided Gaussian Beam data showing error bars.](../resources/lab-guides/gaussian-laser-beams/gauss-example.png){#fig:gauss-example width="15cm"}
+
+## Prelab Exercise: Error Function Fitting Practice
+
+Now that you understand curve fitting, apply it to beam width analysis. This exercise prepares you for analyzing your own knife-edge measurements.
+
+**Note on AI assistance:** You may use AI tools to help write your curve fitting code. However, the learning goal is to understand what the code does and why. Be prepared to explain: (1) what the fit parameters mean physically, (2) why the error function is the appropriate model, and (3) how to interpret the uncertainties reported by `curve_fit`.
+
+### The Error Function Model
+
+In Week 1, you derived that blocking a Gaussian beam with a knife edge produces a signal described by:
+
+$$P(x) = \frac{P_0}{2}\left[1 + \text{erf}\left(\frac{\sqrt{2}(x-x_0)}{w}\right)\right]$$
+
+where $w$ is the beam width, $x_0$ is the beam center position, and $P_0$ is the total power.
+
+For fitting, we use a slightly more general form that accounts for offsets:
+
+$$y(x) = a \cdot \text{erf}\left(\frac{\sqrt{2}}{w}(x-b)\right) + c$$
+
+where:
+- $a$ = amplitude (half the voltage swing)
+- $b$ = beam center position
+- $w$ = beam width (what we want!)
+- $c$ = vertical offset
+
+### Practice Exercise
+
+Download [Test_Profile_Data.csv](../resources/lab-guides/gaussian-laser-beams/Test_Profile_Data.csv) and complete the following:
+
+1. **Plot the raw data** (position vs. voltage). Does it look like an error function?
+
+2. **Define the fit function:**
+   ```python
+   from scipy.special import erf
+
+   def erf_model(x, a, w, b, c):
+       """Error function model for knife-edge beam profile."""
+       return a * erf(np.sqrt(2) / w * (x - b)) + c
+   ```
+
+3. **Perform the fit:**
+   ```python
+   from scipy.optimize import curve_fit
+
+   # Load data
+   data = np.loadtxt('Test_Profile_Data.csv', delimiter=',', skiprows=1)
+   x = data[:, 0]  # Position (m)
+   y = data[:, 1]  # Voltage (V)
+
+   # Initial guesses (estimate from your plot)
+   p0 = [1.0, 0.0005, 0.001, 0.5]  # [a, w, b, c]
+
+   # Fit
+   popt, pcov = curve_fit(erf_model, x, y, p0=p0)
+   perr = np.sqrt(np.diag(pcov))  # Standard errors
+
+   print(f"Beam width w = {popt[1]:.2e} ± {perr[1]:.2e} m")
+   ```
+
+4. **Verify your result:** You should get $w = 4.52 \times 10^{-4}$ m (approximately 0.45 mm).
+
+5. **Plot data and fit together** to verify the fit is reasonable.
+
+6. **Interpret the uncertainties:** What is the fractional uncertainty in your beam width? Is this uncertainty dominated by random noise or could there be systematic effects?
+
+*Save your fitting code—you will use this same procedure to analyze your own knife-edge data in lab.*
 
 # Introduction to Python for Data Acquisition
 
@@ -1025,6 +1091,23 @@ _______________________________________________
 
 _______________________________________________
 
+## Peer Comparison: Gain Setting Choices
+
+Compare your gain setting decision with another group. This discussion builds scientific argumentation skills—in research, different groups often make different but equally valid experimental choices.
+
+1. **Share your selected gain setting** and the key reasoning behind your choice.
+
+2. **Compare approaches:** Did they weight the tradeoffs (saturation vs. noise floor) differently? Did they consider factors you overlooked?
+
+3. **Explore disagreements:** If you chose different settings, discuss whether both choices can be valid. What measurement conditions favor one choice over the other?
+
+4. **Document briefly** in your notebook:
+   - The other group's chosen gain setting: _______ dB
+   - Their primary justification (1 sentence): _______________________
+   - One insight from the discussion that changed or confirmed your thinking: _______________________
+
+*In science, disagreements are productive when they are grounded in evidence. Your goal is not to determine who is "right" but to understand why reasonable approaches can differ.*
+
 ## Part 5: Week 4 Validation (To Complete in Week 4)
 
 Before your first automated beam profile scan, validate your gain choice:
@@ -1050,6 +1133,16 @@ _______________________________________________
 _______________________________________________
 
 This validation step closes the loop on your experimental decision-making process.
+
+## Looking Ahead: Connecting Noise to Uncertainty
+
+The noise measurements you made today will directly inform your Week 4 analysis. Here's how the pieces connect:
+
+1. **Week 2 (today):** You measured RMS noise at your chosen gain setting
+2. **Week 3 (next week):** You'll learn error propagation—how uncertainties in measurements become uncertainties in derived quantities
+3. **Week 4:** The noise you measured here determines the uncertainty in each beam profile point, which propagates through your curve fit to give uncertainty in beam width $w$ and waist position $z_w$
+
+Keep your noise characterization data accessible—you'll need it when propagating uncertainties in Week 3's prelab exercises.
 
 ## Noise Characterization Troubleshooting
 

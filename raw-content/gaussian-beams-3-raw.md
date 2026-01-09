@@ -37,6 +37,17 @@ After completing the lab, you will be able to:
 
 This week's prelab covers two topics: error propagation and the theoretical foundation for Gaussian laser beams.
 
+## Connecting to Your Week 2 Work
+
+In Week 2, you characterized your photodetector's noise and chose a gain setting. This week, you'll learn how those noise measurements propagate through your analysis to determine the uncertainty in your final results.
+
+The chain of uncertainty is:
+1. **Voltage noise** (measured in Week 2) → determines uncertainty in each beam profile point
+2. **Beam profile uncertainty** → propagates through curve fitting to give uncertainty in beam width $w$
+3. **Beam width uncertainty at multiple positions** → propagates through the Gaussian beam model to give uncertainty in $w_0$ and $z_w$
+
+This section teaches the mathematical framework for steps 2 and 3. By the end, you'll be able to predict the uncertainty in your Week 4 measurements before you take them.
+
 ## Error propagation - from measured to derived quantities
 
 The quantity of interest in an experiment is often derived from other measured quantities. An example is estimating the resistance of a circuit element from measurements of current and voltage, using Ohm's law ($R=V/I$) to convert our measured quantities (voltage and current) into a derived quantity (resistance).
@@ -209,6 +220,41 @@ The Gaussian beam equations given in Equations @eq:8 -@eq:11 assume the beam com
     2. What are the different fit parameters and what do they mean?
     3. Is it a linear or nonlinear fit function? Why?
 6.  You should get that a beam waist of $w_0=(93.9\pm0.1)\times10^{-6}\ m$ and occurs at a position $z_w=0.3396\pm0.0003\ m$.
+
+## Prediction Exercise: What Will You Measure?
+
+Before taking beam width measurements in Week 4, make quantitative predictions using the Gaussian beam model. This exercise strengthens the connection between the mathematical formalism you just learned and the physical measurements you will make.
+
+**1. Sketch the expected beam profile at three positions:**
+
+Using the beam width equation $w(z) = w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$, sketch the expected transverse beam profile (intensity vs. x) at:
+
+- $z = 0.5$ m from the laser output
+- $z = 1.0$ m from the laser output
+- $z = 2.0$ m from the laser output
+
+For each sketch, indicate:
+- The beam width $w(z)$ on your axes
+- Whether the beam is diverging, converging, or at its waist
+- The approximate peak intensity relative to the $z = 0.5$ m case
+
+**2. Calculate expected beam widths:**
+
+Using the Gaussian beam equation and assuming $w_0 \approx 0.5$ mm and $z_w \approx 0$ (beam waist at laser output):
+
+| Position | Predicted $w(z)$ |
+|----------|------------------|
+| $z = 0.5$ m | _______ mm |
+| $z = 1.0$ m | _______ mm |
+| $z = 2.0$ m | _______ mm |
+
+Show your calculation for at least one position.
+
+**3. Record your predictions** in your notebook before taking any measurements. In Week 4, you will compare these predictions to your experimental results to test the Gaussian beam model.
+
+**4. Prediction reflection:**
+
+If your Week 4 measurements differ significantly from these predictions, what are the most likely causes? List at least two possibilities and how you would distinguish between them.
 
 # Fourier Analysis Techniques
 

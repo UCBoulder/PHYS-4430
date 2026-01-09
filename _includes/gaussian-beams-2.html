@@ -100,6 +100,18 @@
             class="toc-section-number">3.7.2</span> Example: Gaussian
             laser beam width measurement</a></li>
             </ul></li>
+            <li><a
+            href="#prelab-exercise-error-function-fitting-practice"><span
+            class="toc-section-number">3.8</span> Prelab Exercise: Error
+            Function Fitting Practice</a>
+            <ul>
+            <li><a href="#the-error-function-model"><span
+            class="toc-section-number">3.8.1</span> The Error Function
+            Model</a></li>
+            <li><a href="#practice-exercise"><span
+            class="toc-section-number">3.8.2</span> Practice
+            Exercise</a></li>
+            </ul></li>
             </ul></li>
             <li><a
             href="#introduction-to-python-for-data-acquisition"><span
@@ -222,12 +234,19 @@
             class="toc-section-number">6.5.4</span> Your
             Decision</a></li>
             </ul></li>
+            <li><a href="#peer-comparison-gain-setting-choices"><span
+            class="toc-section-number">6.6</span> Peer Comparison: Gain
+            Setting Choices</a></li>
             <li><a
             href="#part-5-week-4-validation-to-complete-in-week-4"><span
-            class="toc-section-number">6.6</span> Part 5: Week 4
+            class="toc-section-number">6.7</span> Part 5: Week 4
             Validation (To Complete in Week 4)</a></li>
+            <li><a
+            href="#looking-ahead-connecting-noise-to-uncertainty"><span
+            class="toc-section-number">6.8</span> Looking Ahead:
+            Connecting Noise to Uncertainty</a></li>
             <li><a href="#noise-characterization-troubleshooting"><span
-            class="toc-section-number">6.7</span> Noise Characterization
+            class="toc-section-number">6.9</span> Noise Characterization
             Troubleshooting</a></li>
             </ul></li>
             <li><a href="#saving-data-and-additional-daq-features"><span
@@ -371,10 +390,13 @@
          </ol>
          <h1 data-number="3" id="prelab"><span
          class="header-section-number">3</span> Prelab</h1>
-         <p>This week’s prelab continues the measurement uncertainty and
-         error analysis exploration from last week. This is a “user’s
-         guide” to least-squares fitting and determining the goodness of
-         your fits. At the end of the prelab you will be able to:</p>
+         <p>This week’s prelab builds on the uncertainty concepts you
+         learned in the Week 1 prelab. Now we move from estimating
+         uncertainties in individual measurements to fitting data and
+         propagating those uncertainties to derived quantities. This is
+         a “user’s guide” to least-squares fitting and determining the
+         goodness of your fits. At the end of the prelab you will be
+         able to:</p>
          <ol type="1">
          <li>Explain why we minimize the sum of squares to get the best
          fit.</li>
@@ -1137,6 +1159,85 @@
          bars.</figcaption>
          </figure>
          </div>
+         <h2 data-number="3.8"
+         id="prelab-exercise-error-function-fitting-practice"><span
+         class="header-section-number">3.8</span> Prelab Exercise: Error
+         Function Fitting Practice</h2>
+         <p>Now that you understand curve fitting, apply it to beam
+         width analysis. This exercise prepares you for analyzing your
+         own knife-edge measurements.</p>
+         <p><strong>Note on AI assistance:</strong> You may use AI tools
+         to help write your curve fitting code. However, the learning
+         goal is to understand what the code does and why. Be prepared
+         to explain: (1) what the fit parameters mean physically, (2)
+         why the error function is the appropriate model, and (3) how to
+         interpret the uncertainties reported by
+         <code>curve_fit</code>.</p>
+         <h3 data-number="3.8.1" id="the-error-function-model"><span
+         class="header-section-number">3.8.1</span> The Error Function
+         Model</h3>
+         <p>In Week 1, you derived that blocking a Gaussian beam with a
+         knife edge produces a signal described by:</p>
+         <p><span class="math display">\[P(x) = \frac{P_0}{2}\left[1 +
+         \text{erf}\left(\frac{\sqrt{2}(x-x_0)}{w}\right)\right]\]</span></p>
+         <p>where <span class="math inline">\(w\)</span> is the beam
+         width, <span class="math inline">\(x_0\)</span> is the beam
+         center position, and <span class="math inline">\(P_0\)</span>
+         is the total power.</p>
+         <p>For fitting, we use a slightly more general form that
+         accounts for offsets:</p>
+         <p><span class="math display">\[y(x) = a \cdot
+         \text{erf}\left(\frac{\sqrt{2}}{w}(x-b)\right) + c\]</span></p>
+         <p>where: - <span class="math inline">\(a\)</span> = amplitude
+         (half the voltage swing) - <span
+         class="math inline">\(b\)</span> = beam center position - <span
+         class="math inline">\(w\)</span> = beam width (what we want!) -
+         <span class="math inline">\(c\)</span> = vertical offset</p>
+         <h3 data-number="3.8.2" id="practice-exercise"><span
+         class="header-section-number">3.8.2</span> Practice
+         Exercise</h3>
+         <p>Download <a
+         href="../resources/lab-guides/gaussian-laser-beams/Test_Profile_Data.csv">Test_Profile_Data.csv</a>
+         and complete the following:</p>
+         <ol type="1">
+         <li><p><strong>Plot the raw data</strong> (position
+         vs. voltage). Does it look like an error function?</p></li>
+         <li><p><strong>Define the fit function:</strong></p>
+         <div class="sourceCode" id="cb16"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> erf</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> erf_model(x, a, w, b, c):</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Error function model for knife-edge beam profile.&quot;&quot;&quot;</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> a <span class="op">*</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">/</span> w <span class="op">*</span> (x <span class="op">-</span> b)) <span class="op">+</span> c</span></code></pre></div></li>
+         <li><p><strong>Perform the fit:</strong></p>
+         <div class="sourceCode" id="cb17"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> curve_fit</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;Test_Profile_Data.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> data[:, <span class="dv">0</span>]  <span class="co"># Position (m)</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data[:, <span class="dv">1</span>]  <span class="co"># Voltage (V)</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial guesses (estimate from your plot)</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.0005</span>, <span class="fl">0.001</span>, <span class="fl">0.5</span>]  <span class="co"># [a, w, b, c]</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(erf_model, x, y, p0<span class="op">=</span>p0)</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))  <span class="co"># Standard errors</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam width w = </span><span class="sc">{</span>popt[<span class="dv">1</span>]<span class="sc">:.2e}</span><span class="ss"> ± </span><span class="sc">{</span>perr[<span class="dv">1</span>]<span class="sc">:.2e}</span><span class="ss"> m&quot;</span>)</span></code></pre></div></li>
+         <li><p><strong>Verify your result:</strong> You should get
+         <span class="math inline">\(w = 4.52 \times 10^{-4}\)</span> m
+         (approximately 0.45 mm).</p></li>
+         <li><p><strong>Plot data and fit together</strong> to verify
+         the fit is reasonable.</p></li>
+         <li><p><strong>Interpret the uncertainties:</strong> What is
+         the fractional uncertainty in your beam width? Is this
+         uncertainty dominated by random noise or could there be
+         systematic effects?</p></li>
+         </ol>
+         <p><em>Save your fitting code—you will use this same procedure
+         to analyze your own knife-edge data in lab.</em></p>
          <h1 data-number="4"
          id="introduction-to-python-for-data-acquisition"><span
          class="header-section-number">4</span> Introduction to Python
@@ -1173,26 +1274,26 @@
          <li>Open the “Test Panel” to test analog inputs manually</li>
          </ul></li>
          <li><p>Use Python to list available DAQ devices:</p>
-         <div class="sourceCode" id="cb16"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.system <span class="im">import</span> System</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># List all connected DAQ devices</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>system <span class="op">=</span> System.local()</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> device <span class="kw">in</span> system.devices:</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Device: </span><span class="sc">{</span>device<span class="sc">.</span>name<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  Product Type: </span><span class="sc">{</span>device<span class="sc">.</span>product_type<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  AI Channels: </span><span class="sc">{</span>[ch.name <span class="cf">for</span> ch <span class="kw">in</span> device.ai_physical_chans]<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
+         <div class="sourceCode" id="cb18"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.system <span class="im">import</span> System</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># List all connected DAQ devices</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>system <span class="op">=</span> System.local()</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> device <span class="kw">in</span> system.devices:</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Device: </span><span class="sc">{</span>device<span class="sc">.</span>name<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  Product Type: </span><span class="sc">{</span>device<span class="sc">.</span>product_type<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  AI Channels: </span><span class="sc">{</span>[ch.name <span class="cf">for</span> ch <span class="kw">in</span> device.ai_physical_chans]<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
          <li><p>Connect the 5V power rail to <code>AI0+</code> and
          ground to <code>AI0-</code>. You must connect both wires since
          the device measures a potential difference between the two
          terminals.</p></li>
          <li><p>Read a voltage to verify the connection:</p>
-         <div class="sourceCode" id="cb17"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    voltage <span class="op">=</span> task.read()</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Measured voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span></code></pre></div></li>
+         <div class="sourceCode" id="cb19"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    voltage <span class="op">=</span> task.read()</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Measured voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span></code></pre></div></li>
          </ol>
          <h2 data-number="4.3" id="reading-multiple-samples"><span
          class="header-section-number">4.3</span> Reading Multiple
@@ -1221,38 +1322,38 @@
          <h3 data-number="4.3.2" id="sec:analogmeas"><span
          class="header-section-number">4.3.2</span> Acquiring Multiple
          Samples</h3>
-         <div class="sourceCode" id="cb18"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">20000</span>  <span class="co"># Hz</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>samples_to_read <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire data</span></span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    task.timing.cfg_samp_clk_timing(</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>        rate<span class="op">=</span>sample_rate,</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>        sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>        samps_per_chan<span class="op">=</span>samples_to_read</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>samples_to_read)</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(samples_to_read) <span class="op">/</span> sample_rate</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>plt.plot(time <span class="op">*</span> <span class="dv">1000</span>, data)  <span class="co"># Time in ms</span></span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Acquired Signal&#39;</span>)</span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+         <div class="sourceCode" id="cb20"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">20000</span>  <span class="co"># Hz</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>samples_to_read <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire data</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    task.timing.cfg_samp_clk_timing(</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        rate<span class="op">=</span>sample_rate,</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>        sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        samps_per_chan<span class="op">=</span>samples_to_read</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>samples_to_read)</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(samples_to_read) <span class="op">/</span> sample_rate</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>plt.plot(time <span class="op">*</span> <span class="dv">1000</span>, data)  <span class="co"># Time in ms</span></span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Acquired Signal&#39;</span>)</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
          <h3 data-number="4.3.3" id="exercise-capture-a-waveform"><span
          class="header-section-number">4.3.3</span> Exercise: Capture a
          Waveform</h3>
@@ -1284,28 +1385,28 @@
          <li><p>Modify your Python script so that the <em>Number of
          Samples</em> and <em>Sample Rate</em> are easily configurable
          variables at the top:</p>
-         <div class="sourceCode" id="cb19"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration - easily adjustable</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>SAMPLE_RATE <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Samples per second</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>NUM_SAMPLES <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Total samples (1 second of data)</span></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>DAQ_CHANNEL <span class="op">=</span> <span class="st">&quot;Dev1/ai0&quot;</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> acquire_data(sample_rate, num_samples, channel):</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Acquire data from DAQ with specified parameters.&quot;&quot;&quot;</span></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(channel)</span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>num_samples)</span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array(data)</span></code></pre></div></li>
+         <div class="sourceCode" id="cb21"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration - easily adjustable</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>SAMPLE_RATE <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Samples per second</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>NUM_SAMPLES <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Total samples (1 second of data)</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>DAQ_CHANNEL <span class="op">=</span> <span class="st">&quot;Dev1/ai0&quot;</span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> acquire_data(sample_rate, num_samples, channel):</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Acquire data from DAQ with specified parameters.&quot;&quot;&quot;</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(channel)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>num_samples)</span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array(data)</span></code></pre></div></li>
          <li><p>Set up a function generator to produce a <strong>1 kHz
          sine wave</strong>.</p></li>
          <li><p>Connect the function generator’s output to both the
@@ -1322,18 +1423,18 @@
          the DAQ. Make sure that the time range on the oscilloscope is
          set such that it is on the same order as the data being
          recorded by the DAQ.</p>
-         <div class="sourceCode" id="cb20"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire and plot data</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> acquire_data(SAMPLE_RATE, NUM_SAMPLES, DAQ_CHANNEL)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(NUM_SAMPLES) <span class="op">/</span> SAMPLE_RATE</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>plt.plot(time, data)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (s)&#39;</span>)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f&#39;Acquired Signal (</span><span class="sc">{</span>SAMPLE_RATE<span class="sc">}</span><span class="ss"> Hz sample rate)&#39;</span>)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <div class="sourceCode" id="cb22"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire and plot data</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> acquire_data(SAMPLE_RATE, NUM_SAMPLES, DAQ_CHANNEL)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(NUM_SAMPLES) <span class="op">/</span> SAMPLE_RATE</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>plt.plot(time, data)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (s)&#39;</span>)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f&#39;Acquired Signal (</span><span class="sc">{</span>SAMPLE_RATE<span class="sc">}</span><span class="ss"> Hz sample rate)&#39;</span>)</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          <li><p>Compare the two plots. What are the major differences
          between the two?</p></li>
          <li><p>Why might one or both of these plots be giving an
@@ -1796,33 +1897,33 @@
          use AI assistance to help write the code, but you must answer
          the Design Decisions questions (above) BEFORE generating code,
          and you must be able to explain your implementation.</p>
-         <div class="sourceCode" id="cb21"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> measure_noise(channel<span class="op">=</span><span class="st">&quot;Dev1/ai0&quot;</span>, num_samples<span class="op">=</span>???, sample_rate<span class="op">=</span>???):</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Measure DC level and RMS noise from the photodetector.</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">        channel: DAQ channel connected to photodetector</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">        num_samples: Number of samples to acquire (you decide)</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">        sample_rate: Sampling rate in Hz (you decide)</span></span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">        dc_level: Mean voltage (V)</span></span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co">        noise_rms: RMS noise (V)</span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Your implementation here</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hints:</span></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Use nidaqmx.Task() context manager</span></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Configure with task.ai_channels.add_ai_voltage_chan()</span></span>
-<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Set timing with task.timing.cfg_samp_clk_timing()</span></span>
-<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Read data with task.read()</span></span>
-<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Compute statistics with numpy</span></span>
-<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div>
+         <div class="sourceCode" id="cb23"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> measure_noise(channel<span class="op">=</span><span class="st">&quot;Dev1/ai0&quot;</span>, num_samples<span class="op">=</span>???, sample_rate<span class="op">=</span>???):</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Measure DC level and RMS noise from the photodetector.</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co">        channel: DAQ channel connected to photodetector</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">        num_samples: Number of samples to acquire (you decide)</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co">        sample_rate: Sampling rate in Hz (you decide)</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co">        dc_level: Mean voltage (V)</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co">        noise_rms: RMS noise (V)</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Your implementation here</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hints:</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Use nidaqmx.Task() context manager</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Configure with task.ai_channels.add_ai_voltage_chan()</span></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Set timing with task.timing.cfg_samp_clk_timing()</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Read data with task.read()</span></span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Compute statistics with numpy</span></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div>
          <p><strong>Implementation Questions:</strong></p>
          <ol type="1">
          <li><p>What values did you choose for <code>num_samples</code>
@@ -1867,27 +1968,27 @@
          <p>The following code was generated by an AI assistant to
          measure noise, but it contains THREE bugs. Find and fix each
          one, then explain what was wrong.</p>
-         <div class="sourceCode" id="cb22"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> measure_noise_buggy(channel<span class="op">=</span><span class="st">&quot;Dev1/ai0&quot;</span>, num_samples<span class="op">=</span><span class="dv">1000</span>, sample_rate<span class="op">=</span><span class="dv">10000</span>):</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Measure DC level and RMS noise. Contains 3 bugs!&quot;&quot;&quot;</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(channel)</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span><span class="dv">100</span>)  <span class="co"># Bug #1</span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>        dc_level <span class="op">=</span> np.mean(data)</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>        noise_rms <span class="op">=</span> np.mean((data <span class="op">-</span> dc_level)<span class="op">**</span><span class="dv">2</span>)  <span class="co"># Bug #2</span></span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dc_level, noise_rms  <span class="co"># Bug #3</span></span></code></pre></div>
+         <div class="sourceCode" id="cb24"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> measure_noise_buggy(channel<span class="op">=</span><span class="st">&quot;Dev1/ai0&quot;</span>, num_samples<span class="op">=</span><span class="dv">1000</span>, sample_rate<span class="op">=</span><span class="dv">10000</span>):</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Measure DC level and RMS noise. Contains 3 bugs!&quot;&quot;&quot;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(channel)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span><span class="dv">100</span>)  <span class="co"># Bug #1</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>        dc_level <span class="op">=</span> np.mean(data)</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>        noise_rms <span class="op">=</span> np.mean((data <span class="op">-</span> dc_level)<span class="op">**</span><span class="dv">2</span>)  <span class="co"># Bug #2</span></span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dc_level, noise_rms  <span class="co"># Bug #3</span></span></code></pre></div>
          <p><strong>Hints:</strong> - Bug #1 is a mismatch between what
          you asked for and what you read - Bug #2 is a mathematical
          error in computing RMS - Bug #3 is a subtle issue with
@@ -1976,8 +2077,39 @@
          <hr />
          <hr />
          <h2 data-number="6.6"
+         id="peer-comparison-gain-setting-choices"><span
+         class="header-section-number">6.6</span> Peer Comparison: Gain
+         Setting Choices</h2>
+         <p>Compare your gain setting decision with another group. This
+         discussion builds scientific argumentation skills—in research,
+         different groups often make different but equally valid
+         experimental choices.</p>
+         <ol type="1">
+         <li><p><strong>Share your selected gain setting</strong> and
+         the key reasoning behind your choice.</p></li>
+         <li><p><strong>Compare approaches:</strong> Did they weight the
+         tradeoffs (saturation vs. noise floor) differently? Did they
+         consider factors you overlooked?</p></li>
+         <li><p><strong>Explore disagreements:</strong> If you chose
+         different settings, discuss whether both choices can be valid.
+         What measurement conditions favor one choice over the
+         other?</p></li>
+         <li><p><strong>Document briefly</strong> in your notebook:</p>
+         <ul>
+         <li>The other group’s chosen gain setting: _______ dB</li>
+         <li>Their primary justification (1 sentence):
+         _______________________</li>
+         <li>One insight from the discussion that changed or confirmed
+         your thinking: _______________________</li>
+         </ul></li>
+         </ol>
+         <p><em>In science, disagreements are productive when they are
+         grounded in evidence. Your goal is not to determine who is
+         “right” but to understand why reasonable approaches can
+         differ.</em></p>
+         <h2 data-number="6.7"
          id="part-5-week-4-validation-to-complete-in-week-4"><span
-         class="header-section-number">6.6</span> Part 5: Week 4
+         class="header-section-number">6.7</span> Part 5: Week 4
          Validation (To Complete in Week 4)</h2>
          <p>Before your first automated beam profile scan, validate your
          gain choice:</p>
@@ -2031,9 +2163,30 @@
          <hr />
          <p>This validation step closes the loop on your experimental
          decision-making process.</p>
-         <h2 data-number="6.7"
+         <h2 data-number="6.8"
+         id="looking-ahead-connecting-noise-to-uncertainty"><span
+         class="header-section-number">6.8</span> Looking Ahead:
+         Connecting Noise to Uncertainty</h2>
+         <p>The noise measurements you made today will directly inform
+         your Week 4 analysis. Here’s how the pieces connect:</p>
+         <ol type="1">
+         <li><strong>Week 2 (today):</strong> You measured RMS noise at
+         your chosen gain setting</li>
+         <li><strong>Week 3 (next week):</strong> You’ll learn error
+         propagation—how uncertainties in measurements become
+         uncertainties in derived quantities</li>
+         <li><strong>Week 4:</strong> The noise you measured here
+         determines the uncertainty in each beam profile point, which
+         propagates through your curve fit to give uncertainty in beam
+         width <span class="math inline">\(w\)</span> and waist position
+         <span class="math inline">\(z_w\)</span></li>
+         </ol>
+         <p>Keep your noise characterization data accessible—you’ll need
+         it when propagating uncertainties in Week 3’s prelab
+         exercises.</p>
+         <h2 data-number="6.9"
          id="noise-characterization-troubleshooting"><span
-         class="header-section-number">6.7</span> Noise Characterization
+         class="header-section-number">6.9</span> Noise Characterization
          Troubleshooting</h2>
          <p><strong>Noise much higher than datasheet:</strong></p>
          <ul>
@@ -2074,28 +2227,28 @@
          File</h2>
          <p>Save your acquired data to a CSV file for later
          analysis:</p>
-         <div class="sourceCode" id="cb23"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># After acquiring data...</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a timestamp for the filename</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>timestamp <span class="op">=</span> datetime.now().strftime(<span class="st">&quot;%Y%m</span><span class="sc">%d</span><span class="st">_%H%M%S&quot;</span>)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="ss">f&quot;data_</span><span class="sc">{</span>timestamp<span class="sc">}</span><span class="ss">.csv&quot;</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="bu">len</span>(data)) <span class="op">/</span> sample_rate</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Save to CSV</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>np.savetxt(</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    filename,</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    np.column_stack([time, data]),</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>,</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    header<span class="op">=</span><span class="st">&#39;Time (s), Voltage (V)&#39;</span>,</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    comments<span class="op">=</span><span class="st">&#39;&#39;</span></span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Data saved to </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb25"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># After acquiring data...</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a timestamp for the filename</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>timestamp <span class="op">=</span> datetime.now().strftime(<span class="st">&quot;%Y%m</span><span class="sc">%d</span><span class="st">_%H%M%S&quot;</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="ss">f&quot;data_</span><span class="sc">{</span>timestamp<span class="sc">}</span><span class="ss">.csv&quot;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="bu">len</span>(data)) <span class="op">/</span> sample_rate</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Save to CSV</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>np.savetxt(</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    filename,</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    np.column_stack([time, data]),</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>,</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    header<span class="op">=</span><span class="st">&#39;Time (s), Voltage (V)&#39;</span>,</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    comments<span class="op">=</span><span class="st">&#39;&#39;</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Data saved to </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
          <h3 data-number="7.1.1"
          id="exercise-save-and-reload-data"><span
          class="header-section-number">7.1.1</span> Exercise: Save and
@@ -2103,19 +2256,19 @@
          <ol type="1">
          <li><p>Acquire a waveform and save it to a CSV file.</p></li>
          <li><p>Load the data back and plot it:</p>
-         <div class="sourceCode" id="cb24"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>loaded_data <span class="op">=</span> np.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>time_loaded <span class="op">=</span> loaded_data[:, <span class="dv">0</span>]</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>voltage_loaded <span class="op">=</span> loaded_data[:, <span class="dv">1</span>]</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>plt.plot(time_loaded <span class="op">*</span> <span class="dv">1000</span>, voltage_loaded)</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Loaded Data&#39;</span>)</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <div class="sourceCode" id="cb26"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>loaded_data <span class="op">=</span> np.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>time_loaded <span class="op">=</span> loaded_data[:, <span class="dv">0</span>]</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>voltage_loaded <span class="op">=</span> loaded_data[:, <span class="dv">1</span>]</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plt.plot(time_loaded <span class="op">*</span> <span class="dv">1000</span>, voltage_loaded)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Loaded Data&#39;</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          <li><p>Verify the loaded data matches your original
          acquisition.</p></li>
          </ol>
@@ -2126,15 +2279,15 @@
          limited rate of 150 S/s). Note that the USB-6009’s analog
          outputs have a range of 0-5V only, so we must specify this
          range explicitly:</p>
-         <div class="sourceCode" id="cb25"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Output a DC voltage</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    task.ao_channels.add_ao_voltage_chan(<span class="st">&quot;Dev1/ao0&quot;</span>, min_val<span class="op">=</span><span class="fl">0.0</span>, max_val<span class="op">=</span><span class="fl">5.0</span>)</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    task.write(<span class="fl">2.5</span>, auto_start<span class="op">=</span><span class="va">True</span>)  <span class="co"># Output 2.5 V</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Outputting 2.5 V on AO0&quot;</span>)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>(<span class="st">&quot;Press Enter to stop...&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb27"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Output a DC voltage</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    task.ao_channels.add_ao_voltage_chan(<span class="st">&quot;Dev1/ao0&quot;</span>, min_val<span class="op">=</span><span class="fl">0.0</span>, max_val<span class="op">=</span><span class="fl">5.0</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    task.write(<span class="fl">2.5</span>, auto_start<span class="op">=</span><span class="va">True</span>)  <span class="co"># Output 2.5 V</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Outputting 2.5 V on AO0&quot;</span>)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>(<span class="st">&quot;Press Enter to stop...&quot;</span>)</span></code></pre></div>
          <h3 data-number="7.2.1" id="exercise-test-analog-output"><span
          class="header-section-number">7.2.1</span> Exercise: Test
          Analog Output</h3>
@@ -2154,22 +2307,22 @@
          class="header-section-number">7.3</span> Error Handling</h2>
          <p>Always include error handling in your data acquisition
          code:</p>
-         <div class="sourceCode" id="cb26"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.errors <span class="im">import</span> DaqError</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        voltage <span class="op">=</span> task.read()</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> DaqError <span class="im">as</span> e:</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;DAQ Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Check that:&quot;</span>)</span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The DAQ device is connected&quot;</span>)</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The device name is correct (try &#39;Dev1&#39;, &#39;Dev2&#39;, etc.)&quot;</span>)</span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - NI-DAQmx drivers are installed&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb28"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.errors <span class="im">import</span> DaqError</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        voltage <span class="op">=</span> task.read()</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> DaqError <span class="im">as</span> e:</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;DAQ Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Check that:&quot;</span>)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The DAQ device is connected&quot;</span>)</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The device name is correct (try &#39;Dev1&#39;, &#39;Dev2&#39;, etc.)&quot;</span>)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - NI-DAQmx drivers are installed&quot;</span>)</span></code></pre></div>
          <h1 data-number="8" id="summary"><span
          class="header-section-number">8</span> Summary</h1>
          <p>In this lab, you learned to:</p>

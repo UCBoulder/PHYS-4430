@@ -29,11 +29,59 @@ After completing this week's lab, you will be able to:
 
 # Prelab
 
-This week's prelab focuses on preparing for automated data acquisition. Review the Gaussian beam theory from Week 3's prelab, particularly the beam width equation:
+This week you'll test the Gaussian beam model with automated measurements. Before collecting data, make quantitative predictions—this transforms the lab from "taking data" to "testing your understanding."
 
-$$w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}\text{.}$$
+## Prediction Exercise 1: Beam Width vs. Position
 
-You will use this model to analyze your automated measurements.
+In Week 3, you calculated expected beam widths at several positions. Now refine those predictions using the full Gaussian beam model:
+
+$$w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$$
+
+**Using your Week 1 beam width measurement** (if available) or assuming $w_0 \approx 0.5$ mm at $z_w \approx 0$:
+
+| Position $z$ (m) | Predicted $w(z)$ (mm) |
+|------------------|----------------------|
+| 0.5 | _______ |
+| 1.0 | _______ |
+| 1.5 | _______ |
+| 2.0 | _______ |
+
+Show your calculation for at least one position. Record these predictions—you will compare to measurements during lab.
+
+## Prediction Exercise 2: Lens Effects
+
+Before adding a lens to your beam path, predict what will happen using the thin lens equation:
+
+$$\frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}$$
+
+For a lens with focal length $f = $ _______ mm placed at distance $S_1 = $ _______ m from the laser:
+
+1. **Predicted image position** $S_2$ = _______ m (from lens)
+2. **Predicted new beam waist** location relative to laser: _______ m
+
+Show your calculation. If you need to estimate $S_1$ (the distance from laser to lens), use a reasonable value based on your optical table layout.
+
+## Prediction Exercise 3: Uncertainty Budget
+
+List the sources of uncertainty that will affect your $w_0$ and $z_w$ measurements:
+
+| Source | Estimated magnitude | Random or Systematic? |
+|--------|--------------------|-----------------------|
+| Voltage noise (from Week 2) | _______ mV | Random |
+| Position measurement | _______ mm | _______ |
+| _______ | _______ | _______ |
+| _______ | _______ | _______ |
+
+Which source do you expect to dominate the uncertainty in $w_0$? Justify your answer briefly.
+
+## Connecting Your Previous Work
+
+This lab brings together everything from the sequence:
+- **Week 1:** Optical alignment, photodetector calibration, knife-edge technique
+- **Week 2:** Noise characterization, gain selection, curve fitting
+- **Week 3:** Error propagation, Gaussian beam theory, motor control
+
+Your predictions above use results from all three previous weeks. If any predictions seem unreasonable, review the relevant material before lab.
 
 # Verify Your Setup
 
@@ -222,6 +270,28 @@ $$ \frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}$$
 3. Systematic errors: Under what conditions should the thin lens equation be most valid? How do these conditions compare to conditions of your actual measurements? Can you get better agreement?
 
 ![Diagram showing the focusing of light by a thin lens in the ray approximation. The diagram identifies the quantities in the thin lens equation: image distance, object distance, and focal length.](../resources/lab-guides/gaussian-laser-beams/ray-diagram.png){#fig:ray-diagram width="15cm"}
+
+## Peer Discussion: Comparing Results
+
+If time permits, compare your thin lens test results with another group. This comparison helps identify systematic effects and builds confidence in your conclusions.
+
+1. **Compare measured image positions.** Record each group's values:
+
+   | Group | $S_1$ (object distance) | $S_2$ (measured) | $S_2$ (predicted) | Discrepancy |
+   |-------|------------------------|------------------|-------------------|-------------|
+   | Yours | _______ | _______ | _______ | _______ |
+   | Other | _______ | _______ | _______ | _______ |
+
+2. **Investigate discrepancies:** If results differ significantly, consider:
+   - Did you use different lenses or object distances?
+   - How did you each define "beam waist position"? (Peak intensity? Best fit location?)
+   - What systematic error sources might differ between setups?
+
+3. **Synthesize:** What does the comparison tell you about the accuracy of the thin lens equation for Gaussian beams? If both groups found discrepancies in the same direction (e.g., both measured $S_2$ shorter than predicted), what might that indicate about the model?
+
+4. **Document briefly** in your notebook:
+   - Whether results agreed within uncertainties
+   - Key insight from the comparison
 
 ## Advanced Investigation: Minimum Spot Size
 
