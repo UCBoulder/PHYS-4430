@@ -107,9 +107,10 @@
             class="toc-section-number">10.1</span> Python Preparation
             for Week 2</a></li>
             <li><a
-            href="#apply-to-your-data-if-you-completed-section-6-in-lab"><span
+            href="#apply-to-your-data-if-you-completed-the-beam-width-measurement-in-lab"><span
             class="toc-section-number">10.2</span> Apply to Your Data
-            (if you completed Section 6 in lab)</a></li>
+            (if you completed the beam width measurement in
+            lab)</a></li>
             </ul></li>
             <li><a href="#deliverables-and-assessment"><span
             class="toc-section-number">11</span> Deliverables and
@@ -420,10 +421,14 @@
          id="calibrating-the-photodetector-offset-and-gain"><span
          class="header-section-number">7.2</span> Calibrating the
          photodetector offset and gain</h2>
-         <p>Calibrating the photodetector is especially important when
-         you take a data set that uses multiple gain settings. Having an
-         accurate calibration of the gain and offset will let you stitch
-         the data together accurately.</p>
+         <p>Calibrating the photodetector is essential when working with
+         multiple gain settings. Imagine you’re measuring beam width
+         later today (or in Week 4’s automated measurements): at one
+         position the signal saturates at 40 dB gain, but gives good
+         readings at 30 dB. How would you combine these measurements
+         onto a single scale? That’s what calibration enables—it lets
+         you stitch data from different gain settings together
+         accurately.</p>
          <ol type="1">
          <li><p>The photodetector gain is specified in <strong>decibels
          (dB)</strong>, a logarithmic scale commonly used in
@@ -451,8 +456,17 @@
          <p>For example, 20 dB corresponds to <span
          class="math inline">\(10^{20/20} = 10^1 = 10\times\)</span>
          gain.</p>
-         <p><strong>Use this tool to check your
-         understanding:</strong></p></li>
+         <p><strong>Important: What “0 dB” means on the PDA36A.</strong>
+         On this photodetector, “0 dB” does <em>not</em> mean “no
+         amplification.” The 0 dB setting has a transimpedance gain of
+         1.51 × 10³ V/A—this is the baseline. The dB labels indicate
+         gain <em>relative to this baseline</em>: the 20 dB setting has
+         10× more gain than 0 dB, the 40 dB setting has 100× more, and
+         so on.</p>
+         <p><strong>Build your intuition:</strong> Predict the linear
+         gain for 40 dB before moving the slider below, then check your
+         answer. Try a few values until the conversion feels
+         natural.</p></li>
          </ol>
          <div id="db-gain-interactive"
          style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 20px auto; font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, sans-serif; max-width: 400px;">
@@ -516,66 +530,97 @@
          with your partner or revisit after completing the
          calibration.</em></p>
          <ol start="2" type="1">
-         <li>Calibrating the offset voltage (the output of the
-         photodetector when no light is incident upon the device).
+         <li><p>Calibrating the offset voltage.</p>
+         <p>The offset voltage is the photodetector’s output when no
+         light is incident on the sensor. You’ll need to subtract this
+         from your measurements to get accurate readings.</p>
          <ol type="1">
-         <li>Calibrate the offset of the photodetector as a function of
-         gain setting.</li>
-         <li>Quantitatively compare it to the specifications given in
-         the table. Is your measured value within the specified range
-         given on the PDA36A or PDA36A2 photodetector data sheet?</li>
-         <li>What measures did you take to eliminate stray light? Were
-         your measures sufficient for an accurate calibration?</li>
+         <li><p><strong>Measure the offset:</strong> Block all light
+         from reaching the detector and record the output voltage at
+         each gain setting (0, 10, 20, … 70 dB). How does the offset
+         change with gain?</p></li>
+         <li><p><strong>Compare to datasheet:</strong> The datasheet
+         specifies typical and maximum offset values for each gain
+         setting. Are your measured values within the specified
+         range?</p></li>
+         <li><p><strong>Eliminating stray light:</strong> What steps did
+         you take to ensure no light reached the detector? How confident
+         are you that stray light isn’t affecting your offset
+         measurements?</p></li>
          </ol></li>
-         <li>Calibrating the gain.
+         <li><p>Calibrating the gain.</p>
          <ol type="1">
-         <li>Is it possible to measure the <span
-         class="math inline">\(V/A\)</span> gain for each setting, or
-         can you only measure the change in gain as you switch the
-         settings? Why? Note that this lab only requires relative
-         gain.</li>
-         <li>Make a measurement of the gain or relative gain for most of
-         the gain settings. If you need to adjust the laser power, try
-         blocking part of the beam. Note, you will need to make two
-         measurements at one gain setting when you block the beam. What
-         systematic error sources are of most concern?</li>
-         <li>Quantitatively compare your results with the range of
-         values given on the data sheet. Do you believe your results
-         provide a more accurate estimate of the photodetector gain than
-         the data sheet? Why or why not?</li>
-         <li>Using the appropriate spec sheet and your measurements,
-         what is the power of your laser? Does this agree with the laser
-         power shown on the laser?</li>
-         <li>Hypothetically, how would you measure the absolute
-         gain?</li>
+         <li><p><strong>Absolute vs. relative gain:</strong> The
+         datasheet specifies gain in V/A (volts out per amp of
+         photocurrent in). Can you measure this absolute gain with the
+         equipment available, or can you only measure how gain
+         <em>changes</em> between settings (relative gain)? Explain your
+         reasoning. <em>(Note: This lab only requires relative
+         gain.)</em></p></li>
+         <li><p><strong>Measure relative gain:</strong> Choose a light
+         level where the detector doesn’t saturate at your highest gain
+         setting—you may need to partially block the beam. Then measure
+         output voltage at several gain settings (e.g., 0, 10, 20, 30,
+         40 dB) without changing anything else. Calculate the gain ratio
+         between adjacent settings.</p>
+         <ul>
+         <li>If you need to block the beam partway through your
+         measurements, how can you account for this change? <em>(Hint:
+         repeat one gain setting before and after blocking.)</em></li>
+         <li>What systematic errors could affect your measurements?</li>
+         </ul></li>
+         <li><p><strong>Compare to datasheet:</strong> The datasheet
+         lists expected gain ratios between settings (each 10 dB step
+         should be ~3.16×, each 20 dB step should be ~10×). How do your
+         measured ratios compare? Are any discrepancies within
+         reasonable experimental uncertainty?</p></li>
+         <li><p><strong>Estimate laser power:</strong> Using the
+         datasheet values for responsivity (at 632.8 nm) and the 0 dB
+         transimpedance gain, estimate your laser’s output power from
+         your measured voltage. Does this agree with the power labeled
+         on the laser? If not, what might explain the
+         difference?</p></li>
+         <li><p><strong>Thinking further:</strong> If you had access to
+         a calibrated optical power meter, how would you use it to
+         measure the <em>absolute</em> transimpedance gain at each
+         setting?</p></li>
          </ol></li>
          </ol>
          <h2 data-number="7.3" id="follow-up"><span
          class="header-section-number">7.3</span> Follow up</h2>
-         <ol type="1">
-         <li>Write mathematical expressions that converts the incident
-         power (the light) <span class="math inline">\(P_{in}\)</span>
-         to the photodetector voltage <span
-         class="math inline">\(V\)</span> and the photodetector voltage
-         <span class="math inline">\(V\)</span> to input power <span
-         class="math inline">\(P_{in}\)</span>. Take into account all
-         relevant parameters such as the photodetector gain setting (in
-         <span class="math inline">\(dB\)</span>) and offsets.</li>
-         </ol>
+         <p><strong>Write the conversion equations:</strong> Express the
+         relationship between incident optical power <span
+         class="math inline">\(P_{in}\)</span> and photodetector output
+         voltage <span class="math inline">\(V\)</span>. Your equations
+         should include:</p>
+         <ul>
+         <li>Responsivity <span
+         class="math inline">\(R(\lambda)\)</span> in A/W</li>
+         <li>Transimpedance gain <span class="math inline">\(G\)</span>
+         in V/A (or the dB setting)</li>
+         <li>Offset voltage <span
+         class="math inline">\(V_{offset}\)</span></li>
+         </ul>
+         <p>Write both directions: (1) <span
+         class="math inline">\(P_{in} \rightarrow V\)</span> and (2)
+         <span class="math inline">\(V \rightarrow P_{in}\)</span>.</p>
          <h2 data-number="7.4"
          id="reflection-using-your-calibration"><span
          class="header-section-number">7.4</span> Reflection: Using Your
          Calibration</h2>
-         <p>In Week 4, you will use this photodetector to measure beam
-         profiles. Before moving on, consider how you will use your
-         calibration results:</p>
+         <p>You’ll use this photodetector throughout the lab
+         sequence—for beam width measurements today and for automated
+         profiling in Week 4. Before moving on, consider how you will
+         use your calibration results:</p>
          <ol type="1">
-         <li><p>Based on your calibration, would you trust the datasheet
-         gain values, or would you use your measured values? Under what
-         conditions might the datasheet values be inadequate?</p></li>
-         <li><p>If your measured offset voltage differed significantly
-         from the datasheet (say, by more than 50%), what would you do
-         before proceeding?</p>
+         <li><p><strong>Datasheet vs. measured values:</strong> Based on
+         your calibration, would you trust the datasheet gain values, or
+         would you use your measured values? Under what conditions might
+         the datasheet values be inadequate?</p></li>
+         <li><p><strong>Handling discrepancies:</strong> If your
+         measured offset voltage differed significantly from the
+         datasheet (say, by more than 50%), what would you do before
+         proceeding?</p>
          <ul>
          <li><ol type="a">
          <li>Repeat the measurement</li>
@@ -592,10 +637,11 @@
          </ul>
          <p>There is no single correct answer—justify your choice in 2-3
          sentences.</p></li>
-         <li><p>You will use this photodetector at a single gain setting
-         for most of Week 4’s measurements. Which gain setting would you
-         tentatively choose based on your calibration? (You will refine
-         this choice in Week 2 after characterizing noise.)</p></li>
+         <li><p><strong>Choosing a gain setting:</strong> For most
+         measurements, you’ll use this photodetector at a single gain
+         setting. Which setting would you tentatively choose based on
+         your calibration? (You will refine this choice in Week 2 after
+         characterizing noise.)</p></li>
          </ol>
          <h1 data-number="8"
          id="understanding-measurement-uncertainty"><span
@@ -747,15 +793,15 @@
          multiple parts with different priorities:</p>
          <ol type="1">
          <li><p><strong>Essential (must complete):</strong> Derive the
-         error function model (Section 7.1) and complete the curve
-         fitting practice (Section 7.2). This analysis is critical
+         error function model and complete the curve fitting practice
+         (“Before you take data” subsection). This analysis is critical
          preparation for Week 2.</p></li>
          <li><p><strong>Important (complete if time allows):</strong>
-         Build the setup and take data (Sections 7.3-7.5). If you don’t
-         finish in Week 1, you will revisit this in Week 3.</p></li>
+         Build the setup and take data. If you don’t finish in Week 1,
+         you will complete this in Week 3.</p></li>
          <li><p><strong>Good practice:</strong> If you take data,
-         complete the analysis (Section 7.6). This validates your
-         fitting code on real data.</p></li>
+         complete the analysis. This validates your fitting code on real
+         data.</p></li>
          </ol>
          <p>The basic scheme involves measuring the power in the laser
          beam as the beam is gradually blocked by a knife edge (razor
@@ -881,9 +927,9 @@
          The curve fitting skills needed for beam width analysis will be
          covered in Week 2’s prelab.</p>
          <h2 data-number="10.2"
-         id="apply-to-your-data-if-you-completed-section-6-in-lab"><span
+         id="apply-to-your-data-if-you-completed-the-beam-width-measurement-in-lab"><span
          class="header-section-number">10.2</span> Apply to Your Data
-         (if you completed Section 6 in lab)</h2>
+         (if you completed the beam width measurement in lab)</h2>
          <p>If you collected knife-edge measurement data during lab, you
          can optionally begin analysis now. However, the full fitting
          procedure will be covered in Week 2’s prelab, so you may prefer
@@ -922,15 +968,13 @@
          class="header-section-number">11.2</span> Analysis and
          Questions (can be completed after lab)</h2>
          <ol type="1">
-         <li><strong>Photodetector physics explanation</strong> (Section
-         3.1): diagram and written explanation of how the photodetector
-         converts light to voltage</li>
-         <li><strong>Calibration comparison</strong> (Section 3.2-3.3):
-         quantitative comparison of your measurements to datasheet
-         values</li>
-         <li><strong>Beam width measurement</strong> (Section 6, if
-         completed): fit plot, extracted beam width with
-         uncertainty</li>
+         <li><strong>Photodetector physics explanation</strong>: diagram
+         and written explanation of how the photodetector converts light
+         to voltage</li>
+         <li><strong>Calibration comparison</strong>: quantitative
+         comparison of your measurements to datasheet values</li>
+         <li><strong>Beam width measurement</strong> (if completed): fit
+         plot, extracted beam width with uncertainty</li>
          </ol>
          <h2 data-number="11.3" id="postlab-1"><span
          class="header-section-number">11.3</span> Postlab</h2>
