@@ -63,4 +63,4 @@ These scripts interface with:
 
 ## Lab Guide Editing
 
-Edit files in `raw-content/`, not in `_includes/`. After editing, run `mdtohtml.sh` to regenerate HTML. The `labX-raw.md` files are live on the site—use "old/new" naming convention for development versions.
+Edit files in `raw-content/`, not in `_includes/`. After editing, the user will run `mdtohtml.sh` from the Docker container to regenerate HTML. **Do not run `mdtohtml.sh` automatically**—the user prefers to do this manually. The `labX-raw.md` files are live on the site—use "old/new" naming convention for development versions.

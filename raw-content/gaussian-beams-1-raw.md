@@ -61,7 +61,7 @@ The estimated uncertainty (standard deviation, $\sigma_y$) of any single measure
 
 $$\sigma_y = \sqrt{\frac{1}{N-1}{\displaystyle \sum_{i=1}^{N}}(y_i-\overline{y})^2}\text{,}$$
 
-while the uncertainty in the mean value $\sigma_{\overline{y}}$ is smaller:
+while the uncertainty in the mean value $\sigma_{\overline{y}}$ (also called the standard deviation of the mean) is smaller:
 
 $$\sigma_{\overline{y}} = \frac{\sigma_y}{\sqrt{N}}\text{.}$$
 
