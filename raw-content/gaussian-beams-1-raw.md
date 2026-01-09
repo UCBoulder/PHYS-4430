@@ -6,9 +6,9 @@ title: "Gaussian Beams - Week 1"
 
 **Week 1 of 4: Foundations**
 
-This week you build the foundational skills for the entire Gaussian Beams sequence: optical alignment, photodetector operation, uncertainty estimation, and beam width measurement. The calibration data and measurement techniques you develop this week will be used directly in Weeks 2-4.
+This week you build the foundational skills for the entire Gaussian Beams sequence: optical alignment, photodetector operation, and beam width measurement. The calibration data and measurement techniques you develop this week will be used directly in Weeks 2-4.
 
-**This week:** Align optics → Calibrate photodetector → Learn uncertainty methods → Measure beam width
+**This week:** Align optics → Calibrate photodetector → Measure beam width
 **Next week:** Learn data acquisition → Characterize noise → Choose optimal gain setting
 
 # Learning Goals
@@ -20,10 +20,9 @@ After completing this week's lab, you will be able to:
 3. Explain how a photodiode converts photons to current via the photoelectric effect.
 4. Calculate expected photodetector output voltage given incident power, responsivity, and gain setting.
 5. Calibrate a photodetector's offset and gain and compare to manufacturer specifications.
-6. Compare eyeball, statistical sampling, and instrument specification methods for estimating measurement uncertainty.
-7. Report measurements with appropriate significant figures and uncertainty.
-8. Set up a knife-edge measurement and derive the theoretical model (error function).
-9. Perform a nonlinear curve fit to extract beam width from experimental data.
+6. Estimate measurement uncertainty using statistical sampling and explain why repeated measurements improve precision.
+7. Set up a knife-edge measurement and derive the theoretical model (error function).
+8. Perform a nonlinear curve fit to extract beam width from experimental data.
 
 # Python Preparation
 
@@ -42,130 +41,6 @@ This lab sequence uses Python for data acquisition, analysis, and visualization.
 - Loading data with `np.loadtxt()`
 
 If you need to review these skills, see the [Python Resources](/PHYS-4430/python-resources) page.
-
-# Prelab: Review of Measurement Uncertainty
-
-**Complete before arriving at lab. Time estimate: 30-45 minutes.**
-
-In this course, you will repeatedly need to estimate measurement uncertainty. Different methods give different answers, and understanding why is critical for interpreting your results. This prelab introduces the mathematical foundations and helps you develop judgment about which methods are appropriate in different situations.
-
-## Mathematical Foundations
-
-When attempting to establish the validity of our experimental results, we must quantify the uncertainty. Measurement uncertainty is not invented to make lab classes tedious—it is a core part of any experimental work that gives us a way to quantify how much we trust our results.
-
-A simple and rigorous way to make a measurement and estimate its uncertainty is to take $N$ measurements $\{y_1,y_2,\ ...\ ,y_N\}$ and estimate the value by the mean:
-
-$$\overline{y} = \frac{1}{N}{\displaystyle \sum_{i=1}^{N}}y_i\text{.}$$
-
-The estimated uncertainty (standard deviation, $\sigma_y$) of any single measurement is given by:
-
-$$\sigma_y = \sqrt{\frac{1}{N-1}{\displaystyle \sum_{i=1}^{N}}(y_i-\overline{y})^2}\text{,}$$
-
-while the uncertainty in the mean value $\sigma_{\overline{y}}$ (also called the standard deviation of the mean) is smaller:
-
-$$\sigma_{\overline{y}} = \frac{\sigma_y}{\sqrt{N}}\text{.}$$
-
-**Question 1:** In your own words, explain why the uncertainty in the mean decreases as $N$ increases, even though the standard deviation $\sigma_y$ does not. (2-3 sentences)
-
-## Comparing Estimation Methods: A Data-Based Exercise
-
-Download the data file [photodetector_samples.csv](../resources/lab-guides/gaussian-laser-beams/photodetector_samples.csv) containing 200 voltage measurements from a photodetector measuring a nominally constant laser signal. Each measurement was taken at 0.1-second intervals.
-
-**Complete the following analysis using Python, a spreadsheet, or a calculator.**
-
-### Method A: Statistical Sampling (Ground Truth)
-
-Use all 200 data points to calculate:
-
-1. The mean voltage $\overline{V}$
-2. The standard deviation $\sigma_V$ of a single measurement
-3. The standard error of the mean $\sigma_{\overline{V}}$
-
-Record these values—they will serve as your "ground truth" for comparison.
-
-### Method B: "Eyeballing" from a Subset
-
-Imagine you can only see the first 10 data points: 2.352, 2.343, 2.355, 2.368, 2.341, 2.341, 2.369, 2.357, 2.338, 2.353 (all in volts).
-
-Without performing calculations:
-
-1. Estimate the mean by eye
-2. Estimate the typical size of fluctuations (how much do values vary from your estimated mean?)
-
-**Question 2:** Compare your eyeball estimates to the ground truth values from Method A. Were you close? Did you over- or underestimate the uncertainty?
-
-### Method C: Max/Min Method
-
-Using the same 10 data points:
-
-1. Find $V_{max}$ and $V_{min}$
-2. Estimate the mean as $(V_{max} + V_{min})/2$
-3. Estimate the uncertainty as $(V_{max} - V_{min})/2$
-
-**Question 3:** The max/min method gives an uncertainty estimate of approximately ______ V. Compare this to $\sigma_V$ from Method A. Does the max/min method overestimate or underestimate the true standard deviation? Why might this be? (Hint: think about what the max and min values represent statistically.)
-
-### Method D: Instrument Specification
-
-The Fluke 115 multimeter used in this course has a DC voltage accuracy specification of $\pm(0.5\% + 2 \text{ counts})$ at the 6V range. For a reading of 2.35 V:
-
-1. Calculate the specification-based uncertainty
-2. The "counts" refer to the least significant digit. At the 6V range, 1 count = 0.001 V.
-
-**Question 4:** The instrument specification gives an uncertainty of approximately ______ V. How does this compare to the statistical uncertainty from Method A? Under what conditions would you use the instrument specification instead of statistical sampling?
-
-## Understanding What Each Method Measures
-
-Each estimation method captures different sources of uncertainty:
-
-| Method | What it captures | What it misses |
-|--------|-----------------|----------------|
-| Statistical sampling | Random fluctuations in the signal | Systematic offsets, calibration errors |
-| Eyeballing | Quick estimate of variability | Precise quantification, rare large deviations |
-| Max/min | Extreme fluctuations | Typical behavior (biased toward outliers) |
-| Instrument spec | Manufacturer's guaranteed accuracy | Actual noise in your specific measurement |
-
-**Question 5:** In Week 1, you will measure photodetector voltage while keeping the laser power nominally constant. Suppose the room lights flicker occasionally, causing the photodetector signal to jump by 0.5 V for a few seconds out of every minute.
-
-(a) Which estimation method(s) would capture this effect in the uncertainty?
-
-(b) Which method(s) would miss it entirely?
-
-(c) If you need to know whether your laser power is stable enough for precision measurements, which method would you choose? Why?
-
-## Uncertainty and Curve Fitting (Looking Ahead)
-
-In Week 2, you will fit experimental data to a theoretical model. The curve fitting algorithm needs to know the uncertainty in each data point to:
-
-1. Weight the points appropriately (precise points count more)
-2. Calculate the uncertainty in fit parameters
-3. Test whether the fit is "good" (chi-squared test)
-
-*Note: Week 2's prelab will explain how fitting programs calculate parameter uncertainties. For now, focus on interpreting and reporting them correctly.*
-
-**Question 6:** A curve fitting program generated the following fit parameters:
-
-$$a = -0.6699999999999988 \pm 0.6751049301158053$$
-$$b = 2.2700000000000005 \pm 0.2035517952102936$$
-
-(a) Rewrite these values following the convention that uncertainty should have 1-2 significant figures, and the measurement should be reported to the same decimal place as the uncertainty.
-
-(b) Based on the uncertainties, is parameter $a$ statistically different from zero? How do you know? (Hint: compare the value to its uncertainty.)
-
-## Reflection: Preparing for Lab
-
-**Question 7:** In the Week 1 lab, you will compare uncertainty estimates from a multimeter and an oscilloscope viewing the same signal. Based on what you learned in this prelab:
-
-(a) Do you expect the two instruments to give the same uncertainty estimate? Why or why not?
-
-(b) If they differ, which one would you trust more for determining whether your laser is stable enough for beam width measurements?
-
-## What You Should Bring to Lab
-
-1. Your answers to Questions 1-7
-2. The calculated values from Methods A-D
-3. An understanding of when each estimation method is appropriate
-
----
 
 # Lab Notebook
 
@@ -212,8 +87,8 @@ The two videos linked below provide information and tips on how to use and mount
 
 Now, we will begin assembling the components.
 
-1.  Get a laser and power supply from the “He-Ne Laser” drawer in the colored drawer cabinet found in your chosen or assigned optics bay. You’ll also need two sets of 3D-printed laser tube mounts which you can find in the same drawer (see Figure @fig:tube-mount). The bottom mount first gets mounted to an optical post and then the top of the mount can be assembled with ¼-20 socket head cap screw and nut. After both sets of tube mounts are attached to the laser, insert the optical posts into post holders and attach the assembly to the optical table.
-2. Each person in your group is responsible for assembling a mirror as shown in Figure @fig:mount-assembley. In the end, you will need at least 2 mirrors to complete the next task. **Remember to wear latex/nitrile gloves or finger cots while handling optical components.** 
+1.  Get a laser and power supply from the "He-Ne Laser" drawer in the colored drawer cabinet found in your chosen or assigned optics bay. You'll also need two sets of 3D-printed laser tube mounts which you can find in the same drawer (see Figure @fig:tube-mount). The bottom mount first gets mounted to an optical post and then the top of the mount can be assembled with ¼-20 socket head cap screw and nut. After both sets of tube mounts are attached to the laser, insert the optical posts into post holders and attach the assembly to the optical table. We recommend placing the laser towards the rear of the optical table (under the shelf), oriented so the beam travels along the length of the table (parallel to the shelf). This layout leaves the front of the table clear for mounting the photodetector and translation stage you'll add later.
+2. Each person in your group is responsible for assembling a mirror as shown in Figure @fig:mount-assembley. In the end, you will need at least 2 mirrors to complete the next task. **Remember to wear latex/nitrile gloves or finger cots while handling optical components.** Mount one mirror at the far end of the table (opposite the laser) and the second closer to you, so that the laser beam propagates across the table and gives you plenty of space to mount additional components.
 
 *As you are mounting the optics, choose the heights so that the laser hits the center of each optic and the beam is parallel to the table.*
 
@@ -277,31 +152,82 @@ In Week 4, you will use this photodetector to measure beam profiles. Before movi
 
 3. You will use this photodetector at a single gain setting for most of Week 4's measurements. Which gain setting would you tentatively choose based on your calibration? (You will refine this choice in Week 2 after characterizing noise.) 
 
-# Verifying Uncertainty Methods (In-Lab)
+# Understanding Measurement Uncertainty
 
-In the prelab, you compared different uncertainty estimation methods using provided data. Now you will verify your understanding by applying these methods to real measurements with your photodetector.
+You've just calibrated your photodetector and recorded voltage values. But how confident should you be in those numbers? This section introduces measurement uncertainty—a core skill you'll use throughout this course and your scientific career.
 
 **Make sure that your laser has been turned on for at least 5 minutes so it has had the opportunity to warm up.**
 
-## Quick Verification Exercise
+## Your First Uncertainty Measurement
 
-Using the oscilloscope to measure your photodetector output voltage:
+Connect your photodetector to the oscilloscope and observe the voltage signal from the laser.
 
-1. **Measure using two methods:**
-   - Use the oscilloscope's RMS measurement function to record the mean and RMS fluctuations
-   - "Eyeball" the amplitude of fluctuations from the display
+**Step 1: Make a single measurement**
 
-2. **Compare to your prelab predictions:**
-   - In prelab Question 7, you predicted whether these methods would agree. Were you correct?
-   - If they differ, which method do you trust more? Why?
+Record the voltage you see on the oscilloscope: ______ V
 
-3. **Record in your notebook:**
-   - Mean voltage: ______ V
-   - RMS fluctuation (scope measurement): ______ V
-   - Estimated fluctuation (eyeball): ______ V
-   - Brief note on agreement/disagreement with prelab predictions
+Now ask yourself: *How confident are you in that number? If you looked away and looked back, would you get exactly the same value?*
 
-This brief verification ensures you can apply the concepts from the prelab to real measurements. You will develop more sophisticated noise characterization skills in Week 2.
+**Step 2: Watch the fluctuations**
+
+Observe the signal for 10-15 seconds. You'll notice the voltage isn't perfectly constant—it fluctuates.
+
+1. Estimate by eye: How large are the fluctuations? ±______ V
+2. What might cause these fluctuations? (List 2-3 possibilities in your notebook)
+
+**Step 3: Quantify with repeated measurements**
+
+Take 10 voltage readings, recording each value:
+
+| Reading | Voltage (V) |
+|---------|-------------|
+| 1 | |
+| 2 | |
+| 3 | |
+| 4 | |
+| 5 | |
+| 6 | |
+| 7 | |
+| 8 | |
+| 9 | |
+| 10 | |
+
+**Step 4: Calculate statistics**
+
+Using your 10 measurements, calculate:
+
+1. **Mean:** $\overline{V} = \frac{1}{N}\sum V_i$ = ______ V
+
+2. **Standard deviation:** $\sigma_V = \sqrt{\frac{1}{N-1}\sum(V_i - \overline{V})^2}$ = ______ V
+
+   This tells you the typical size of fluctuations in a *single* measurement.
+
+3. **Standard deviation of the mean:** $\sigma_{\overline{V}} = \frac{\sigma_V}{\sqrt{N}}$ = ______ V
+
+   This tells you the uncertainty in your *average* value.
+
+**Step 5: Compare methods**
+
+Now use the oscilloscope's built-in RMS measurement function to measure the fluctuations automatically.
+
+- Oscilloscope RMS reading: ______ V
+- Your calculated standard deviation: ______ V
+
+Do they agree? The oscilloscope's RMS function is essentially doing the same calculation you just did, but with many more samples.
+
+## Why This Matters
+
+**Reflection questions** (answer in your notebook):
+
+1. Your standard deviation of the mean ($\sigma_{\overline{V}}$) is smaller than the standard deviation ($\sigma_V$). Why does averaging multiple measurements reduce uncertainty?
+
+2. If you took 100 measurements instead of 10, how would $\sigma_{\overline{V}}$ change? (Hint: look at the formula)
+
+3. In your beam width measurements later today, you'll record voltage at each razor position. Based on what you just learned, how could you reduce uncertainty in those measurements?
+
+## The Key Insight
+
+Measurement uncertainty isn't a sign of failure—it's essential information about how much you can trust your data. In Week 2, you'll learn to characterize noise more systematically and use uncertainty to make quantitative decisions about your experimental setup.
 
 # Measuring the Beam Width
 
@@ -380,16 +306,11 @@ If you want to start early:
 
 Your lab notebook should include the following for this week:
 
-## Prelab (complete before arriving at lab)
-
-1. **Uncertainty methods analysis**: Answers to Questions 1-7 from the prelab
-2. **Data analysis results**: Calculated values from Methods A-D using the provided photodetector_samples.csv file
-
 ## In-Lab Documentation (recorded during lab)
 
 1. **Optical setup diagram** showing laser, mirrors, alignment discs, and photodetector positions
 2. **Photodetector calibration data**: offset voltage vs. gain setting, relative gain measurements
-3. **Uncertainty verification**: Brief comparison of oscilloscope measurements to prelab predictions
+3. **Uncertainty mini-lesson**: 10 voltage measurements, calculated statistics (mean, σ, σ_mean), and answers to the reflection questions
 4. **Knife-edge measurement data**: position vs. voltage (if completed)
 
 ## Analysis and Questions (can be completed after lab)
@@ -411,4 +332,4 @@ Before moving to Week 2, answer these questions:
    - Options: (a) Repeat the measurement, (b) Accept the datasheet value, (c) Investigate the cause, (d) Use your measured value
    - Justify your choice in 2-3 sentences.
 
-2. Based on your prelab analysis and in-lab verification, which uncertainty estimation method would you use for your beam width measurements? Why? 
+2. You took 10 measurements and calculated both σ (standard deviation) and σ_mean (standard deviation of the mean). Which would you report as the uncertainty in your voltage measurement? Why? 

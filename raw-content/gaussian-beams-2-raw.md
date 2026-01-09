@@ -55,7 +55,7 @@ After completing the lab, you will be able to:
 
 # Prelab
 
-This week's prelab builds on the uncertainty concepts you learned in the Week 1 prelab. Now we move from estimating uncertainties in individual measurements to fitting data and propagating those uncertainties to derived quantities. This is a "user's guide" to least-squares fitting and determining the goodness of your fits. At the end of the prelab you will be able to:
+This week's prelab builds on the uncertainty concepts you learned during Week 1's lab (where you measured voltage fluctuations and calculated standard deviation). Now we move from estimating uncertainties in individual measurements to fitting data and propagating those uncertainties to derived quantities. This is a "user's guide" to least-squares fitting and determining the goodness of your fits. At the end of the prelab you will be able to:
 
 1. Explain why we minimize the sum of squares to get the best fit.
 2. Carry out a least-squares minimization graphically.
