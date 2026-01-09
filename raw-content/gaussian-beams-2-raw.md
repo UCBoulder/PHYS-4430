@@ -429,6 +429,39 @@ In real experiments, these assumptions often fail. Consider these scenarios rele
 
 2. In Week 4, you'll extract beam waist $w_0$ from fits at multiple positions. Besides random noise in voltage measurements, what other sources of uncertainty should you consider? List at least two.
 
+### Random vs. Systematic Uncertainties
+
+Understanding the distinction between random and systematic uncertainties is crucial for proper error analysis. This distinction becomes especially important in Week 4 when you construct an uncertainty budget.
+
+**Random uncertainties** are unpredictable fluctuations that vary from measurement to measurement. They average out over many measurements—take 100 readings and compute the mean, and the random uncertainty in that mean decreases by $\sqrt{100} = 10$.
+
+Examples from this lab:
+- Voltage noise on the photodetector (varies each reading)
+- Thermal fluctuations in electronic components
+- Shot noise from random photon arrival times
+
+**Systematic uncertainties** are consistent biases that affect all measurements the same way. They do NOT average out—take 100 readings and the systematic error remains exactly the same.
+
+Examples from this lab:
+- Micrometer calibration offset (if it reads 0.02 mm high, ALL positions are 0.02 mm high)
+- DAQ voltage offset (shifts all readings by a fixed amount)
+- Beam not perfectly perpendicular to knife edge (consistent underestimate of width)
+
+**Why this matters for fitting:**
+
+`curve_fit` only sees random scatter around your fit function. It has no way to detect systematic offsets. If your micrometer is miscalibrated by 0.1 mm, the fit will find parameters that are systematically shifted, and `curve_fit` will not include this in the reported uncertainty.
+
+**Quick self-test:** Classify each of these as random (R) or systematic (S):
+
+1. The photodetector gain knob is actually at 28 dB when the label says 30 dB: _____
+2. 60 Hz pickup causing voltage fluctuations: _____
+3. The laser power slowly drifting over 30 minutes: _____ (tricky—think about whether it averages out)
+4. Room lights flickering: _____
+
+*Answers: 1=S, 2=R (if averaging over many cycles), 3=S (drift is correlated, doesn't average out), 4=R*
+
+In Week 4, when you construct your uncertainty budget, you will need to identify the dominant sources of both random AND systematic uncertainty, and combine them appropriately.
+
 ## Error bars
 
 The error bar is a graphical way to display the uncertainty in a measurement. In order to put error bars on a plot you must first estimate the error for each point. Anytime you include error bars in a plot you should explain how the uncertainty in each point was estimated (e.g., you "eyeballed" the uncertainty, or you sampled it $N$ times and took the standard deviation of the mean, etc.)

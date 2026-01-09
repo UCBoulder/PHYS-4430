@@ -204,6 +204,28 @@ The remarkable thing about all these equations is that only two parameters need 
 
 ![Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam width, $w$.](../resources/lab-guides/gaussian-laser-beams/gauss-hermite.png){#fig:gauss-hermite width="20cm"}
 
+## Physical Intuition Check
+
+Before applying these equations, test your physical understanding. Answer each question without looking at the equations, then verify with a calculation.
+
+1. **Scaling the waist:** If you double the beam waist $w_0$, what happens to:
+   - The divergence angle $\theta = \lambda / (\pi w_0)$ in the far field?
+   - The Rayleigh range $z_R = \pi w_0^2 / \lambda$?
+
+   *Intuition check:* A wider waist means the beam is more collimated (less divergent). Does your answer reflect this?
+
+2. **Distance to double:** At what distance from the waist does the beam width double (i.e., $w(z) = 2w_0$)?
+
+   *Hint:* Set up the equation and solve for $z$ in terms of $z_R$. The answer is a simple multiple of the Rayleigh range.
+
+3. **Wavelength dependence:** Two lasers have identical beam waists $w_0$, but one is red (633 nm) and one is blue (450 nm). Which beam diverges more rapidly? Why?
+
+4. **Conservation of energy:** As the beam expands, the width increases but the total power stays constant. What must happen to the peak intensity $I_{max}$ as $z$ increases? Write a proportionality relationship.
+
+5. **Beam quality check:** You measure a beam width of 0.8 mm at $z = 1$ m from the laser. Assuming $\lambda = 633$ nm, what is the minimum possible beam waist? (Hint: The waist could be inside or outside the laser cavity.)
+
+*Record your answers in your notebook. Getting physical intuition wrong is valuable—it reveals gaps in understanding that equations alone can hide.*
+
 ## Trying out the Gaussian beam model
 
 In the first week of the lab, we assumed the intensity profile of the Gaussian beam was given by $I(x,y)=I_{max}e^{-2(x^2+y^2)/w^2}$. The equation for the electric field of the Gaussian Beam in Equation @eq:8 looks substantially more complicated.
@@ -220,6 +242,43 @@ The Gaussian beam equations given in Equations @eq:8 -@eq:11 assume the beam com
     2. What are the different fit parameters and what do they mean?
     3. Is it a linear or nonlinear fit function? Why?
 6.  You should get that a beam waist of $w_0=(93.9\pm0.1)\times10^{-6}\ m$ and occurs at a position $z_w=0.3396\pm0.0003\ m$.
+
+## Beyond Beam Width: The Unmeasured Parameters
+
+The Gaussian beam solution contains four key quantities: the beam width $w(z)$, the wavefront radius of curvature $R(z)$, the Gouy phase $\zeta(z)$, and the peak amplitude. In Week 4, you will measure only $w(z)$ using the knife-edge technique. What about the others?
+
+### What we can and cannot measure with a knife edge
+
+The knife-edge profiler measures **intensity** as a function of position. This directly gives you $w(z)$, the beam width. However:
+
+- **$R(z)$ (radius of curvature):** This describes how the wavefronts are curved—flat at the waist, increasingly curved far away. A knife edge only sees intensity, not phase, so it cannot measure $R(z)$ directly.
+
+- **$\zeta(z)$ (Gouy phase):** This is a phase shift that accumulates as the beam passes through its waist. Like $R(z)$, it requires phase-sensitive measurements.
+
+### How would you measure R(z)?
+
+If you wanted to measure the wavefront curvature, you would need **interferometry**—combining your beam with a reference beam and analyzing the interference pattern. The spacing and curvature of interference fringes reveals $R(z)$.
+
+**Think about it:** Near the waist, $R(z) \to \infty$ (flat wavefronts). Far from the waist, $R(z) \approx z$ (spherical wavefronts centered on the waist). What does this tell you about how the beam's wavefronts evolve?
+
+### How would you measure ζ(z)?
+
+The Gouy phase shift is subtle—it's a $\pi$ total phase change as the beam goes from $z = -\infty$ to $z = +\infty$ through the waist. Detecting it requires:
+
+1. **Interferometry with a reference beam** that bypasses the focus
+2. **Mode-matching experiments** where the Gouy phase affects coupling efficiency
+
+The Gouy phase has practical consequences: it affects the resonant frequencies of laser cavities and the focal properties of lens systems.
+
+### Why does w(z) suffice for this lab?
+
+For characterizing a laser beam's propagation, $w(z)$ is often the most practically important parameter because:
+
+1. It determines the spot size for any application (machining, microscopy, communications)
+2. Combined with the wavelength $\lambda$, it uniquely determines the waist $w_0$ and waist position $z_w$
+3. Once you know $w_0$, you can *calculate* $R(z)$ and $\zeta(z)$ from the equations—you don't need to measure them separately
+
+**Reflection:** In what applications might you actually need to measure $R(z)$ or $\zeta(z)$ rather than just calculating them from $w_0$? (Hint: When might the theoretical relationship break down?)
 
 ## Prediction Exercise: What Will You Measure?
 

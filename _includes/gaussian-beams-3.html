@@ -6,13 +6,6 @@
       
       
       <title>PHYS 4430</title>
-            
-            <!-- pandoc-eqnos: equation style -->
-            <style>
-              .eqnos { display: inline-block; position: relative; width: 100%; }
-              .eqnos br { display: none; }
-              .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
-            </style>
          </head>
    <body>
             <div>
@@ -25,162 +18,227 @@
                   <h1 class="title">Contents</h1>
         <nav id="TOC">
             <ul>
-            <li><a href="#where-we-are-in-the-sequence"><span
+            <li><a href="#where-we-are-in-the-sequence"
+            id="toc-where-we-are-in-the-sequence"><span
             class="toc-section-number">1</span> Where We Are in the
             Sequence</a></li>
-            <li><a href="#overview"><span
+            <li><a href="#overview" id="toc-overview"><span
             class="toc-section-number">2</span> Overview</a></li>
-            <li><a href="#learning-goals"><span
+            <li><a href="#learning-goals" id="toc-learning-goals"><span
             class="toc-section-number">3</span> Learning Goals</a></li>
-            <li><a href="#prelab"><span
+            <li><a href="#prelab" id="toc-prelab"><span
             class="toc-section-number">4</span> Prelab</a>
             <ul>
-            <li><a href="#connecting-to-your-week-2-work"><span
+            <li><a href="#connecting-to-your-week-2-work"
+            id="toc-connecting-to-your-week-2-work"><span
             class="toc-section-number">4.1</span> Connecting to Your
             Week 2 Work</a></li>
             <li><a
-            href="#error-propagation---from-measured-to-derived-quantities"><span
+            href="#error-propagation---from-measured-to-derived-quantities"
+            id="toc-error-propagation---from-measured-to-derived-quantities"><span
             class="toc-section-number">4.2</span> Error propagation -
             from measured to derived quantities</a></li>
-            <li><a href="#error-propagation-in-python"><span
+            <li><a href="#error-propagation-in-python"
+            id="toc-error-propagation-in-python"><span
             class="toc-section-number">4.3</span> Error propagation in
             Python</a>
             <ul>
-            <li><a href="#approach-1-manual-calculation"><span
+            <li><a href="#approach-1-manual-calculation"
+            id="toc-approach-1-manual-calculation"><span
             class="toc-section-number">4.3.1</span> Approach 1: Manual
             calculation</a></li>
-            <li><a
-            href="#approach-2-using-the-uncertainties-package"><span
+            <li><a href="#approach-2-using-the-uncertainties-package"
+            id="toc-approach-2-using-the-uncertainties-package"><span
             class="toc-section-number">4.3.2</span> Approach 2: Using
             the <code>uncertainties</code> package</a></li>
-            <li><a href="#exercise-beam-width-uncertainty"><span
+            <li><a href="#exercise-beam-width-uncertainty"
+            id="toc-exercise-beam-width-uncertainty"><span
             class="toc-section-number">4.3.3</span> Exercise: Beam width
             uncertainty</a></li>
             </ul></li>
-            <li><a href="#gaussian-beam-theory"><span
+            <li><a href="#gaussian-beam-theory"
+            id="toc-gaussian-beam-theory"><span
             class="toc-section-number">4.4</span> Gaussian beam
             theory</a></li>
-            <li><a href="#sec:wave-eqn"><span
+            <li><a href="#sec:wave-eqn" id="toc-sec:wave-eqn"><span
             class="toc-section-number">4.5</span> Paraxial wave
             equation</a></li>
-            <li><a href="#trying-out-the-gaussian-beam-model"><span
-            class="toc-section-number">4.6</span> Trying out the
+            <li><a href="#physical-intuition-check"
+            id="toc-physical-intuition-check"><span
+            class="toc-section-number">4.6</span> Physical Intuition
+            Check</a></li>
+            <li><a href="#trying-out-the-gaussian-beam-model"
+            id="toc-trying-out-the-gaussian-beam-model"><span
+            class="toc-section-number">4.7</span> Trying out the
             Gaussian beam model</a></li>
+            <li><a href="#beyond-beam-width-the-unmeasured-parameters"
+            id="toc-beyond-beam-width-the-unmeasured-parameters"><span
+            class="toc-section-number">4.8</span> Beyond Beam Width: The
+            Unmeasured Parameters</a>
+            <ul>
             <li><a
-            href="#prediction-exercise-what-will-you-measure"><span
-            class="toc-section-number">4.7</span> Prediction Exercise:
+            href="#what-we-can-and-cannot-measure-with-a-knife-edge"
+            id="toc-what-we-can-and-cannot-measure-with-a-knife-edge"><span
+            class="toc-section-number">4.8.1</span> What we can and
+            cannot measure with a knife edge</a></li>
+            <li><a href="#how-would-you-measure-rz"
+            id="toc-how-would-you-measure-rz"><span
+            class="toc-section-number">4.8.2</span> How would you
+            measure R(z)?</a></li>
+            <li><a href="#how-would-you-measure-ζz"
+            id="toc-how-would-you-measure-ζz"><span
+            class="toc-section-number">4.8.3</span> How would you
+            measure ζ(z)?</a></li>
+            <li><a href="#why-does-wz-suffice-for-this-lab"
+            id="toc-why-does-wz-suffice-for-this-lab"><span
+            class="toc-section-number">4.8.4</span> Why does w(z)
+            suffice for this lab?</a></li>
+            </ul></li>
+            <li><a href="#prediction-exercise-what-will-you-measure"
+            id="toc-prediction-exercise-what-will-you-measure"><span
+            class="toc-section-number">4.9</span> Prediction Exercise:
             What Will You Measure?</a></li>
             </ul></li>
-            <li><a href="#fourier-analysis-techniques"><span
+            <li><a href="#fourier-analysis-techniques"
+            id="toc-fourier-analysis-techniques"><span
             class="toc-section-number">5</span> Fourier Analysis
             Techniques</a>
             <ul>
-            <li><a href="#introduction-to-fourier-transforms"><span
+            <li><a href="#introduction-to-fourier-transforms"
+            id="toc-introduction-to-fourier-transforms"><span
             class="toc-section-number">5.1</span> Introduction to
             Fourier Transforms</a>
             <ul>
-            <li><a href="#sec:basic-fourier"><span
+            <li><a href="#sec:basic-fourier"
+            id="toc-sec:basic-fourier"><span
             class="toc-section-number">5.1.1</span> Basic Fourier
             Concepts</a></li>
             </ul></li>
-            <li><a href="#computing-the-power-spectrum-in-python"><span
+            <li><a href="#computing-the-power-spectrum-in-python"
+            id="toc-computing-the-power-spectrum-in-python"><span
             class="toc-section-number">5.2</span> Computing the Power
             Spectrum in Python</a>
             <ul>
-            <li><a
-            href="#frequency-resolution-and-maximum-frequency"><span
+            <li><a href="#frequency-resolution-and-maximum-frequency"
+            id="toc-frequency-resolution-and-maximum-frequency"><span
             class="toc-section-number">5.2.1</span> Frequency Resolution
             and Maximum Frequency</a></li>
             </ul></li>
-            <li><a href="#building-a-real-time-spectral-analyzer"><span
+            <li><a href="#building-a-real-time-spectral-analyzer"
+            id="toc-building-a-real-time-spectral-analyzer"><span
             class="toc-section-number">5.3</span> Building a Real-Time
             Spectral Analyzer</a>
             <ul>
-            <li><a href="#code-modification-exercises"><span
+            <li><a href="#code-modification-exercises"
+            id="toc-code-modification-exercises"><span
             class="toc-section-number">5.3.1</span> Code Modification
             Exercises</a></li>
             </ul></li>
-            <li><a href="#exercises-spectral-analysis"><span
+            <li><a href="#exercises-spectral-analysis"
+            id="toc-exercises-spectral-analysis"><span
             class="toc-section-number">5.4</span> Exercises: Spectral
             Analysis</a>
             <ul>
-            <li><a href="#understanding-frequency-resolution"><span
+            <li><a href="#understanding-frequency-resolution"
+            id="toc-understanding-frequency-resolution"><span
             class="toc-section-number">5.4.1</span> Understanding
             Frequency Resolution</a></li>
-            <li><a href="#analyzing-different-waveforms"><span
+            <li><a href="#analyzing-different-waveforms"
+            id="toc-analyzing-different-waveforms"><span
             class="toc-section-number">5.4.2</span> Analyzing Different
             Waveforms</a></li>
             <li><a
-            href="#connecting-fft-to-your-gaussian-beams-experiment"><span
+            href="#connecting-fft-to-your-gaussian-beams-experiment"
+            id="toc-connecting-fft-to-your-gaussian-beams-experiment"><span
             class="toc-section-number">5.4.3</span> Connecting FFT to
             Your Gaussian Beams Experiment</a></li>
-            <li><a href="#analyzing-saved-data"><span
+            <li><a href="#analyzing-saved-data"
+            id="toc-analyzing-saved-data"><span
             class="toc-section-number">5.4.4</span> Analyzing Saved
             Data</a></li>
-            <li><a href="#exercises-with-saved-data"><span
+            <li><a href="#exercises-with-saved-data"
+            id="toc-exercises-with-saved-data"><span
             class="toc-section-number">5.4.5</span> Exercises with Saved
             Data</a></li>
             </ul></li>
             </ul></li>
-            <li><a href="#setting-up-the-motor-controller"><span
+            <li><a href="#setting-up-the-motor-controller"
+            id="toc-setting-up-the-motor-controller"><span
             class="toc-section-number">6</span> Setting Up the Motor
             Controller</a>
             <ul>
-            <li><a href="#hardware-overview"><span
+            <li><a href="#hardware-overview"
+            id="toc-hardware-overview"><span
             class="toc-section-number">6.1</span> Hardware
             Overview</a></li>
-            <li><a href="#software-prerequisites"><span
+            <li><a href="#software-prerequisites"
+            id="toc-software-prerequisites"><span
             class="toc-section-number">6.2</span> Software
             Prerequisites</a>
             <ul>
-            <li><a href="#thorlabs-kinesis-sdk"><span
+            <li><a href="#thorlabs-kinesis-sdk"
+            id="toc-thorlabs-kinesis-sdk"><span
             class="toc-section-number">6.2.1</span> 1. Thorlabs Kinesis
             SDK</a></li>
-            <li><a href="#python-packages"><span
+            <li><a href="#python-packages"
+            id="toc-python-packages"><span
             class="toc-section-number">6.2.2</span> 2. Python
             Packages</a></li>
             </ul></li>
-            <li><a href="#verifying-the-motor-connection"><span
+            <li><a href="#verifying-the-motor-connection"
+            id="toc-verifying-the-motor-connection"><span
             class="toc-section-number">6.3</span> Verifying the Motor
             Connection</a>
             <ul>
-            <li><a href="#test-that-windows-recognizes-the-device"><span
+            <li><a href="#test-that-windows-recognizes-the-device"
+            id="toc-test-that-windows-recognizes-the-device"><span
             class="toc-section-number">6.3.1</span> Test that Windows
             Recognizes the Device</a></li>
-            <li><a href="#test-basic-motor-communication"><span
+            <li><a href="#test-basic-motor-communication"
+            id="toc-test-basic-motor-communication"><span
             class="toc-section-number">6.3.2</span> Test Basic Motor
             Communication</a></li>
-            <li><a href="#test-motor-movement"><span
+            <li><a href="#test-motor-movement"
+            id="toc-test-motor-movement"><span
             class="toc-section-number">6.3.3</span> Test Motor
             Movement</a></li>
             </ul></li>
-            <li><a href="#motor-controller-troubleshooting"><span
+            <li><a href="#motor-controller-troubleshooting"
+            id="toc-motor-controller-troubleshooting"><span
             class="toc-section-number">6.4</span> Motor Controller
             Troubleshooting</a></li>
-            <li><a href="#exercise-verify-your-setup"><span
+            <li><a href="#exercise-verify-your-setup"
+            id="toc-exercise-verify-your-setup"><span
             class="toc-section-number">6.5</span> Exercise: Verify Your
             Setup</a></li>
-            <li><a href="#troubleshooting-reflection"><span
+            <li><a href="#troubleshooting-reflection"
+            id="toc-troubleshooting-reflection"><span
             class="toc-section-number">6.6</span> Troubleshooting
             Reflection</a></li>
             </ul></li>
-            <li><a href="#revisit-measuring-the-beam-width"><span
+            <li><a href="#revisit-measuring-the-beam-width"
+            id="toc-revisit-measuring-the-beam-width"><span
             class="toc-section-number">7</span> Revisit Measuring the
             Beam Width</a></li>
-            <li><a href="#deliverables-and-assessment"><span
+            <li><a href="#deliverables-and-assessment"
+            id="toc-deliverables-and-assessment"><span
             class="toc-section-number">8</span> Deliverables and
             Assessment</a>
             <ul>
-            <li><a href="#prelab-complete-before-lab"><span
+            <li><a href="#prelab-complete-before-lab"
+            id="toc-prelab-complete-before-lab"><span
             class="toc-section-number">8.1</span> Prelab (complete
             before lab)</a></li>
-            <li><a href="#in-lab-documentation"><span
+            <li><a href="#in-lab-documentation"
+            id="toc-in-lab-documentation"><span
             class="toc-section-number">8.2</span> In-Lab
             Documentation</a></li>
-            <li><a href="#code-deliverables"><span
+            <li><a href="#code-deliverables"
+            id="toc-code-deliverables"><span
             class="toc-section-number">8.3</span> Code
             Deliverables</a></li>
-            <li><a href="#reflection-questions"><span
+            <li><a href="#reflection-questions"
+            id="toc-reflection-questions"><span
             class="toc-section-number">8.4</span> Reflection
             Questions</a></li>
             </ul></li>
@@ -423,19 +481,17 @@
          field. The general principles which govern electromagnetic
          waves are Maxwell’s equations. From these general relations, a
          vector wave equation can be derived.</p>
-         <p><span id="eq:1" class="eqnos"><span class="math display">\[
+         <p><span class="math display">\[
          \nabla^2\vec{E}=\mu_0\epsilon_0
-         \frac{\partial^2\vec{E}}{\partial
-         t^2}\text{.}\]</span><span class="eqnos-number">(1)</span></span>
-         </p>
+         \frac{\partial^2\vec{E}}{\partial t^2}\text{.}\]</span>
+         {#eq:1}</p>
          <p>One of the simplest solutions is that of a plane wave
          propagating in the <span class="math inline">\(\hat{z}\)</span>
          direction:</p>
-         <p><span id="eq:2" class="eqnos"><span
+         <p><span
          class="math display">\[\vec{E}(x,y,z,t)=E_x\hat{x}cos(kz-\omega
          t+\phi_x)+E_y\hat{y}cos(kz-\omega
-         t+\phi_y)\text{.}\quad\quad\]</span><span class="eqnos-number">(2)</span></span>
-         </p>
+         t+\phi_y)\text{.}\quad\quad\]</span> {#eq:2}</p>
          <p>But as the measurements from the first week showed, our
          laser beams are commonly well approximated by a beam shape with
          a Gaussian intensity profile. Apparently, since these Gaussian
@@ -452,10 +508,9 @@
          class="math inline">\(\hat{z}\)</span>-direction, with the
          electric field polarization in the <span
          class="math inline">\(\hat{x}\)</span>-direction:</p>
-         <p><span id="eq:3" class="eqnos"><span
+         <p><span
          class="math display">\[\vec{E}(x,y,z,t)=\hat{x}A(x,y,z)e^{kz-\omega
-         t}\text{.}\]</span><span class="eqnos-number">(3)</span></span>
-         </p>
+         t}\text{.}\]</span> {#eq:3}</p>
          <p>The basic idea is that the spatial pattern of the beam,
          described by the function <span
          class="math inline">\(A(x,y,z)\)</span>, does not change much
@@ -463,17 +518,17 @@
          function <span class="math inline">\(A(x,y,z)\)</span> is a
          Gaussian profile that changes its width as a function of <span
          class="math inline">\(z\)</span>. If we substitute the trial
-         solution in Equation <a href="#eq:3">3</a> into the wave
-         equation in Equation <a href="#eq:1">1</a> we get</p>
-         <p><span id="eq:4" class="eqnos"><span
-         class="math display">\[\hat{x} \left[
+         solution in Equation <span class="citation"
+         data-cites="eq:3">@eq:3</span> into the wave equation in
+         Equation <span class="citation" data-cites="eq:1">@eq:1</span>
+         we get</p>
+         <p><span class="math display">\[\hat{x} \left[
          \left(\frac{\partial^2A}{\partial x^2}
          +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial
          z^2} \right) +2ik\frac{\partial A}{\partial z} - k^2A
          \right]e^{i(kz-\omega
          t)}=\hat{x}\mu_0\epsilon_oA(-\omega^2)e^{i(kz-\omega
-         t)}\text{.}\quad\quad\]</span><span class="eqnos-number">(4)</span></span>
-         </p>
+         t)}\text{.}\quad\quad\]</span> {#eq:4}</p>
          <p>This can be simplified recognizing that <span
          class="math inline">\(k^2=\omega^2/c^2=\mu_0\epsilon_0\omega^2\)</span>,
          where the speed of light is related to the permeability and
@@ -482,108 +537,145 @@
          Also, the <span class="math inline">\(\hat{x}e^{i(kz-\omega
          t)}\)</span> term is common to both sides and can be dropped,
          which results in</p>
-         <p><span id="eq:5" class="eqnos"><span
+         <p><span
          class="math display">\[\left(\frac{\partial^2A}{\partial x^2}
          +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial
          z^2} \right) +2ik\frac{\partial A}{\partial
-         z}=0\text{.}\quad\quad\]</span><span class="eqnos-number">(5)</span></span>
-         </p>
+         z}=0\text{.}\quad\quad\]</span> {#eq:5}</p>
          <p>So far, we have made no approximation to the solution or the
          wave equation, but now we apply the assumption that <span
          class="math inline">\(\partial{A}(x,y,z)/\partial{z}\)</span>
          changes slowly over a wavelength <span
          class="math inline">\(\lambda = 2\pi /k\)</span>, so we neglect
          the term</p>
-         <p><span id="eq:6" class="eqnos"><span
-         class="math display">\[\left| \frac{\partial^2A}{\partial z^2}
-         \right| \ll \left|2k\frac{\partial A}{\partial
-         z}\right|\text{.}\]</span><span class="eqnos-number">(6)</span></span>
-         </p>
+         <p><span class="math display">\[\left|
+         \frac{\partial^2A}{\partial z^2} \right| \ll
+         \left|2k\frac{\partial A}{\partial z}\right|\text{.}\]</span>
+         {#eq:6}</p>
          <p>Finally, we get the paraxial wave equation,</p>
-         <p><span id="eq:7" class="eqnos"><span
-         class="math display">\[\frac{\partial^2A}{\partial x^2}
-         +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial
-         z^2}=0\text{.}\]</span><span class="eqnos-number">(7)</span></span>
-         </p>
+         <p><span class="math display">\[\frac{\partial^2A}{\partial
+         x^2} +\frac{\partial^2A}{\partial y^2}
+         +\frac{\partial^2A}{\partial z^2}=0\text{.}\]</span>
+         {#eq:7}</p>
          <p>One set of solutions to the paraxial wave equation are
          Gauss-Hermite beams, which have an intensity profiles like
-         those shown in Figure <a href="#fig:gauss-hermite">1</a>. These
+         those shown in Figure <span class="citation"
+         data-cites="fig:gauss-hermite">@fig:gauss-hermite</span>. These
          are the same solutions as for the quantum simple harmonic
          oscillator, a topic that could be further explored as a final
          project.</p>
          <p>The simplest of these solutions is the Gaussian beam, which
          has an electric field given by</p>
-         <p><span id="eq:8" class="eqnos"><span
-         class="math display">\[\vec{E}(x,y,z,t) =
+         <p><span class="math display">\[\vec{E}(x,y,z,t) =
          \vec{E}_0\frac{w_0}{w(z)}exp\left(-\frac{x^2+y^2}{w^2(z)}\right)exp\left(ik\frac{x^2+y^2}{2R(z)}\right)e^{-i\zeta(z)}e^{i(kz-\omega
-         t)}\text{,}\quad\quad\]</span><span class="eqnos-number">(8)</span></span>
-         </p>
+         t)}\text{,}\quad\quad\]</span> {#eq:8}</p>
          <p>where <span class="math inline">\(\vec{E_0}\)</span> is a
          time-independent vector (orthogonal to propagation direction
          <span class="math inline">\(\hat{z}\)</span>) whose magnitude
          denotes the amplitude of the laser’s electric field and the
          direction denotes the direction of polarization. The beam
          radius <span class="math inline">\(w(z)\)</span>is given by</p>
-         <p><span id="eq:9" class="eqnos"><span
+         <p><span
          class="math display">\[w(z)=w_0\sqrt{1+\left(\frac{\lambda
-         z}{\pi
-         w_0^2}\right)^2}\text{.}\]</span><span class="eqnos-number">(9)</span></span>
-         </p>
+         z}{\pi w_0^2}\right)^2}\text{.}\]</span> {#eq:9}</p>
          <p><span class="math inline">\(R(z)\)</span>,the radius of
          curvature of the wavefront, is given by</p>
-         <p><span id="eq:10" class="eqnos"><span
-         class="math display">\[R(z)=z\left(1+\left(\frac{\pi
-         w_0^2}{\lambda
-         z}\right)^2\right)\text{,}\]</span><span class="eqnos-number">(10)</span></span>
-         </p>
+         <p><span class="math display">\[R(z)=z\left(1+\left(\frac{\pi
+         w_0^2}{\lambda z}\right)^2\right)\text{,}\]</span> {#eq:10}</p>
          <p>and the Gouy phase is given by</p>
-         <p><span id="eq:11" class="eqnos"><span
-         class="math display">\[\zeta(z)=arctan\frac{\pi w_0^2}{\lambda
-         z}\text{.}\]</span><span class="eqnos-number">(11)</span></span>
-         </p>
+         <p><span class="math display">\[\zeta(z)=arctan\frac{\pi
+         w_0^2}{\lambda z}\text{.}\]</span> {#eq:11}</p>
          <p>The remarkable thing about all these equations is that only
          two parameters need to be specified to give the whole beam
          profile: the wavelength <span
          class="math inline">\(\lambda\)</span> and the beam waist <span
          class="math inline">\(w_0\)</span>, which is the narrowest
          point in the beam profile. There is a more general set of
-         Hermite Gaussian modes which are shown in Figure <a
-         href="#fig:gauss-hermite">1</a>. The laser cavity typically
-         produces the (0,0) mode shown in the upper left corner, but an
-         optical cavity can also be used to create these other modes – a
-         topic that can be explored in the final projects.</p>
-         <div id="fig:gauss-hermite" class="fignos">
-         <figure>
+         Hermite Gaussian modes which are shown in Figure <span
+         class="citation"
+         data-cites="fig:gauss-hermite">@fig:gauss-hermite</span>. The
+         laser cavity typically produces the (0,0) mode shown in the
+         upper left corner, but an optical cavity can also be used to
+         create these other modes – a topic that can be explored in the
+         final projects.</p>
+         <figure id="fig:gauss-hermite">
          <img
          src="../resources/lab-guides/gaussian-laser-beams/gauss-hermite.png"
          style="width:20cm"
-         alt="Figure 1: Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam width, w." />
-         <figcaption aria-hidden="true"><span>Figure 1:</span> Intensity
-         distributions for the lowest order Gauss-Hermite solutions to
-         the paraxial wave equation. The axes are in units of the beam
-         width, <span class="math inline">\(w\)</span>.</figcaption>
+         alt="Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam width, w." />
+         <figcaption aria-hidden="true">Intensity distributions for the
+         lowest order Gauss-Hermite solutions to the paraxial wave
+         equation. The axes are in units of the beam width, <span
+         class="math inline">\(w\)</span>.</figcaption>
          </figure>
-         </div>
-         <h2 data-number="4.6"
+         <h2 data-number="4.6" id="physical-intuition-check"><span
+         class="header-section-number">4.6</span> Physical Intuition
+         Check</h2>
+         <p>Before applying these equations, test your physical
+         understanding. Answer each question without looking at the
+         equations, then verify with a calculation.</p>
+         <ol type="1">
+         <li><p><strong>Scaling the waist:</strong> If you double the
+         beam waist <span class="math inline">\(w_0\)</span>, what
+         happens to:</p>
+         <ul>
+         <li>The divergence angle <span class="math inline">\(\theta =
+         \lambda / (\pi w_0)\)</span> in the far field?</li>
+         <li>The Rayleigh range <span class="math inline">\(z_R = \pi
+         w_0^2 / \lambda\)</span>?</li>
+         </ul>
+         <p><em>Intuition check:</em> A wider waist means the beam is
+         more collimated (less divergent). Does your answer reflect
+         this?</p></li>
+         <li><p><strong>Distance to double:</strong> At what distance
+         from the waist does the beam width double (i.e., <span
+         class="math inline">\(w(z) = 2w_0\)</span>)?</p>
+         <p><em>Hint:</em> Set up the equation and solve for <span
+         class="math inline">\(z\)</span> in terms of <span
+         class="math inline">\(z_R\)</span>. The answer is a simple
+         multiple of the Rayleigh range.</p></li>
+         <li><p><strong>Wavelength dependence:</strong> Two lasers have
+         identical beam waists <span class="math inline">\(w_0\)</span>,
+         but one is red (633 nm) and one is blue (450 nm). Which beam
+         diverges more rapidly? Why?</p></li>
+         <li><p><strong>Conservation of energy:</strong> As the beam
+         expands, the width increases but the total power stays
+         constant. What must happen to the peak intensity <span
+         class="math inline">\(I_{max}\)</span> as <span
+         class="math inline">\(z\)</span> increases? Write a
+         proportionality relationship.</p></li>
+         <li><p><strong>Beam quality check:</strong> You measure a beam
+         width of 0.8 mm at <span class="math inline">\(z = 1\)</span> m
+         from the laser. Assuming <span class="math inline">\(\lambda =
+         633\)</span> nm, what is the minimum possible beam waist?
+         (Hint: The waist could be inside or outside the laser
+         cavity.)</p></li>
+         </ol>
+         <p><em>Record your answers in your notebook. Getting physical
+         intuition wrong is valuable—it reveals gaps in understanding
+         that equations alone can hide.</em></p>
+         <h2 data-number="4.7"
          id="trying-out-the-gaussian-beam-model"><span
-         class="header-section-number">4.6</span> Trying out the
+         class="header-section-number">4.7</span> Trying out the
          Gaussian beam model</h2>
          <p>In the first week of the lab, we assumed the intensity
          profile of the Gaussian beam was given by <span
          class="math inline">\(I(x,y)=I_{max}e^{-2(x^2+y^2)/w^2}\)</span>.
          The equation for the electric field of the Gaussian Beam in
-         Equation <a href="#eq:8">8</a> looks substantially more
-         complicated.</p>
+         Equation <span class="citation" data-cites="eq:8">@eq:8</span>
+         looks substantially more complicated.</p>
          <ol type="1">
          <li>How are the expressions for electric field and intensity
          related?</li>
-         <li>Is Equation <a href="#eq:8">8</a> consistent with the
-         simple expression for intensity <span
+         <li>Is Equation <span class="citation"
+         data-cites="eq:8">@eq:8</span> consistent with the simple
+         expression for intensity <span
          class="math inline">\(I(x,y)=I_{max}e^{-2(x^2+y^2)/w^2}\)</span>?</li>
          </ol>
-         <p>The Gaussian beam equations given in Equations <a
-         href="#eq:8">8</a> -<a href="#eq:11">11</a> assume the beam
-         comes to its narrowest width (called the beam waist, <span
+         <p>The Gaussian beam equations given in Equations <span
+         class="citation" data-cites="eq:8">@eq:8</span> <span
+         class="citation" data-cites="eq:11">@eq:11</span> assume the
+         beam comes to its narrowest width (called the beam waist, <span
          class="math inline">\(w_0\)</span>) at <span
          class="math inline">\(z=0\)</span>.</p>
          <ol start="3" type="1">
@@ -591,8 +683,9 @@
          beam waist occurs at a different position <span
          class="math inline">\(z=z_w\)</span>?</li>
          <li>One way to check your answer is to make sure the equations
-         simplify to Equations <a href="#eq:8">8</a> -<a
-         href="#eq:11">11</a> in the special case of <span
+         simplify to Equations <span class="citation"
+         data-cites="eq:8">@eq:8</span> <span class="citation"
+         data-cites="eq:11">@eq:11</span> in the special case of <span
          class="math inline">\(z_w=0\)</span>.</li>
          <li>Write a Python function to fit <a
          href="../resources/lab-guides/gaussian-laser-beams/Test_beam_width_data.csv">this
@@ -609,9 +702,99 @@
          and occurs at a position <span
          class="math inline">\(z_w=0.3396\pm0.0003\ m\)</span>.</li>
          </ol>
-         <h2 data-number="4.7"
+         <h2 data-number="4.8"
+         id="beyond-beam-width-the-unmeasured-parameters"><span
+         class="header-section-number">4.8</span> Beyond Beam Width: The
+         Unmeasured Parameters</h2>
+         <p>The Gaussian beam solution contains four key quantities: the
+         beam width <span class="math inline">\(w(z)\)</span>, the
+         wavefront radius of curvature <span
+         class="math inline">\(R(z)\)</span>, the Gouy phase <span
+         class="math inline">\(\zeta(z)\)</span>, and the peak
+         amplitude. In Week 4, you will measure only <span
+         class="math inline">\(w(z)\)</span> using the knife-edge
+         technique. What about the others?</p>
+         <h3 data-number="4.8.1"
+         id="what-we-can-and-cannot-measure-with-a-knife-edge"><span
+         class="header-section-number">4.8.1</span> What we can and
+         cannot measure with a knife edge</h3>
+         <p>The knife-edge profiler measures <strong>intensity</strong>
+         as a function of position. This directly gives you <span
+         class="math inline">\(w(z)\)</span>, the beam width.
+         However:</p>
+         <ul>
+         <li><p><strong><span class="math inline">\(R(z)\)</span>
+         (radius of curvature):</strong> This describes how the
+         wavefronts are curved—flat at the waist, increasingly curved
+         far away. A knife edge only sees intensity, not phase, so it
+         cannot measure <span class="math inline">\(R(z)\)</span>
+         directly.</p></li>
+         <li><p><strong><span class="math inline">\(\zeta(z)\)</span>
+         (Gouy phase):</strong> This is a phase shift that accumulates
+         as the beam passes through its waist. Like <span
+         class="math inline">\(R(z)\)</span>, it requires
+         phase-sensitive measurements.</p></li>
+         </ul>
+         <h3 data-number="4.8.2" id="how-would-you-measure-rz"><span
+         class="header-section-number">4.8.2</span> How would you
+         measure R(z)?</h3>
+         <p>If you wanted to measure the wavefront curvature, you would
+         need <strong>interferometry</strong>—combining your beam with a
+         reference beam and analyzing the interference pattern. The
+         spacing and curvature of interference fringes reveals <span
+         class="math inline">\(R(z)\)</span>.</p>
+         <p><strong>Think about it:</strong> Near the waist, <span
+         class="math inline">\(R(z) \to \infty\)</span> (flat
+         wavefronts). Far from the waist, <span
+         class="math inline">\(R(z) \approx z\)</span> (spherical
+         wavefronts centered on the waist). What does this tell you
+         about how the beam’s wavefronts evolve?</p>
+         <h3 data-number="4.8.3" id="how-would-you-measure-ζz"><span
+         class="header-section-number">4.8.3</span> How would you
+         measure ζ(z)?</h3>
+         <p>The Gouy phase shift is subtle—it’s a <span
+         class="math inline">\(\pi\)</span> total phase change as the
+         beam goes from <span class="math inline">\(z = -\infty\)</span>
+         to <span class="math inline">\(z = +\infty\)</span> through the
+         waist. Detecting it requires:</p>
+         <ol type="1">
+         <li><strong>Interferometry with a reference beam</strong> that
+         bypasses the focus</li>
+         <li><strong>Mode-matching experiments</strong> where the Gouy
+         phase affects coupling efficiency</li>
+         </ol>
+         <p>The Gouy phase has practical consequences: it affects the
+         resonant frequencies of laser cavities and the focal properties
+         of lens systems.</p>
+         <h3 data-number="4.8.4"
+         id="why-does-wz-suffice-for-this-lab"><span
+         class="header-section-number">4.8.4</span> Why does w(z)
+         suffice for this lab?</h3>
+         <p>For characterizing a laser beam’s propagation, <span
+         class="math inline">\(w(z)\)</span> is often the most
+         practically important parameter because:</p>
+         <ol type="1">
+         <li>It determines the spot size for any application (machining,
+         microscopy, communications)</li>
+         <li>Combined with the wavelength <span
+         class="math inline">\(\lambda\)</span>, it uniquely determines
+         the waist <span class="math inline">\(w_0\)</span> and waist
+         position <span class="math inline">\(z_w\)</span></li>
+         <li>Once you know <span class="math inline">\(w_0\)</span>, you
+         can <em>calculate</em> <span
+         class="math inline">\(R(z)\)</span> and <span
+         class="math inline">\(\zeta(z)\)</span> from the equations—you
+         don’t need to measure them separately</li>
+         </ol>
+         <p><strong>Reflection:</strong> In what applications might you
+         actually need to measure <span
+         class="math inline">\(R(z)\)</span> or <span
+         class="math inline">\(\zeta(z)\)</span> rather than just
+         calculating them from <span class="math inline">\(w_0\)</span>?
+         (Hint: When might the theoretical relationship break down?)</p>
+         <h2 data-number="4.9"
          id="prediction-exercise-what-will-you-measure"><span
-         class="header-section-number">4.7</span> Prediction Exercise:
+         class="header-section-number">4.9</span> Prediction Exercise:
          What Will You Measure?</h2>
          <p>Before taking beam width measurements in Week 4, make
          quantitative predictions using the Gaussian beam model. This
@@ -644,21 +827,21 @@
          laser output):</p>
          <table>
          <thead>
-         <tr class="header">
+         <tr>
          <th>Position</th>
          <th>Predicted <span class="math inline">\(w(z)\)</span></th>
          </tr>
          </thead>
          <tbody>
-         <tr class="odd">
+         <tr>
          <td><span class="math inline">\(z = 0.5\)</span> m</td>
          <td>_______ mm</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td><span class="math inline">\(z = 1.0\)</span> m</td>
          <td>_______ mm</td>
          </tr>
-         <tr class="odd">
+         <tr>
          <td><span class="math inline">\(z = 2.0\)</span> m</td>
          <td>_______ mm</td>
          </tr>
@@ -947,8 +1130,8 @@
          Transform correspond to?</p></li>
          <li><p>How many points are shown in the spectral analysis plot?
          How does this compare to the number of points you expected in
-         the Fourier transform (see Section <a
-         href="#sec:basic-fourier">5.1.1</a>.4)?</p>
+         the Fourier transform (see Section <span class="citation"
+         data-cites="sec:basic-fourier">@sec:basic-fourier</span>.4)?</p>
          <p><strong>Note</strong>: The data acquired from the DAQ is
          always a sequence of real numbers <span
          class="math inline">\(\{y_n\}\)</span>. Under the condition
@@ -1216,7 +1399,7 @@
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Add Kinesis .NET assemblies</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:\Program Files\Thorlabs\Kinesis&quot;</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:</span><span class="er">\</span><span class="vs">Program Files</span><span class="er">\</span><span class="vs">Thorlabs</span><span class="dv">\K</span><span class="vs">inesis&quot;</span>)</span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.DeviceManagerCLI&quot;</span>)</span>
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.KCube.StepperMotorCLI&quot;</span>)</span>
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
@@ -1245,7 +1428,7 @@
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> decimal <span class="im">import</span> Decimal</span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:\Program Files\Thorlabs\Kinesis&quot;</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:</span><span class="er">\</span><span class="vs">Program Files</span><span class="er">\</span><span class="vs">Thorlabs</span><span class="dv">\K</span><span class="vs">inesis&quot;</span>)</span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.DeviceManagerCLI&quot;</span>)</span>
 <span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.KCube.StepperMotorCLI&quot;</span>)</span>
 <span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.GenericMotorCLI&quot;</span>)</span>
@@ -1309,14 +1492,14 @@
          Setup</h2>
          <p>Before leaving lab today, verify that:</p>
          <ol type="1">
-         <li><input type="checkbox" disabled="" />
-         The DAQ can read voltages from the photodetector</li>
-         <li><input type="checkbox" disabled="" />
-         Python can connect to the motor controller</li>
-         <li><input type="checkbox" disabled="" />
-         The motor moves when commanded</li>
-         <li><input type="checkbox" disabled="" />
-         You have noted your motor’s serial number: ____________</li>
+         <li><label><input type="checkbox" />The DAQ can read voltages
+         from the photodetector</label></li>
+         <li><label><input type="checkbox" />Python can connect to the
+         motor controller</label></li>
+         <li><label><input type="checkbox" />The motor moves when
+         commanded</label></li>
+         <li><label><input type="checkbox" />You have noted your motor’s
+         serial number: ____________</label></li>
          </ol>
          <p>This setup will be essential for the automated measurements
          in Week 4.</p>

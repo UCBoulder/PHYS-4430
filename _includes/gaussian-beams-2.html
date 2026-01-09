@@ -6,13 +6,6 @@
       
       
       <title>PHYS 4430</title>
-            
-            <!-- pandoc-eqnos: equation style -->
-            <style>
-              .eqnos { display: inline-block; position: relative; width: 100%; }
-              .eqnos br { display: none; }
-              .eqnos-number { position: absolute; right: 0em; top: 50%; line-height: 0; }
-            </style>
          </head>
    <body>
             <div>
@@ -25,273 +18,327 @@
                   <h1 class="title">Contents</h1>
         <nav id="TOC">
             <ul>
-            <li><a href="#where-we-are-in-the-sequence"><span
+            <li><a href="#where-we-are-in-the-sequence"
+            id="toc-where-we-are-in-the-sequence"><span
             class="toc-section-number">1</span> Where We Are in the
             Sequence</a></li>
-            <li><a href="#overview"><span
+            <li><a href="#overview" id="toc-overview"><span
             class="toc-section-number">2</span> Overview</a>
             <ul>
-            <li><a href="#what-is-python"><span
+            <li><a href="#what-is-python" id="toc-what-is-python"><span
             class="toc-section-number">2.1</span> What is
             Python?</a></li>
-            <li><a href="#learning-goals"><span
+            <li><a href="#learning-goals" id="toc-learning-goals"><span
             class="toc-section-number">2.2</span> Learning
             Goals</a></li>
             </ul></li>
-            <li><a href="#prelab"><span
+            <li><a href="#prelab" id="toc-prelab"><span
             class="toc-section-number">3</span> Prelab</a>
             <ul>
-            <li><a href="#useful-readings"><span
+            <li><a href="#useful-readings"
+            id="toc-useful-readings"><span
             class="toc-section-number">3.1</span> Useful
             readings</a></li>
-            <li><a href="#why-do-we-minimize-the-sum-of-squares"><span
+            <li><a href="#why-do-we-minimize-the-sum-of-squares"
+            id="toc-why-do-we-minimize-the-sum-of-squares"><span
             class="toc-section-number">3.2</span> Why do we minimize the
             sum of squares?</a></li>
-            <li><a href="#sec:min-graph"><span
+            <li><a href="#sec:min-graph" id="toc-sec:min-graph"><span
             class="toc-section-number">3.3</span> Minimizing <span
             class="math inline">\(\chi^2\)</span> graphically</a></li>
-            <li><a href="#uncertainty-in-the-fit-parameters"><span
+            <li><a href="#uncertainty-in-the-fit-parameters"
+            id="toc-uncertainty-in-the-fit-parameters"><span
             class="toc-section-number">3.4</span> Uncertainty in the fit
             parameters</a></li>
-            <li><a href="#estimating-the-uncertainty-in-the-data"><span
+            <li><a href="#estimating-the-uncertainty-in-the-data"
+            id="toc-estimating-the-uncertainty-in-the-data"><span
             class="toc-section-number">3.5</span> Estimating the
             uncertainty in the data</a></li>
-            <li><a href="#goodness-of-fit"><span
+            <li><a href="#goodness-of-fit"
+            id="toc-goodness-of-fit"><span
             class="toc-section-number">3.6</span> Goodness of fit</a>
             <ul>
-            <li><a href="#sec:plot-res"><span
+            <li><a href="#sec:plot-res" id="toc-sec:plot-res"><span
             class="toc-section-number">3.6.1</span> Plotting the fit
             residuals</a></li>
-            <li><a
-            href="#chi-by-eye---eyeballing-the-goodness-of-fit"><span
+            <li><a href="#chi-by-eye---eyeballing-the-goodness-of-fit"
+            id="toc-chi-by-eye---eyeballing-the-goodness-of-fit"><span
             class="toc-section-number">3.6.2</span> “Chi by eye” -
             eyeballing the goodness of fit</a></li>
             <li><a
-            href="#chi2-and-chi_red2-for-testing-the-goodness-of-fit"><span
+            href="#chi2-and-chi_red2-for-testing-the-goodness-of-fit"
+            id="toc-chi2-and-chi_red2-for-testing-the-goodness-of-fit"><span
             class="toc-section-number">3.6.3</span> <span
             class="math inline">\(\chi^2\)</span> and <span
             class="math inline">\(\chi_{red}^2\)</span> for testing the
             “goodness” of fit</a></li>
             <li><a
-            href="#choosing-a-strategy-to-estimate-the-uncertainty"><span
+            href="#choosing-a-strategy-to-estimate-the-uncertainty"
+            id="toc-choosing-a-strategy-to-estimate-the-uncertainty"><span
             class="toc-section-number">3.6.4</span> Choosing a strategy
             to estimate the uncertainty</a></li>
-            <li><a href="#weighted-fits"><span
+            <li><a href="#weighted-fits" id="toc-weighted-fits"><span
             class="toc-section-number">3.6.5</span> Weighted
             fits</a></li>
             <li><a
-            href="#why-is-it-often-bad-to-overestimate-uncertainties"><span
+            href="#why-is-it-often-bad-to-overestimate-uncertainties"
+            id="toc-why-is-it-often-bad-to-overestimate-uncertainties"><span
             class="toc-section-number">3.6.6</span> Why is it often bad
             to overestimate uncertainties?</a></li>
             <li><a
-            href="#when-does-curve_fit-underestimate-the-true-uncertainty"><span
+            href="#when-does-curve_fit-underestimate-the-true-uncertainty"
+            id="toc-when-does-curve_fit-underestimate-the-true-uncertainty"><span
             class="toc-section-number">3.6.7</span> When does
             <code>curve_fit</code> underestimate the true
             uncertainty?</a></li>
+            <li><a href="#random-vs.-systematic-uncertainties"
+            id="toc-random-vs.-systematic-uncertainties"><span
+            class="toc-section-number">3.6.8</span> Random
+            vs. Systematic Uncertainties</a></li>
             </ul></li>
-            <li><a href="#error-bars"><span
+            <li><a href="#error-bars" id="toc-error-bars"><span
             class="toc-section-number">3.7</span> Error bars</a>
             <ul>
-            <li><a href="#error-bars-in-python-with-matplotlib"><span
+            <li><a href="#error-bars-in-python-with-matplotlib"
+            id="toc-error-bars-in-python-with-matplotlib"><span
             class="toc-section-number">3.7.1</span> Error bars in Python
             with Matplotlib</a></li>
-            <li><a
-            href="#example-gaussian-laser-beam-width-measurement"><span
+            <li><a href="#example-gaussian-laser-beam-width-measurement"
+            id="toc-example-gaussian-laser-beam-width-measurement"><span
             class="toc-section-number">3.7.2</span> Example: Gaussian
             laser beam width measurement</a></li>
             </ul></li>
             <li><a
-            href="#prelab-exercise-error-function-fitting-practice"><span
+            href="#prelab-exercise-error-function-fitting-practice"
+            id="toc-prelab-exercise-error-function-fitting-practice"><span
             class="toc-section-number">3.8</span> Prelab Exercise: Error
             Function Fitting Practice</a>
             <ul>
-            <li><a href="#the-error-function-model"><span
+            <li><a href="#the-error-function-model"
+            id="toc-the-error-function-model"><span
             class="toc-section-number">3.8.1</span> The Error Function
             Model</a></li>
-            <li><a href="#practice-exercise"><span
+            <li><a href="#practice-exercise"
+            id="toc-practice-exercise"><span
             class="toc-section-number">3.8.2</span> Practice
             Exercise</a></li>
             </ul></li>
             </ul></li>
-            <li><a
-            href="#introduction-to-python-for-data-acquisition"><span
+            <li><a href="#introduction-to-python-for-data-acquisition"
+            id="toc-introduction-to-python-for-data-acquisition"><span
             class="toc-section-number">4</span> Introduction to Python
             for Data Acquisition</a>
             <ul>
-            <li><a href="#development-environment"><span
+            <li><a href="#development-environment"
+            id="toc-development-environment"><span
             class="toc-section-number">4.1</span> Development
             Environment</a></li>
-            <li><a
-            href="#connect-the-usb-6009-and-verify-it-is-working"><span
+            <li><a href="#connect-the-usb-6009-and-verify-it-is-working"
+            id="toc-connect-the-usb-6009-and-verify-it-is-working"><span
             class="toc-section-number">4.2</span> Connect the USB-6009
             and verify it is working</a></li>
-            <li><a href="#reading-multiple-samples"><span
+            <li><a href="#reading-multiple-samples"
+            id="toc-reading-multiple-samples"><span
             class="toc-section-number">4.3</span> Reading Multiple
             Samples</a>
             <ul>
-            <li><a
-            href="#understanding-sample-rate-and-samples-to-read"><span
+            <li><a href="#understanding-sample-rate-and-samples-to-read"
+            id="toc-understanding-sample-rate-and-samples-to-read"><span
             class="toc-section-number">4.3.1</span> Understanding Sample
             Rate and Samples to Read</a></li>
-            <li><a href="#sec:analogmeas"><span
+            <li><a href="#sec:analogmeas" id="toc-sec:analogmeas"><span
             class="toc-section-number">4.3.2</span> Acquiring Multiple
             Samples</a></li>
-            <li><a href="#exercise-capture-a-waveform"><span
+            <li><a href="#exercise-capture-a-waveform"
+            id="toc-exercise-capture-a-waveform"><span
             class="toc-section-number">4.3.3</span> Exercise: Capture a
             Waveform</a></li>
             </ul></li>
             </ul></li>
-            <li><a href="#digital-sampling-and-nyquist-frequency"><span
+            <li><a href="#digital-sampling-and-nyquist-frequency"
+            id="toc-digital-sampling-and-nyquist-frequency"><span
             class="toc-section-number">5</span> Digital Sampling and
             Nyquist Frequency</a>
             <ul>
-            <li><a href="#exploring-sample-rate-effects"><span
+            <li><a href="#exploring-sample-rate-effects"
+            id="toc-exploring-sample-rate-effects"><span
             class="toc-section-number">5.1</span> Exploring Sample Rate
             Effects</a></li>
-            <li><a href="#initial-measurements"><span
+            <li><a href="#initial-measurements"
+            id="toc-initial-measurements"><span
             class="toc-section-number">5.2</span> Initial
             Measurements</a></li>
-            <li><a href="#enhanced-understanding"><span
+            <li><a href="#enhanced-understanding"
+            id="toc-enhanced-understanding"><span
             class="toc-section-number">5.3</span> Enhanced
             Understanding</a></li>
-            <li><a href="#nyquist-frequency"><span
+            <li><a href="#nyquist-frequency"
+            id="toc-nyquist-frequency"><span
             class="toc-section-number">5.4</span> Nyquist Frequency</a>
             <ul>
-            <li><a href="#aliasing-exercises"><span
+            <li><a href="#aliasing-exercises"
+            id="toc-aliasing-exercises"><span
             class="toc-section-number">5.4.1</span> Aliasing
             Exercises</a></li>
             </ul></li>
             </ul></li>
-            <li><a href="#photodetector-noise-characterization"><span
+            <li><a href="#photodetector-noise-characterization"
+            id="toc-photodetector-noise-characterization"><span
             class="toc-section-number">6</span> Photodetector Noise
             Characterization</a>
             <ul>
-            <li><a
-            href="#background-noise-in-amplified-photodetectors"><span
+            <li><a href="#background-noise-in-amplified-photodetectors"
+            id="toc-background-noise-in-amplified-photodetectors"><span
             class="toc-section-number">6.1</span> Background: Noise in
             Amplified Photodetectors</a>
             <ul>
-            <li><a href="#sources-of-noise"><span
+            <li><a href="#sources-of-noise"
+            id="toc-sources-of-noise"><span
             class="toc-section-number">6.1.1</span> Sources of
             Noise</a></li>
-            <li><a href="#the-gain-noise-tradeoff"><span
+            <li><a href="#the-gain-noise-tradeoff"
+            id="toc-the-gain-noise-tradeoff"><span
             class="toc-section-number">6.1.2</span> The Gain-Noise
             Tradeoff</a></li>
-            <li><a href="#signal-to-noise-ratio-snr"><span
+            <li><a href="#signal-to-noise-ratio-snr"
+            id="toc-signal-to-noise-ratio-snr"><span
             class="toc-section-number">6.1.3</span> Signal-to-Noise
             Ratio (SNR)</a></li>
             </ul></li>
-            <li><a href="#part-1-measuring-the-noise-floor"><span
+            <li><a href="#part-1-measuring-the-noise-floor"
+            id="toc-part-1-measuring-the-noise-floor"><span
             class="toc-section-number">6.2</span> Part 1: Measuring the
             Noise Floor</a>
             <ul>
-            <li><a href="#dark-noise-measurement"><span
+            <li><a href="#dark-noise-measurement"
+            id="toc-dark-noise-measurement"><span
             class="toc-section-number">6.2.1</span> Dark Noise
             Measurement</a></li>
             </ul></li>
-            <li><a href="#part-2-signal-to-noise-measurement"><span
+            <li><a href="#part-2-signal-to-noise-measurement"
+            id="toc-part-2-signal-to-noise-measurement"><span
             class="toc-section-number">6.3</span> Part 2:
             Signal-to-Noise Measurement</a>
             <ul>
-            <li><a href="#setup"><span
+            <li><a href="#setup" id="toc-setup"><span
             class="toc-section-number">6.3.1</span> Setup</a></li>
-            <li><a href="#prediction"><span
+            <li><a href="#prediction" id="toc-prediction"><span
             class="toc-section-number">6.3.2</span> Prediction</a></li>
-            <li><a href="#measurement"><span
+            <li><a href="#measurement" id="toc-measurement"><span
             class="toc-section-number">6.3.3</span> Measurement</a></li>
             </ul></li>
-            <li><a href="#part-3-automating-noise-measurements"><span
+            <li><a href="#part-3-automating-noise-measurements"
+            id="toc-part-3-automating-noise-measurements"><span
             class="toc-section-number">6.4</span> Part 3: Automating
             Noise Measurements</a>
             <ul>
-            <li><a href="#design-decisions"><span
+            <li><a href="#design-decisions"
+            id="toc-design-decisions"><span
             class="toc-section-number">6.4.1</span> Design
             Decisions</a></li>
-            <li><a href="#code-framework"><span
+            <li><a href="#code-framework" id="toc-code-framework"><span
             class="toc-section-number">6.4.2</span> Code
             Framework</a></li>
-            <li><a href="#understanding-your-code-required"><span
+            <li><a href="#understanding-your-code-required"
+            id="toc-understanding-your-code-required"><span
             class="toc-section-number">6.4.3</span> Understanding Your
             Code (Required)</a></li>
-            <li><a href="#debugging-exercise-find-the-bugs"><span
+            <li><a href="#debugging-exercise-find-the-bugs"
+            id="toc-debugging-exercise-find-the-bugs"><span
             class="toc-section-number">6.4.4</span> Debugging Exercise:
             Find the Bugs</a></li>
             </ul></li>
-            <li><a
-            href="#part-4-choosing-your-week-4-gain-setting"><span
+            <li><a href="#part-4-choosing-your-week-4-gain-setting"
+            id="toc-part-4-choosing-your-week-4-gain-setting"><span
             class="toc-section-number">6.5</span> Part 4: Choosing Your
             Week 4 Gain Setting</a>
             <ul>
-            <li><a href="#your-signal-range"><span
+            <li><a href="#your-signal-range"
+            id="toc-your-signal-range"><span
             class="toc-section-number">6.5.1</span> Your Signal
             Range</a></li>
-            <li><a href="#the-constraints"><span
+            <li><a href="#the-constraints"
+            id="toc-the-constraints"><span
             class="toc-section-number">6.5.2</span> The
             Constraints</a></li>
-            <li><a href="#analysis"><span
+            <li><a href="#analysis" id="toc-analysis"><span
             class="toc-section-number">6.5.3</span> Analysis</a></li>
-            <li><a href="#your-decision"><span
+            <li><a href="#your-decision" id="toc-your-decision"><span
             class="toc-section-number">6.5.4</span> Your
             Decision</a></li>
             </ul></li>
-            <li><a href="#peer-comparison-gain-setting-choices"><span
+            <li><a href="#peer-comparison-gain-setting-choices"
+            id="toc-peer-comparison-gain-setting-choices"><span
             class="toc-section-number">6.6</span> Peer Comparison: Gain
             Setting Choices</a></li>
             <li><a
-            href="#part-5-week-4-validation-to-complete-in-week-4"><span
+            href="#part-5-week-4-validation-to-complete-in-week-4"
+            id="toc-part-5-week-4-validation-to-complete-in-week-4"><span
             class="toc-section-number">6.7</span> Part 5: Week 4
             Validation (To Complete in Week 4)</a></li>
-            <li><a
-            href="#looking-ahead-connecting-noise-to-uncertainty"><span
+            <li><a href="#looking-ahead-connecting-noise-to-uncertainty"
+            id="toc-looking-ahead-connecting-noise-to-uncertainty"><span
             class="toc-section-number">6.8</span> Looking Ahead:
             Connecting Noise to Uncertainty</a></li>
-            <li><a href="#noise-characterization-troubleshooting"><span
+            <li><a href="#noise-characterization-troubleshooting"
+            id="toc-noise-characterization-troubleshooting"><span
             class="toc-section-number">6.9</span> Noise Characterization
             Troubleshooting</a></li>
             </ul></li>
-            <li><a href="#saving-data-and-additional-daq-features"><span
+            <li><a href="#saving-data-and-additional-daq-features"
+            id="toc-saving-data-and-additional-daq-features"><span
             class="toc-section-number">7</span> Saving Data and
             Additional DAQ Features</a>
             <ul>
-            <li><a href="#saving-data-to-a-file"><span
+            <li><a href="#saving-data-to-a-file"
+            id="toc-saving-data-to-a-file"><span
             class="toc-section-number">7.1</span> Saving Data to a
             File</a>
             <ul>
-            <li><a href="#exercise-save-and-reload-data"><span
+            <li><a href="#exercise-save-and-reload-data"
+            id="toc-exercise-save-and-reload-data"><span
             class="toc-section-number">7.1.1</span> Exercise: Save and
             Reload Data</a></li>
             </ul></li>
-            <li><a href="#generating-an-analog-output"><span
+            <li><a href="#generating-an-analog-output"
+            id="toc-generating-an-analog-output"><span
             class="toc-section-number">7.2</span> Generating an Analog
             Output</a>
             <ul>
-            <li><a href="#exercise-test-analog-output"><span
+            <li><a href="#exercise-test-analog-output"
+            id="toc-exercise-test-analog-output"><span
             class="toc-section-number">7.2.1</span> Exercise: Test
             Analog Output</a></li>
             </ul></li>
-            <li><a href="#error-handling"><span
+            <li><a href="#error-handling" id="toc-error-handling"><span
             class="toc-section-number">7.3</span> Error
             Handling</a></li>
             </ul></li>
-            <li><a href="#summary"><span
+            <li><a href="#summary" id="toc-summary"><span
             class="toc-section-number">8</span> Summary</a></li>
-            <li><a href="#deliverables-and-assessment"><span
+            <li><a href="#deliverables-and-assessment"
+            id="toc-deliverables-and-assessment"><span
             class="toc-section-number">9</span> Deliverables and
             Assessment</a>
             <ul>
-            <li><a href="#prelab-complete-before-lab"><span
+            <li><a href="#prelab-complete-before-lab"
+            id="toc-prelab-complete-before-lab"><span
             class="toc-section-number">9.1</span> Prelab (complete
             before lab)</a></li>
-            <li><a href="#in-lab-documentation"><span
+            <li><a href="#in-lab-documentation"
+            id="toc-in-lab-documentation"><span
             class="toc-section-number">9.2</span> In-Lab
             Documentation</a></li>
-            <li><a href="#key-data-tables"><span
+            <li><a href="#key-data-tables"
+            id="toc-key-data-tables"><span
             class="toc-section-number">9.3</span> Key Data
             Tables</a></li>
-            <li><a href="#code-deliverables"><span
+            <li><a href="#code-deliverables"
+            id="toc-code-deliverables"><span
             class="toc-section-number">9.4</span> Code
             Deliverables</a></li>
-            <li><a href="#reflection-questions"><span
+            <li><a href="#reflection-questions"
+            id="toc-reflection-questions"><span
             class="toc-section-number">9.5</span> Reflection
             Questions</a></li>
             </ul></li>
@@ -432,11 +479,9 @@
          by minimizing the weighted sum of squares of the deviation
          between the data and the fit. Properly speaking this “sum of
          squares” is called “chi-squared” and is given by</p>
-         <p><span id="eq:1" class="eqnos"><span
-         class="math display">\[\chi^2 = {\displaystyle
+         <p><span class="math display">\[\chi^2 = {\displaystyle
          \sum_{i=1}^{N}}\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \ ... \
-         ))^2\text{,}\]</span><span class="eqnos-number">(1)</span></span>
-         </p>
+         ))^2\text{,}\]</span> {#eq:1}</p>
          <p>where there are where <span class="math inline">\(N\)</span>
          data points, <span class="math inline">\((x_i,y_i )\)</span>,
          and the fit function is given by <span
@@ -518,9 +563,10 @@
          by averaging the first 6 data points to get <span
          class="math inline">\(V_{min}\)</span> and the last 5 to get
          <span class="math inline">\(V_{max}\)</span>.</p></li>
-         <li><p>Use Equation <a href="#eq:1">1</a> to write an
-         expression for <span class="math inline">\(\chi^2\)</span> in
-         terms of your <span class="math inline">\(w\)</span> and <span
+         <li><p>Use Equation <span class="citation"
+         data-cites="eq:1">@eq:1</span> to write an expression for <span
+         class="math inline">\(\chi^2\)</span> in terms of your <span
+         class="math inline">\(w\)</span> and <span
          class="math inline">\(b\)</span> parameters, and the <span
          class="math inline">\(x\)</span> (position) data and <span
          class="math inline">\(y\)</span> (voltage) data. Since you
@@ -576,15 +622,13 @@
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;$</span><span class="ch">\\</span><span class="st">chi^2$ Contour Plot&#39;</span>)</span>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          </ol>
-         <div id="fig:contour" class="fignos">
-         <figure>
+         <figure id="fig:contour">
          <img
          src="../resources/lab-guides/gaussian-laser-beams/contour.png"
-         style="width:15cm" alt="Figure 1: Contour plot example." />
-         <figcaption aria-hidden="true"><span>Figure 1:</span> Contour
-         plot example.</figcaption>
+         style="width:15cm" alt="Contour plot example." />
+         <figcaption aria-hidden="true">Contour plot
+         example.</figcaption>
          </figure>
-         </div>
          <ol start="7" type="1">
          <li><p><strong>Interpretation questions</strong> (answer in
          your notebook):</p>
@@ -644,11 +688,10 @@
          the uncertainty in the data <span
          class="math inline">\(\sigma_y^2\)</span> using the “residuals”
          of the best fit:</p>
-         <p><span id="eq:2" class="eqnos"><span
-         class="math display">\[\sigma_y^2 = \frac{1}{N-n}{\displaystyle
+         <p><span class="math display">\[\sigma_y^2 =
+         \frac{1}{N-n}{\displaystyle
          \sum_{i=1}^{N}}(y_i-y(x_i,a_0,b_0,c_0, \ ... \
-         ))^2\text{,}\quad\quad\]</span><span class="eqnos-number">(2)</span></span>
-         </p>
+         ))^2\text{,}\quad\quad\]</span> {#eq:2}</p>
          <p>where there are <span class="math inline">\(N\)</span> data
          points <span class="math inline">\(y_i\)</span> and the best
          fit value at each point is given by <span
@@ -659,10 +702,10 @@
          very similar to how you would estimate the standard deviation
          of a repeated measurement, which for comparison’s sake is given
          by:</p>
-         <p><span id="eq:3" class="eqnos"><span
-         class="math display">\[\sigma_y^2 = \frac{1}{N-n}{\displaystyle
-         \sum_{i=1}^{N}}(y_i-\overline{y})^2\text{.}\]</span><span class="eqnos-number">(3)</span></span>
-         </p>
+         <p><span class="math display">\[\sigma_y^2 =
+         \frac{1}{N-n}{\displaystyle
+         \sum_{i=1}^{N}}(y_i-\overline{y})^2\text{.}\]</span>
+         {#eq:3}</p>
          <p>The parameter uncertainties are then extracted from the
          covariance matrix:</p>
          <div class="sourceCode" id="cb6"><pre
@@ -679,10 +722,10 @@
          class="header-section-number">3.5</span> Estimating the
          uncertainty in the data</h2>
          <ol type="1">
-         <li><p>Use Equation <a href="#eq:2">2</a> and your best fit
-         parameters to estimate <span
-         class="math inline">\(\sigma_y^2\)</span>, the random error of
-         each data point given by your data.</p>
+         <li><p>Use Equation <span class="citation"
+         data-cites="eq:2">@eq:2</span> and your best fit parameters to
+         estimate <span class="math inline">\(\sigma_y^2\)</span>, the
+         random error of each data point given by your data.</p>
          <div class="sourceCode" id="cb7"><pre
          class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate residuals</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y_fit <span class="op">=</span> beam_profile(x_data, <span class="op">*</span>popt)</span>
@@ -771,25 +814,17 @@
          (i.e., random) error, with a known standard deviation <span
          class="math inline">\(\sigma_i\)</span>, then on average each
          term in the sum is</p>
-         <p><span id="eq:4" class="eqnos"><span
+         <p><span
          class="math display">\[\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \
-         ... \ ))^2 \approx
-         1\text{,}\]</span><span class="eqnos-number">(4)</span></span>
-         </p>
+         ... \ ))^2 \approx 1\text{,}\]</span> {#eq:4}</p>
          <p>and the full <span class="math inline">\(\chi^2\)</span> sum
          of squares is approximately</p>
-         <p><span id="eq:5" class="eqnos"><span
-         class="math display">\[\chi^2 = {\displaystyle
+         <p><span class="math display">\[\chi^2 = {\displaystyle
          \sum_{i=1}^{N}}\frac{1}{\sigma_i^2}(y_i-y(x_i,a,b,c, \ ... \
-         ))^2\approx
-         N-n\text{.}\quad\quad\]</span><span class="eqnos-number">(5)</span></span>
-         </p>
+         ))^2\approx N-n\text{.}\quad\quad\]</span> {#eq:5}</p>
          <p>So a good fit has</p>
-         <p><span id="eq:6" class="eqnos"><span
-         class="math display">\[\chi_{red}^2 \equiv
-         \frac{\chi^2}{N-n}\approx
-         1\text{.}\]</span><span class="eqnos-number">(6)</span></span>
-         </p>
+         <p><span class="math display">\[\chi_{red}^2 \equiv
+         \frac{\chi^2}{N-n}\approx 1\text{.}\]</span> {#eq:6}</p>
          <ol type="1">
          <li><strong>Fact: To find the goodness of fit test, you must
          first estimate the uncertainties on the data points that you
@@ -801,11 +836,12 @@
          class="header-section-number">3.6.4</span> Choosing a strategy
          to estimate the uncertainty</h3>
          <ol type="1">
-         <li><p>Considering your answers from Section <a
-         href="#sec:plot-res">3.6.1</a> (especially <a
-         href="#sec:plot-res">3.6.1</a>.5), which method would give you
-         the best estimate of the uncertainty for each data point, and
-         why?</p>
+         <li><p>Considering your answers from Section <span
+         class="citation" data-cites="sec:plot-res">@sec:plot-res</span>
+         (especially <span class="citation"
+         data-cites="sec:plot-res">@sec:plot-res</span>.5), which method
+         would give you the best estimate of the uncertainty for each
+         data point, and why?</p>
          <ul>
          <li><p>Eyeballing the fluctuations in each data point.</p></li>
          <li><p>Taking <span class="math inline">\(N\)</span>
@@ -821,9 +857,10 @@
          class="math inline">\(\sigma_i\)</span> of each data point
          <span class="math inline">\(y_i\)</span> you should use this
          information when fitting to correctly evaluate the <span
-         class="math inline">\(\chi^2\)</span> expression in Equation <a
-         href="#eq:1">1</a>. The points with high uncertainty contribute
-         less information when choosing the best fit parameters.</p>
+         class="math inline">\(\chi^2\)</span> expression in Equation
+         <span class="citation" data-cites="eq:1">@eq:1</span>. The
+         points with high uncertainty contribute less information when
+         choosing the best fit parameters.</p>
          <p>In Python’s <code>curve_fit</code>, you provide
          uncertainties using the <code>sigma</code> parameter:</p>
          <div class="sourceCode" id="cb9"><pre
@@ -850,8 +887,9 @@
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>y_data <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>y_err <span class="op">=</span> data[:, <span class="dv">2</span>]</span></code></pre></div></li>
          <li><p>Do a weighted fit using the same fit function as in
-         Section <a href="#sec:min-graph">3.3</a>. Use the uncertainty
-         estimates in the third column.</p>
+         Section <span class="citation"
+         data-cites="sec:min-graph">@sec:min-graph</span>. Use the
+         uncertainty estimates in the third column.</p>
          <div class="sourceCode" id="cb11"><pre
          class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weighted fit</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(</span>
@@ -892,16 +930,13 @@
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> stats.chi2.cdf(chi2, dof)</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;P-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
          </ol>
-         <div id="fig:cdf" class="fignos">
-         <figure>
+         <figure id="fig:cdf">
          <img src="../resources/lab-guides/gaussian-laser-beams/cdf.png"
          style="width:15cm"
-         alt="Figure 2: Cumulative Density Function (CDF) for the chi-squared distribution." />
-         <figcaption aria-hidden="true"><span>Figure 2:</span>
-         Cumulative Density Function (CDF) for the chi-squared
-         distribution.</figcaption>
+         alt="Cumulative Density Function (CDF) for the chi-squared distribution." />
+         <figcaption aria-hidden="true">Cumulative Density Function
+         (CDF) for the chi-squared distribution.</figcaption>
          </figure>
-         </div>
          <h3 data-number="3.6.6"
          id="why-is-it-often-bad-to-overestimate-uncertainties"><span
          class="header-section-number">3.6.6</span> Why is it often bad
@@ -967,6 +1002,54 @@
          other sources of uncertainty should you consider? List at least
          two.</p></li>
          </ol>
+         <h3 data-number="3.6.8"
+         id="random-vs.-systematic-uncertainties"><span
+         class="header-section-number">3.6.8</span> Random
+         vs. Systematic Uncertainties</h3>
+         <p>Understanding the distinction between random and systematic
+         uncertainties is crucial for proper error analysis. This
+         distinction becomes especially important in Week 4 when you
+         construct an uncertainty budget.</p>
+         <p><strong>Random uncertainties</strong> are unpredictable
+         fluctuations that vary from measurement to measurement. They
+         average out over many measurements—take 100 readings and
+         compute the mean, and the random uncertainty in that mean
+         decreases by <span class="math inline">\(\sqrt{100} =
+         10\)</span>.</p>
+         <p>Examples from this lab: - Voltage noise on the photodetector
+         (varies each reading) - Thermal fluctuations in electronic
+         components - Shot noise from random photon arrival times</p>
+         <p><strong>Systematic uncertainties</strong> are consistent
+         biases that affect all measurements the same way. They do NOT
+         average out—take 100 readings and the systematic error remains
+         exactly the same.</p>
+         <p>Examples from this lab: - Micrometer calibration offset (if
+         it reads 0.02 mm high, ALL positions are 0.02 mm high) - DAQ
+         voltage offset (shifts all readings by a fixed amount) - Beam
+         not perfectly perpendicular to knife edge (consistent
+         underestimate of width)</p>
+         <p><strong>Why this matters for fitting:</strong></p>
+         <p><code>curve_fit</code> only sees random scatter around your
+         fit function. It has no way to detect systematic offsets. If
+         your micrometer is miscalibrated by 0.1 mm, the fit will find
+         parameters that are systematically shifted, and
+         <code>curve_fit</code> will not include this in the reported
+         uncertainty.</p>
+         <p><strong>Quick self-test:</strong> Classify each of these as
+         random (R) or systematic (S):</p>
+         <ol type="1">
+         <li>The photodetector gain knob is actually at 28 dB when the
+         label says 30 dB: _____</li>
+         <li>60 Hz pickup causing voltage fluctuations: _____</li>
+         <li>The laser power slowly drifting over 30 minutes: _____
+         (tricky—think about whether it averages out)</li>
+         <li>Room lights flickering: _____</li>
+         </ol>
+         <p><em>Answers: 1=S, 2=R (if averaging over many cycles), 3=S
+         (drift is correlated, doesn’t average out), 4=R</em></p>
+         <p>In Week 4, when you construct your uncertainty budget, you
+         will need to identify the dominant sources of both random AND
+         systematic uncertainty, and combine them appropriately.</p>
          <h2 data-number="3.7" id="error-bars"><span
          class="header-section-number">3.7</span> Error bars</h2>
          <p>The error bar is a graphical way to display the uncertainty
@@ -1020,18 +1103,16 @@
          but the uncertainty in the actual data was probably smaller
          than this.</p>
          <center>
-         <div id="tbl:example-data" class="tablenos">
          <table id="tbl:example-data">
-         <caption><span>Table 1:</span> Table of data with a fixed
-         uncertainty used to illustrate creating plots with error bars.
-         </caption>
+         <caption>Table of data with a fixed uncertainty used to
+         illustrate creating plots with error bars.</caption>
          <colgroup>
          <col style="width: 35%" />
          <col style="width: 32%" />
          <col style="width: 32%" />
          </colgroup>
          <thead>
-         <tr class="header">
+         <tr>
          <th style="text-align: center;">Micrometer Position
          (inches)</th>
          <th style="text-align: center;">Photodetector Voltage (V)</th>
@@ -1039,95 +1120,95 @@
          </tr>
          </thead>
          <tbody>
-         <tr class="odd">
+         <tr>
          <td style="text-align: center;">0.410</td>
          <td style="text-align: center;">0.015</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td style="text-align: center;">0.412</td>
          <td style="text-align: center;">0.016</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="odd">
+         <tr>
          <td style="text-align: center;">0.414</td>
          <td style="text-align: center;">0.017</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td style="text-align: center;">0.416</td>
          <td style="text-align: center;">0.026</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="odd">
+         <tr>
          <td style="text-align: center;">0.418</td>
          <td style="text-align: center;">0.060</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td style="text-align: center;">0.420</td>
          <td style="text-align: center;">0.176</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="odd">
+         <tr>
          <td style="text-align: center;">0.422</td>
          <td style="text-align: center;">0.460</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td style="text-align: center;">0.424</td>
          <td style="text-align: center;">0.849</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="odd">
+         <tr>
          <td style="text-align: center;">0.426</td>
          <td style="text-align: center;">1.364</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td style="text-align: center;">0.428</td>
          <td style="text-align: center;">1.971</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="odd">
+         <tr>
          <td style="text-align: center;">0.430</td>
          <td style="text-align: center;">2.410</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td style="text-align: center;">0.432</td>
          <td style="text-align: center;">2.703</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="odd">
+         <tr>
          <td style="text-align: center;">0.434</td>
          <td style="text-align: center;">2.795</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td style="text-align: center;">0.436</td>
          <td style="text-align: center;">2.861</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="odd">
+         <tr>
          <td style="text-align: center;">0.438</td>
          <td style="text-align: center;">2.879</td>
          <td style="text-align: center;">0.04</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td style="text-align: center;">0.440</td>
          <td style="text-align: center;">2.884</td>
          <td style="text-align: center;">0.04</td>
          </tr>
          </tbody>
          </table>
-         </div>
          </center>
          <p><br></p>
          <p>Download <a
          href="../resources/lab-guides/gaussian-laser-beams/gaussian_data_with_errors.txt">this
-         data set</a> and create a plot with error bars like Figure <a
-         href="#fig:gauss-example">3</a>.</p>
+         data set</a> and create a plot with error bars like Figure
+         <span class="citation"
+         data-cites="fig:gauss-example">@fig:gauss-example</span>.</p>
          <div class="sourceCode" id="cb15"><pre
          class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1148,17 +1229,14 @@
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
 <span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-         <div id="fig:gauss-example" class="fignos">
-         <figure>
+         <figure id="fig:gauss-example">
          <img
          src="../resources/lab-guides/gaussian-laser-beams/gauss-example.png"
          style="width:15cm"
-         alt="Figure 3: Plot of the provided Gaussian Beam data showing error bars." />
-         <figcaption aria-hidden="true"><span>Figure 3:</span> Plot of
-         the provided Gaussian Beam data showing error
-         bars.</figcaption>
+         alt="Plot of the provided Gaussian Beam data showing error bars." />
+         <figcaption aria-hidden="true">Plot of the provided Gaussian
+         Beam data showing error bars.</figcaption>
          </figure>
-         </div>
          <h2 data-number="3.8"
          id="prelab-exercise-error-function-fitting-practice"><span
          class="header-section-number">3.8</span> Prelab Exercise: Error
@@ -1518,9 +1596,10 @@
          regular discrete time intervals. This question requires the use
          of a Rigol DS1052E oscilloscope and a waveform generator.</p>
          <ol type="1">
-         <li>Figure <a href="#fig:scope-menu">4</a> is copied from the
-         Rigol Oscilloscope manual. The Horizontal menu allows you to
-         view the actual sample rate “Sa Rate” of the digital
+         <li>Figure <span class="citation"
+         data-cites="fig:scope-menu">@fig:scope-menu</span> is copied
+         from the Rigol Oscilloscope manual. The Horizontal menu allows
+         you to view the actual sample rate “Sa Rate” of the digital
          acquisition on the scope.</li>
          <li>Predict what should you observe if you set the waveform
          generator to the same frequency as the sample rate? Try it out,
@@ -1531,16 +1610,14 @@
          explain what you observe.</li>
          </ol></li>
          </ol>
-         <div id="fig:scope-menu" class="fignos">
-         <figure>
+         <figure id="fig:scope-menu">
          <img
          src="../resources/lab-guides/gaussian-laser-beams/scope-menu.png"
          style="width:20cm"
-         alt="Figure 4: The horizontal menu on the Rigol DS1052E Oscilloscope." />
-         <figcaption aria-hidden="true"><span>Figure 4:</span> The
-         horizontal menu on the Rigol DS1052E Oscilloscope.</figcaption>
+         alt="The horizontal menu on the Rigol DS1052E Oscilloscope." />
+         <figcaption aria-hidden="true">The horizontal menu on the Rigol
+         DS1052E Oscilloscope.</figcaption>
          </figure>
-         </div>
          <h1 data-number="6"
          id="photodetector-noise-characterization"><span
          class="header-section-number">6</span> Photodetector Noise
@@ -1603,7 +1680,7 @@
          <col style="width: 27%" />
          </colgroup>
          <thead>
-         <tr class="header">
+         <tr>
          <th>Gain Setting</th>
          <th>Transimpedance (V/A)</th>
          <th>Datasheet Noise RMS</th>
@@ -1611,25 +1688,25 @@
          </tr>
          </thead>
          <tbody>
-         <tr class="odd">
+         <tr>
          <td>0 dB</td>
          <td>_______</td>
          <td>_______</td>
          <td>_______</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td>30 dB</td>
          <td>_______</td>
          <td>_______</td>
          <td>_______</td>
          </tr>
-         <tr class="odd">
+         <tr>
          <td>50 dB</td>
          <td>_______</td>
          <td>_______</td>
          <td>_______</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td>70 dB</td>
          <td>_______</td>
          <td>_______</td>
@@ -1707,7 +1784,7 @@
          <col style="width: 39%" />
          </colgroup>
          <thead>
-         <tr class="header">
+         <tr>
          <th>Gain</th>
          <th>Measured Noise RMS</th>
          <th>Datasheet Noise</th>
@@ -1715,25 +1792,25 @@
          </tr>
          </thead>
          <tbody>
-         <tr class="odd">
+         <tr>
          <td>0 dB</td>
          <td>_______ mV</td>
          <td>_______ mV</td>
          <td>_______</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td>30 dB</td>
          <td>_______ mV</td>
          <td>_______ mV</td>
          <td>_______</td>
          </tr>
-         <tr class="odd">
+         <tr>
          <td>50 dB</td>
          <td>_______ mV</td>
          <td>_______ mV</td>
          <td>_______</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td>70 dB</td>
          <td>_______ mV</td>
          <td>_______ mV</td>
@@ -1768,7 +1845,7 @@
          your prelab calculations and Week 1 calibration data.</p>
          <table>
          <thead>
-         <tr class="header">
+         <tr>
          <th>Gain</th>
          <th>Predicted Signal (V)</th>
          <th>Predicted Noise (mV)</th>
@@ -1776,25 +1853,25 @@
          </tr>
          </thead>
          <tbody>
-         <tr class="odd">
+         <tr>
          <td>0 dB</td>
          <td>_______</td>
          <td>_______</td>
          <td>_______</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td>30 dB</td>
          <td>_______</td>
          <td>_______</td>
          <td>_______</td>
          </tr>
-         <tr class="odd">
+         <tr>
          <td>50 dB</td>
          <td>_______</td>
          <td>_______</td>
          <td>_______</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td>70 dB</td>
          <td>_______</td>
          <td>_______</td>
@@ -1814,7 +1891,7 @@
          <col style="width: 25%" />
          </colgroup>
          <thead>
-         <tr class="header">
+         <tr>
          <th>Gain</th>
          <th>Measured Signal (V)</th>
          <th>Measured Noise (mV)</th>
@@ -1823,28 +1900,28 @@
          </tr>
          </thead>
          <tbody>
-         <tr class="odd">
+         <tr>
          <td>0 dB</td>
          <td>_______</td>
          <td>_______</td>
          <td>_______</td>
          <td>_______</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td>30 dB</td>
          <td>_______</td>
          <td>_______</td>
          <td>_______</td>
          <td>_______</td>
          </tr>
-         <tr class="odd">
+         <tr>
          <td>50 dB</td>
          <td>_______</td>
          <td>_______</td>
          <td>_______</td>
          <td>_______</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td>70 dB</td>
          <td>_______</td>
          <td>_______</td>
@@ -2126,7 +2203,7 @@
          </ol>
          <table>
          <thead>
-         <tr class="header">
+         <tr>
          <th>Measurement</th>
          <th>Week 2 Prediction</th>
          <th>Week 4 Actual</th>
@@ -2134,19 +2211,19 @@
          </tr>
          </thead>
          <tbody>
-         <tr class="odd">
+         <tr>
          <td>Dark noise RMS</td>
          <td>_______ mV</td>
          <td>_______ mV</td>
          <td>_______</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td>Max signal</td>
          <td>_______ V</td>
          <td>_______ V</td>
          <td>_______</td>
          </tr>
-         <tr class="odd">
+         <tr>
          <td>SNR at max</td>
          <td>_______</td>
          <td>_______</td>
@@ -2392,7 +2469,7 @@
          <p>Make sure these tables are completed in your notebook:</p>
          <table>
          <thead>
-         <tr class="header">
+         <tr>
          <th>Gain</th>
          <th>Datasheet Noise</th>
          <th>Measured Noise</th>
@@ -2400,13 +2477,13 @@
          </tr>
          </thead>
          <tbody>
-         <tr class="odd">
+         <tr>
          <td>0 dB</td>
          <td>_______</td>
          <td>_______</td>
          <td>_______</td>
          </tr>
-         <tr class="even">
+         <tr>
          <td>…</td>
          <td>…</td>
          <td>…</td>
@@ -2416,7 +2493,7 @@
          </table>
          <table>
          <thead>
-         <tr class="header">
+         <tr>
          <th>Gain</th>
          <th>Predicted SNR</th>
          <th>Measured SNR</th>
@@ -2424,7 +2501,7 @@
          </tr>
          </thead>
          <tbody>
-         <tr class="odd">
+         <tr>
          <td>…</td>
          <td>…</td>
          <td>…</td>
