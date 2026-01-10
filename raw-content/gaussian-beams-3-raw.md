@@ -4,163 +4,49 @@ title: "Gaussian Beams - Week 3"
 
 # Where We Are in the Sequence
 
-**Week 3 of 4: Theory and Preparation for Automation**
+**Week 3 of 4: Theory, First Automated Measurement, and Analysis**
 
-Last week you characterized your photodetector's noise and chose an optimal gain setting. This week you'll learn the theoretical foundation for Gaussian beams (which you'll test next week), develop spectral analysis skills to understand noise sources, and set up the motor controller for automated measurements.
+Last week you characterized your photodetector's noise and chose an optimal gain setting. This week you'll learn the theoretical foundation for Gaussian beams, set up the motor controller, take your first automated beam profile, and apply error propagation to your real data.
 
 **Last week:** Learned DAQ programming, characterized noise, chose gain setting
-**This week:** Learn Gaussian beam theory → Analyze noise spectra → Set up motor controller
-**Next week:** Automated measurements → Test Gaussian beam model → Investigate lens effects
+**This week:** Learn Gaussian beam theory → Set up motor → Take beam profile → Analyze with error propagation
+**Next week:** Multiple beam profiles → Test Gaussian beam model → Investigate lens effects
 
 # Overview
 
-The third week of the Gaussian Beams lab builds upon the Python data acquisition skills you developed last week. This week's prelab covers error propagation (how uncertainties in measured quantities affect derived quantities) and introduces the theoretical foundation for Gaussian laser beams, deriving the equations you'll use in Week 4's experiments. In the lab portion, you will use spectral analysis tools to perform Fourier Transforms, set up the motor controller hardware for automated measurements, and revisit your beam width measurement. Be sure to document all of your work in your lab notebook.
+This week connects theory to practice. In the prelab, you'll derive the Gaussian beam equations from Maxwell's equations and develop physical intuition for beam propagation. In lab, you'll set up the motor controller and take your first motor-controlled beam profile. Then you'll apply error propagation to your actual data—not abstract examples—to predict uncertainties in your Week 4 measurements. By the end of this week, you'll have tested your entire measurement system and made quantitative predictions for next week.
 
 # Learning Goals
 
 After completing the prelab, you will be able to:
 
-1. Propagate uncertainties from measured quantities to derived quantities using partial derivatives.
-2. Derive the paraxial wave equation from Maxwell's equations by applying the slowly-varying envelope approximation.
-3. Explain the physical meaning of Gaussian beam parameters ($w_0$, $w(z)$, $R(z)$, $\zeta(z)$) and how they relate to observable properties.
-4. Fit experimental beam width data to extract beam waist $w_0$ and waist position $z_w$ with uncertainties.
+1. Derive the paraxial wave equation from Maxwell's equations by applying the slowly-varying envelope approximation.
+2. Explain the physical meaning of Gaussian beam parameters ($w_0$, $w(z)$, $R(z)$, $\zeta(z)$) and how they relate to observable properties.
+3. Predict how beam width changes with position using the Gaussian beam equations.
 
 After completing the lab, you will be able to:
 
-1. Explain what a Fourier Transform reveals about a signal and interpret a power spectrum.
-2. Compute and plot the power spectrum of a measured signal using NumPy's FFT functions.
-3. Identify frequency components in experimental data and relate them to physical sources.
-4. Set up and verify the motor controller for automated measurements.
-5. Measure beam width using the knife-edge technique and compare automated vs. manual methods.
+1. Set up and operate the motor controller for automated measurements.
+2. Take a complete beam profile using motor-controlled positioning.
+3. Fit beam profile data to extract beam width with uncertainty.
+4. Propagate uncertainties from measured quantities to derived quantities.
+5. Make quantitative predictions for Week 4 measurements based on your data.
 
 # Overview of Your Work
 
-This week prepares you for next week's automated experiments. Your work has two parallel threads:
+This week has three phases:
 
-**Theory (Prelab):** You'll derive the Gaussian beam equations from Maxwell's equations and learn error propagation. This isn't abstract—you'll use these equations to interpret your Week 4 data, and error propagation will tell you whether your measured beam waist is consistent with theory.
+**Phase 1 - Theory (Prelab, ~75 min):** Derive the Gaussian beam equations from Maxwell's equations and build physical intuition. You'll understand *why* beams have the shape they do.
 
-**Skills (Lab):** You'll develop two capabilities needed for automation:
+**Phase 2 - Measurement (Lab, ~60 min):** Set up the motor controller and take a complete beam profile. This is your first automated measurement—a trial run before Week 4's systematic data collection.
 
-1. **Spectral analysis** — Use FFT to identify frequency components in signals. You'll apply this to your photodetector's noise spectrum to understand what's limiting your measurements.
-2. **Motor control** — Set up the Thorlabs translation stage and verify you can command it from Python. This is the final piece for automated beam profiling.
-
-**Complete your beam width measurement** if you didn't finish in Week 1. You'll need this data for analysis practice.
+**Phase 3 - Analysis (Lab, ~60 min):** Apply error propagation to your actual beam width measurement. Fit your data, calculate uncertainties, and make predictions for Week 4. This is where theory meets your measurements.
 
 *See the detailed deliverables checklist at the end of this guide.*
 
 # Prelab
 
-This week's prelab covers two topics: error propagation and the theoretical foundation for Gaussian laser beams.
-
-## Connecting to Your Week 2 Work
-
-In Week 2, you characterized your photodetector's noise and chose a gain setting. This week, you'll learn how those noise measurements propagate through your analysis to determine the uncertainty in your final results.
-
-The chain of uncertainty is:
-1. **Voltage noise** (measured in Week 2) → determines uncertainty in each beam profile point
-2. **Beam profile uncertainty** → propagates through curve fitting to give uncertainty in beam width $w$
-3. **Beam width uncertainty at multiple positions** → propagates through the Gaussian beam model to give uncertainty in $w_0$ and $z_w$
-
-This section teaches the mathematical framework for steps 2 and 3. By the end, you'll be able to predict the uncertainty in your Week 4 measurements before you take them.
-
-## Error propagation - from measured to derived quantities
-
-The quantity of interest in an experiment is often derived from other measured quantities. An example is estimating the resistance of a circuit element from measurements of current and voltage, using Ohm's law ($R=V/I$) to convert our measured quantities (voltage and current) into a derived quantity (resistance).
-
-Error propagation comes in when we want to estimate the uncertainty in the derived quantity based on the uncertainties in the measured quantities. Keeping things general, suppose we want to derive a quantity $z$ from a set of measured quantities $a,b,c, \ ... \ $. The mathematical function which gives us $z$ is $z=z(a,b,c, \ ... \ )$. In general, any fluctuation in the measured quantities $a,b,c, \ ... \ $ will cause a fluctuation in $z$ according to
-
-$$\delta z = \left( \frac{\partial z}{\partial a}\right)\delta a+\left( \frac{\partial z}{\partial b}\right)\delta b+\left( \frac{\partial z}{\partial c}\right)\delta c+ \ ...\text{.}\quad\quad$$
-
-This equation comes straight from basic calculus. It's like the first term in a Taylor series. It's the linear approximation of $z(a,b,c, \ ... \ )$ near $(a_0,b_0,c_0, \ ... \ )$. However, we don't know the exact magnitude or sign of the fluctuations, rather we just can estimate the spread in $\delta a, \delta b, \delta c, \ ... \ $, which we often use the standard deviations $\sigma_a, \sigma_b, \sigma_c, \ ... \ $ In this case, the propagated uncertainty in $z$ is:
-
-$$\sigma_z^2 = \left( \frac{\partial z}{\partial a}\right)^2\sigma_a^2+\left( \frac{\partial z}{\partial b}\right)^2\sigma_b^2+\left( \frac{\partial z}{\partial c}\right)^2\sigma_c^2+ \ ...\text{.}\quad\quad$$
-
-There are standard equations provided in courses like the introductory physics lab for the error in the sum, difference, product, quotient. These are all easily derived from this general formula.
-
-## Error propagation in Python
-
-There are two main approaches to error propagation in Python:
-
-### Approach 1: Manual calculation
-
-For simple cases, you can compute partial derivatives manually:
-
-```python
-import numpy as np
-
-# Example: R = V / I
-# Measured values and uncertainties
-V = 5.0      # Voltage (V)
-sigma_V = 0.1  # Uncertainty in V
-I = 0.5      # Current (A)
-sigma_I = 0.02  # Uncertainty in I
-
-# Calculate resistance
-R = V / I
-
-# Partial derivatives
-dR_dV = 1 / I
-dR_dI = -V / I**2
-
-# Propagated uncertainty
-sigma_R = np.sqrt((dR_dV * sigma_V)**2 + (dR_dI * sigma_I)**2)
-
-print(f"R = {R:.2f} ± {sigma_R:.2f} Ω")
-```
-
-### Approach 2: Using the `uncertainties` package
-
-For more complex calculations, the `uncertainties` package automatically tracks error propagation:
-
-```python
-from uncertainties import ufloat
-from uncertainties.umath import sqrt  # Use umath for math functions
-
-# Define values with uncertainties
-V = ufloat(5.0, 0.1)   # 5.0 ± 0.1 V
-I = ufloat(0.5, 0.02)  # 0.5 ± 0.02 A
-
-# Calculate - uncertainty propagates automatically
-R = V / I
-
-print(f"R = {R}")  # Shows value ± uncertainty
-```
-
-### Exercise: Beam width uncertainty
-
-Later in this prelab, we will model a Gaussian beam's width $w(z)$ as:
-
-$$w(z) = w_0\sqrt{1+\left(\frac{z-z_0}{\pi w_0^2/\lambda}\right)^2}\text{.}$$
-
-For the output beam of one of the lasers in the lab, a fit of beam width versus position gave the following fit parameters:
-
-$$z_0 = -0.03 \pm 0.04 \ m$$
-
-$$w_0=(1.90 \pm 0.09)\times 10^{-6} \ m$$
-
-The wavelength is given by $\lambda = 632.8 \pm 0.1 \ nm$.
-
-1. Use Python to estimate the uncertainty in the derived width $w(z)$ when $z$ is a distance of $2.000 \pm 0.005 \ m$ from the waist position.
-
-   Using the `uncertainties` package:
-
-   ```python
-   from uncertainties import ufloat
-   from uncertainties.umath import sqrt
-   import numpy as np
-
-   # Define parameters with uncertainties
-   z0 = ufloat(-0.03, 0.04)           # m
-   w0 = ufloat(1.90e-6, 0.09e-6)      # m
-   wavelength = ufloat(632.8e-9, 0.1e-9)  # m
-   z = ufloat(2.000, 0.005)           # m
-
-   # Calculate beam width
-   z_R = np.pi * w0**2 / wavelength  # Rayleigh range
-   w = w0 * sqrt(1 + ((z - z0) / z_R)**2)
-
-   print(f"w(z) = {w}")
-   ```
+This week's prelab focuses on the theoretical foundation for Gaussian laser beams. You'll derive the equations that describe how laser beams propagate and develop physical intuition for the key parameters. Error propagation will be covered in lab, where you'll apply it directly to your measurements.
 
 ## Gaussian beam theory
 
@@ -252,11 +138,8 @@ The Gaussian beam equations given in Equations @eq:8 -@eq:11 assume the beam com
 
 3.  How would you rewrite these four equations assuming the beam waist occurs at a different position $z=z_w$?
 4.  One way to check your answer is to make sure the equations simplify to Equations @eq:8 -@eq:11 in the special case of $z_w=0$.
-5.  Write a Python function to fit [this data set](../resources/lab-guides/gaussian-laser-beams/Test_beam_width_data.csv). Assume the wavelength is $\lambda=632.8\ nm$.
-    1. What is the functional form for your fit function?
-    2. What are the different fit parameters and what do they mean?
-    3. Is it a linear or nonlinear fit function? Why?
-6.  You should get that a beam waist of $w_0=(93.9\pm0.1)\times10^{-6}\ m$ and occurs at a position $z_w=0.3396\pm0.0003\ m$.
+
+*You will fit actual beam width data in lab today using these modified equations.*
 
 ## Beyond Beam Width: The Unmeasured Parameters
 
@@ -294,381 +177,6 @@ For characterizing a laser beam's propagation, $w(z)$ is often the most practica
 3. Once you know $w_0$, you can *calculate* $R(z)$ and $\zeta(z)$ from the equations—you don't need to measure them separately
 
 **Reflection:** In what applications might you actually need to measure $R(z)$ or $\zeta(z)$ rather than just calculating them from $w_0$? (Hint: When might the theoretical relationship break down?)
-
-## Prediction Exercise: What Will You Measure?
-
-Before taking beam width measurements in Week 4, make quantitative predictions using the Gaussian beam model. This exercise strengthens the connection between the mathematical formalism you just learned and the physical measurements you will make.
-
-**1. Sketch the expected beam profile at three positions:**
-
-Using the beam width equation $w(z) = w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$, sketch the expected transverse beam profile (intensity vs. x) at:
-
-- $z = 0.5$ m from the laser output
-- $z = 1.0$ m from the laser output
-- $z = 2.0$ m from the laser output
-
-For each sketch, indicate:
-- The beam width $w(z)$ on your axes
-- Whether the beam is diverging, converging, or at its waist
-- The approximate peak intensity relative to the $z = 0.5$ m case
-
-**2. Calculate expected beam widths:**
-
-Using the Gaussian beam equation and assuming $w_0 \approx 0.5$ mm and $z_w \approx 0$ (beam waist at laser output):
-
-| Position | Predicted $w(z)$ |
-|----------|------------------|
-| $z = 0.5$ m | _______ mm |
-| $z = 1.0$ m | _______ mm |
-| $z = 2.0$ m | _______ mm |
-
-Show your calculation for at least one position.
-
-**3. Record your predictions** in your notebook before taking any measurements. In Week 4, you will compare these predictions to your experimental results to test the Gaussian beam model.
-
-**4. Prediction reflection:**
-
-If your Week 4 measurements differ significantly from these predictions, what are the most likely causes? List at least two possibilities and how you would distinguish between them.
-
-# Fourier Analysis Techniques
-
-In Week 2, you learned about the Nyquist frequency and how sample rate affects your ability to accurately capture signals. This week, we'll analyze signals in the **frequency domain** using Fourier Transforms. This is a powerful technique used throughout physics and engineering.
-
-## Introduction to Fourier Transforms
-
-The discrete Fourier Transform of a set of data $\{y_0,y_1, ... , y_{N-1}\}$ is given by
-
-$$Y_m=\displaystyle \sum_{n=0}^{N-1}y_n\cdot e^{-2\pi i \frac{m}{N}n}$$
-
-The basic idea is that a Fourier Transform decomposes the data into a set of different frequency components, so the amplitude of $Y_m$ tells you how much of your signal was formed by an oscillation at the $m$-th frequency.
-
-### Basic Fourier Concepts {#sec:basic-fourier}
-
-1. How do the units of the Fourier Transform array $Y_m$ relate to the units of the data $y_n$?
-2. Does the data $y_n$ have to be taken at equally spaced intervals?
-3. Is it possible for two different sets of data to have the same Fourier Transform?
-4. If a data set has $N$ elements, how long is the discrete Fourier Transform?
-
-## Computing the Power Spectrum in Python
-
-NumPy provides efficient FFT (Fast Fourier Transform) functions for spectral analysis:
-
-```python
-import numpy as np
-
-def compute_spectrum(data, sample_rate):
-    """
-    Compute the one-sided power spectrum of a signal.
-
-    Parameters:
-        data: 1D array of signal values
-        sample_rate: Sample rate in Hz
-
-    Returns:
-        frequencies: Array of frequency values
-        power: Power spectrum (magnitude squared)
-    """
-    n = len(data)
-
-    # Compute FFT
-    fft_result = np.fft.fft(data)
-
-    # Get positive frequencies only (real signal has symmetric spectrum)
-    n_unique = n // 2 + 1
-    frequencies = np.fft.fftfreq(n, d=1/sample_rate)[:n_unique]
-    frequencies = np.abs(frequencies)
-
-    # Power spectrum (magnitude squared, normalized)
-    power = (np.abs(fft_result[:n_unique]) / n) ** 2
-    power[1:-1] *= 2  # Double power for frequencies with both +/- components
-
-    return frequencies, power
-```
-
-### Frequency Resolution and Maximum Frequency
-
-The relationship between your acquisition parameters and the spectrum is:
-
-```python
-# Frequency resolution and maximum frequency
-freq_resolution = sample_rate / num_samples  # Hz per bin
-max_frequency = sample_rate / 2  # Nyquist frequency
-
-print(f"Frequency resolution: {freq_resolution} Hz")
-print(f"Maximum frequency: {max_frequency} Hz")
-```
-
-**Key relationships:**
-
-- **Frequency resolution** = Sample Rate / Number of Samples
-- **Maximum frequency** (Nyquist) = Sample Rate / 2
-
-If the data is sampled for 2 seconds at 100 Hz sample rate:
-- Number of samples = 200
-- Frequency resolution = 100 Hz / 200 = 0.5 Hz
-- Maximum frequency = 100 Hz / 2 = 50 Hz
-
-## Building a Real-Time Spectral Analyzer
-
-The following script acquires data and displays both time-domain and frequency-domain views simultaneously. **This code is provided for you**—the learning goal is to *use and interpret* spectral analysis, not to write real-time plotting code from scratch.
-
-Run this script, then complete the exercises that follow. You will modify specific aspects of the code to deepen your understanding.
-
-```python
-import nidaqmx
-import numpy as np
-import matplotlib.pyplot as plt
-from nidaqmx.constants import AcquisitionType
-from IPython.display import display, clear_output
-
-# Configuration
-SAMPLE_RATE = 10000  # Hz
-NUM_SAMPLES = 2000
-DAQ_CHANNEL = "Dev1/ai0"
-
-def compute_spectrum(data, sample_rate):
-    """Compute one-sided power spectrum."""
-    n = len(data)
-    fft_result = np.fft.fft(data)
-    n_unique = n // 2 + 1
-    frequencies = np.abs(np.fft.fftfreq(n, d=1/sample_rate)[:n_unique])
-    power = (np.abs(fft_result[:n_unique]) / n) ** 2
-    power[1:-1] *= 2
-    return frequencies, power
-
-# Set up plots
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 8))
-
-# Time domain plot
-line1, = ax1.plot([], [], 'b-')
-ax1.set_xlabel('Time (ms)')
-ax1.set_ylabel('Voltage (V)')
-ax1.set_title('Time Domain')
-ax1.grid(True, alpha=0.3)
-
-# Frequency domain plot
-line2, = ax2.plot([], [], 'r-')
-ax2.set_xlabel('Frequency (Hz)')
-ax2.set_ylabel('Power')
-ax2.set_title('Frequency Domain (Power Spectrum)')
-ax2.grid(True, alpha=0.3)
-ax2.set_xlim(0, SAMPLE_RATE / 2)
-
-plt.tight_layout()
-
-last_data = None
-
-with nidaqmx.Task() as task:
-    task.ai_channels.add_ai_voltage_chan(DAQ_CHANNEL)
-    task.timing.cfg_samp_clk_timing(
-        rate=SAMPLE_RATE,
-        sample_mode=AcquisitionType.CONTINUOUS
-    )
-    task.start()
-
-    print("Acquiring data... Press Ctrl+C (or Interrupt Kernel) to stop")
-
-    try:
-        while True:
-            # Drain buffer to prevent overflow
-            samples_available = task.in_stream.avail_samp_per_chan
-            if samples_available >= NUM_SAMPLES:
-                data = task.read(number_of_samples_per_channel=samples_available)
-                # Use most recent samples
-                data = data[-NUM_SAMPLES:]
-                last_data = np.array(data)
-
-                # Update time domain plot
-                time_ms = np.arange(len(data)) / SAMPLE_RATE * 1000
-                line1.set_data(time_ms, data)
-                ax1.set_xlim(0, time_ms[-1])
-                ax1.set_ylim(np.min(data) - 0.1, np.max(data) + 0.1)
-
-                # Update frequency domain plot
-                frequencies, power = compute_spectrum(np.array(data), SAMPLE_RATE)
-                line2.set_data(frequencies, power)
-                ax2.set_ylim(0, np.max(power) * 1.1 + 0.001)
-
-                clear_output(wait=True)
-                display(fig)
-
-    except KeyboardInterrupt:
-        print("\nStopped by user")
-
-# Save last dataset
-if last_data is not None:
-    np.savetxt('last_acquisition.csv',
-               np.column_stack([np.arange(len(last_data))/SAMPLE_RATE, last_data]),
-               delimiter=',', header='Time (s), Voltage (V)', comments='')
-    print("Last dataset saved to 'last_acquisition.csv'")
-
-plt.close(fig)
-```
-
-### Code Modification Exercises
-
-These exercises help you understand spectral analysis by making targeted modifications to the code above. For each modification, **predict the result before running the code**.
-
-1. **Change the sample rate.** Modify `SAMPLE_RATE` from 10000 Hz to 2000 Hz.
-   - **Before running:** Predict what will change in the frequency-domain plot. What will be the new maximum frequency? What will happen to frequency resolution?
-   - **After running:** Was your prediction correct? If not, explain what you learned.
-
-2. **Change the number of samples.** Reset `SAMPLE_RATE` to 10000 Hz, then change `NUM_SAMPLES` from 2000 to 500.
-   - **Before running:** How will this affect the frequency resolution? Will the maximum frequency change?
-   - **After running:** Compare the spectrum to the original. Is it easier or harder to identify frequency peaks? Why?
-
-3. **Add a deliberate bug.** Modify the `compute_spectrum` function to remove the line `power[1:-1] *= 2`:
-   ```python
-   # power[1:-1] *= 2  # Comment this out
-   ```
-   - **Before running:** What do you predict will happen to the displayed power values?
-   - **After running:** Compare the magnitude of peaks to the original. Research why this factor of 2 is needed for a one-sided spectrum.
-
-4. **Document a wrong prediction.** In your notebook, record at least one case where your prediction was incorrect. Explain:
-   - What you predicted
-   - What actually happened
-   - Why your mental model was wrong
-   - What you now understand better
-
-**Note:** Whether you generated these modifications yourself or with AI assistance, the learning comes from making predictions and comparing to results. Always restore the original code before moving to the next exercise.
-
-## Exercises: Spectral Analysis
-
-### Understanding Frequency Resolution
-
-1. Use a waveform generator to output a waveform of your choice at a frequency in the tens of Hz to kHz range and view the output on the oscilloscope and in your Python script.
-
-2. Look at the spectral analysis. How do the **frequency resolution** (frequency step size between data in the spectrum) and **maximum frequency** relate to the **sample rate** and **number of samples**? Verify the algebraic relationship experimentally.
-
-3. If the data is sampled for 2 seconds at 100 Hz sample rate, what frequency does the $m$-th component of the Fourier Transform correspond to?
-
-4. How many points are shown in the spectral analysis plot? How does this compare to the number of points you expected in the Fourier transform (see Section @sec:basic-fourier\.4)?
-
-   **Note**: The data acquired from the DAQ is always a sequence of real numbers $\{y_n\}$. Under the condition that the signal is only real numbers, it can be proved that $Y_m=Y_{N-M}^*$ so $|Y_M|=|Y_{N-m}|$, meaning the spectrum is symmetric about the $N/2$-th data point, which corresponds to the Nyquist frequency. For this reason, we typically only plot the first half of the Fourier spectrum up to the Nyquist frequency.
-
-### Analyzing Different Waveforms
-
-1. How do you expect the spectrum of a **sine wave** to look? How should it change as you vary the amplitude and frequency on the waveform generator? Try it.
-
-2. How do you expect the spectrum of a **square wave** to look? How should it change as you vary the amplitude and frequency on the waveform generator? Try it.
-
-   (Hint: you can look up or calculate the Fourier Series of a square wave to see if the observed amplitudes agree with the mathematical prediction.)
-
-3. Generate a signal with **two frequencies** (if your function generator supports this, or use the sum of two signals). Can you identify both frequencies in the spectrum?
-
-### Connecting FFT to Your Gaussian Beams Experiment
-
-The spectral analysis techniques you've learned have direct applications to your beam profiling work. In this section, you'll analyze the photodetector signal to understand noise sources that could affect your Week 4 measurements.
-
-1. **Photodetector noise spectrum.** Connect your photodetector to the DAQ (as in Week 2) with the beam blocked.
-
-   1. Acquire 1-2 seconds of data at 10 kHz sample rate.
-   2. Compute and plot the power spectrum.
-   3. Are there any peaks at specific frequencies? If so, what are likely physical sources? (Common culprits: 60 Hz power line, 120 Hz rectified power, computer switching frequencies, room lighting)
-   4. How does the noise spectrum change when you change the photodetector gain setting?
-
-2. **Signal spectrum with laser.** Now unblock the beam so light hits the photodetector.
-
-   1. Acquire data and compute the power spectrum.
-   2. Compare to the dark noise spectrum. What changed?
-   3. If you see new peaks, what might cause periodic variations in laser intensity?
-
-3. **Implications for beam profiling.** Consider your Week 4 automated measurements.
-
-   1. Your beam profiler waits 500 ms between steps and takes a single voltage reading. Based on your noise spectrum, what frequencies could affect your measurement?
-   2. If you wanted to reduce the effect of 60 Hz noise, how long should you average each measurement? (Hint: averaging over an integer number of periods cancels periodic noise)
-   3. Would it be better to average many fast samples or take one slow measurement? Justify your answer using your spectral analysis.
-
-4. **Quantitative prediction for Week 4.** Based on your noise spectrum analysis:
-
-   1. Calculate the RMS noise you expect in a 100-sample average at 10 kHz sample rate. (Hint: if your single-sample RMS noise is $\sigma$, the RMS of an N-sample average is $\sigma/\sqrt{N}$, assuming white noise.)
-   2. Record this prediction in your notebook: "Predicted RMS noise with 100-sample averaging: ______ mV"
-   3. You will test this prediction in Week 4 by examining the scatter in your beam profile data.
-
-### Analyzing Saved Data
-
-Sometimes you may want to analyze data after it is saved rather than in real-time:
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Load saved data
-data = np.loadtxt('saved_waveform.csv', delimiter=',', skiprows=1)
-time = data[:, 0]
-signal = data[:, 1]
-
-# Determine sample rate from time data
-sample_rate = 1 / (time[1] - time[0])
-
-# Compute FFT
-n = len(signal)
-fft_result = np.fft.fft(signal)
-
-# Create frequency axis
-frequencies = np.fft.fftfreq(n, d=1/sample_rate)
-
-# Get positive frequencies only
-positive_mask = frequencies >= 0
-freq_positive = frequencies[positive_mask]
-magnitude = np.abs(fft_result[positive_mask]) / n
-
-# Plot spectrum
-plt.figure(figsize=(10, 6))
-plt.plot(freq_positive, magnitude)
-plt.xlabel('Frequency (Hz)')
-plt.ylabel('Magnitude')
-plt.title('Fourier Transform of Saved Data')
-plt.grid(True, alpha=0.3)
-plt.show()
-```
-
-### Exercises with Saved Data
-
-1. Import any saved data set of a periodic function saved from the DAQ or the oscilloscope.
-
-2. Use NumPy's `fft` function to compute the discrete Fourier Transform of the signal.
-   1. Do you expect the FFT output to be real-valued or complex-valued?
-
-3. Plot the output of the FFT function. Since the output is complex-valued, plot `np.abs()` or `np.abs()**2`.
-   1. What is the x-axis range and step-size in the plot?
-   2. What frequency range and step size should be displayed on the x-axis?
-
-4. Make sure to add the frequency column to create a proper plot of spectrum vs. frequency:
-
-   ```python
-   # Complete example
-   n = len(signal)
-   sample_rate = 10000  # Adjust to your actual sample rate
-
-   # Compute FFT and frequencies
-   fft_result = np.fft.fft(signal)
-   frequencies = np.fft.fftfreq(n, d=1/sample_rate)
-
-   # One-sided spectrum (positive frequencies)
-   n_half = n // 2 + 1
-   freq_pos = frequencies[:n_half]
-   magnitude = np.abs(fft_result[:n_half]) * 2 / n  # Normalize and account for one-sided
-   magnitude[0] /= 2  # DC component doesn't double
-
-   plt.figure(figsize=(10, 6))
-   plt.plot(freq_pos, magnitude)
-   plt.xlabel('Frequency (Hz)')
-   plt.ylabel('Magnitude')
-   plt.xlim(0, sample_rate/2)
-   plt.grid(True, alpha=0.3)
-   plt.show()
-   ```
-
-5. Does the spectral analysis show the same spectrum at the same frequencies that you expect from the waveform generator settings?
-
-6. NumPy's FFT uses specific conventions. You can check the documentation with:
-
-   ```python
-   help(np.fft.fft)
-   ```
-
-   The convention used is: $Y_k = \sum_{n=0}^{N-1} y_n e^{-2\pi i k n / N}$
 
 # Setting Up the Motor Controller
 
@@ -854,51 +362,299 @@ List at least three things you would check, *in order of likelihood*, and explai
 
 This systematic approach to troubleshooting will serve you well in Week 4 and beyond.
 
-# Revisit Measuring the Beam Width
+# Taking Your First Automated Beam Profile
 
-Now that you have the motor controller working, you're ready to prepare for Week 4's automated measurements. Review (and complete if necessary) [section 7](/PHYS-4430/lab-guides/gaussian-beams-1#measuring-the-beam-width) from Week 1.
+Now that you have the motor controller working, take a complete beam profile measurement. This serves two purposes: (1) verify your entire measurement system works end-to-end, and (2) generate real data for the analysis section.
 
-Make sure you can:
+## Measurement Procedure
 
-1. Take a complete beam profile measurement manually
-2. Fit the data using the error function model
-3. Extract the beam width $w$ with uncertainty
-4. Create a plot showing the data and fit
+1. **Position the knife-edge assembly** at a known distance from the laser (measure and record this distance—you'll need it for analysis).
 
-This will serve as your baseline for comparison with the automated measurements next week. If time permits, try using the motor controller to take a few data points—this will give you confidence that your setup is ready for Week 4.
+2. **Set up the measurement:**
+   - Ensure the photodetector is receiving the full beam when the knife-edge is retracted
+   - Use the gain setting you determined in Week 2
+   - Verify DAQ is reading reasonable voltages
+
+3. **Take the beam profile:**
+   - Move the knife-edge across the beam in steps of 0.05-0.1 mm
+   - At each position, record the motor position and photodetector voltage
+   - Continue until the beam is fully blocked (voltage reaches dark level)
+   - Aim for 20-30 data points across the transition
+
+4. **Save your data** with a descriptive filename including the date and z-position.
+
+**Tip:** If using manual motor commands, you can automate data collection with a simple loop:
+
+```python
+import time
+import numpy as np
+import nidaqmx
+
+# Configuration
+positions = np.arange(0, 3, 0.1)  # 0 to 3 mm in 0.1 mm steps
+data = []
+
+for pos in positions:
+    # Move motor to position (use your motor control code)
+    # motor.MoveTo(pos)
+    time.sleep(0.3)  # Wait for motor to settle
+
+    # Read voltage
+    with nidaqmx.Task() as task:
+        task.ai_channels.add_ai_voltage_chan("Dev1/ai0")
+        voltage = np.mean(task.read(number_of_samples_per_channel=100))
+
+    data.append([pos, voltage])
+    print(f"Position: {pos:.2f} mm, Voltage: {voltage:.4f} V")
+
+# Save data
+np.savetxt('beam_profile_week3.csv', data, delimiter=',',
+           header='Position (mm), Voltage (V)', comments='')
+```
+
+## Quick Check
+
+Before proceeding to analysis, verify your data looks reasonable:
+- Does the voltage transition smoothly from high to low?
+- Is the transition region clearly visible?
+- Do you have enough points in the transition region (where the voltage changes)?
+
+If the data looks noisy or the transition is unclear, retake the measurement with smaller step sizes or more averaging.
+
+# Applying Theory to Your Measurements
+
+This section connects the Gaussian beam theory from your prelab to your actual measurements. You'll learn error propagation by applying it to your own data—not abstract examples.
+
+## Error Propagation: From Measured to Derived Quantities
+
+The quantity of interest in an experiment is often derived from other measured quantities. For example, you'll derive beam width $w$ from your knife-edge data, then use $w$ at multiple positions to determine the beam waist $w_0$.
+
+### The General Formula
+
+Suppose you want to derive a quantity $z$ from measured quantities $a, b, c, ...$. The mathematical function is $z = z(a, b, c, ...)$. The propagated uncertainty in $z$ is:
+
+$$\sigma_z^2 = \left( \frac{\partial z}{\partial a}\right)^2\sigma_a^2+\left( \frac{\partial z}{\partial b}\right)^2\sigma_b^2+\left( \frac{\partial z}{\partial c}\right)^2\sigma_c^2+ \ ...\text{.}$$
+
+This comes directly from calculus—it's the linear approximation of how fluctuations in inputs cause fluctuations in outputs.
+
+### Error Propagation in Python
+
+For complex calculations, the `uncertainties` package automatically tracks error propagation:
+
+```python
+from uncertainties import ufloat
+from uncertainties.umath import sqrt
+
+# Define values with uncertainties
+V = ufloat(5.0, 0.1)   # 5.0 ± 0.1 V
+I = ufloat(0.5, 0.02)  # 0.5 ± 0.02 A
+
+# Calculate - uncertainty propagates automatically
+R = V / I
+print(f"R = {R}")  # Shows value ± uncertainty
+```
+
+## Fitting Your Beam Profile Data
+
+Now fit your beam profile data to extract the beam width.
+
+### Step 1: Load and Plot Your Data
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+from scipy.special import erf
+
+# Load your data
+data = np.loadtxt('beam_profile_week3.csv', delimiter=',', skiprows=1)
+position = data[:, 0]  # mm
+voltage = data[:, 1]   # V
+
+# Plot raw data
+plt.figure(figsize=(10, 6))
+plt.plot(position, voltage, 'bo', label='Data')
+plt.xlabel('Position (mm)')
+plt.ylabel('Voltage (V)')
+plt.title('Beam Profile - Week 3')
+plt.grid(True, alpha=0.3)
+plt.show()
+```
+
+### Step 2: Define and Fit the Error Function Model
+
+The knife-edge measurement gives an integrated Gaussian, which is the error function:
+
+$$V(x) = \frac{V_{max} - V_{min}}{2} \left[1 - \text{erf}\left(\frac{\sqrt{2}(x - x_0)}{w}\right)\right] + V_{min}$$
+
+```python
+def beam_profile(x, V_max, V_min, x0, w):
+    """Error function model for knife-edge beam profile."""
+    return (V_max - V_min) / 2 * (1 - erf(np.sqrt(2) * (x - x0) / w)) + V_min
+
+# Initial guesses
+V_max_guess = np.max(voltage)
+V_min_guess = np.min(voltage)
+x0_guess = position[len(position)//2]
+w_guess = 0.5  # mm
+
+p0 = [V_max_guess, V_min_guess, x0_guess, w_guess]
+
+# Fit the data
+popt, pcov = curve_fit(beam_profile, position, voltage, p0=p0)
+perr = np.sqrt(np.diag(pcov))
+
+# Extract results
+V_max, V_min, x0, w = popt
+V_max_err, V_min_err, x0_err, w_err = perr
+
+print(f"Beam width: w = {w:.4f} ± {w_err:.4f} mm")
+print(f"Beam center: x0 = {x0:.4f} ± {x0_err:.4f} mm")
+```
+
+### Step 3: Plot the Fit
+
+```python
+# Generate smooth curve for plotting
+x_fit = np.linspace(position.min(), position.max(), 200)
+v_fit = beam_profile(x_fit, *popt)
+
+plt.figure(figsize=(10, 6))
+plt.plot(position, voltage, 'bo', label='Data')
+plt.plot(x_fit, v_fit, 'r-', label=f'Fit: w = {w:.3f} ± {w_err:.3f} mm')
+plt.xlabel('Position (mm)')
+plt.ylabel('Voltage (V)')
+plt.title('Beam Profile with Error Function Fit')
+plt.legend()
+plt.grid(True, alpha=0.3)
+plt.savefig('beam_profile_fit.png', dpi=150)
+plt.show()
+```
+
+**Record in your notebook:**
+- Beam width: $w = $ _______ $\pm$ _______ mm
+- Measurement position: $z = $ _______ m from laser
+
+**Connection to Week 2:** The uncertainty in your fit parameters depends on the noise level in your voltage measurements. Your Week 2 noise characterization tells you what σ_V to expect at your gain setting. Look at the residuals (data minus fit)—does their scatter match your predicted noise level? If the residuals are much larger than expected, you may have additional noise sources (vibration, beam drift) affecting your measurement.
+
+## Predicting Week 4 Results
+
+Now use your measured beam width to make predictions for Week 4. This is where error propagation becomes practical.
+
+### Step 1: Estimate Beam Waist from Your Measurement
+
+Using the Gaussian beam equation:
+
+$$w(z) = w_0\sqrt{1+\left(\frac{\lambda (z - z_w)}{\pi w_0^2}\right)^2}$$
+
+If we assume $z_w \approx 0$ (beam waist at laser output), we can estimate $w_0$ from a single measurement. Rearranging:
+
+```python
+from uncertainties import ufloat
+from uncertainties.umath import sqrt
+import numpy as np
+
+# Your measured values (replace with your actual data)
+w_measured = ufloat(0.52, 0.03)  # mm - USE YOUR VALUE
+z_measured = ufloat(1.5, 0.01)   # m - USE YOUR VALUE
+wavelength = 632.8e-9  # m (He-Ne laser)
+
+# Convert w to meters
+w_m = w_measured * 1e-3
+
+# For a beam at distance z from waist, we can estimate w0
+# This is approximate - assumes z >> z_R (far from waist)
+# w ≈ w0 * z * λ / (π * w0²) = z * λ / (π * w0)
+# So w0 ≈ z * λ / (π * w)
+w0_approx = z_measured * wavelength / (np.pi * w_m)
+
+print(f"Approximate beam waist: w0 ≈ {w0_approx*1e6:.1f} μm")
+```
+
+### Step 2: Predict Beam Widths at Other Positions
+
+Use error propagation to predict what you'll measure in Week 4:
+
+```python
+# Predict beam width at different positions
+positions = [0.5, 1.0, 1.5, 2.0]  # meters
+
+print("\nPredicted beam widths for Week 4:")
+print("-" * 40)
+for z in positions:
+    z_val = ufloat(z, 0.01)
+    z_R = np.pi * w0_approx**2 / wavelength
+    w_pred = w0_approx * sqrt(1 + (z_val / z_R)**2)
+    print(f"z = {z:.1f} m:  w = {w_pred*1e3:.3f} mm")
+```
+
+### Step 3: Record Your Predictions
+
+Fill in this table in your notebook:
+
+| Position $z$ | Predicted $w(z)$ | Predicted uncertainty |
+|-------------|------------------|----------------------|
+| 0.5 m | _______ mm | ± _______ mm |
+| 1.0 m | _______ mm | ± _______ mm |
+| 1.5 m | _______ mm | ± _______ mm |
+| 2.0 m | _______ mm | ± _______ mm |
+
+**Prediction reflection:** If your Week 4 measurements differ significantly from these predictions, what are the most likely causes? List at least two possibilities, and for each one, describe what signature in your Week 4 data would distinguish that cause from the others. (For example: Would the discrepancy be systematic across all positions? Would it affect near-field and far-field measurements differently?)
+
+## Comparing Manual vs. Motor-Controlled Measurements
+
+If you took beam width measurements manually in Week 1, compare them to today's motor-controlled measurement:
+
+| Method | Beam width | Uncertainty | Notes |
+|--------|-----------|-------------|-------|
+| Week 1 (manual) | _______ mm | ± _______ mm | |
+| Week 3 (motor) | _______ mm | ± _______ mm | |
+
+Are they consistent within uncertainties? If not, what might explain the difference?
 
 # Deliverables and Assessment
 
 Your lab notebook should include the following for this week:
 
-## Prelab (complete before lab)
+## Prelab (complete before lab, ~75 min)
 
-1. **Error propagation exercise**: calculation of $w(z)$ uncertainty using the `uncertainties` package
-2. **Paraxial wave equation derivation**: show the key steps from Maxwell's equations to Equation 7
+1. **Paraxial wave equation derivation**: show the key steps from Maxwell's equations to Equation 7
+2. **Physical Intuition Check**: answers to all 5 questions
 3. **Gaussian beam model questions**: answers to questions 1-4 in "Trying out the Gaussian beam model"
-4. **Beam waist fitting**: fit results for the test data set with $w_0$ and $z_w$ values
+4. **Beyond Beam Width reflection**: when might you need to measure $R(z)$ or $\zeta(z)$ directly?
 
 ## In-Lab Documentation
 
-1. **FFT exercises**:
-   - Plots comparing time-domain and frequency-domain representations
-   - Answers to frequency resolution questions
-   - Analysis of sine wave, square wave, and multi-frequency signals
-   - **Photodetector noise spectrum** (new section): dark noise and signal spectra with analysis of implications for beam profiling
-2. **Motor controller verification**:
+### Phase 2: Measurement (~60 min)
+1. **Motor controller verification**:
    - Completed setup checklist (DAQ, motor connection, movement test)
    - Motor serial number recorded
-3. **Beam width measurement** (from Week 1 or new):
-   - Data table: position vs. voltage
-   - Fit plot with extracted beam width and uncertainty
+   - Troubleshooting reflection
+2. **Beam profile data**:
+   - Raw data file saved
+   - Position of measurement from laser: $z = $ _______ m
+   - Quick check: does data show clean transition?
+
+### Phase 3: Analysis (~60 min)
+3. **Beam profile fit**:
+   - Fit plot showing data and error function model
+   - Extracted beam width: $w = $ _______ $\pm$ _______ mm
+4. **Error propagation and predictions**:
+   - Estimated beam waist $w_0$
+   - Predicted beam widths at 4 positions for Week 4
+   - Prediction reflection (what could cause disagreement?)
+5. **Comparison** (if Week 1 data available):
+   - Manual vs. motor-controlled beam width comparison
 
 ## Code Deliverables
 
-1. Working spectral analysis script
-2. Motor communication test script
+1. Motor communication test script
+2. Beam profile fitting script
 
 ## Reflection Questions
 
-1. Your FFT shows an unexpected peak at 120 Hz that wasn't present in your function generator signal. List three possible physical sources for this frequency and describe how you would determine which is responsible.
+1. What was the dominant source of uncertainty in your beam width measurement? How could you reduce it?
 
-2. You measure a beam width of $w = 0.52 \pm 0.03$ mm at position $z = 1.5$ m. Using the Gaussian beam equations, predict $w$ at $z = 2.0$ m, including the propagated uncertainty. Show your calculation.
+2. Based on your motor controller setup experience, what was the most challenging part? How would you help a classmate who encountered the same issue?
+
+3. Look at your predicted beam widths for Week 4. Which measurement position will have the largest *relative* uncertainty (σ_w / w)? Why?

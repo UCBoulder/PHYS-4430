@@ -49,20 +49,20 @@ This week you'll test the Gaussian beam model with automated measurements. Befor
 
 ## Prediction Exercise 1: Beam Width vs. Position
 
-In Week 3, you calculated expected beam widths at several positions. Now refine those predictions using the full Gaussian beam model:
+**Transfer your predictions from Week 3.** In Week 3, you measured a beam profile, applied error propagation, and predicted beam widths at several positions. Copy those predictions here:
+
+| Position $z$ (m) | Predicted $w(z)$ (mm) | Predicted uncertainty |
+|------------------|----------------------|----------------------|
+| 0.5 | _______ | ± _______ |
+| 1.0 | _______ | ± _______ |
+| 1.5 | _______ | ± _______ |
+| 2.0 | _______ | ± _______ |
+
+*If you did not complete the Week 3 prediction exercise, do so now using the Gaussian beam model:*
 
 $$w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$$
 
-**Using your Week 1 beam width measurement** (if available) or assuming $w_0 \approx 0.5$ mm at $z_w \approx 0$:
-
-| Position $z$ (m) | Predicted $w(z)$ (mm) |
-|------------------|----------------------|
-| 0.5 | _______ |
-| 1.0 | _______ |
-| 1.5 | _______ |
-| 2.0 | _______ |
-
-Show your calculation for at least one position. Record these predictions—you will compare to measurements during lab.
+Use your Week 3 beam width measurement and estimated $w_0$ to calculate predictions with propagated uncertainties.
 
 ## Prediction Exercise 2: Lens Effects
 
