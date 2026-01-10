@@ -360,11 +360,11 @@
       color: var(--text-heading);
     }
 
-    /* Images with transparent backgrounds need light background in dark mode */
-    .dark-mode img {
-      background-color: #f8f8f8;
+    /* Consistent image styling for both modes */
+    /* Light background only visible through transparent areas of images */
+    img {
       border-radius: 4px;
-      padding: 8px;
+      background-color: #f8f8f8;
     }
 
     /* MathJax uses body text color */
