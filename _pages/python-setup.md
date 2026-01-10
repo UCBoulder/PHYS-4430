@@ -9,6 +9,13 @@ permalink: /python-setup
 
 The lab computers have all required software pre-installed. If you want to use your own computer, follow the steps below.
 
+> **Note for Mac users:** This guide focuses on Windows because several hardware drivers are Windows-only:
+> - **NI-DAQmx** (data acquisition with USB-6009) — Windows only
+> - **Thorlabs Kinesis** (motor control) — Windows only
+> - **NI-VISA** (instrument communication) — available for Mac
+>
+> If you have a Mac, you can install Python and the core packages (NumPy, SciPy, Matplotlib, etc.) for data analysis on your own computer, but you'll need to use the lab computers for data acquisition and motor control.
+
 ---
 
 ## Install Python (Windows)
@@ -47,29 +54,53 @@ py list --online
 
 ---
 
+## Install Python (Mac)
+
+1. Go to [python.org/downloads/release/python-31210](https://www.python.org/downloads/release/python-31210/)
+2. Scroll down to **Files** and download the **macOS 64-bit universal2 installer**
+3. Run the installer and follow the prompts
+
+Verify the installation by opening Terminal and running:
+
+```bash
+python3 --version
+```
+
+---
+
 ## Install Required Packages
 
-Once Python is installed, install the packages needed for this course:
+Once Python is installed, install the packages needed for this course.
+
+**On Windows:**
 
 ```bash
 py -m pip install uv numpy pandas matplotlib scipy nidaqmx jupyterlab pyvisa pyserial pythonnet uncertainties
 ```
 
+**On Mac:**
+
+```bash
+python3 -m pip install uv numpy pandas matplotlib scipy jupyterlab uncertainties
+```
+
+> **Note:** Hardware interface packages (`nidaqmx`, `pythonnet`, `pyvisa`, `pyserial`) are omitted since Mac users will use the lab computers for hardware interfacing.
+
 Or download our [requirements.txt](/PHYS-4430/resources/lab-guides/gaussian-laser-beams/python/requirements.txt) and run:
+
+**On Windows:**
 
 ```bash
 py -m pip install -r requirements.txt
 ```
 
-**Faster alternative with uv:** After installing `uv`, you can use it for much faster package installs:
-
-```bash
-uv pip install -r requirements.txt
-```
+**On Mac:** You'll need to install packages individually (as shown above) since the requirements file includes Windows-only packages.
 
 ---
 
-## Install Hardware Drivers
+## Install Hardware Drivers (Windows only)
+
+> **Mac users:** Skip this section. These drivers are Windows-only; use the lab computers for hardware interfacing.
 
 ### NI-DAQmx (for data acquisition)
 
@@ -113,7 +144,7 @@ C:\Program Files\Thorlabs\Kinesis\
 
 ## Verifying Your Setup
 
-Run this quick test to verify everything is installed correctly:
+**Windows:** Run this test to verify everything is installed correctly:
 
 ```python
 # Test core packages
@@ -141,6 +172,18 @@ try:
 except Exception as e:
     print(f"PyVISA: {e}")
 
+print("\nSetup complete!")
+```
+
+**Mac:** Run this test to verify the core packages are installed:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+from uncertainties import ufloat
+
+print("Core packages: OK")
 print("\nSetup complete!")
 ```
 
