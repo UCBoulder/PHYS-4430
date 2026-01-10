@@ -6,6 +6,15 @@
 
 
   <body>
+    <!-- Theme initialization (runs immediately to prevent flash) -->
+    <script>
+      (function() {
+        var savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.body.classList.add('dark-mode');
+        }
+      })();
+    </script>
 
     {% include header.html %}
 
@@ -20,6 +29,22 @@
     <br>
 
     {% include footer.html %}
+
+    <!-- Theme toggle functionality -->
+    <script>
+      function toggleTheme() {
+        var isDark = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      }
+
+      // Keyboard shortcut: Ctrl/Cmd + Shift + D
+      document.addEventListener('keydown', function(e) {
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.code === 'KeyD') {
+          e.preventDefault();
+          toggleTheme();
+        }
+      });
+    </script>
 
     <!-- Add copy buttons to code blocks -->
     <script>

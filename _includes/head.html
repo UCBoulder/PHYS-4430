@@ -19,14 +19,149 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <!-- Code block styling, syntax highlighting, and copy button -->
+  <!-- Theme and styling -->
   <style>
+    /* ===== Theme Variables ===== */
+    /* CU Boulder brand colors */
+    :root {
+      --ucb-gold: #CFB87C;
+      --ucb-gold-light: #D6C590;
+      --ucb-gold-dark: #B8A56B;
+      --ucb-black: #000000;
+    }
+
+    /* Light mode (default) */
+    :root {
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f5f5;
+      --bg-tertiary: #eeeeee;
+      --text-primary: #555555;
+      --text-heading: #333333;
+      --text-secondary: #595959;
+      --text-muted: #757575;
+      --border-color: #ddd;
+      --code-bg: #f8f8f8;
+      --code-text: #c7254e;
+      --link-color: #337ab7;
+      --link-hover: #23527c;
+      --table-stripe: #f9f9f9;
+      --table-hover: #f1f1f1;
+      --navbar-bg: #f8f8f8;
+      --navbar-text: #777;
+      --navbar-brand: #777;
+    }
+
+    /* Dark mode */
+    .dark-mode {
+      --bg-primary: #222222;
+      --bg-secondary: #2a2a2a;
+      --bg-tertiary: #333333;
+      --text-primary: #bbbbbb;
+      --text-heading: #eeeeee;
+      --text-secondary: #999999;
+      --text-muted: #888888;
+      --border-color: #444;
+      --code-bg: #2d2d2d;
+      --code-text: #e06c75;
+      --link-color: #6db3f2;
+      --link-hover: #9dcbf7;
+      --table-stripe: #2a2a2a;
+      --table-hover: #333333;
+      --navbar-bg: #1a1a1a;
+      --navbar-text: #bbbbbb;
+      --navbar-brand: #eeeeee;
+    }
+
+    /* Apply theme colors globally */
+    body {
+      background-color: var(--bg-primary) !important;
+      color: var(--text-primary) !important;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    a {
+      color: var(--link-color);
+      overflow-wrap: break-word;
+      word-wrap: break-word;
+    }
+    a:hover, a:focus {
+      color: var(--link-hover);
+    }
+
+    /* Navbar theming */
+    .navbar-default {
+      background-color: var(--navbar-bg) !important;
+      border-color: var(--border-color) !important;
+      transition: background-color 0.3s ease;
+    }
+    .navbar-default .navbar-brand,
+    .navbar-default .navbar-brand:hover,
+    .navbar-default .navbar-brand:focus {
+      color: var(--navbar-brand) !important;
+    }
+    .navbar-default .navbar-nav > li > a {
+      color: var(--navbar-text) !important;
+    }
+    .navbar-default .navbar-nav > li > a:hover,
+    .navbar-default .navbar-nav > li > a:focus {
+      color: var(--text-primary) !important;
+      background-color: transparent !important;
+    }
+    .navbar-default .navbar-nav > .open > a,
+    .navbar-default .navbar-nav > .open > a:hover,
+    .navbar-default .navbar-nav > .open > a:focus {
+      background-color: var(--bg-secondary) !important;
+      color: var(--text-primary) !important;
+    }
+    .dropdown-menu {
+      background-color: var(--bg-primary) !important;
+      border-color: var(--border-color) !important;
+    }
+    .dropdown-menu > li > a {
+      color: var(--text-primary) !important;
+    }
+    .dropdown-menu > li > a:hover,
+    .dropdown-menu > li > a:focus {
+      background-color: var(--bg-secondary) !important;
+      color: var(--text-primary) !important;
+    }
+
+    /* Theme toggle button */
+    .theme-toggle {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      margin-left: 10px;
+      margin-top: 8px;
+      color: var(--navbar-text);
+      transition: color 0.2s ease;
+      vertical-align: middle;
+    }
+    .theme-toggle:hover {
+      color: var(--ucb-gold);
+    }
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+    /* Show/hide sun/moon icons */
+    .dark-mode .sun-icon { display: block; }
+    .dark-mode .moon-icon { display: none; }
+    :root .sun-icon { display: none; }
+    :root .moon-icon { display: block; }
+    body:not(.dark-mode) .sun-icon { display: none; }
+    body:not(.dark-mode) .moon-icon { display: block; }
+
+    /* ===== Code block styling ===== */
     /* Code block container */
     pre {
       position: relative;
-      background-color: #f8f8f8;
-      border: 1px solid #ddd;
+      background-color: var(--code-bg);
+      border: 1px solid var(--border-color);
       border-radius: 4px;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
     /* Copy button - overlays top-right corner */
@@ -36,13 +171,14 @@
       right: 0.5em;
       padding: 0.25em 0.5em;
       font-size: 0.75em;
-      background-color: rgba(240, 240, 240, 0.9);
-      border: 1px solid #ccc;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border-color);
       border-radius: 4px;
       cursor: pointer;
       opacity: 0;
       transition: opacity 0.2s, background-color 0.2s;
       z-index: 10;
+      color: var(--text-secondary);
     }
 
     /* Show button on hover */
@@ -51,7 +187,8 @@
     }
 
     .copy-button:hover {
-      background-color: #e0e0e0;
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
     }
 
     .copy-button.copied {
@@ -67,15 +204,16 @@
       overflow-x: auto;
       padding: 1em !important;
       background-color: transparent;
+      color: var(--text-primary);
     }
 
     /* Inline code styling */
     code:not(pre code) {
-      background-color: #f4f4f4;
+      background-color: var(--code-bg);
       padding: 0.2em 0.4em;
       border-radius: 3px;
       font-size: 0.9em;
-      color: #c7254e;
+      color: var(--code-text);
     }
 
     /* Pandoc syntax highlighting (GitHub-inspired theme) */
@@ -179,6 +317,7 @@
     /* Rouge container styling */
     .highlight pre { margin: 0; padding: 1em; }
     div.highlight { border-radius: 4px; }
+    .highlight { background: var(--code-bg); }
 
     /* Table styling */
     table {
@@ -187,19 +326,88 @@
       margin: 1em 0;
     }
     th, td {
-      border: 1px solid #ddd;
+      border: 1px solid var(--border-color);
       padding: 0.5em 1em;
       text-align: left;
     }
     th {
-      background-color: #f4f4f4;
+      background-color: var(--bg-secondary);
       font-weight: bold;
     }
     tr:nth-child(even) {
-      background-color: #f9f9f9;
+      background-color: var(--table-stripe);
     }
     tr:hover {
-      background-color: #f1f1f1;
+      background-color: var(--table-hover);
+    }
+
+    /* Blockquote theming */
+    blockquote {
+      background-color: var(--bg-secondary);
+      border-left-color: var(--ucb-gold);
+      color: var(--text-primary);
+    }
+
+    /* Form inputs */
+    input, textarea, select {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      border-color: var(--border-color);
+    }
+
+    /* Headings */
+    h1, h2, h3, h4, h5, h6 {
+      color: var(--text-heading);
+    }
+
+    /* Images with transparent backgrounds need light background in dark mode */
+    .dark-mode img {
+      background-color: #f8f8f8;
+      border-radius: 4px;
+      padding: 8px;
+    }
+
+    /* MathJax uses body text color */
+    .MathJax, .MathJax_Display, mjx-container {
+      color: var(--text-primary) !important;
+    }
+
+    /* Allow long equations to scroll horizontally on mobile */
+    mjx-container {
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+    }
+    mjx-container[jax="CHTML"][display="true"] {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    /* Horizontal rule */
+    hr {
+      border-color: var(--border-color);
+    }
+
+    /* Footer */
+    .footer, .panel-footer {
+      background-color: var(--bg-secondary) !important;
+      border-color: var(--border-color) !important;
+      color: var(--text-muted);
+      transition: background-color 0.3s ease;
+    }
+    .footer .text-muted {
+      color: var(--text-muted) !important;
+    }
+
+    /* Back to top button */
+    #back-to-top {
+      background-color: var(--bg-tertiary) !important;
+      color: var(--text-secondary) !important;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    #back-to-top:hover {
+      background-color: var(--ucb-gold) !important;
+      color: var(--ucb-black) !important;
     }
   </style>
 </head>
