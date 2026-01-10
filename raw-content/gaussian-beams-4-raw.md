@@ -27,6 +27,22 @@ After completing this week's lab, you will be able to:
 6. Evaluate whether the thin lens equation accurately predicts image location for Gaussian beams.
 7. Identify sources of systematic error when predictions and measurements disagree.
 
+# Overview of Your Work
+
+This week brings together everything you've built: you'll test the Gaussian beam model with automated measurements and investigate how lenses modify the beam.
+
+**The scientific question:** Does the Gaussian beam model accurately predict how beam width varies with position? Does the thin lens equation work for focused Gaussian beams?
+
+**Your approach:**
+
+1. **Validate your setup** — Confirm your Week 2 noise predictions still hold, and verify automated measurements match manual methods
+2. **Test the propagation model** — Measure $w(z)$ at multiple positions, fit to extract $w_0$ and $z_w$, and compare to your prelab predictions
+3. **Investigate lens effects** — Add a lens, measure how it modifies the beam, and test whether the thin lens equation predicts the new waist location
+
+**Key decisions you'll make:** When predictions and measurements disagree, you'll need to identify whether the discrepancy is due to measurement uncertainty, systematic error, or limitations of the model.
+
+*See the detailed deliverables checklist at the end of this guide.*
+
 # Prelab
 
 This week you'll test the Gaussian beam model with automated measurements. Before collecting data, make quantitative predictions—this transforms the lab from "taking data" to "testing your understanding."

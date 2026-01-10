@@ -33,6 +33,21 @@ After completing the lab, you will be able to:
 4. Set up and verify the motor controller for automated measurements.
 5. Measure beam width using the knife-edge technique and compare automated vs. manual methods.
 
+# Overview of Your Work
+
+This week prepares you for next week's automated experiments. Your work has two parallel threads:
+
+**Theory (Prelab):** You'll derive the Gaussian beam equations from Maxwell's equations and learn error propagation. This isn't abstract—you'll use these equations to interpret your Week 4 data, and error propagation will tell you whether your measured beam waist is consistent with theory.
+
+**Skills (Lab):** You'll develop two capabilities needed for automation:
+
+1. **Spectral analysis** — Use FFT to identify frequency components in signals. You'll apply this to your photodetector's noise spectrum to understand what's limiting your measurements.
+2. **Motor control** — Set up the Thorlabs translation stage and verify you can command it from Python. This is the final piece for automated beam profiling.
+
+**Complete your beam width measurement** if you didn't finish in Week 1. You'll need this data for analysis practice.
+
+*See the detailed deliverables checklist at the end of this guide.*
+
 # Prelab
 
 This week's prelab covers two topics: error propagation and the theoretical foundation for Gaussian laser beams.

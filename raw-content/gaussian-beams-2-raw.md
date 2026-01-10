@@ -53,6 +53,21 @@ After completing the lab, you will be able to:
 8. Select and justify an optimal gain setting based on quantitative analysis.
 9. Save acquired data to a CSV file.
 
+# Overview of Your Work
+
+This week culminates in a decision: **which gain setting will you use for Week 4's automated beam profiling?** This isn't arbitrary—you'll build the quantitative evidence to justify your choice.
+
+**Prelab:** Develop curve-fitting skills you'll use throughout this course. You'll learn to minimize χ², interpret residuals, and assess goodness of fit. These skills are essential for extracting beam widths from your knife-edge data.
+
+**In Lab:** You'll work through a predict-measure-compare cycle for noise characterization:
+
+1. **Learn DAQ fundamentals** — Read voltages with Python, understand sampling theory, observe aliasing
+2. **Measure dark noise** — Quantify the photodetector's noise floor at each gain setting and compare to datasheet values
+3. **Predict and measure SNR** — Before measuring, predict how signal-to-noise ratio changes with gain. Then measure and confront your predictions.
+4. **Make your decision** — Select a gain setting for Week 4 with written justification based on your data
+
+*See the detailed deliverables checklist at the end of this guide.*
+
 # Prelab
 
 This week's prelab builds on the uncertainty concepts you learned during Week 1's lab (where you measured voltage fluctuations and calculated standard deviation). Now we move from estimating uncertainties in individual measurements to fitting data and propagating those uncertainties to derived quantities. This is a "user's guide" to least-squares fitting and determining the goodness of your fits. At the end of the prelab you will be able to:

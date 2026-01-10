@@ -24,6 +24,20 @@ After completing this week's lab, you will be able to:
 7. Set up a knife-edge measurement and derive the theoretical model (error function).
 8. Perform a nonlinear curve fit to extract beam width from experimental data.
 
+# Overview of Your Work
+
+This week you'll build the foundation for the entire lab sequence. Your work centers on three activities:
+
+**1. Build and align your optical setup.** You'll mount a laser and mirrors, then use the "walking the beam" technique to achieve parallel propagation. Document your setup with a diagram—you'll refer back to this in later weeks.
+
+**2. Understand and calibrate your photodetector.** Before you can trust voltage readings, you need to know how the detector behaves. You'll measure offset voltages at each gain setting and verify that gain ratios match the datasheet. This calibration enables you to combine measurements taken at different gain settings.
+
+**3. Characterize measurement uncertainty.** You'll observe voltage fluctuations, identify their character (random noise vs. drift), and make decisions about your measurement strategy for beam profiling.
+
+**If time permits:** Begin knife-edge beam width measurements. If not, you'll complete this in Week 3.
+
+*See the detailed deliverables checklist at the end of this guide.*
+
 # Python Preparation
 
 This lab sequence uses Python for data acquisition, analysis, and visualization. The following skills will be introduced as you progress through the weeks:
