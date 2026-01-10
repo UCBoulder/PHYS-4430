@@ -7,7 +7,7 @@
 
 # Site settings
 title: PHYS 4430
-email: your-email@domain.com
+email: physicslabs@colorado.edu
 description: > # this means to ignore newlines until "baseurl:"
   Website of the Advanced Lab - PHYS 4430.
 baseurl: "/PHYS-4430"
@@ -50,3 +50,7 @@ kramdown:
   smart_quotes: lsquo,rsquo,ldquo,rdquo
   enable_coderay: false
   parse_block_html: true # default for kramdown is false. This will enable using Markdown links
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    block:
+      line_numbers: false

@@ -2,9 +2,60 @@
 title: "Gaussian Beams - Week 1"
 ---
 
-# Goals
+# Where We Are in the Sequence
 
-In the first week of the guided Gaussian Beams lab, you learn about mounting optics and photodetectors and try out some techniques that are generally useful in optics labs and elsewhere. In particular, you will set up a simple optics system for measuring the width of a laser beam and in the process will have to mount and align the laser and optics. 
+**Week 1 of 4: Foundations**
+
+This week you build the foundational skills for the entire Gaussian Beams sequence: optical alignment, photodetector operation, and beam width measurement. The calibration data and measurement techniques you develop this week will be used directly in Weeks 2-4.
+
+**This week:** Align optics → Calibrate photodetector → Measure beam width
+
+**Next week:** Learn data acquisition → Characterize noise → Choose optimal gain setting
+
+# Learning Goals
+
+After completing this week's lab, you will be able to:
+
+1. Mount and align optical components (mirrors, lenses) using standard optomechanical hardware.
+2. Walk a laser beam to achieve parallel propagation using two mirrors.
+3. Explain how a photodiode converts photons to current via the photoelectric effect.
+4. Calculate expected photodetector output voltage given incident power, responsivity, and gain setting.
+5. Calibrate a photodetector's offset and gain and compare to manufacturer specifications.
+6. Estimate measurement uncertainty using statistical sampling and explain why repeated measurements improve precision.
+7. Set up a knife-edge measurement and derive the theoretical model (error function).
+8. *(If time permits)* Apply a curve fit to test data to verify your analysis code is ready for real measurements.
+
+# Overview of Your Work
+
+This week you'll build the foundation for the entire lab sequence. Your work centers on three activities:
+
+**1. Build and align your optical setup.** You'll mount a laser and mirrors, then use the "walking the beam" technique to achieve parallel propagation. Document your setup with a diagram—you'll refer back to this in later weeks.
+
+**2. Understand and calibrate your photodetector.** Before you can trust voltage readings, you need to know how the detector behaves. You'll measure offset voltages at each gain setting and verify that gain ratios match the datasheet. This calibration enables you to combine measurements taken at different gain settings.
+
+**3. Characterize measurement uncertainty.** You'll observe voltage fluctuations, identify their character (random noise vs. drift), and make decisions about your measurement strategy for beam profiling.
+
+**If time permits:** Begin knife-edge beam width measurements. If not, you'll complete this in Week 3.
+
+*See the detailed deliverables checklist at the end of this guide.*
+
+# Python Preparation
+
+This lab sequence uses Python for data acquisition, analysis, and visualization. The following skills will be introduced as you progress through the weeks:
+
+| Week | Python Skills | Resources |
+|------|---------------|-----------|
+| Week 1 | NumPy basics, Matplotlib plotting, file I/O | [Data Analysis](/PHYS-4430/python-analysis) |
+| Week 2 | Curve fitting with SciPy, NI-DAQmx | [Data Analysis](/PHYS-4430/python-analysis), [NI-DAQmx](/PHYS-4430/python-nidaqmx) |
+| Week 3 | Error propagation, motor control | [Data Analysis](/PHYS-4430/python-analysis), [Thorlabs Motors](/PHYS-4430/python-thorlabs) |
+| Week 4 | Integrated automation | All above |
+
+**Before Week 2**, ensure you are comfortable with:
+- NumPy array operations
+- Basic plotting with Matplotlib
+- Loading data with `np.loadtxt()`
+
+If you need to review these skills, see the [Python Resources](/PHYS-4430/python-resources) page.
 
 # Lab Notebook
 
@@ -51,8 +102,8 @@ The two videos linked below provide information and tips on how to use and mount
 
 Now, we will begin assembling the components.
 
-1.  Get a laser and power supply from the “He-Ne Laser” drawer in the colored drawer cabinet found in your chosen or assigned optics bay. You’ll also need two sets of 3D-printed laser tube mounts which you can find in the same drawer (see Figure @fig:tube-mount). The bottom mount first gets mounted to an optical post and then the top of the mount can be assembled with ¼-20 socket head cap screw and nut. After both sets of tube mounts are attached to the laser, insert the optical posts into post holders and attach the assembly to the optical table.
-2. Each person in your group is responsible for assembling a mirror as shown in Figure @fig:mount-assembley. In the end, you will need at least 2 mirrors to complete the next task. **Remember to wear latex/nitrile gloves or finger cots while handling optical components.** 
+1.  Get a laser and power supply from the "He-Ne Laser" drawer in the colored drawer cabinet found in your chosen or assigned optics bay. You'll also need two sets of 3D-printed laser tube mounts which you can find in the same drawer (see Figure @fig:tube-mount). The bottom mount first gets mounted to an optical post and then the top of the mount can be assembled with ¼-20 socket head cap screw and nut. After both sets of tube mounts are attached to the laser, insert the optical posts into post holders and attach the assembly to the optical table. We recommend placing the laser towards the rear of the optical table (under the shelf), oriented so the beam travels along the length of the table (parallel to the shelf). This layout leaves the front of the table clear for mounting the photodetector and translation stage you'll add later.
+2. Each person in your group is responsible for assembling a mirror as shown in Figure @fig:mount-assembley. In the end, you will need at least 2 mirrors to complete the next task. **Remember to wear latex/nitrile gloves or finger cots while handling optical components.** Mount one mirror at the far end of the table (opposite the laser) and the second closer to you, so that the laser beam propagates across the table and gives you plenty of space to mount additional components.
 
 *As you are mounting the optics, choose the heights so that the laser hits the center of each optic and the beam is parallel to the table.*
 
@@ -82,95 +133,181 @@ The goal of this part of the lab is to understand a lot about the specifications
 
 
 ## Calibrating the photodetector offset and gain
-Calibrating the photodetector is especially important when you take a data set that uses multiple gain settings. Having an accurate calibration of the gain and offset will let you stitch the data together accurately.
 
-1. Here you will encounter gain values that are presented on a logarithmic $dB$ (decibel) scale, which is obtained by taking $20×log(V_{out}/V_{in})$. For example, $20\ dB$ of gain corresponds to electronic voltage amplification by a factor of 10. A $dB$ scale could also be defined as $10×log(P_{out}/P_{in})$, where $P$ is the power. Explain the conversion between these two scales and why this makes sense. 
-2. Calibrating the offset voltage (the output of the photodetector when no light is incident upon the device).
-   1. Calibrate the offset of the photodetector as a function of gain setting. 
-   2. Quantitatively compare it to the specifications given in the table. Is your measured value within the specified range given on the PDA36A or PDA36A2 photodetector data sheet?
-   3. What measures did you take to eliminate stray light? Were your measures sufficient for an accurate calibration?
+Calibrating the photodetector is essential when working with multiple gain settings. Imagine you're measuring beam width later today (or in Week 4's automated measurements): at one position the signal saturates at 40 dB gain, but gives good readings at 30 dB. How would you combine these measurements onto a single scale? That's what calibration enables—it lets you stitch data from different gain settings together accurately.
+
+1. The photodetector gain is specified in **decibels (dB)**, a logarithmic scale commonly used in electronics. Here's how it works:
+
+   **The definition:** For voltage gain,
+   $$dB = 20 \times \log_{10}\left(\frac{V_{out}}{V_{in}}\right)$$
+
+   **What does log₁₀ mean?** The function $\log_{10}(x)$ asks: "10 raised to what power equals $x$?" For example:
+   - $\log_{10}(10) = 1$ because $10^1 = 10$
+   - $\log_{10}(100) = 2$ because $10^2 = 100$
+   - $\log_{10}(1000) = 3$ because $10^3 = 1000$
+
+   <br>
+
+   **Converting dB to linear gain:** To find the actual gain from a dB value, invert the formula:
+   $$\text{voltage gain} = 10^{dB/20}$$
+
+   For example, 20 dB corresponds to $10^{20/20} = 10^1 = 10\times$ gain.
+
+   **Important: What "0 dB" means on the PDA36A.** On this photodetector, "0 dB" does *not* mean "no amplification." The 0 dB setting has a transimpedance gain of 1.51 × 10³ V/A—this is the baseline. The dB labels indicate gain *relative to this baseline*: the 20 dB setting has 10× more gain than 0 dB, the 40 dB setting has 100× more, and so on.
+
+   **Build your intuition:** Predict the linear gain for 40 dB before moving the slider below, then check your answer. Try a few values until the conversion feels natural.
+
+<div id="db-gain-interactive" style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin: 20px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 400px;">
+<div style="margin-bottom: 15px;">
+<label for="db-slider" style="font-weight: bold; display: block; margin-bottom: 8px;">Gain Setting: <span id="db-value">20</span> dB</label>
+<input type="range" id="db-slider" min="0" max="70" value="20" step="10" style="width: 100%; cursor: pointer;">
+<div style="display: flex; justify-content: space-between; font-size: 12px; color: #666; margin-top: 4px;">
+<span>0 dB</span>
+<span>70 dB</span>
+</div>
+</div>
+<div style="background: #e7f3ff; padding: 15px; border-radius: 6px; text-align: center; margin-bottom: 12px;">
+<div style="font-size: 14px; color: #666; margin-bottom: 5px;">Voltage Gain</div>
+<div id="voltage-gain" style="font-size: 28px; font-weight: bold; color: #0066cc;">10×</div>
+</div>
+<div style="background: #fff; padding: 10px; border-radius: 6px; border: 1px solid #ddd; font-size: 13px;">
+<div id="calculation" style="color: #666; font-family: monospace;">20 dB → 10^(20/20) = 10×</div>
+</div>
+</div>
+
+<script>
+(function() {
+    var slider = document.getElementById('db-slider');
+    var dbValue = document.getElementById('db-value');
+    var voltageGain = document.getElementById('voltage-gain');
+    var calculation = document.getElementById('calculation');
+    function formatGain(value) {
+        if (value >= 1000) return Math.round(value).toLocaleString() + '×';
+        if (value >= 100) return Math.round(value) + '×';
+        if (value >= 10) return value.toFixed(1) + '×';
+        return value.toFixed(2) + '×';
+    }
+    function updateDisplay() {
+        var db = parseFloat(slider.value);
+        var vGain = Math.pow(10, db / 20);
+        dbValue.textContent = db;
+        voltageGain.textContent = formatGain(vGain);
+        var vStr = vGain >= 100 ? Math.round(vGain) : vGain.toFixed(1);
+        calculation.textContent = db + ' dB → 10^(' + db + '/20) = ' + vStr + '×';
+    }
+    slider.addEventListener('input', updateDisplay);
+    updateDisplay();
+})();
+</script>
+
+   **Think about it:** The dB scale can also be defined for power: $dB = 10 \times \log_{10}(P_{out}/P_{in})$. Notice the factor is 10 instead of 20. Why does this make sense? *(Hint: How is power related to voltage in a resistive circuit?)*
+
+   *You might not get this immediately—that's fine. Discuss with your partner or revisit after completing the calibration.*
+
+2. Calibrating the offset voltage.
+
+   The offset voltage is the photodetector's output when no light is incident on the sensor. You'll need to subtract this from your measurements to get accurate readings.
+
+   1. **Measure the offset:** Block all light from reaching the detector and record the output voltage at each gain setting (0, 10, 20, ... 70 dB). How does the offset change with gain?
+
+   2. **Compare to datasheet:** The datasheet specifies typical and maximum offset values for each gain setting. Are your measured values within the specified range?
+
+   3. **Eliminating stray light:** What steps did you take to ensure no light reached the detector? How confident are you that stray light isn't affecting your offset measurements?
 3. Calibrating the gain.
-   1. Is it possible to measure the $V/A$ gain for each setting, or can you only measure the change in gain as you switch the settings? Why? Note that this lab only requires relative gain.
-   2. Make a measurement of the gain or relative gain for most of the gain settings. If you need to adjust the laser power, try blocking part of the beam. Note, you will need to make two measurements at one gain setting when you block the beam. What systematic error sources are of most concern?
-   3. Quantitatively compare your results with the range of values given on the data sheet. Do you believe your results provide a more accurate estimate of the photodetector gain than the data sheet? Why or why not?
-   4. Using the appropriate spec sheet and your measurements, what is the power of your laser? Does this agree with the laser power shown on the laser?
-   5. Hypothetically, how would you measure the absolute gain?
+
+   1. **Absolute vs. relative gain:** The datasheet specifies gain in V/A (volts out per amp of photocurrent in). Can you measure this absolute gain with the equipment available, or can you only measure how gain *changes* between settings (relative gain)? Explain your reasoning. *(Note: This lab only requires relative gain.)*
+
+   2. **Measure relative gain:** Choose a light level where the detector doesn't saturate at your highest gain setting—you may need to partially block the beam. Then measure output voltage at several gain settings (e.g., 0, 10, 20, 30, 40 dB) without changing anything else. Calculate the gain ratio between adjacent settings.
+      - If you need to block the beam partway through your measurements, how can you account for this change? *(Hint: repeat one gain setting before and after blocking.)*
+      - What systematic errors could affect your measurements?
+
+   3. **Compare to datasheet:** The datasheet lists expected gain ratios between settings (each 10 dB step should be ~3.16×, each 20 dB step should be ~10×). How do your measured ratios compare? Are any discrepancies within reasonable experimental uncertainty?
+
+   4. **Estimate laser power:** Using the datasheet values for responsivity (at 632.8 nm) and the 0 dB transimpedance gain, estimate your laser's output power from your measured voltage. Does this agree with the power labeled on the laser? If not, what might explain the difference?
+
+   5. **Thinking further:** If you had access to a calibrated optical power meter, how would you use it to measure the *absolute* transimpedance gain at each setting?
 
 ## Follow up
 
-1. Write mathematical expressions that converts the incident power (the light) $P_{in}$ to the photodetector voltage $V$ and the photodetector voltage $V$ to input power $P_{in}$. Take into account all relevant parameters such as the photodetector gain setting (in $dB$) and offsets. 
+**Write the conversion equations:** Express the relationship between incident optical power $P_{in}$ and photodetector output voltage $V$. Your equations should include:
 
-# Review of Measurement Uncertainty
+- Responsivity $R(\lambda)$ in A/W
+- Transimpedance gain $G$ in V/A (or the dB setting)
+- Offset voltage $V_{offset}$
 
-When attempting to establish the validity of our experimental results it is always important to quantify the uncertainty. Measurement uncertainty wasn’t invented to make lab classes tedious, rather it is a core part of any experimental work that gives us a way to quantify how much we trust our results. 
+Write both directions: (1) $P_{in} \rightarrow V$ and (2) $V \rightarrow P_{in}$.
 
-A simple and rigorous way to make a measurement and estimate its uncertainty is to take $N$ measurements $\{y_1,y_2,\ ...\ ,y_N\}$ and estimate the value by the mean:
+## Reflection: Using Your Calibration
 
-$$\overline{y} = \frac{1}{N}{\displaystyle \sum_{i=1}^{N}}y_i\text{.}$$
+You'll use this photodetector throughout the lab sequence—for beam width measurements today and for automated profiling in Week 4. Before moving on, consider how you will use your calibration results:
 
-The estimated uncertainty (standard deviation, $\sigma_y$, or variance, $\sigma_y^2$) of any one measurement is given by
+1. **Datasheet vs. measured values:** Based on your calibration, would you trust the datasheet gain values, or would you use your measured values? Under what conditions might the datasheet values be inadequate?
 
-$$\sigma_y^2 = \frac{1}{N-1}{\displaystyle \sum_{i=1}^{N}}(y_i-\overline{y})^2\text{,}$$
+2. **Handling discrepancies:** If your measured offset voltage differed significantly from the datasheet (say, by more than 50%), what would you do before proceeding?
+   - (a) Repeat the measurement
+   - (b) Accept the datasheet value
+   - (c) Investigate the cause of the discrepancy
+   - (d) Use your measured value and note the discrepancy
 
-while the uncertainty in the mean value $\sigma_{\overline{y}}$ is smaller and is given by
+   There is no single correct answer—justify your choice in 2-3 sentences.
 
-$$\sigma_{\overline{y}}^2 = \frac{\sigma_y^2}{N}\text{.}$$
+3. **Choosing a gain setting:** For most measurements, you'll use this photodetector at a single gain setting. Which setting would you tentatively choose based on your calibration? (You will refine this choice in Week 2 after characterizing noise.) 
 
-## Estimating the mean and uncertainty
+# Understanding Measurement Uncertainty
 
-**Make sure that your laser has been turned on for at least 5 minutes so it has had the opportunity to warm up.** You will use the photodetector to measure the DC optical power.
+You've just calibrated your photodetector and recorded voltage values. But how confident should you be in those numbers? You've encountered measurement uncertainty in previous courses—this section gives you hands-on practice applying those concepts to real-time optical measurements, a skill you'll use throughout this lab sequence.
 
-## Measurement and uncertainty using the multimeter
+**Make sure that your laser has been turned on for at least 5 minutes so it has had the opportunity to warm up.**
 
-Using your digital multimeter, make a table of estimated DC voltages from your photodiode as it is illuminated by your laser and the corresponding uncertainties using the following methods:
+## Characterizing Your Signal
 
-1. “Eyeball” the mean. “Eyeball” the amplitude of the random fluctuations.
-2. Set the multimeter on max/min mode to record the $V_{max}$ and $V_{min}$ fluctuations over a certain time period. You can estimate the mean by $(V_{max}+V_{min})/2$ and the uncertainty by $(V_{max}-V_{min})/2$.
-3. Record the instantaneous voltage reading on the multimeter $N$ times and calculate the estimated uncertainty from the standard deviation.
-4. What is the resolution intrinsic to the multimeter according to the [spec sheet](../resources/lab-guides/gaussian-laser-beams/Fluke_115_Multimeter_Data_Sheet.pdf) (no measurement required)? How does this compare to the observed uncertainty in parts 1-3?
+Connect your photodetector to the oscilloscope and observe the voltage signal from the laser.
 
-## Measurement and uncertainty using the oscilloscope
+**1. Observe the temporal structure**
 
-Now connect the photodiode to an oscilloscope. Continue the previous table of estimated DC voltages from your photodiode as it is illuminated by your laser and the corresponding uncertainties using the following methods. For each method comment on if and how it depends on the setting for the time scale or voltage scale on the oscilloscope.
+Watch the signal for 30 seconds or more. The key question isn't just "how much does it fluctuate?" but "*what kind* of fluctuations do you see?"
 
-1. “Eyeball” the mean. “Eyeball” the amplitude of the random fluctuations (no cursors or measurement tools).
-2. Use the measurement function on the scope to record the mean and RMS fluctuations.
-3. Use the cursors to measure the mean and size of fluctuations.
-4. Record the voltage from the oscilloscope $N$ times and calculate the estimated uncertainty from the standard deviation.
-5. A comparison with the data sheet is difficult because so many factors affect the observed noise in the oscilloscope. You can find some information [here](../resources/lab-guides/gaussian-laser-beams/Rigol_DS1052E_Oscilloscope_Datasheet.pdf) (there is information about the resolution and the DC measurement accuracy) .
+- **Random noise:** Rapid, unpredictable fluctuations with no pattern
+- **Drift:** Slow, systematic changes in one direction
+- **Periodic signals:** Regular oscillations (often from 60 Hz interference or optical feedback)
 
-## Summary of methods 
+Record what you observe in your notebook. Do you see primarily random noise, drift, periodic components, or some combination?
 
-Make sure to support your answers for each question below.
+**2. Quantify the fluctuations**
 
-1. Did any methods overestimate the uncertainty?
-2. Did any methods underestimate the uncertainty?
-3. How reliable was “eyeballing”?
-4. Did the time scale or voltage scale affect any of the oscilloscope measurements? If yes, how? Does this tell you anything about how to use the scope?
-5. Suppose the light into the photodetector was not constant during the measurements (due to variations of the laser, room lights, etc.). In which estimates of the uncertainty will this be included?
-6. Which method(s) should give a true estimate for the uncertainty?
+Take 10 voltage readings and calculate:
 
-## Writing numbers and their uncertainty
+- Mean: $\overline{V} = \frac{1}{N}\sum V_i$
+- Standard deviation: $\sigma_V = \sqrt{\frac{1}{N-1}\sum(V_i - \overline{V})^2}$
+- Standard deviation of the mean: $\sigma_{\overline{V}} = \sigma_V/\sqrt{N}$
 
-The convention used in this course is that we:
+**3. Make experimental decisions**
 
-- only display one significant digit of the uncertainty (two are allowed if the first significant digit is a 1).
+Based on your observations, answer these questions in your notebook:
 
-- display the measurement to the same digit as the uncertainty.
+1. **Does σ capture your uncertainty?** If you observed drift, the standard deviation of random samples may not accurately represent your measurement uncertainty. Why not?
 
-The numbers $154\pm 3$, $576.33\pm 0.04$, and $245.1\pm 1.4$ follow theis convention. However, numbers copied from the computer are often displayed as “machine precision” with no regard for significant digits. 
+2. **How many measurements do you need?** Calculate how many measurements would give you 1% relative uncertainty in the mean (i.e., $\sigma_{\overline{V}}/\overline{V} = 0.01$). Is this practical for your beam width measurements?
 
-Mathematica generated the following fit parameters and corresponding uncertainties:
+3. **What's your measurement strategy?** For the knife-edge scan, will you record single readings at each position or average multiple readings? What's the trade-off between speed and precision?
 
-$$a=-0.6699999999999988 \pm 0.6751049301158053$$
+## Connecting to Your Experiment
 
-$$b=2.2700000000000005 \pm 0.2035517952102936$$
+These decisions matter for your beam width measurement. If drift is present during a knife-edge scan, it could systematically bias your fitted beam width. If you're averaging at each position, you're trading measurement time for precision.
 
-1. How should the two Mathematica fit parameters above be rewritten such that they correspond with the convention described above?
+In Week 2, you'll characterize noise more systematically and learn to make these trade-offs quantitatively.
 
 # Measuring the Beam Width
 
-The goal of this section is to develop a measurement technique and analysis scheme to measure the width of a laser beam. The scheme will let you measure the width in one dimension. The technique is most useful for beams that have an approximately Gaussian intensity profile. You will improve and refine this technique in the upcoming weeks of this lab. *Note: You may or may not find that completing this section during your lab time this week is challenging due to time constraints. This is okay - get as far as you can now. You'll have an opportunity to revisit this section during week 3. However, don't just skip it now as you'll find the outcomes to be useful in the upcoming weeks.*
+The goal of this section is to develop a measurement technique and analysis scheme to measure the width of a laser beam. The scheme will let you measure the width in one dimension. The technique is most useful for beams that have an approximately Gaussian intensity profile. You will improve and refine this technique in the upcoming weeks of this lab.
+
+**Time management note:** This section has multiple parts with different priorities:
+
+1. **Essential (must complete):** Derive the error function model and answer the required questions in "Before you take data." This theoretical understanding is critical preparation for Week 2.
+
+2. **Important (complete if time allows):** Build the setup and take data. If you don't finish in Week 1, you will complete this in Week 3.
+
+3. **Optional (good practice):** Try the curve fitting practice exercise with test data. This prepares you for Week 2, but fitting is covered in detail in Week 2's prelab.
 
 The basic scheme involves measuring the power in the laser beam as the beam is gradually blocked by a knife edge (razor blade) using a setup similar to Figure @fig:knife-assembley.
 
@@ -180,14 +317,21 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
    1. Draw a diagram showing the beam and the razor.
    2. Using the above expression for $I(x,y)$, write the mathematical expression for the power incident on the photodiode as a function of razor position. Note, to address this question, you will need to become familiar with the Error Function, $erf(x)$. What assumptions, if any, did you need to make in evaluating the integral? Hint: if you are moving in the $x$ direction, what is going on in the $y$ direction?
 
-## Before you take data: create an analysis function to fit a test set of data {#sec:analysis}
+## Before you take data: prepare for analysis {#sec:analysis}
 
-*Note: Nonlinear least squares fitting is covered in next week's prelab. There is also a YouTube video available on [least squares fitting in Mathematica](https://www.youtube.com/watch?v=KolZZm8If9Q&t=2s).*
+*Note: Nonlinear least squares fitting is covered in detail in Week 2's prelab. This section prepares you to understand what you'll be fitting.*
 
-1. What is the functional form for your fit function?
+**Required (answer in your notebook):**
+
+1. What is the functional form for your fit function? (You derived this from the Gaussian integral above.)
 2. Is it a linear or nonlinear fit function? Why?
 3. What are the fit parameters? Why do you need this many?
 4. How do the fit parameters relate to the beam width?
+
+**Optional practice (if time permits):**
+
+If you want to get a head start on curve fitting, you can practice with test data. See the [Python Resources](/PHYS-4430/python-resources) page for a guide to curve fitting with `scipy.optimize.curve_fit`. Week 2's prelab covers this in detail, so don't worry if you don't complete this now.
+
 5. Download [this data set](../resources/lab-guides/gaussian-laser-beams/Test_Profile_Data.csv).
    1. Make a plot of the data.
    2. Make a fit and plot it with the data.
@@ -211,48 +355,132 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
 1. Use the analysis procedures verified in section @sec:analysis to find the beam width for your data. Be sure to include the uncertainty.
 2. Plot your fit together with your data to make sure it is good.
 
-# Postlab
+# Preparation for Week 2
 
-Please choose either Mathematica, Matlab, or Python for this assignment. Both Mathematica and Matlab
-[licenses are provided by CU](https://oit.colorado.edu/software-hardware/software-catalog) and Python is free. You must submit both code and results. Note that the following assignment was created based on Mathematica and Matlab.
+Before Week 2, complete the following to ensure you're ready for the curve fitting and data acquisition work ahead. This is not busywork—Week 2's prelab assumes you can confidently work with NumPy arrays and Matplotlib. Use this exercise to honestly assess your readiness and identify gaps.
 
-1. Evaluate the following math expressions:
+## Step 1: Predict Before You Run
 
-   1. $e^{1.6\pi j}$
-   2. $4i\pi+e^{7\pi /4}$
-   3. $sin^2(\frac{\pi}{5})$
-   4. $log(3+\sqrt{3})$
-   5. $|3+4i|^{2/3}$
+**Download** the test data: [Test_Profile_Data.csv](../resources/lab-guides/gaussian-laser-beams/Test_Profile_Data.csv)
 
-2. Plot the following functions at the given ranges. Make sure to add appropriate $x$ and $y$-axis ticks and numeric labels at the ticks locations.
+Open the file in a text editor or spreadsheet to see its structure. Then, **before running any code**, answer these questions in your notebook:
 
-   1.  Plot $sin^2~\theta$ vs. $\theta$ in the range $0\le\theta\le 6\pi$. Add the legend that indicate the name of the function used.
-   2. Plot $sin~2t$ and $cos~5t$ together (using different colored lines) on the sample for $t$ in the range of $0\le t \le 10$.
+1. The file has two columns (position and voltage) and about 30 rows of data. After running `data = np.loadtxt('Test_Profile_Data.csv', delimiter=',', skiprows=1)`, what will `data.shape` return?
 
-3. Plot the following data set (wavelength, $\lambda$, and the corresponding index of refraction, $n$, of a particular type of glass): 
+2. The code below uses `data[:, 0]` and `data[:, 1]`. In plain English, what does the `:` mean? What does the `0` mean?
 
-   $$ \lambda~ [{\rm \mu m}]: 0.375, ~ 0.419,~0.558,~ 0.612,~0.744,~0.821 \\ n:1.553,~1.531,~1.521,~1.516,~1.513,~1.511 $$
+3. The raw position data is in meters, but the plot displays millimeters. Why might millimeters (or smaller units) be preferable for displaying a beam profile measurement? (Hint: think about typical laser beam widths.)
 
-   1. Make a plot of $n$ vs. $\lambda$. Which variable would you choose for $x$-axis? Please make sure to add the axes names and appropriate ticks for each axis. 
-   2. Add lines to connect each points. What can you tell about the relation between the wavelength and the index of refraction from this plot? 
-   3. Provide your code to make your plot from 8.3.1 including the following:
-      1. Title of "Refraction index as a function of $\lambda$".
-      2. Add the linear fitting line $ y= ax +b$, where $y$ corresponds to $n$ and $x$ to $\lambda$ on the data. 
-      3. Include the fitting linear equation on the plot. 
-   4. If you would like to display the $x$-axis only below $0.6\mu m$ (i.e. $\lambda \le 0.6~ \mu m$), how can you do that? 
+## Step 2: Run and Verify
 
-4. Familiarize yourself with the **HELP** functions of your chosen software package and perform the following tasks and answer the questions. 
+Now run the code and check your predictions:
 
-   1. Make a contour plot of any function of $z=f(y,x)$ of your choice.
-   2. What are the built-in function names for:
-      1. Inverse sine function ($\sin^{-1} x$)
-      2. Hyperbolic functions (e.g. $\sinh x$, $\cosh x$ etc.)
-      3. Natural log and 10-based log function
+```python
+import numpy as np
+import matplotlib.pyplot as plt
 
-5. We would like to evaluate a function, $f(x)$, at $x= \frac{\pi}{10}, \frac{2\pi}{10}, ~\cdots~,\frac{9\pi}{10}\frac{10\pi}{10}$.
+# Load the data
+data = np.loadtxt('Test_Profile_Data.csv', delimiter=',', skiprows=1)
+print(f"Data shape: {data.shape}")  # Check your prediction!
 
-   1. How can we represent/create these $x$ points in your chosen software package? What should we modify in order to make the increment of $x$ be $\frac{\pi}{100}$, instead of $\frac{\pi}{10}$?
-   2. Now, define a function that represents $y= f(x) = \frac{\sin x}{x}$ and evaluate $y$ at the given $x$ with increment of $\frac{\pi}{10}$.
-   3. Export your $(x,y)$ data created in 8.5.2 in .csv format.
+position = data[:, 0]  # meters
+voltage = data[:, 1]   # volts
 
-6. Download [this data set](../resources/lab-guides/gaussian-laser-beams/BoulderDailyTemp.txt) (in .txt format), where the temperature of Boulder was recorded at approximately every hour ($\approx 0.04$ days) since January 1st. Using the **HELP** function of your chosen software package, export this data and plot in an appropriate way (make sure to include labels, ticks, titles etc). 
+# Create a plot
+plt.figure(figsize=(8, 5))
+plt.plot(position * 1000, voltage, 'bo', markersize=4)
+plt.xlabel('Position (mm)')
+plt.ylabel('Voltage (V)')
+plt.title('Beam Profile Test Data')
+plt.grid(True, alpha=0.3)
+plt.savefig('week1_python_check.png', dpi=150)
+plt.show()
+```
+
+**In your notebook:** Were your predictions correct? If not, make sure you understand why before proceeding.
+
+## Step 3: Modify to Demonstrate Understanding
+
+Running code proves you can execute it. *Modifying* code proves you understand it. Make these changes:
+
+1. **Change units:** Display position in micrometers (μm) instead of millimeters. Update both the data conversion and the axis label.
+
+2. **Change appearance:** Change the markers from blue circles to red squares. (Hint: look up Matplotlib marker styles, or ask an AI assistant—the skill is knowing *what* to ask.)
+
+3. **Add information:** Add a horizontal dashed line at the mean voltage value. (Hint: `plt.axhline()`)
+
+4. **Transfer task:** Create a *second* figure showing only the first half of the data points. Save it as `week1_python_subset.png`. (This tests whether you understand array slicing, not just symbol substitution.)
+
+**Self-check:** Your modified plot (tasks 1-3) should show position in μm (ranging from about -1800 to +4200 μm based on this dataset). Your subset plot (task 4) should show roughly half as many data points as the original.
+
+## Step 4: Honest Self-Assessment
+
+For each skill below, rate yourself honestly. This is not graded—it's for *you* to identify gaps before Week 2.
+
+**Calibration check:** Before filling in the table, try this without looking at any code: write a line of Python that extracts only the first 5 position values from the `position` array. If this took you more than 30 seconds or you weren't sure of the answer, you should probably rate yourself "C" for array operations—and that's okay, as long as you address it before Week 2.
+
+| Skill | A: Confident | B: Could figure out | C: Would struggle |
+|-------|--------------|---------------------|-------------------|
+| Extract a specific column from a 2D NumPy array | | | |
+| Create a plot with title and labeled axes | | | |
+| Read a Python error message and identify which line caused it | | | |
+| Modify code to change units or appearance | | | |
+| Save a figure to a file | | | |
+
+**If you rated yourself "C" on any skill:** Before Week 2, work through the relevant sections of [Python Resources](/PHYS-4430/python-resources). Budget 1-2 hours. It's much better to address gaps now than to struggle during the Week 2 prelab.
+
+## Why This Matters for Week 2
+
+In Week 2, you'll encounter code like this:
+
+```python
+def beam_profile(x, amplitude, center, width, offset):
+    return amplitude * erf(np.sqrt(2) * (x - center) / width) + offset
+
+popt, pcov = curve_fit(beam_profile, x_data, y_data, p0=[1.4, 0.01, 0.0005, 1.4])
+print(f"Beam width: {popt[2]:.4f} m")
+```
+
+You don't need to understand `curve_fit` yet—that's Week 2's content. But you *do* need to understand:
+
+- What `x_data` and `y_data` are (arrays you loaded from a file)
+- How to extract `popt[2]` (the third element) from the result
+- How to create and customize plots with your data
+
+If the exercises above felt confusing, address that gap now. Week 2 builds directly on these skills, and struggling with Python basics will distract you from learning the physics.
+
+# Deliverables and Assessment
+
+Your lab notebook should include the following for this week:
+
+## In-Lab Documentation (recorded during lab)
+
+1. **Optical setup diagram** showing laser, mirrors, alignment discs, and photodetector positions
+2. **Photodetector calibration data**: offset voltage vs. gain setting, relative gain measurements
+3. **Uncertainty mini-lesson**: 10 voltage measurements, calculated statistics (mean, σ, σ_mean), and answers to the reflection questions
+4. **Knife-edge measurement data**: position vs. voltage (if completed)
+
+## Analysis and Questions (can be completed after lab)
+
+1. **Photodetector physics explanation**: diagram and written explanation of how the photodetector converts light to voltage
+2. **Calibration comparison**: quantitative comparison of your measurements to datasheet values
+3. **Beam width measurement** (if completed): fit plot, extracted beam width with uncertainty
+4. **Reflection questions**:
+
+   a. Your photodetector offset voltage differs from the datasheet by 15%. What would you do before using this detector for precision measurements?
+      - Options: (a) Repeat the measurement, (b) Accept the datasheet value, (c) Investigate the cause, (d) Use your measured value
+      - Justify your choice in 2-3 sentences.
+
+   b. You took 10 measurements and calculated both σ (standard deviation) and σ_mean (standard deviation of the mean). Which would you report as the uncertainty in your voltage measurement? Why?
+
+## Preparation for Week 2 (required before next lab)
+
+1. **Prediction questions** (Step 1): Written answers to the three prediction questions about `data.shape`, array indexing, and unit conversion—include your reasoning, not just the answer
+
+2. **Prediction verification** (Step 2): Note whether your predictions were correct, and if not, what you learned
+
+3. **Modified plot** (Step 3): Your customized plot showing position in μm, red square markers, and mean voltage line (`week1_python_modified.png`)
+
+4. **Subset plot** (Step 3, task 4): Plot showing only the first half of the data points (`week1_python_subset.png`)
+
+5. **Self-assessment** (Step 4): Completed skill rating table with honest A/B/C ratings, including the calibration check 
