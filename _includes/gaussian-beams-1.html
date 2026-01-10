@@ -70,15 +70,12 @@
             class="toc-section-number">8</span> Understanding
             Measurement Uncertainty</a>
             <ul>
-            <li><a href="#your-first-uncertainty-measurement"><span
-            class="toc-section-number">8.1</span> Your First Uncertainty
-            Measurement</a></li>
-            <li><a href="#why-this-matters"><span
-            class="toc-section-number">8.2</span> Why This
-            Matters</a></li>
-            <li><a href="#the-key-insight"><span
-            class="toc-section-number">8.3</span> The Key
-            Insight</a></li>
+            <li><a href="#characterizing-your-signal"><span
+            class="toc-section-number">8.1</span> Characterizing Your
+            Signal</a></li>
+            <li><a href="#connecting-to-your-experiment"><span
+            class="toc-section-number">8.2</span> Connecting to Your
+            Experiment</a></li>
             </ul></li>
             <li><a href="#measuring-the-beam-width"><span
             class="toc-section-number">9</span> Measuring the Beam
@@ -649,137 +646,73 @@
          Measurement Uncertainty</h1>
          <p>You’ve just calibrated your photodetector and recorded
          voltage values. But how confident should you be in those
-         numbers? This section introduces measurement uncertainty—a core
-         skill you’ll use throughout this course and your scientific
-         career.</p>
+         numbers? You’ve encountered measurement uncertainty in previous
+         courses—this section gives you hands-on practice applying those
+         concepts to real-time optical measurements, a skill you’ll use
+         throughout this lab sequence.</p>
          <p><strong>Make sure that your laser has been turned on for at
          least 5 minutes so it has had the opportunity to warm
          up.</strong></p>
-         <h2 data-number="8.1"
-         id="your-first-uncertainty-measurement"><span
-         class="header-section-number">8.1</span> Your First Uncertainty
-         Measurement</h2>
+         <h2 data-number="8.1" id="characterizing-your-signal"><span
+         class="header-section-number">8.1</span> Characterizing Your
+         Signal</h2>
          <p>Connect your photodetector to the oscilloscope and observe
          the voltage signal from the laser.</p>
-         <p><strong>Step 1: Make a single measurement</strong></p>
-         <p>Record the voltage you see on the oscilloscope: ______ V</p>
-         <p>Now ask yourself: <em>How confident are you in that number?
-         If you looked away and looked back, would you get exactly the
-         same value?</em></p>
-         <p><strong>Step 2: Watch the fluctuations</strong></p>
-         <p>Observe the signal for 10-15 seconds. You’ll notice the
-         voltage isn’t perfectly constant—it fluctuates.</p>
-         <ol type="1">
-         <li>Estimate by eye: How large are the fluctuations? ±______
-         V</li>
-         <li>What might cause these fluctuations? (List 2-3
-         possibilities in your notebook)</li>
-         </ol>
-         <p><strong>Step 3: Quantify with repeated
-         measurements</strong></p>
-         <p>Take 10 voltage readings, recording each value:</p>
-         <table>
-         <thead>
-         <tr class="header">
-         <th>Reading</th>
-         <th>Voltage (V)</th>
-         </tr>
-         </thead>
-         <tbody>
-         <tr class="odd">
-         <td>1</td>
-         <td></td>
-         </tr>
-         <tr class="even">
-         <td>2</td>
-         <td></td>
-         </tr>
-         <tr class="odd">
-         <td>3</td>
-         <td></td>
-         </tr>
-         <tr class="even">
-         <td>4</td>
-         <td></td>
-         </tr>
-         <tr class="odd">
-         <td>5</td>
-         <td></td>
-         </tr>
-         <tr class="even">
-         <td>6</td>
-         <td></td>
-         </tr>
-         <tr class="odd">
-         <td>7</td>
-         <td></td>
-         </tr>
-         <tr class="even">
-         <td>8</td>
-         <td></td>
-         </tr>
-         <tr class="odd">
-         <td>9</td>
-         <td></td>
-         </tr>
-         <tr class="even">
-         <td>10</td>
-         <td></td>
-         </tr>
-         </tbody>
-         </table>
-         <p><strong>Step 4: Calculate statistics</strong></p>
-         <p>Using your 10 measurements, calculate:</p>
-         <ol type="1">
-         <li><p><strong>Mean:</strong> <span
-         class="math inline">\(\overline{V} = \frac{1}{N}\sum
-         V_i\)</span> = ______ V</p></li>
-         <li><p><strong>Standard deviation:</strong> <span
-         class="math inline">\(\sigma_V = \sqrt{\frac{1}{N-1}\sum(V_i -
-         \overline{V})^2}\)</span> = ______ V</p>
-         <p>This tells you the typical size of fluctuations in a
-         <em>single</em> measurement.</p></li>
-         <li><p><strong>Standard deviation of the mean:</strong> <span
-         class="math inline">\(\sigma_{\overline{V}} =
-         \frac{\sigma_V}{\sqrt{N}}\)</span> = ______ V</p>
-         <p>This tells you the uncertainty in your <em>average</em>
-         value.</p></li>
-         </ol>
-         <p><strong>Step 5: Compare methods</strong></p>
-         <p>Now use the oscilloscope’s built-in RMS measurement function
-         to measure the fluctuations automatically.</p>
+         <p><strong>1. Observe the temporal structure</strong></p>
+         <p>Watch the signal for 30 seconds or more. The key question
+         isn’t just “how much does it fluctuate?” but “<em>what
+         kind</em> of fluctuations do you see?”</p>
          <ul>
-         <li>Oscilloscope RMS reading: ______ V</li>
-         <li>Your calculated standard deviation: ______ V</li>
+         <li><strong>Random noise:</strong> Rapid, unpredictable
+         fluctuations with no pattern</li>
+         <li><strong>Drift:</strong> Slow, systematic changes in one
+         direction</li>
+         <li><strong>Periodic signals:</strong> Regular oscillations
+         (often from 60 Hz interference or optical feedback)</li>
          </ul>
-         <p>Do they agree? The oscilloscope’s RMS function is
-         essentially doing the same calculation you just did, but with
-         many more samples.</p>
-         <h2 data-number="8.2" id="why-this-matters"><span
-         class="header-section-number">8.2</span> Why This Matters</h2>
-         <p><strong>Reflection questions</strong> (answer in your
-         notebook):</p>
+         <p>Record what you observe in your notebook. Do you see
+         primarily random noise, drift, periodic components, or some
+         combination?</p>
+         <p><strong>2. Quantify the fluctuations</strong></p>
+         <p>Take 10 voltage readings and calculate:</p>
+         <ul>
+         <li>Mean: <span class="math inline">\(\overline{V} =
+         \frac{1}{N}\sum V_i\)</span></li>
+         <li>Standard deviation: <span class="math inline">\(\sigma_V =
+         \sqrt{\frac{1}{N-1}\sum(V_i - \overline{V})^2}\)</span></li>
+         <li>Standard deviation of the mean: <span
+         class="math inline">\(\sigma_{\overline{V}} =
+         \sigma_V/\sqrt{N}\)</span></li>
+         </ul>
+         <p><strong>3. Make experimental decisions</strong></p>
+         <p>Based on your observations, answer these questions in your
+         notebook:</p>
          <ol type="1">
-         <li><p>Your standard deviation of the mean (<span
-         class="math inline">\(\sigma_{\overline{V}}\)</span>) is
-         smaller than the standard deviation (<span
-         class="math inline">\(\sigma_V\)</span>). Why does averaging
-         multiple measurements reduce uncertainty?</p></li>
-         <li><p>If you took 100 measurements instead of 10, how would
-         <span class="math inline">\(\sigma_{\overline{V}}\)</span>
-         change? (Hint: look at the formula)</p></li>
-         <li><p>In your beam width measurements later today, you’ll
-         record voltage at each razor position. Based on what you just
-         learned, how could you reduce uncertainty in those
+         <li><p><strong>Does σ capture your uncertainty?</strong> If you
+         observed drift, the standard deviation of random samples may
+         not accurately represent your measurement uncertainty. Why
+         not?</p></li>
+         <li><p><strong>How many measurements do you need?</strong>
+         Calculate how many measurements would give you 1% relative
+         uncertainty in the mean (i.e., <span
+         class="math inline">\(\sigma_{\overline{V}}/\overline{V} =
+         0.01\)</span>). Is this practical for your beam width
          measurements?</p></li>
+         <li><p><strong>What’s your measurement strategy?</strong> For
+         the knife-edge scan, will you record single readings at each
+         position or average multiple readings? What’s the trade-off
+         between speed and precision?</p></li>
          </ol>
-         <h2 data-number="8.3" id="the-key-insight"><span
-         class="header-section-number">8.3</span> The Key Insight</h2>
-         <p>Measurement uncertainty isn’t a sign of failure—it’s
-         essential information about how much you can trust your data.
-         In Week 2, you’ll learn to characterize noise more
-         systematically and use uncertainty to make quantitative
-         decisions about your experimental setup.</p>
+         <h2 data-number="8.2" id="connecting-to-your-experiment"><span
+         class="header-section-number">8.2</span> Connecting to Your
+         Experiment</h2>
+         <p>These decisions matter for your beam width measurement. If
+         drift is present during a knife-edge scan, it could
+         systematically bias your fitted beam width. If you’re averaging
+         at each position, you’re trading measurement time for
+         precision.</p>
+         <p>In Week 2, you’ll characterize noise more systematically and
+         learn to make these trade-offs quantitatively.</p>
          <h1 data-number="9" id="measuring-the-beam-width"><span
          class="header-section-number">9</span> Measuring the Beam
          Width</h1>

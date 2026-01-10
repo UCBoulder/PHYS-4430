@@ -240,80 +240,47 @@ You'll use this photodetector throughout the lab sequence—for beam width measu
 
 # Understanding Measurement Uncertainty
 
-You've just calibrated your photodetector and recorded voltage values. But how confident should you be in those numbers? This section introduces measurement uncertainty—a core skill you'll use throughout this course and your scientific career.
+You've just calibrated your photodetector and recorded voltage values. But how confident should you be in those numbers? You've encountered measurement uncertainty in previous courses—this section gives you hands-on practice applying those concepts to real-time optical measurements, a skill you'll use throughout this lab sequence.
 
 **Make sure that your laser has been turned on for at least 5 minutes so it has had the opportunity to warm up.**
 
-## Your First Uncertainty Measurement
+## Characterizing Your Signal
 
 Connect your photodetector to the oscilloscope and observe the voltage signal from the laser.
 
-**Step 1: Make a single measurement**
+**1. Observe the temporal structure**
 
-Record the voltage you see on the oscilloscope: ______ V
+Watch the signal for 30 seconds or more. The key question isn't just "how much does it fluctuate?" but "*what kind* of fluctuations do you see?"
 
-Now ask yourself: *How confident are you in that number? If you looked away and looked back, would you get exactly the same value?*
+- **Random noise:** Rapid, unpredictable fluctuations with no pattern
+- **Drift:** Slow, systematic changes in one direction
+- **Periodic signals:** Regular oscillations (often from 60 Hz interference or optical feedback)
 
-**Step 2: Watch the fluctuations**
+Record what you observe in your notebook. Do you see primarily random noise, drift, periodic components, or some combination?
 
-Observe the signal for 10-15 seconds. You'll notice the voltage isn't perfectly constant—it fluctuates.
+**2. Quantify the fluctuations**
 
-1. Estimate by eye: How large are the fluctuations? ±______ V
-2. What might cause these fluctuations? (List 2-3 possibilities in your notebook)
+Take 10 voltage readings and calculate:
 
-**Step 3: Quantify with repeated measurements**
+- Mean: $\overline{V} = \frac{1}{N}\sum V_i$
+- Standard deviation: $\sigma_V = \sqrt{\frac{1}{N-1}\sum(V_i - \overline{V})^2}$
+- Standard deviation of the mean: $\sigma_{\overline{V}} = \sigma_V/\sqrt{N}$
 
-Take 10 voltage readings, recording each value:
+**3. Make experimental decisions**
 
-| Reading | Voltage (V) |
-|---------|-------------|
-| 1 | |
-| 2 | |
-| 3 | |
-| 4 | |
-| 5 | |
-| 6 | |
-| 7 | |
-| 8 | |
-| 9 | |
-| 10 | |
+Based on your observations, answer these questions in your notebook:
 
-**Step 4: Calculate statistics**
+1. **Does σ capture your uncertainty?** If you observed drift, the standard deviation of random samples may not accurately represent your measurement uncertainty. Why not?
 
-Using your 10 measurements, calculate:
+2. **How many measurements do you need?** Calculate how many measurements would give you 1% relative uncertainty in the mean (i.e., $\sigma_{\overline{V}}/\overline{V} = 0.01$). Is this practical for your beam width measurements?
 
-1. **Mean:** $\overline{V} = \frac{1}{N}\sum V_i$ = ______ V
+3. **What's your measurement strategy?** For the knife-edge scan, will you record single readings at each position or average multiple readings? What's the trade-off between speed and precision?
 
-2. **Standard deviation:** $\sigma_V = \sqrt{\frac{1}{N-1}\sum(V_i - \overline{V})^2}$ = ______ V
+## Connecting to Your Experiment
 
-   This tells you the typical size of fluctuations in a *single* measurement.
+These decisions matter for your beam width measurement. If drift is present during a knife-edge scan, it could systematically bias your fitted beam width. If you're averaging at each position, you're trading measurement time for precision.
 
-3. **Standard deviation of the mean:** $\sigma_{\overline{V}} = \frac{\sigma_V}{\sqrt{N}}$ = ______ V
-
-   This tells you the uncertainty in your *average* value.
-
-**Step 5: Compare methods**
-
-Now use the oscilloscope's built-in RMS measurement function to measure the fluctuations automatically.
-
-- Oscilloscope RMS reading: ______ V
-- Your calculated standard deviation: ______ V
-
-Do they agree? The oscilloscope's RMS function is essentially doing the same calculation you just did, but with many more samples.
-
-## Why This Matters
-
-**Reflection questions** (answer in your notebook):
-
-1. Your standard deviation of the mean ($\sigma_{\overline{V}}$) is smaller than the standard deviation ($\sigma_V$). Why does averaging multiple measurements reduce uncertainty?
-
-2. If you took 100 measurements instead of 10, how would $\sigma_{\overline{V}}$ change? (Hint: look at the formula)
-
-3. In your beam width measurements later today, you'll record voltage at each razor position. Based on what you just learned, how could you reduce uncertainty in those measurements?
-
-## The Key Insight
-
-Measurement uncertainty isn't a sign of failure—it's essential information about how much you can trust your data. In Week 2, you'll learn to characterize noise more systematically and use uncertainty to make quantitative decisions about your experimental setup.
+In Week 2, you'll characterize noise more systematically and learn to make these trade-offs quantitatively.
 
 # Measuring the Beam Width
 
