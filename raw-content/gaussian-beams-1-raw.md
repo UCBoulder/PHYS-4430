@@ -442,9 +442,10 @@ print(f"Beam width: {popt[2]:.4f} m")
 ```
 
 You don't need to understand `curve_fit` yet—that's Week 2's content. But you *do* need to understand:
+
 - What `x_data` and `y_data` are (arrays you loaded from a file)
 - How to extract `popt[2]` (the third element) from the result
-- How to plot the fit curve over your data points
+- How to create and customize plots with your data
 
 If the exercises above felt confusing, address that gap now. Week 2 builds directly on these skills, and struggling with Python basics will distract you from learning the physics.
 
