@@ -9,7 +9,9 @@ title: "Gaussian Beams - Week 2"
 Last week you calibrated your photodetector and learned to measure beam width manually. This week you'll learn Python-based data acquisition and—critically—characterize your photodetector's noise performance. Your goal: make a quantitative, evidence-based decision about which gain setting to use for Week 4's automated measurements.
 
 **Last week:** Aligned optics, calibrated photodetector, measured beam width manually
+
 **This week:** Learn DAQ programming → Characterize noise → Choose optimal gain setting
+
 **Next week:** Learn Gaussian beam theory → Set up motor controller → Take first automated measurement
 
 # Overview

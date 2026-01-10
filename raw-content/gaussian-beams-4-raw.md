@@ -9,6 +9,7 @@ title: "Gaussian Beams - Week 4"
 This is the culmination of the Gaussian Beams sequence. You've built the skills and made the decisions necessary for today's work: optical alignment (Week 1), photodetector calibration (Week 1), noise characterization and gain selection (Week 2), Gaussian beam theory (Week 3), and motor control (Week 3). Now you'll put it all together to test the Gaussian beam model quantitatively.
 
 **Previous weeks:** Foundations → Noise characterization → Theory and motor setup
+
 **This week:** Validate setup → Automated measurements → Test Gaussian beam model → Investigate lens effects
 
 # Overview

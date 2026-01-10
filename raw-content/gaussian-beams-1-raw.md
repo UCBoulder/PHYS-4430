@@ -9,6 +9,7 @@ title: "Gaussian Beams - Week 1"
 This week you build the foundational skills for the entire Gaussian Beams sequence: optical alignment, photodetector operation, and beam width measurement. The calibration data and measurement techniques you develop this week will be used directly in Weeks 2-4.
 
 **This week:** Align optics → Calibrate photodetector → Measure beam width
+
 **Next week:** Learn data acquisition → Characterize noise → Choose optimal gain setting
 
 # Learning Goals
@@ -354,27 +355,94 @@ If you want to get a head start on curve fitting, you can practice with test dat
 1. Use the analysis procedures verified in section @sec:analysis to find the beam width for your data. Be sure to include the uncertainty.
 2. Plot your fit together with your data to make sure it is good.
 
-# Postlab
+# Preparation for Week 2
 
-## Python Preparation for Week 2
+Before Week 2, complete the following to ensure you're ready for the curve fitting and data acquisition work ahead. This is not busywork—Week 2's prelab assumes you can confidently work with NumPy arrays and Matplotlib. Use this exercise to honestly assess your readiness and identify gaps.
 
-This lab sequence requires Python proficiency with NumPy, Matplotlib, and SciPy. Before Week 2, ensure you are comfortable with:
+## Step 1: Predict Before You Run
 
-- **NumPy array operations** - See [Python Resources: Data Analysis](/PHYS-4430/python-analysis), "NumPy Essentials" section
-- **Plotting with Matplotlib** - See [Python Resources: Data Analysis](/PHYS-4430/python-analysis), "Plotting with Matplotlib" section
-- **Loading CSV files** with `np.loadtxt()`
+**Download** the test data: [Test_Profile_Data.csv](../resources/lab-guides/gaussian-laser-beams/Test_Profile_Data.csv)
 
-If you need practice, work through the exercises on the [Python Resources](/PHYS-4430/python-resources) page. The curve fitting skills needed for beam width analysis will be covered in Week 2's prelab.
+Open the file in a text editor or spreadsheet to see its structure. Then, **before running any code**, answer these questions in your notebook:
 
-## Apply to Your Data (if you completed the beam width measurement in lab)
+1. The file has two columns (position and voltage) and about 30 rows of data. After running `data = np.loadtxt('Test_Profile_Data.csv', delimiter=',', skiprows=1)`, what will `data.shape` return?
 
-If you collected knife-edge measurement data during lab, you can optionally begin analysis now. However, the full fitting procedure will be covered in Week 2's prelab, so you may prefer to wait.
+2. The code below uses `data[:, 0]` and `data[:, 1]`. In plain English, what does the `:` mean? What does the `0` mean?
 
-If you want to start early:
+3. The plot command uses `position * 1000`. What unit conversion is this performing, and why might it be useful?
 
-1. Plot your data (position vs. voltage) to verify it looks like an error function
-2. Identify approximate values for the beam center and transition width
-3. Note any unusual features (noise, asymmetry, incomplete transition)
+## Step 2: Run and Verify
+
+Now run the code and check your predictions:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Load the data
+data = np.loadtxt('Test_Profile_Data.csv', delimiter=',', skiprows=1)
+print(f"Data shape: {data.shape}")  # Check your prediction!
+
+position = data[:, 0]  # meters
+voltage = data[:, 1]   # volts
+
+# Create a plot
+plt.figure(figsize=(8, 5))
+plt.plot(position * 1000, voltage, 'bo', markersize=4)
+plt.xlabel('Position (mm)')
+plt.ylabel('Voltage (V)')
+plt.title('Beam Profile Test Data')
+plt.grid(True, alpha=0.3)
+plt.savefig('week1_python_check.png', dpi=150)
+plt.show()
+```
+
+**In your notebook:** Were your predictions correct? If not, make sure you understand why before proceeding.
+
+## Step 3: Modify to Demonstrate Understanding
+
+Running code proves you can execute it. *Modifying* code proves you understand it. Make these changes:
+
+1. **Change units:** Display position in micrometers (μm) instead of millimeters. Update both the data conversion and the axis label.
+
+2. **Change appearance:** Change the markers from blue circles to red squares. (Hint: look up Matplotlib marker styles, or ask an AI assistant—the skill is knowing *what* to ask.)
+
+3. **Add information:** Add a horizontal dashed line at the mean voltage value. (Hint: `plt.axhline()`)
+
+Save your modified plot as `week1_python_modified.png`.
+
+## Step 4: Honest Self-Assessment
+
+For each skill below, rate yourself honestly. This is not graded—it's for *you* to identify gaps before Week 2.
+
+| Skill | A: Confident | B: Could figure out | C: Would struggle |
+|-------|--------------|---------------------|-------------------|
+| Extract a specific column from a 2D NumPy array | | | |
+| Create a plot with title and labeled axes | | | |
+| Read a Python error message and identify which line caused it | | | |
+| Modify code to change units or appearance | | | |
+| Save a figure to a file | | | |
+
+**If you rated yourself "C" on any skill:** Before Week 2, work through the relevant sections of [Python Resources](/PHYS-4430/python-resources). Budget 1-2 hours. It's much better to address gaps now than to struggle during the Week 2 prelab.
+
+## Why This Matters for Week 2
+
+In Week 2, you'll encounter code like this:
+
+```python
+def beam_profile(x, amplitude, center, width, offset):
+    return amplitude * erf(np.sqrt(2) * (x - center) / width) + offset
+
+popt, pcov = curve_fit(beam_profile, x_data, y_data, p0=[1.4, 0.01, 0.0005, 1.4])
+print(f"Beam width: {popt[2]:.4f} m")
+```
+
+You don't need to understand `curve_fit` yet—that's Week 2's content. But you *do* need to understand:
+- What `x_data` and `y_data` are (arrays you loaded from a file)
+- How to extract `popt[2]` (the third element) from the result
+- How to plot the fit curve over your data points
+
+If the exercises above felt confusing, address that gap now. Week 2 builds directly on these skills, and struggling with Python basics will distract you from learning the physics.
 
 # Deliverables and Assessment
 
@@ -393,17 +461,20 @@ Your lab notebook should include the following for this week:
 2. **Calibration comparison**: quantitative comparison of your measurements to datasheet values
 3. **Beam width measurement** (if completed): fit plot, extracted beam width with uncertainty
 
-## Postlab
+## Preparation for Week 2 (required before next lab)
 
-1. **Python preparation**: Review [Python Resources](/PHYS-4430/python-resources) if needed for NumPy, Matplotlib, and file I/O
-2. **Optional early analysis**: If you collected knife-edge data, you may begin exploring it (full fitting covered in Week 2)
+1. **Prediction questions** (Step 1): Written answers to the three prediction questions about `data.shape`, array indexing, and unit conversion
 
-## Reflection Questions
+2. **Prediction verification** (Step 2): Note whether your predictions were correct, and if not, what you learned
 
-Before moving to Week 2, answer these questions:
+3. **Modified plot** (Step 3): Your customized plot showing position in μm, red square markers, and mean voltage line (`week1_python_modified.png`)
 
-1. Your photodetector offset voltage differs from the datasheet by 15%. What would you do before using this detector for precision measurements?
-   - Options: (a) Repeat the measurement, (b) Accept the datasheet value, (c) Investigate the cause, (d) Use your measured value
-   - Justify your choice in 2-3 sentences.
+4. **Self-assessment** (Step 4): Completed skill rating table with honest A/B/C ratings
 
-2. You took 10 measurements and calculated both σ (standard deviation) and σ_mean (standard deviation of the mean). Which would you report as the uncertainty in your voltage measurement? Why? 
+5. **Reflection questions** (answer in your notebook):
+
+   a. Your photodetector offset voltage differs from the datasheet by 15%. What would you do before using this detector for precision measurements?
+      - Options: (a) Repeat the measurement, (b) Accept the datasheet value, (c) Investigate the cause, (d) Use your measured value
+      - Justify your choice in 2-3 sentences.
+
+   b. You took 10 measurements and calculated both σ (standard deviation) and σ_mean (standard deviation of the mean). Which would you report as the uncertainty in your voltage measurement? Why? 

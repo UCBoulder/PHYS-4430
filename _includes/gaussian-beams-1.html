@@ -99,17 +99,26 @@
             class="toc-section-number">10.4</span> Analysis of the real
             data</a></li>
             </ul></li>
-            <li><a href="#postlab"><span
-            class="toc-section-number">11</span> Postlab</a>
+            <li><a href="#preparation-for-week-2"><span
+            class="toc-section-number">11</span> Preparation for Week
+            2</a>
             <ul>
-            <li><a href="#python-preparation-for-week-2"><span
-            class="toc-section-number">11.1</span> Python Preparation
-            for Week 2</a></li>
+            <li><a href="#step-1-predict-before-you-run"><span
+            class="toc-section-number">11.1</span> Step 1: Predict
+            Before You Run</a></li>
+            <li><a href="#step-2-run-and-verify"><span
+            class="toc-section-number">11.2</span> Step 2: Run and
+            Verify</a></li>
             <li><a
-            href="#apply-to-your-data-if-you-completed-the-beam-width-measurement-in-lab"><span
-            class="toc-section-number">11.2</span> Apply to Your Data
-            (if you completed the beam width measurement in
-            lab)</a></li>
+            href="#step-3-modify-to-demonstrate-understanding"><span
+            class="toc-section-number">11.3</span> Step 3: Modify to
+            Demonstrate Understanding</a></li>
+            <li><a href="#step-4-honest-self-assessment"><span
+            class="toc-section-number">11.4</span> Step 4: Honest
+            Self-Assessment</a></li>
+            <li><a href="#why-this-matters-for-week-2"><span
+            class="toc-section-number">11.5</span> Why This Matters for
+            Week 2</a></li>
             </ul></li>
             <li><a href="#deliverables-and-assessment"><span
             class="toc-section-number">12</span> Deliverables and
@@ -123,11 +132,10 @@
             href="#analysis-and-questions-can-be-completed-after-lab"><span
             class="toc-section-number">12.2</span> Analysis and
             Questions (can be completed after lab)</a></li>
-            <li><a href="#postlab-1"><span
-            class="toc-section-number">12.3</span> Postlab</a></li>
-            <li><a href="#reflection-questions"><span
-            class="toc-section-number">12.4</span> Reflection
-            Questions</a></li>
+            <li><a
+            href="#preparation-for-week-2-required-before-next-lab"><span
+            class="toc-section-number">12.3</span> Preparation for Week
+            2 (required before next lab)</a></li>
             </ul></li>
             </ul>
         </nav>
@@ -142,9 +150,9 @@
          measurement techniques you develop this week will be used
          directly in Weeks 2-4.</p>
          <p><strong>This week:</strong> Align optics → Calibrate
-         photodetector → Measure beam width <strong>Next week:</strong>
-         Learn data acquisition → Characterize noise → Choose optimal
-         gain setting</p>
+         photodetector → Measure beam width</p>
+         <p><strong>Next week:</strong> Learn data acquisition →
+         Characterize noise → Choose optimal gain setting</p>
          <h1 data-number="2" id="learning-goals"><span
          class="header-section-number">2</span> Learning Goals</h1>
          <p>After completing this week’s lab, you will be able to:</p>
@@ -875,45 +883,155 @@
          <li>Plot your fit together with your data to make sure it is
          good.</li>
          </ol>
-         <h1 data-number="11" id="postlab"><span
-         class="header-section-number">11</span> Postlab</h1>
-         <h2 data-number="11.1" id="python-preparation-for-week-2"><span
-         class="header-section-number">11.1</span> Python Preparation
-         for Week 2</h2>
-         <p>This lab sequence requires Python proficiency with NumPy,
-         Matplotlib, and SciPy. Before Week 2, ensure you are
-         comfortable with:</p>
-         <ul>
-         <li><strong>NumPy array operations</strong> - See <a
-         href="/PHYS-4430/python-analysis">Python Resources: Data
-         Analysis</a>, “NumPy Essentials” section</li>
-         <li><strong>Plotting with Matplotlib</strong> - See <a
-         href="/PHYS-4430/python-analysis">Python Resources: Data
-         Analysis</a>, “Plotting with Matplotlib” section</li>
-         <li><strong>Loading CSV files</strong> with
-         <code>np.loadtxt()</code></li>
-         </ul>
-         <p>If you need practice, work through the exercises on the <a
-         href="/PHYS-4430/python-resources">Python Resources</a> page.
-         The curve fitting skills needed for beam width analysis will be
-         covered in Week 2’s prelab.</p>
-         <h2 data-number="11.2"
-         id="apply-to-your-data-if-you-completed-the-beam-width-measurement-in-lab"><span
-         class="header-section-number">11.2</span> Apply to Your Data
-         (if you completed the beam width measurement in lab)</h2>
-         <p>If you collected knife-edge measurement data during lab, you
-         can optionally begin analysis now. However, the full fitting
-         procedure will be covered in Week 2’s prelab, so you may prefer
-         to wait.</p>
-         <p>If you want to start early:</p>
+         <h1 data-number="11" id="preparation-for-week-2"><span
+         class="header-section-number">11</span> Preparation for Week
+         2</h1>
+         <p>Before Week 2, complete the following to ensure you’re ready
+         for the curve fitting and data acquisition work ahead. This is
+         not busywork—Week 2’s prelab assumes you can confidently work
+         with NumPy arrays and Matplotlib. Use this exercise to honestly
+         assess your readiness and identify gaps.</p>
+         <h2 data-number="11.1" id="step-1-predict-before-you-run"><span
+         class="header-section-number">11.1</span> Step 1: Predict
+         Before You Run</h2>
+         <p><strong>Download</strong> the test data: <a
+         href="../resources/lab-guides/gaussian-laser-beams/Test_Profile_Data.csv">Test_Profile_Data.csv</a></p>
+         <p>Open the file in a text editor or spreadsheet to see its
+         structure. Then, <strong>before running any code</strong>,
+         answer these questions in your notebook:</p>
          <ol type="1">
-         <li>Plot your data (position vs. voltage) to verify it looks
-         like an error function</li>
-         <li>Identify approximate values for the beam center and
-         transition width</li>
-         <li>Note any unusual features (noise, asymmetry, incomplete
-         transition)</li>
+         <li><p>The file has two columns (position and voltage) and
+         about 30 rows of data. After running
+         <code>data = np.loadtxt('Test_Profile_Data.csv', delimiter=',', skiprows=1)</code>,
+         what will <code>data.shape</code> return?</p></li>
+         <li><p>The code below uses <code>data[:, 0]</code> and
+         <code>data[:, 1]</code>. In plain English, what does the
+         <code>:</code> mean? What does the <code>0</code>
+         mean?</p></li>
+         <li><p>The plot command uses <code>position * 1000</code>. What
+         unit conversion is this performing, and why might it be
+         useful?</p></li>
          </ol>
+         <h2 data-number="11.2" id="step-2-run-and-verify"><span
+         class="header-section-number">11.2</span> Step 2: Run and
+         Verify</h2>
+         <p>Now run the code and check your predictions:</p>
+         <div class="sourceCode" id="cb1"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;Test_Profile_Data.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Data shape: </span><span class="sc">{</span>data<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">&quot;</span>)  <span class="co"># Check your prediction!</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>position <span class="op">=</span> data[:, <span class="dv">0</span>]  <span class="co"># meters</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>voltage <span class="op">=</span> data[:, <span class="dv">1</span>]   <span class="co"># volts</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a plot</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>plt.plot(position <span class="op">*</span> <span class="dv">1000</span>, voltage, <span class="st">&#39;bo&#39;</span>, markersize<span class="op">=</span><span class="dv">4</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (mm)&#39;</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Beam Profile Test Data&#39;</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">&#39;week1_python_check.png&#39;</span>, dpi<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+         <p><strong>In your notebook:</strong> Were your predictions
+         correct? If not, make sure you understand why before
+         proceeding.</p>
+         <h2 data-number="11.3"
+         id="step-3-modify-to-demonstrate-understanding"><span
+         class="header-section-number">11.3</span> Step 3: Modify to
+         Demonstrate Understanding</h2>
+         <p>Running code proves you can execute it. <em>Modifying</em>
+         code proves you understand it. Make these changes:</p>
+         <ol type="1">
+         <li><p><strong>Change units:</strong> Display position in
+         micrometers (μm) instead of millimeters. Update both the data
+         conversion and the axis label.</p></li>
+         <li><p><strong>Change appearance:</strong> Change the markers
+         from blue circles to red squares. (Hint: look up Matplotlib
+         marker styles, or ask an AI assistant—the skill is knowing
+         <em>what</em> to ask.)</p></li>
+         <li><p><strong>Add information:</strong> Add a horizontal
+         dashed line at the mean voltage value. (Hint:
+         <code>plt.axhline()</code>)</p></li>
+         </ol>
+         <p>Save your modified plot as
+         <code>week1_python_modified.png</code>.</p>
+         <h2 data-number="11.4" id="step-4-honest-self-assessment"><span
+         class="header-section-number">11.4</span> Step 4: Honest
+         Self-Assessment</h2>
+         <p>For each skill below, rate yourself honestly. This is not
+         graded—it’s for <em>you</em> to identify gaps before Week
+         2.</p>
+         <table>
+         <thead>
+         <tr class="header">
+         <th>Skill</th>
+         <th>A: Confident</th>
+         <th>B: Could figure out</th>
+         <th>C: Would struggle</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="odd">
+         <td>Extract a specific column from a 2D NumPy array</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         </tr>
+         <tr class="even">
+         <td>Create a plot with title and labeled axes</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         </tr>
+         <tr class="odd">
+         <td>Read a Python error message and identify which line caused
+         it</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         </tr>
+         <tr class="even">
+         <td>Modify code to change units or appearance</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         </tr>
+         <tr class="odd">
+         <td>Save a figure to a file</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         </tr>
+         </tbody>
+         </table>
+         <p><strong>If you rated yourself “C” on any skill:</strong>
+         Before Week 2, work through the relevant sections of <a
+         href="/PHYS-4430/python-resources">Python Resources</a>. Budget
+         1-2 hours. It’s much better to address gaps now than to
+         struggle during the Week 2 prelab.</p>
+         <h2 data-number="11.5" id="why-this-matters-for-week-2"><span
+         class="header-section-number">11.5</span> Why This Matters for
+         Week 2</h2>
+         <p>In Week 2, you’ll encounter code like this:</p>
+         <div class="sourceCode" id="cb2"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> beam_profile(x, amplitude, center, width, offset):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> amplitude <span class="op">*</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">*</span> (x <span class="op">-</span> center) <span class="op">/</span> width) <span class="op">+</span> offset</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(beam_profile, x_data, y_data, p0<span class="op">=</span>[<span class="fl">1.4</span>, <span class="fl">0.01</span>, <span class="fl">0.0005</span>, <span class="fl">1.4</span>])</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam width: </span><span class="sc">{</span>popt[<span class="dv">2</span>]<span class="sc">:.4f}</span><span class="ss"> m&quot;</span>)</span></code></pre></div>
+         <p>You don’t need to understand <code>curve_fit</code>
+         yet—that’s Week 2’s content. But you <em>do</em> need to
+         understand: - What <code>x_data</code> and <code>y_data</code>
+         are (arrays you loaded from a file) - How to extract
+         <code>popt[2]</code> (the third element) from the result - How
+         to plot the fit curve over your data points</p>
+         <p>If the exercises above felt confusing, address that gap now.
+         Week 2 builds directly on these skills, and struggling with
+         Python basics will distract you from learning the physics.</p>
          <h1 data-number="12" id="deliverables-and-assessment"><span
          class="header-section-number">12</span> Deliverables and
          Assessment</h1>
@@ -947,21 +1065,26 @@
          <li><strong>Beam width measurement</strong> (if completed): fit
          plot, extracted beam width with uncertainty</li>
          </ol>
-         <h2 data-number="12.3" id="postlab-1"><span
-         class="header-section-number">12.3</span> Postlab</h2>
+         <h2 data-number="12.3"
+         id="preparation-for-week-2-required-before-next-lab"><span
+         class="header-section-number">12.3</span> Preparation for Week
+         2 (required before next lab)</h2>
          <ol type="1">
-         <li><strong>Python preparation</strong>: Review <a
-         href="/PHYS-4430/python-resources">Python Resources</a> if
-         needed for NumPy, Matplotlib, and file I/O</li>
-         <li><strong>Optional early analysis</strong>: If you collected
-         knife-edge data, you may begin exploring it (full fitting
-         covered in Week 2)</li>
-         </ol>
-         <h2 data-number="12.4" id="reflection-questions"><span
-         class="header-section-number">12.4</span> Reflection
-         Questions</h2>
-         <p>Before moving to Week 2, answer these questions:</p>
-         <ol type="1">
+         <li><p><strong>Prediction questions</strong> (Step 1): Written
+         answers to the three prediction questions about
+         <code>data.shape</code>, array indexing, and unit
+         conversion</p></li>
+         <li><p><strong>Prediction verification</strong> (Step 2): Note
+         whether your predictions were correct, and if not, what you
+         learned</p></li>
+         <li><p><strong>Modified plot</strong> (Step 3): Your customized
+         plot showing position in μm, red square markers, and mean
+         voltage line (<code>week1_python_modified.png</code>)</p></li>
+         <li><p><strong>Self-assessment</strong> (Step 4): Completed
+         skill rating table with honest A/B/C ratings</p></li>
+         <li><p><strong>Reflection questions</strong> (answer in your
+         notebook):</p>
+         <ol type="a">
          <li>Your photodetector offset voltage differs from the
          datasheet by 15%. What would you do before using this detector
          for precision measurements?
@@ -975,6 +1098,7 @@
          deviation) and σ_mean (standard deviation of the mean). Which
          would you report as the uncertainty in your voltage
          measurement? Why?</li>
+         </ol></li>
          </ol>
                </div>
             <!-- Mathjax -->

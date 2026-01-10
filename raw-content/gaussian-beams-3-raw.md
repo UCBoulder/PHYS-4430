@@ -9,7 +9,9 @@ title: "Gaussian Beams - Week 3"
 Last week you characterized your photodetector's noise and chose an optimal gain setting. This week you'll learn the theoretical foundation for Gaussian beams, set up the motor controller, take your first automated beam profile, and apply error propagation to your real data.
 
 **Last week:** Learned DAQ programming, characterized noise, chose gain setting
+
 **This week:** Learn Gaussian beam theory → Set up motor → Take beam profile → Analyze with error propagation
+
 **Next week:** Multiple beam profiles → Test Gaussian beam model → Investigate lens effects
 
 # Overview
