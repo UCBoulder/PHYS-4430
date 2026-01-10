@@ -908,9 +908,10 @@
          <code>data[:, 1]</code>. In plain English, what does the
          <code>:</code> mean? What does the <code>0</code>
          mean?</p></li>
-         <li><p>The plot command uses <code>position * 1000</code>. What
-         unit conversion is this performing, and why might it be
-         useful?</p></li>
+         <li><p>The raw position data is in meters, but the plot
+         displays millimeters. Why might millimeters (or smaller units)
+         be preferable for displaying a beam profile measurement? (Hint:
+         think about typical laser beam widths.)</p></li>
          </ol>
          <h2 data-number="11.2" id="step-2-run-and-verify"><span
          class="header-section-number">11.2</span> Step 2: Run and
@@ -956,15 +957,29 @@
          <li><p><strong>Add information:</strong> Add a horizontal
          dashed line at the mean voltage value. (Hint:
          <code>plt.axhline()</code>)</p></li>
+         <li><p><strong>Transfer task:</strong> Create a <em>second</em>
+         figure showing only the first half of the data points. Save it
+         as <code>week1_python_subset.png</code>. (This tests whether
+         you understand array slicing, not just symbol
+         substitution.)</p></li>
          </ol>
-         <p>Save your modified plot as
-         <code>week1_python_modified.png</code>.</p>
+         <p><strong>Self-check:</strong> Your modified plot (tasks 1-3)
+         should show position in μm (ranging from about -1800 to +4200
+         μm based on this dataset). Your subset plot (task 4) should
+         show roughly half as many data points as the original.</p>
          <h2 data-number="11.4" id="step-4-honest-self-assessment"><span
          class="header-section-number">11.4</span> Step 4: Honest
          Self-Assessment</h2>
          <p>For each skill below, rate yourself honestly. This is not
          graded—it’s for <em>you</em> to identify gaps before Week
          2.</p>
+         <p><strong>Calibration check:</strong> Before filling in the
+         table, try this without looking at any code: write a line of
+         Python that extracts only the first 5 position values from the
+         <code>position</code> array. If this took you more than 30
+         seconds or you weren’t sure of the answer, you should probably
+         rate yourself “C” for array operations—and that’s okay, as long
+         as you address it before Week 2.</p>
          <table>
          <thead>
          <tr class="header">
@@ -1057,33 +1072,14 @@
          class="header-section-number">12.2</span> Analysis and
          Questions (can be completed after lab)</h2>
          <ol type="1">
-         <li><strong>Photodetector physics explanation</strong>: diagram
-         and written explanation of how the photodetector converts light
-         to voltage</li>
-         <li><strong>Calibration comparison</strong>: quantitative
-         comparison of your measurements to datasheet values</li>
-         <li><strong>Beam width measurement</strong> (if completed): fit
-         plot, extracted beam width with uncertainty</li>
-         </ol>
-         <h2 data-number="12.3"
-         id="preparation-for-week-2-required-before-next-lab"><span
-         class="header-section-number">12.3</span> Preparation for Week
-         2 (required before next lab)</h2>
-         <ol type="1">
-         <li><p><strong>Prediction questions</strong> (Step 1): Written
-         answers to the three prediction questions about
-         <code>data.shape</code>, array indexing, and unit
-         conversion</p></li>
-         <li><p><strong>Prediction verification</strong> (Step 2): Note
-         whether your predictions were correct, and if not, what you
-         learned</p></li>
-         <li><p><strong>Modified plot</strong> (Step 3): Your customized
-         plot showing position in μm, red square markers, and mean
-         voltage line (<code>week1_python_modified.png</code>)</p></li>
-         <li><p><strong>Self-assessment</strong> (Step 4): Completed
-         skill rating table with honest A/B/C ratings</p></li>
-         <li><p><strong>Reflection questions</strong> (answer in your
-         notebook):</p>
+         <li><p><strong>Photodetector physics explanation</strong>:
+         diagram and written explanation of how the photodetector
+         converts light to voltage</p></li>
+         <li><p><strong>Calibration comparison</strong>: quantitative
+         comparison of your measurements to datasheet values</p></li>
+         <li><p><strong>Beam width measurement</strong> (if completed):
+         fit plot, extracted beam width with uncertainty</p></li>
+         <li><p><strong>Reflection questions</strong>:</p>
          <ol type="a">
          <li>Your photodetector offset voltage differs from the
          datasheet by 15%. What would you do before using this detector
@@ -1099,6 +1095,28 @@
          would you report as the uncertainty in your voltage
          measurement? Why?</li>
          </ol></li>
+         </ol>
+         <h2 data-number="12.3"
+         id="preparation-for-week-2-required-before-next-lab"><span
+         class="header-section-number">12.3</span> Preparation for Week
+         2 (required before next lab)</h2>
+         <ol type="1">
+         <li><p><strong>Prediction questions</strong> (Step 1): Written
+         answers to the three prediction questions about
+         <code>data.shape</code>, array indexing, and unit
+         conversion—include your reasoning, not just the answer</p></li>
+         <li><p><strong>Prediction verification</strong> (Step 2): Note
+         whether your predictions were correct, and if not, what you
+         learned</p></li>
+         <li><p><strong>Modified plot</strong> (Step 3): Your customized
+         plot showing position in μm, red square markers, and mean
+         voltage line (<code>week1_python_modified.png</code>)</p></li>
+         <li><p><strong>Subset plot</strong> (Step 3, task 4): Plot
+         showing only the first half of the data points
+         (<code>week1_python_subset.png</code>)</p></li>
+         <li><p><strong>Self-assessment</strong> (Step 4): Completed
+         skill rating table with honest A/B/C ratings, including the
+         calibration check</p></li>
          </ol>
                </div>
             <!-- Mathjax -->

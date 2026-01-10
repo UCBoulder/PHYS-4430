@@ -369,7 +369,7 @@ Open the file in a text editor or spreadsheet to see its structure. Then, **befo
 
 2. The code below uses `data[:, 0]` and `data[:, 1]`. In plain English, what does the `:` mean? What does the `0` mean?
 
-3. The plot command uses `position * 1000`. What unit conversion is this performing, and why might it be useful?
+3. The raw position data is in meters, but the plot displays millimeters. Why might millimeters (or smaller units) be preferable for displaying a beam profile measurement? (Hint: think about typical laser beam widths.)
 
 ## Step 2: Run and Verify
 
@@ -409,11 +409,15 @@ Running code proves you can execute it. *Modifying* code proves you understand i
 
 3. **Add information:** Add a horizontal dashed line at the mean voltage value. (Hint: `plt.axhline()`)
 
-Save your modified plot as `week1_python_modified.png`.
+4. **Transfer task:** Create a *second* figure showing only the first half of the data points. Save it as `week1_python_subset.png`. (This tests whether you understand array slicing, not just symbol substitution.)
+
+**Self-check:** Your modified plot (tasks 1-3) should show position in μm (ranging from about -1800 to +4200 μm based on this dataset). Your subset plot (task 4) should show roughly half as many data points as the original.
 
 ## Step 4: Honest Self-Assessment
 
 For each skill below, rate yourself honestly. This is not graded—it's for *you* to identify gaps before Week 2.
+
+**Calibration check:** Before filling in the table, try this without looking at any code: write a line of Python that extracts only the first 5 position values from the `position` array. If this took you more than 30 seconds or you weren't sure of the answer, you should probably rate yourself "C" for array operations—and that's okay, as long as you address it before Week 2.
 
 | Skill | A: Confident | B: Could figure out | C: Would struggle |
 |-------|--------------|---------------------|-------------------|
@@ -460,21 +464,22 @@ Your lab notebook should include the following for this week:
 1. **Photodetector physics explanation**: diagram and written explanation of how the photodetector converts light to voltage
 2. **Calibration comparison**: quantitative comparison of your measurements to datasheet values
 3. **Beam width measurement** (if completed): fit plot, extracted beam width with uncertainty
-
-## Preparation for Week 2 (required before next lab)
-
-1. **Prediction questions** (Step 1): Written answers to the three prediction questions about `data.shape`, array indexing, and unit conversion
-
-2. **Prediction verification** (Step 2): Note whether your predictions were correct, and if not, what you learned
-
-3. **Modified plot** (Step 3): Your customized plot showing position in μm, red square markers, and mean voltage line (`week1_python_modified.png`)
-
-4. **Self-assessment** (Step 4): Completed skill rating table with honest A/B/C ratings
-
-5. **Reflection questions** (answer in your notebook):
+4. **Reflection questions**:
 
    a. Your photodetector offset voltage differs from the datasheet by 15%. What would you do before using this detector for precision measurements?
       - Options: (a) Repeat the measurement, (b) Accept the datasheet value, (c) Investigate the cause, (d) Use your measured value
       - Justify your choice in 2-3 sentences.
 
-   b. You took 10 measurements and calculated both σ (standard deviation) and σ_mean (standard deviation of the mean). Which would you report as the uncertainty in your voltage measurement? Why? 
+   b. You took 10 measurements and calculated both σ (standard deviation) and σ_mean (standard deviation of the mean). Which would you report as the uncertainty in your voltage measurement? Why?
+
+## Preparation for Week 2 (required before next lab)
+
+1. **Prediction questions** (Step 1): Written answers to the three prediction questions about `data.shape`, array indexing, and unit conversion—include your reasoning, not just the answer
+
+2. **Prediction verification** (Step 2): Note whether your predictions were correct, and if not, what you learned
+
+3. **Modified plot** (Step 3): Your customized plot showing position in μm, red square markers, and mean voltage line (`week1_python_modified.png`)
+
+4. **Subset plot** (Step 3, task 4): Plot showing only the first half of the data points (`week1_python_subset.png`)
+
+5. **Self-assessment** (Step 4): Completed skill rating table with honest A/B/C ratings, including the calibration check 
