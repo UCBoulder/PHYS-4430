@@ -38,6 +38,7 @@ exclude:
   - /Gemfile.lock
   - /Dockerfile
   - /compose.yaml
+  - vendor
 
 # Markdown Processing
 kramdown:
