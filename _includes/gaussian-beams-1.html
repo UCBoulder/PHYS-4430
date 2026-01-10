@@ -86,8 +86,7 @@
             <ul>
             <li><a href="#sec:analysis"><span
             class="toc-section-number">10.1</span> Before you take data:
-            create an analysis function to fit a test set of
-            data</a></li>
+            prepare for analysis</a></li>
             <li><a
             href="#build-your-setup-for-measuring-the-beam-width-of-your-laser"><span
             class="toc-section-number">10.2</span> Build your setup for
@@ -164,8 +163,9 @@
          and explain why repeated measurements improve precision.</li>
          <li>Set up a knife-edge measurement and derive the theoretical
          model (error function).</li>
-         <li>Perform a nonlinear curve fit to extract beam width from
-         experimental data.</li>
+         <li><em>(If time permits)</em> Apply a curve fit to test data
+         to verify your analysis code is ready for real
+         measurements.</li>
          </ol>
          <h1 data-number="3" id="overview-of-your-work"><span
          class="header-section-number">3</span> Overview of Your
@@ -223,7 +223,7 @@
          </tr>
          <tr class="odd">
          <td>Week 3</td>
-         <td>FFT analysis, motor control</td>
+         <td>Error propagation, motor control</td>
          <td><a href="/PHYS-4430/python-analysis">Data Analysis</a>, <a
          href="/PHYS-4430/python-thorlabs">Thorlabs Motors</a></td>
          </tr>
@@ -753,15 +753,16 @@
          multiple parts with different priorities:</p>
          <ol type="1">
          <li><p><strong>Essential (must complete):</strong> Derive the
-         error function model and complete the curve fitting practice
-         (“Before you take data” subsection). This analysis is critical
-         preparation for Week 2.</p></li>
+         error function model and answer the required questions in
+         “Before you take data.” This theoretical understanding is
+         critical preparation for Week 2.</p></li>
          <li><p><strong>Important (complete if time allows):</strong>
          Build the setup and take data. If you don’t finish in Week 1,
          you will complete this in Week 3.</p></li>
-         <li><p><strong>Good practice:</strong> If you take data,
-         complete the analysis. This validates your fitting code on real
-         data.</p></li>
+         <li><p><strong>Optional (good practice):</strong> Try the curve
+         fitting practice exercise with test data. This prepares you for
+         Week 2, but fitting is covered in detail in Week 2’s
+         prelab.</p></li>
          </ol>
          <p>The basic scheme involves measuring the power in the laser
          beam as the beam is gradually blocked by a knife edge (razor
@@ -800,18 +801,28 @@
          </ol>
          <h2 data-number="10.1" id="sec:analysis"><span
          class="header-section-number">10.1</span> Before you take data:
-         create an analysis function to fit a test set of data</h2>
-         <p><em>Note: Nonlinear least squares fitting is covered in next
-         week’s prelab. See the <a
-         href="/PHYS-4430/python-resources">Python Resources</a> page
-         for a guide to curve fitting with
-         <code>scipy.optimize.curve_fit</code>.</em></p>
+         prepare for analysis</h2>
+         <p><em>Note: Nonlinear least squares fitting is covered in
+         detail in Week 2’s prelab. This section prepares you to
+         understand what you’ll be fitting.</em></p>
+         <p><strong>Required (answer in your notebook):</strong></p>
          <ol type="1">
-         <li>What is the functional form for your fit function?</li>
+         <li>What is the functional form for your fit function? (You
+         derived this from the Gaussian integral above.)</li>
          <li>Is it a linear or nonlinear fit function? Why?</li>
          <li>What are the fit parameters? Why do you need this
          many?</li>
          <li>How do the fit parameters relate to the beam width?</li>
+         </ol>
+         <p><strong>Optional practice (if time permits):</strong></p>
+         <p>If you want to get a head start on curve fitting, you can
+         practice with test data. See the <a
+         href="/PHYS-4430/python-resources">Python Resources</a> page
+         for a guide to curve fitting with
+         <code>scipy.optimize.curve_fit</code>. Week 2’s prelab covers
+         this in detail, so don’t worry if you don’t complete this
+         now.</p>
+         <ol start="5" type="1">
          <li>Download <a
          href="../resources/lab-guides/gaussian-laser-beams/Test_Profile_Data.csv">this
          data set</a>.

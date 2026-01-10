@@ -320,8 +320,8 @@
          electric field polarization in the <span
          class="math inline">\(\hat{x}\)</span>-direction:</p>
          <p><span id="eq:3" class="eqnos"><span
-         class="math display">\[\vec{E}(x,y,z,t)=\hat{x}A(x,y,z)e^{kz-\omega
-         t}\text{.}\]</span><span class="eqnos-number">(3)</span></span>
+         class="math display">\[\vec{E}(x,y,z,t)=\hat{x}A(x,y,z)e^{i(kz-\omega
+         t)}\text{.}\]</span><span class="eqnos-number">(3)</span></span>
          </p>
          <p>The basic idea is that the spatial pattern of the beam,
          described by the function <span
@@ -369,8 +369,9 @@
          <p>Finally, we get the paraxial wave equation,</p>
          <p><span id="eq:7" class="eqnos"><span
          class="math display">\[\frac{\partial^2A}{\partial x^2}
-         +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial
-         z^2}=0\text{.}\]</span><span class="eqnos-number">(7)</span></span>
+         +\frac{\partial^2A}{\partial y^2} + 2ik\frac{\partial
+         A}{\partial
+         z}=0\text{.}\]</span><span class="eqnos-number">(7)</span></span>
          </p>
          <p>One set of solutions to the paraxial wave equation are
          Gauss-Hermite beams, which have an intensity profiles like
@@ -653,10 +654,16 @@
          Packages</h3>
          <p>Install the required packages:</p>
          <div class="sourceCode" id="cb2"><pre
-         class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pythonnet</span></code></pre></div>
+         class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install pythonnet uncertainties</span></code></pre></div>
+         <ul>
+         <li><code>pythonnet</code>: Required for interfacing with
+         Thorlabs Kinesis motor control</li>
+         <li><code>uncertainties</code>: Required for error propagation
+         calculations in the analysis section</li>
+         </ul>
          <p>(You should already have <code>nidaqmx</code>,
-         <code>numpy</code>, and <code>matplotlib</code> from Week
-         2.)</p>
+         <code>numpy</code>, <code>scipy</code>, and
+         <code>matplotlib</code> from Week 2.)</p>
          <h2 data-number="6.3" id="verifying-the-motor-connection"><span
          class="header-section-number">6.3</span> Verifying the Motor
          Connection</h2>
@@ -976,28 +983,41 @@
          V_{min}}{2} \left[1 - \text{erf}\left(\frac{\sqrt{2}(x -
          x_0)}{w}\right)\right] + V_{min}\]</span></p>
          <div class="sourceCode" id="cb8"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> beam_profile(x, V_max, V_min, x0, w):</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Error function model for knife-edge beam profile.&quot;&quot;&quot;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (V_max <span class="op">-</span> V_min) <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">*</span> (x <span class="op">-</span> x0) <span class="op">/</span> w)) <span class="op">+</span> V_min</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial guesses</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>V_max_guess <span class="op">=</span> np.<span class="bu">max</span>(voltage)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>V_min_guess <span class="op">=</span> np.<span class="bu">min</span>(voltage)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>x0_guess <span class="op">=</span> position[<span class="bu">len</span>(position)<span class="op">//</span><span class="dv">2</span>]</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>w_guess <span class="op">=</span> <span class="fl">0.5</span>  <span class="co"># mm</span></span>
+         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> beam_profile(x, V_max, V_min, center, width):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Error function model for knife-edge beam profile.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">        x: position (mm)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">        V_max: maximum voltage when beam is unblocked (V)</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">        V_min: minimum voltage when beam is blocked (V)</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">        center: beam center position (mm)</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">        width: beam width w (mm)</span></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> [V_max_guess, V_min_guess, x0_guess, w_guess]</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the data</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(beam_profile, position, voltage, p0<span class="op">=</span>p0)</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract results</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>V_max, V_min, x0, w <span class="op">=</span> popt</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>V_max_err, V_min_err, x0_err, w_err <span class="op">=</span> perr</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam width: w = </span><span class="sc">{</span>w<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>w_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam center: x0 = </span><span class="sc">{</span>x0<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>x0_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span></code></pre></div>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Note: This form uses V_max/V_min instead of amplitude/offset</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">    for physical clarity. The forms are equivalent:</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">        amplitude = (V_max - V_min) / 2</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">        offset = (V_max + V_min) / 2</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (V_max <span class="op">-</span> V_min) <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">*</span> (x <span class="op">-</span> center) <span class="op">/</span> width)) <span class="op">+</span> V_min</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial guesses</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>V_max_guess <span class="op">=</span> np.<span class="bu">max</span>(voltage)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>V_min_guess <span class="op">=</span> np.<span class="bu">min</span>(voltage)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>center_guess <span class="op">=</span> position[<span class="bu">len</span>(position)<span class="op">//</span><span class="dv">2</span>]</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>width_guess <span class="op">=</span> <span class="fl">0.5</span>  <span class="co"># mm</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> [V_max_guess, V_min_guess, center_guess, width_guess]</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the data</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(beam_profile, position, voltage, p0<span class="op">=</span>p0)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract results</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>V_max, V_min, center, width <span class="op">=</span> popt</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>V_max_err, V_min_err, center_err, width_err <span class="op">=</span> perr</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam width: w = </span><span class="sc">{</span>width<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>width_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam center: x0 = </span><span class="sc">{</span>center<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>center_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span></code></pre></div>
          <h3 data-number="8.2.3" id="step-3-plot-the-fit"><span
          class="header-section-number">8.2.3</span> Step 3: Plot the
          Fit</h3>
@@ -1008,7 +1028,7 @@
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.plot(position, voltage, <span class="st">&#39;bo&#39;</span>, label<span class="op">=</span><span class="st">&#39;Data&#39;</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.plot(x_fit, v_fit, <span class="st">&#39;r-&#39;</span>, label<span class="op">=</span><span class="ss">f&#39;Fit: w = </span><span class="sc">{</span>w<span class="sc">:.3f}</span><span class="ss"> ± </span><span class="sc">{</span>w_err<span class="sc">:.3f}</span><span class="ss"> mm&#39;</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.plot(x_fit, v_fit, <span class="st">&#39;r-&#39;</span>, label<span class="op">=</span><span class="ss">f&#39;Fit: w = </span><span class="sc">{</span>width<span class="sc">:.3f}</span><span class="ss"> ± </span><span class="sc">{</span>width_err<span class="sc">:.3f}</span><span class="ss"> mm&#39;</span>)</span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (mm)&#39;</span>)</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Beam Profile with Error Function Fit&#39;</span>)</span>
