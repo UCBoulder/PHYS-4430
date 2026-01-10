@@ -213,10 +213,17 @@ There is a straightforward reason that a He-Ne laser should produce a Gaussian b
 
 1. Considering the Gaussian beam equations from Week 3's prelab (the electric field, beam width $w(z)$, radius of curvature $R(z)$, and Gouy phase $\zeta(z)$), which aspects of the Gaussian beam model can you test? Are there any parts of the model you cannot test?
 
-2. Measure the beam width $w$ at various distances from the laser. Consider carefully:
+2. Measure the beam width $w$ at various distances from the laser.
+
+   **Measurement strategy guidance:**
+   - **Number of positions:** Take measurements at 5-10 different $z$ positions. Fewer than 5 makes it difficult to constrain both $w_0$ and $z_w$ in your fit; more than 10 offers diminishing returns.
+   - **Position spacing:** Distribute your measurements across your available range. Include positions both near and far from the laser to capture the beam's divergence.
+   - **Rayleigh range consideration:** If you can estimate the Rayleigh range $z_R = \pi w_0^2 / \lambda$ from Week 3's data, try to include positions within $z_R$ of the waist (where width changes slowly) AND well beyond $z_R$ (where width grows linearly). This helps distinguish $w_0$ from $z_w$ in your fit.
+
+   **Consider carefully:**
    - What distance should be varying: laser to razor, razor to photodetector, or laser to photodetector?
-   - How did you decide what positions $z$ to measure the width at?
    - Use meter sticks and other measurement tools available in the lab.
+   - Record the distance from the laser (or a fixed reference point) for each measurement.
 
 3. Fit the data to $w(z)$, the predicted expression for a Gaussian beam:
    $$w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$$
@@ -424,6 +431,7 @@ Your lab notebook should include the following for this week:
 3. **Thin lens equation test**:
    - Measured vs. predicted image position
    - Quantitative comparison with uncertainties
+4. **Peer comparison** (if completed): other group's results, whether results agreed, and key insight from discussion
 
 ## Key Results Summary
 

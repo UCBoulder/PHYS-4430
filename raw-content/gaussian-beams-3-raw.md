@@ -65,7 +65,7 @@ But as the measurements from the first week showed, our laser beams are commonly
 
 One important thing to note about the beam output from most lasers is that the width of the beam changes very slowly compared to the wavelength of light. Assume a complex solution, where the beam is propagating in the $\hat{z}$-direction, with the electric field polarization in the $\hat{x}$-direction:
 
-$$\vec{E}(x,y,z,t)=\hat{x}A(x,y,z)e^{kz-\omega t}\text{.}$$ {#eq:3}
+$$\vec{E}(x,y,z,t)=\hat{x}A(x,y,z)e^{i(kz-\omega t)}\text{.}$$ {#eq:3}
 
 The basic idea is that the spatial pattern of the beam, described by the function $A(x,y,z)$, does not change much over a wavelength. In the case of the He-Ne laser output, the function $A(x,y,z)$ is a Gaussian profile that changes its width as a function of $z$. If we substitute the trial solution in Equation @eq:3 into the wave equation in Equation @eq:1 we get
 
@@ -81,7 +81,7 @@ $$\left| \frac{\partial^2A}{\partial z^2} \right| \ll \left|2k\frac{\partial A}{
 
 Finally, we get the paraxial wave equation,
 
-$$\frac{\partial^2A}{\partial x^2} +\frac{\partial^2A}{\partial y^2} +\frac{\partial^2A}{\partial z^2}=0\text{.}$$ {#eq:7}
+$$\frac{\partial^2A}{\partial x^2} +\frac{\partial^2A}{\partial y^2} + 2ik\frac{\partial A}{\partial z}=0\text{.}$$ {#eq:7}
 
 One set of solutions to the paraxial wave equation are Gauss-Hermite beams, which have an intensity profiles like those shown in Figure @fig:gauss-hermite. These are the same solutions as for the quantum simple harmonic oscillator, a topic that could be further explored as a final project.
 
@@ -220,10 +220,13 @@ print(sys.maxsize > 2**32)  # True = 64-bit, False = 32-bit
 Install the required packages:
 
 ```bash
-pip install pythonnet
+pip install pythonnet uncertainties
 ```
 
-(You should already have `nidaqmx`, `numpy`, and `matplotlib` from Week 2.)
+- `pythonnet`: Required for interfacing with Thorlabs Kinesis motor control
+- `uncertainties`: Required for error propagation calculations in the analysis section
+
+(You should already have `nidaqmx`, `numpy`, `scipy`, and `matplotlib` from Week 2.)
 
 ## Verifying the Motor Connection
 
@@ -488,28 +491,41 @@ The knife-edge measurement gives an integrated Gaussian, which is the error func
 $$V(x) = \frac{V_{max} - V_{min}}{2} \left[1 - \text{erf}\left(\frac{\sqrt{2}(x - x_0)}{w}\right)\right] + V_{min}$$
 
 ```python
-def beam_profile(x, V_max, V_min, x0, w):
-    """Error function model for knife-edge beam profile."""
-    return (V_max - V_min) / 2 * (1 - erf(np.sqrt(2) * (x - x0) / w)) + V_min
+def beam_profile(x, V_max, V_min, center, width):
+    """Error function model for knife-edge beam profile.
+
+    Parameters:
+        x: position (mm)
+        V_max: maximum voltage when beam is unblocked (V)
+        V_min: minimum voltage when beam is blocked (V)
+        center: beam center position (mm)
+        width: beam width w (mm)
+
+    Note: This form uses V_max/V_min instead of amplitude/offset
+    for physical clarity. The forms are equivalent:
+        amplitude = (V_max - V_min) / 2
+        offset = (V_max + V_min) / 2
+    """
+    return (V_max - V_min) / 2 * (1 - erf(np.sqrt(2) * (x - center) / width)) + V_min
 
 # Initial guesses
 V_max_guess = np.max(voltage)
 V_min_guess = np.min(voltage)
-x0_guess = position[len(position)//2]
-w_guess = 0.5  # mm
+center_guess = position[len(position)//2]
+width_guess = 0.5  # mm
 
-p0 = [V_max_guess, V_min_guess, x0_guess, w_guess]
+p0 = [V_max_guess, V_min_guess, center_guess, width_guess]
 
 # Fit the data
 popt, pcov = curve_fit(beam_profile, position, voltage, p0=p0)
 perr = np.sqrt(np.diag(pcov))
 
 # Extract results
-V_max, V_min, x0, w = popt
-V_max_err, V_min_err, x0_err, w_err = perr
+V_max, V_min, center, width = popt
+V_max_err, V_min_err, center_err, width_err = perr
 
-print(f"Beam width: w = {w:.4f} ± {w_err:.4f} mm")
-print(f"Beam center: x0 = {x0:.4f} ± {x0_err:.4f} mm")
+print(f"Beam width: w = {width:.4f} ± {width_err:.4f} mm")
+print(f"Beam center: x0 = {center:.4f} ± {center_err:.4f} mm")
 ```
 
 ### Step 3: Plot the Fit
@@ -521,7 +537,7 @@ v_fit = beam_profile(x_fit, *popt)
 
 plt.figure(figsize=(10, 6))
 plt.plot(position, voltage, 'bo', label='Data')
-plt.plot(x_fit, v_fit, 'r-', label=f'Fit: w = {w:.3f} ± {w_err:.3f} mm')
+plt.plot(x_fit, v_fit, 'r-', label=f'Fit: w = {width:.3f} ± {width_err:.3f} mm')
 plt.xlabel('Position (mm)')
 plt.ylabel('Voltage (V)')
 plt.title('Beam Profile with Error Function Fit')

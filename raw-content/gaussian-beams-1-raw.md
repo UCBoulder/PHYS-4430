@@ -22,7 +22,7 @@ After completing this week's lab, you will be able to:
 5. Calibrate a photodetector's offset and gain and compare to manufacturer specifications.
 6. Estimate measurement uncertainty using statistical sampling and explain why repeated measurements improve precision.
 7. Set up a knife-edge measurement and derive the theoretical model (error function).
-8. Perform a nonlinear curve fit to extract beam width from experimental data.
+8. *(If time permits)* Apply a curve fit to test data to verify your analysis code is ready for real measurements.
 
 # Overview of Your Work
 
@@ -46,7 +46,7 @@ This lab sequence uses Python for data acquisition, analysis, and visualization.
 |------|---------------|-----------|
 | Week 1 | NumPy basics, Matplotlib plotting, file I/O | [Data Analysis](/PHYS-4430/python-analysis) |
 | Week 2 | Curve fitting with SciPy, NI-DAQmx | [Data Analysis](/PHYS-4430/python-analysis), [NI-DAQmx](/PHYS-4430/python-nidaqmx) |
-| Week 3 | FFT analysis, motor control | [Data Analysis](/PHYS-4430/python-analysis), [Thorlabs Motors](/PHYS-4430/python-thorlabs) |
+| Week 3 | Error propagation, motor control | [Data Analysis](/PHYS-4430/python-analysis), [Thorlabs Motors](/PHYS-4430/python-thorlabs) |
 | Week 4 | Integrated automation | All above |
 
 **Before Week 2**, ensure you are comfortable with:
@@ -302,11 +302,11 @@ The goal of this section is to develop a measurement technique and analysis sche
 
 **Time management note:** This section has multiple parts with different priorities:
 
-1. **Essential (must complete):** Derive the error function model and complete the curve fitting practice ("Before you take data" subsection). This analysis is critical preparation for Week 2.
+1. **Essential (must complete):** Derive the error function model and answer the required questions in "Before you take data." This theoretical understanding is critical preparation for Week 2.
 
 2. **Important (complete if time allows):** Build the setup and take data. If you don't finish in Week 1, you will complete this in Week 3.
 
-3. **Good practice:** If you take data, complete the analysis. This validates your fitting code on real data.
+3. **Optional (good practice):** Try the curve fitting practice exercise with test data. This prepares you for Week 2, but fitting is covered in detail in Week 2's prelab.
 
 The basic scheme involves measuring the power in the laser beam as the beam is gradually blocked by a knife edge (razor blade) using a setup similar to Figure @fig:knife-assembley.
 
@@ -316,14 +316,21 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
    1. Draw a diagram showing the beam and the razor.
    2. Using the above expression for $I(x,y)$, write the mathematical expression for the power incident on the photodiode as a function of razor position. Note, to address this question, you will need to become familiar with the Error Function, $erf(x)$. What assumptions, if any, did you need to make in evaluating the integral? Hint: if you are moving in the $x$ direction, what is going on in the $y$ direction?
 
-## Before you take data: create an analysis function to fit a test set of data {#sec:analysis}
+## Before you take data: prepare for analysis {#sec:analysis}
 
-*Note: Nonlinear least squares fitting is covered in next week's prelab. See the [Python Resources](/PHYS-4430/python-resources) page for a guide to curve fitting with `scipy.optimize.curve_fit`.*
+*Note: Nonlinear least squares fitting is covered in detail in Week 2's prelab. This section prepares you to understand what you'll be fitting.*
 
-1. What is the functional form for your fit function?
+**Required (answer in your notebook):**
+
+1. What is the functional form for your fit function? (You derived this from the Gaussian integral above.)
 2. Is it a linear or nonlinear fit function? Why?
 3. What are the fit parameters? Why do you need this many?
 4. How do the fit parameters relate to the beam width?
+
+**Optional practice (if time permits):**
+
+If you want to get a head start on curve fitting, you can practice with test data. See the [Python Resources](/PHYS-4430/python-resources) page for a guide to curve fitting with `scipy.optimize.curve_fit`. Week 2's prelab covers this in detail, so don't worry if you don't complete this now.
+
 5. Download [this data set](../resources/lab-guides/gaussian-laser-beams/Test_Profile_Data.csv).
    1. Make a plot of the data.
    2. Make a fit and plot it with the data.

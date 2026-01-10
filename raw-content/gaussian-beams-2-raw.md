@@ -10,7 +10,7 @@ Last week you calibrated your photodetector and learned to measure beam width ma
 
 **Last week:** Aligned optics, calibrated photodetector, measured beam width manually
 **This week:** Learn DAQ programming → Characterize noise → Choose optimal gain setting
-**Next week:** Learn FFT analysis → Set up motor controller → Prepare for automation
+**Next week:** Learn Gaussian beam theory → Set up motor controller → Take first automated measurement
 
 # Overview
 
@@ -138,9 +138,17 @@ where there are where $N$ data points, $(x_i,y_i )$, and the fit function is giv
    ```python
    from scipy.special import erf
 
-   def beam_profile(x, a, b, c, w):
-       """Error function model for knife-edge beam profile."""
-       return a * erf(np.sqrt(2) * (x - b) / w) + c
+   def beam_profile(x, amplitude, center, width, offset):
+       """Error function model for knife-edge beam profile.
+
+       Parameters:
+           x: position (m)
+           amplitude: half the voltage swing (V)
+           center: beam center position (m)
+           width: beam width w (m)
+           offset: vertical offset (V)
+       """
+       return amplitude * erf(np.sqrt(2) * (x - center) / width) + offset
    ```
 
 3. Reduce the fit to two free parameters. This step is only necessary because it is hard to visualize more than 3 dimensions. Assume $a_{fit}=(V_{max}-V_{min})/2 = 1.4375$ and $c_{fit} =(V_{max}+V_{min})/2 = 1.45195$. These were determined by averaging the first 6 data points to get $V_{min}$ and the last 5 to get $V_{max}$.
@@ -148,9 +156,9 @@ where there are where $N$ data points, $(x_i,y_i )$, and the fit function is giv
 4. Use Equation @eq:1 to write an expression for $\chi^2$ in terms of your $w$ and $b$ parameters, and the $x$ (position) data and $y$ (voltage) data. Since you don't have any estimate for the uncertainties $\sigma_i$, assume they are all unity so $\sigma_i=1$.
 
    ```python
-   def chi_squared(w, b, x_data, y_data, a_fixed, c_fixed):
+   def chi_squared(width, center, x_data, y_data, amplitude_fixed, offset_fixed):
        """Calculate chi-squared for given parameters."""
-       y_fit = beam_profile(x_data, a_fixed, b, c_fixed, w)
+       y_fit = beam_profile(x_data, amplitude_fixed, center, width, offset_fixed)
        return np.sum((y_data - y_fit)**2)
    ```
 
@@ -163,26 +171,26 @@ where there are where $N$ data points, $(x_i,y_i )$, and the fit function is giv
 6. Make a contour plot of $\chi^2(w,b)$ and tweak the plot range until you see the minimum. You can use AI assistance or the code below. The goal is to *interpret* the result, not to write the code from scratch.
 
    ```python
-   # Create a grid of w and b values
-   w_range = np.linspace(0.0003, 0.0007, 100)
-   b_range = np.linspace(0.009, 0.011, 100)
-   W, B = np.meshgrid(w_range, b_range)
+   # Create a grid of width and center values
+   width_range = np.linspace(0.0003, 0.0007, 100)
+   center_range = np.linspace(0.009, 0.011, 100)
+   W, C = np.meshgrid(width_range, center_range)
 
    # Calculate chi-squared for each combination
-   a_fixed = 1.4375
-   c_fixed = 1.45195
+   amplitude_fixed = 1.4375
+   offset_fixed = 1.45195
    Z = np.zeros_like(W)
-   for i in range(len(b_range)):
-       for j in range(len(w_range)):
-           Z[i, j] = chi_squared(w_range[j], b_range[i], x_data, y_data,
-                                 a_fixed, c_fixed)
+   for i in range(len(center_range)):
+       for j in range(len(width_range)):
+           Z[i, j] = chi_squared(width_range[j], center_range[i], x_data, y_data,
+                                 amplitude_fixed, offset_fixed)
 
    # Make contour plot
    plt.figure(figsize=(10, 8))
-   plt.contour(W * 1000, B * 1000, Z, levels=20)
+   plt.contour(W * 1000, C * 1000, Z, levels=20)
    plt.colorbar(label='$\\chi^2$')
-   plt.xlabel('w (mm)')
-   plt.ylabel('b (mm)')
+   plt.xlabel('width (mm)')
+   plt.ylabel('center (mm)')
    plt.title('$\\chi^2$ Contour Plot')
    plt.show()
    ```
@@ -202,17 +210,17 @@ where there are where $N$ data points, $(x_i,y_i )$, and the fit function is giv
    ```python
    from scipy.optimize import curve_fit
 
-   # Initial guesses
-   p0 = [1.4375, 0.01, 1.45195, 0.0005]
+   # Initial guesses: [amplitude, center, width, offset]
+   p0 = [1.4375, 0.01, 0.0005, 1.45195]
 
    # Perform the fit
    popt, pcov = curve_fit(beam_profile, x_data, y_data, p0=p0)
 
    print("Best fit parameters:")
-   print(f"  a = {popt[0]:.6f}")
-   print(f"  b = {popt[1]:.6f}")
-   print(f"  c = {popt[2]:.6f}")
-   print(f"  w = {popt[3]:.6f}")
+   print(f"  amplitude = {popt[0]:.6f}")
+   print(f"  center    = {popt[1]:.6f}")
+   print(f"  width     = {popt[2]:.6f}")
+   print(f"  offset    = {popt[3]:.6f}")
    ```
 
 ## Uncertainty in the fit parameters
@@ -238,10 +246,10 @@ The parameter uncertainties are then extracted from the covariance matrix:
 perr = np.sqrt(np.diag(pcov))
 
 print("Parameter uncertainties:")
-print(f"  σ_a = {perr[0]:.6f}")
-print(f"  σ_b = {perr[1]:.6f}")
-print(f"  σ_c = {perr[2]:.6f}")
-print(f"  σ_w = {perr[3]:.6f}")
+print(f"  σ_amplitude = {perr[0]:.6f}")
+print(f"  σ_center    = {perr[1]:.6f}")
+print(f"  σ_width     = {perr[2]:.6f}")
+print(f"  σ_offset    = {perr[3]:.6f}")
 ```
 
 ## Estimating the uncertainty in the data
@@ -600,13 +608,21 @@ Download [Test_Profile_Data.csv](../resources/lab-guides/gaussian-laser-beams/Te
 
 1. **Plot the raw data** (position vs. voltage). Does it look like an error function?
 
-2. **Define the fit function:**
+2. **Define the fit function** (same as used earlier):
    ```python
    from scipy.special import erf
 
-   def erf_model(x, a, w, b, c):
-       """Error function model for knife-edge beam profile."""
-       return a * erf(np.sqrt(2) / w * (x - b)) + c
+   def beam_profile(x, amplitude, center, width, offset):
+       """Error function model for knife-edge beam profile.
+
+       Parameters:
+           x: position (m)
+           amplitude: half the voltage swing (V)
+           center: beam center position (m)
+           width: beam width w (m)
+           offset: vertical offset (V)
+       """
+       return amplitude * erf(np.sqrt(2) * (x - center) / width) + offset
    ```
 
 3. **Perform the fit:**
@@ -619,13 +635,14 @@ Download [Test_Profile_Data.csv](../resources/lab-guides/gaussian-laser-beams/Te
    y = data[:, 1]  # Voltage (V)
 
    # Initial guesses (estimate from your plot)
-   p0 = [1.0, 0.0005, 0.001, 0.5]  # [a, w, b, c]
+   # Order: [amplitude, center, width, offset]
+   p0 = [1.0, 0.001, 0.0005, 0.5]
 
    # Fit
-   popt, pcov = curve_fit(erf_model, x, y, p0=p0)
+   popt, pcov = curve_fit(beam_profile, x, y, p0=p0)
    perr = np.sqrt(np.diag(pcov))  # Standard errors
 
-   print(f"Beam width w = {popt[1]:.2e} ± {perr[1]:.2e} m")
+   print(f"Beam width w = {popt[2]:.2e} ± {perr[2]:.2e} m")
    ```
 
 4. **Verify your result:** You should get $w = 4.52 \times 10^{-4}$ m (approximately 0.45 mm).
@@ -1125,7 +1142,7 @@ Answer these questions to determine your optimal gain:
 
    where $|dV/dx|_{\text{max}}$ is the maximum slope of your profile (at the beam center).
 
-   *Note: This approximation captures the dominant effect of noise on fit precision. A rigorous treatment would use the full covariance matrix from the least-squares fit, which accounts for the number of data points and correlations between parameters. You will encounter this in Week 3's curve fitting analysis.*
+   *Note: This approximation captures the dominant effect of noise on fit precision. A rigorous treatment would use the full covariance matrix from the least-squares fit, which accounts for the number of data points and correlations between parameters. You learned about the covariance matrix earlier in this week's prelab (see "Uncertainty in the fit parameters" section), and you'll apply it to your real data in Week 3.*
 
    Using your Week 1 beam width measurement (~0.5 mm) and the voltage swing across the profile, estimate $\sigma_w$ for your chosen gain setting. Is this acceptable for your Week 4 measurements?
 
@@ -1354,6 +1371,7 @@ Your lab notebook should include the following for this week:
    - Signal-to-noise predictions AND measurements
    - DAQ intrinsic noise measurement
 5. **Gain setting decision**: your selected gain with written justification
+6. **Peer comparison**: other group's gain setting, their justification, and insight from discussion
 
 ## Key Data Tables
 
