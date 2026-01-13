@@ -355,7 +355,7 @@ If you want to get a head start on curve fitting, you can practice with test dat
 1. Use the analysis procedures verified in section @sec:analysis to find the beam width for your data. Be sure to include the uncertainty.
 2. Plot your fit together with your data to make sure it is good.
 
-# Preparation for Week 2
+# Postlab - Preparation for Week 2
 
 Before Week 2, complete the following to ensure you're ready for the curve fitting and data acquisition work ahead. This is not busywork—Week 2's prelab assumes you can confidently work with NumPy arrays and Matplotlib. Use this exercise to honestly assess your readiness and identify gaps.
 
