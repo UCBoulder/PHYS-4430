@@ -40,7 +40,7 @@ Photodetector → DAQ Device → Computer → Python → Analysis
 
 #### 2.1 The Basic Concept
 
-**Analogy:** A DAQ is a "computerized voltmeter" that can take readings automatically
+**Analogy:** A DAQ (Data AcQuisition device) is a "computerized voltmeter" that can take readings automatically
 
 **Key functions:**
 - **Analog-to-Digital Conversion (ADC):** Converts continuous voltage to discrete numbers
