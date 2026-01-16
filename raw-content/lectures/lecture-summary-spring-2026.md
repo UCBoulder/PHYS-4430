@@ -1,52 +1,58 @@
 # PHYS 4430 Lecture Summary — Spring 2026 (Weeks 0-4)
 
-> **Note:** Weeks 0-1 have been delivered. Weeks 2-4 are planned content.
->
 > **Scheduling principle:** Thursday lectures prepare for next week's prelab; Tuesday lectures support that week's lab.
+>
+> **Detailed outlines available:** All weeks now have full lecture outlines in this directory (e.g., `week0-thursday-outline.md`, `week1-tuesday-outline.md`, etc.)
 
 ---
 
-## Week 0 (Jan 7): Course Introduction ✓ Delivered
+## Week 0 (Jan 7): Course Introduction
 
-- Course philosophy: research standards vs. classroom standards
-- Course structure: skills weeks (1-4), guided labs (5-10), final project (11-15)
-- Gaussian laser beam intensity profile and error function introduction
-- Lab notebook requirements and scanning quality standards
-- Grading breakdown and policies
-- Safety requirements (lasers, high voltage, radioactive sources)
-- AI usage policy (permitted for coding, prohibited for generating data/text)
-- Optomechanics handling and beam alignment basics
+*Outline: `week0-thursday-outline.md`*
+
+*Prepares Week 1 prelab: photodiode physics, Python basics, error function derivation*
+
+### Thursday Lecture (~50 min)
+- Course philosophy: research standards vs. classroom standards (~10 min)
+- Course structure: skills (1-4), guided labs (5-10), final project (11-15) (~8 min)
+- Gaussian laser beam intensity profile and error function introduction (~12 min)
+- Lab notebook requirements and documentation standards (~5 min)
+- Safety requirements: lasers, electrical, general lab (~8 min)
+- Optomechanics handling and beam alignment preview (~5 min)
+- AI usage policy and course resources (~3 min)
 
 ---
 
-## Week 1 (Jan 13 & 15): Error Analysis ✓ Delivered
+## Week 1 (Jan 13 & 15): Error Analysis
+
+*Outlines: `week1-tuesday-outline.md`, `week1-thursday-outline.md`*
 
 ### Tuesday Lecture
+*Supports Lab 1: photodetector calibration, noise characterization*
 
-- Standard format for presenting results: value ± uncertainty (units)
-- Significant figure rules and uncertainty representation
-- Types of errors: blunders, systematic, and statistical (random)
-- Mean, standard deviation, and standard deviation of the mean (SDOM)
-- Weighted averages for combining measurements
-- Chauvenet's criterion for outlier identification
-- Accuracy vs. precision distinction
-- Ethical data handling (A₂ meson cautionary tale)
+- Standard format for presenting results: value ± uncertainty (units) (~8 min)
+- Types of errors: blunders, systematic, and statistical (random) (~12 min)
+- Mean, standard deviation, and standard deviation of the mean (SDOM) (~12 min)
+- Weighted averages for combining measurements (~5 min)
+- Chauvenet's criterion for outlier identification (~4 min)
+- Accuracy vs. precision distinction (~3 min)
+- Ethical data handling (A₂ meson cautionary tale) (~2 min, if time)
 
 ### Thursday Lecture
+*Prepares Week 2 prelab: curve fitting, χ² minimization*
 
-- Error propagation via partial derivatives
-- Propagation rules for addition, multiplication, powers
-- Linear least-squares fitting (y = A + Bx)
-- Chi-square (χ²) minimization
-- Gaussian/normal distribution and probability calculations
-- Photoelectric effect fitting example
-- Introduction to Gaussian beam fitting with error function
+- Error propagation via partial derivatives (~12 min)
+- Gaussian/normal distribution properties (~8 min)
+- Least-squares fitting: χ² concept and minimization (~10 min)
+- Reduced χ² and goodness-of-fit interpretation (~7 min)
+- Residual analysis for detecting systematic errors (~5 min)
+- Preview: fitting beam profile with error function (~4 min)
 
 ---
 
-## Week 2 (Jan 21 & 23): DAQ and Gaussian Beam Theory — Planned
+## Week 2 (Jan 21 & 23): DAQ and Gaussian Beam Theory
 
-*Supports Lab 2 (DAQ, noise characterization) and prepares Week 3 prelab (Gaussian beam derivation)*
+*Outlines: `week2-tuesday-outline.md`, `week2-thursday-outline.md`*
 
 ### Tuesday Lecture
 *Supports Lab 2: DAQ and noise characterization*
@@ -74,9 +80,9 @@
 
 ---
 
-## Week 3 (Jan 28 & 30): Motor Control and Lenses — Planned
+## Week 3 (Jan 28 & 30): Motor Control and Lenses
 
-*Supports Lab 3 (motor control, automated profiling) and prepares Week 4 prelab (lens predictions)*
+*Outlines: `week3-tuesday-outline.md`, `week3-thursday-outline.md`*
 
 ### Tuesday Lecture
 *Supports Lab 3: Motor control and beam profiling*
@@ -99,9 +105,9 @@
 
 ---
 
-## Week 4 (Feb 4 & 6): Model Testing and Presentations — Planned
+## Week 4 (Feb 4 & 6): Model Testing and Presentations
 
-*Supports Lab 4 (model testing) and prepares for upcoming presentations*
+*Outlines: `week4-tuesday-outline.md`, `week4-thursday-outline.md`*
 
 ### Tuesday Lecture
 *Supports Lab 4: Testing the Gaussian beam model*
