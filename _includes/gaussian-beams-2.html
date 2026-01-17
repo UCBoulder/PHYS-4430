@@ -91,8 +91,9 @@
             class="toc-section-number">4.6.7</span> When does
             <code>curve_fit</code> underestimate the true
             uncertainty?</a></li>
-            <li><a href="#random-vs.-systematic-uncertainties"><span
-            class="toc-section-number">4.6.8</span> Random
+            <li><a
+            href="#statistical-vs.-systematic-uncertainties"><span
+            class="toc-section-number">4.6.8</span> Statistical
             vs. Systematic Uncertainties</a></li>
             </ul></li>
             <li><a href="#error-bars"><span
@@ -168,59 +169,66 @@
             Exercises</a></li>
             </ul></li>
             </ul></li>
-            <li><a href="#photodetector-noise-characterization"><span
-            class="toc-section-number">7</span> Photodetector Noise
+            <li><a href="#noise-floor-characterization"><span
+            class="toc-section-number">7</span> Noise Floor
             Characterization</a>
             <ul>
             <li><a
-            href="#background-noise-in-amplified-photodetectors"><span
-            class="toc-section-number">7.1</span> Background: Noise in
-            Amplified Photodetectors</a>
+            href="#background-understanding-your-measurement-chain"><span
+            class="toc-section-number">7.1</span> Background:
+            Understanding Your Measurement Chain</a>
             <ul>
-            <li><a href="#sources-of-noise"><span
-            class="toc-section-number">7.1.1</span> Sources of
-            Noise</a></li>
-            <li><a href="#the-gain-noise-tradeoff"><span
-            class="toc-section-number">7.1.2</span> The Gain-Noise
-            Tradeoff</a></li>
-            <li><a href="#signal-to-noise-ratio-snr"><span
+            <li><a href="#the-complete-signal-path"><span
+            class="toc-section-number">7.1.1</span> The Complete Signal
+            Path</a></li>
+            <li><a href="#why-daq-noise-dominates"><span
+            class="toc-section-number">7.1.2</span> Why DAQ Noise
+            Dominates</a></li>
+            <li><a
+            href="#signal-to-noise-ratio-snr-with-fixed-noise"><span
             class="toc-section-number">7.1.3</span> Signal-to-Noise
-            Ratio (SNR)</a></li>
+            Ratio (SNR) with Fixed Noise</a></li>
             </ul></li>
-            <li><a href="#part-1-measuring-the-noise-floor"><span
-            class="toc-section-number">7.2</span> Part 1: Measuring the
-            Noise Floor</a>
+            <li><a href="#part-1-characterize-the-daq-noise-floor"><span
+            class="toc-section-number">7.2</span> Part 1: Characterize
+            the DAQ Noise Floor</a>
             <ul>
-            <li><a href="#dark-noise-measurement"><span
-            class="toc-section-number">7.2.1</span> Dark Noise
-            Measurement</a></li>
+            <li><a href="#phase-1-predict"><span
+            class="toc-section-number">7.2.1</span> Phase 1:
+            Predict</a></li>
+            <li><a href="#phase-2-measure"><span
+            class="toc-section-number">7.2.2</span> Phase 2:
+            Measure</a></li>
+            <li><a href="#phase-3-compare"><span
+            class="toc-section-number">7.2.3</span> Phase 3:
+            Compare</a></li>
             </ul></li>
-            <li><a href="#part-2-signal-to-noise-measurement"><span
-            class="toc-section-number">7.3</span> Part 2:
-            Signal-to-Noise Measurement</a>
+            <li><a href="#part-2-signal-chain-characterization"><span
+            class="toc-section-number">7.3</span> Part 2: Signal Chain
+            Characterization</a>
             <ul>
             <li><a href="#setup"><span
             class="toc-section-number">7.3.1</span> Setup</a></li>
-            <li><a href="#prediction"><span
-            class="toc-section-number">7.3.2</span> Prediction</a></li>
             <li><a href="#measurement"><span
-            class="toc-section-number">7.3.3</span> Measurement</a></li>
+            class="toc-section-number">7.3.2</span> Measurement</a></li>
             </ul></li>
-            <li><a href="#part-3-automating-noise-measurements"><span
-            class="toc-section-number">7.4</span> Part 3: Automating
-            Noise Measurements</a>
+            <li><a
+            href="#part-3-snr-optimization-with-fixed-noise-floor"><span
+            class="toc-section-number">7.4</span> Part 3: SNR
+            Optimization with Fixed Noise Floor</a>
             <ul>
-            <li><a href="#design-decisions"><span
-            class="toc-section-number">7.4.1</span> Design
-            Decisions</a></li>
-            <li><a href="#code-framework"><span
-            class="toc-section-number">7.4.2</span> Code
-            Framework</a></li>
+            <li><a href="#the-gain-snr-relationship"><span
+            class="toc-section-number">7.4.1</span> The Gain-SNR
+            Relationship</a></li>
+            <li><a href="#prediction"><span
+            class="toc-section-number">7.4.2</span> Prediction</a></li>
+            <li><a href="#measurement-1"><span
+            class="toc-section-number">7.4.3</span> Measurement</a></li>
             <li><a href="#understanding-your-code-required"><span
-            class="toc-section-number">7.4.3</span> Understanding Your
+            class="toc-section-number">7.4.4</span> Understanding Your
             Code (Required)</a></li>
             <li><a href="#debugging-exercise-find-the-bugs"><span
-            class="toc-section-number">7.4.4</span> Debugging Exercise:
+            class="toc-section-number">7.4.5</span> Debugging Exercise:
             Find the Bugs</a></li>
             </ul></li>
             <li><a
@@ -231,9 +239,9 @@
             <li><a href="#your-signal-range"><span
             class="toc-section-number">7.5.1</span> Your Signal
             Range</a></li>
-            <li><a href="#the-constraints"><span
-            class="toc-section-number">7.5.2</span> The
-            Constraints</a></li>
+            <li><a href="#the-constraints-updated"><span
+            class="toc-section-number">7.5.2</span> The Constraints
+            (Updated)</a></li>
             <li><a href="#analysis"><span
             class="toc-section-number">7.5.3</span> Analysis</a></li>
             <li><a href="#your-decision"><span
@@ -251,9 +259,13 @@
             href="#looking-ahead-connecting-noise-to-uncertainty"><span
             class="toc-section-number">7.8</span> Looking Ahead:
             Connecting Noise to Uncertainty</a></li>
+            <li><a
+            href="#optional-extension-oscilloscope-comparison"><span
+            class="toc-section-number">7.9</span> Optional Extension:
+            Oscilloscope Comparison</a></li>
             <li><a href="#noise-characterization-troubleshooting"><span
-            class="toc-section-number">7.9</span> Noise Characterization
-            Troubleshooting</a></li>
+            class="toc-section-number">7.10</span> Noise
+            Characterization Troubleshooting</a></li>
             </ul></li>
             <li><a href="#saving-data-and-additional-daq-features"><span
             class="toc-section-number">8</span> Saving Data and
@@ -312,13 +324,14 @@
          <p>Last week you calibrated your photodetector and learned to
          measure beam width manually. This week you’ll learn
          Python-based data acquisition and—critically—characterize your
-         photodetector’s noise performance. Your goal: make a
+         measurement system’s noise floor. Your goal: make a
          quantitative, evidence-based decision about which gain setting
          to use for Week 4’s automated measurements.</p>
          <p><strong>Last week:</strong> Aligned optics, calibrated
          photodetector, measured beam width manually</p>
          <p><strong>This week:</strong> Learn DAQ programming →
-         Characterize noise → Choose optimal gain setting</p>
+         Characterize measurement system noise → Choose optimal gain
+         setting</p>
          <p><strong>Next week:</strong> Learn Gaussian beam theory → Set
          up motor controller → Take first automated measurement</p>
          <h1 data-number="2" id="overview"><span
@@ -327,9 +340,15 @@
          Python for data acquisition and guides you through interfacing
          Python with the instrumentation and data acquisition systems
          used in this course. You will also learn about digital sampling
-         theory and characterize the noise performance of your
-         photodetector—a critical step for making informed measurement
-         decisions in Week 4.</p>
+         theory and characterize your measurement system’s noise floor—a
+         critical step for making informed measurement decisions in Week
+         4.</p>
+         <p><strong>An important discovery awaits:</strong> The DAQ
+         device that records your data has its own noise floor—and this
+         is what actually limits your Week 4 measurements. Every
+         instrument has limitations. Expert experimentalists
+         characterize those limitations and design around them. This
+         week, you’ll do exactly that.</p>
          <p>This week’s lab is divided into two parts. In part 1
          (Prelab), you will learn essential curve fitting techniques
          that you’ll use throughout this course. In part 2 (Lab), you
@@ -340,7 +359,7 @@
          single-ended (4 differential) analog inputs (14-bit, 48 kS/s),
          2 analog outputs (12-bit, 150 S/s), 12 digital I/O channels,
          and a 32-bit counter. You will then apply these DAQ skills to
-         characterize your photodetector’s noise floor and make a
+         characterize your measurement system’s noise floor and make a
          quantitative decision about optimal gain settings.</p>
          <h2 data-number="2.1" id="what-is-python"><span
          class="header-section-number">2.1</span> What is Python?</h2>
@@ -386,12 +405,16 @@
          <li>Explain Nyquist’s theorem and choose appropriate sample
          rates.</li>
          <li>Recognize aliasing and understand its causes.</li>
-         <li>Measure the photodetector’s noise floor and compare to
-         datasheet specifications.</li>
-         <li>Calculate signal-to-noise ratio and predict how it depends
-         on gain setting.</li>
+         <li>Measure the DAQ noise floor and compare to datasheet
+         specifications.</li>
+         <li>Identify which component (photodetector or DAQ) limits your
+         measurement system’s noise.</li>
+         <li>Calculate signal-to-noise ratio and explain why gain
+         improves SNR despite a fixed DAQ noise floor.</li>
          <li>Select and justify an optimal gain setting based on
          quantitative analysis.</li>
+         <li>Confront predictions with measurements and identify sources
+         of discrepancies.</li>
          <li>Save acquired data to a CSV file.</li>
          </ol>
          <h1 data-number="3" id="overview-of-your-work"><span
@@ -411,12 +434,16 @@
          <ol type="1">
          <li><strong>Learn DAQ fundamentals</strong> — Read voltages
          with Python, understand sampling theory, observe aliasing</li>
-         <li><strong>Measure dark noise</strong> — Quantify the
-         photodetector’s noise floor at each gain setting and compare to
-         datasheet values</li>
+         <li><strong>Characterize DAQ noise floor</strong> — Measure the
+         DAQ’s intrinsic noise with input shorted, then understand what
+         limits your measurement system</li>
+         <li><strong>Understand the measurement chain</strong> —
+         Discover which component (photodetector or DAQ) dominates your
+         system noise at each gain setting</li>
          <li><strong>Predict and measure SNR</strong> — Before
-         measuring, predict how signal-to-noise ratio changes with gain.
-         Then measure and confront your predictions.</li>
+         measuring, predict how signal-to-noise ratio changes with gain
+         given a fixed DAQ noise floor. Then measure and confront your
+         predictions.</li>
          <li><strong>Make your decision</strong> — Select a gain setting
          for Week 4 with written justification based on your data</li>
          </ol>
@@ -724,8 +751,8 @@
          <ol type="1">
          <li><p>Use Equation <a href="#eq:2">2</a> and your best fit
          parameters to estimate <span
-         class="math inline">\(\sigma_y^2\)</span>, the random error of
-         each data point given by your data.</p>
+         class="math inline">\(\sigma_y^2\)</span>, the statistical
+         error of each data point given by your data.</p>
          <div class="sourceCode" id="cb7"><pre
          class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate residuals</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y_fit <span class="op">=</span> beam_profile(x_data, <span class="op">*</span>popt)</span>
@@ -811,7 +838,7 @@
          <p>This section answers the question “What should <span
          class="math inline">\(\chi^2\)</span> be for a good fit?”</p>
          <p>Suppose the only uncertainty in the data is statistical
-         (i.e., random) error, with a known standard deviation <span
+         error, with a known standard deviation <span
          class="math inline">\(\sigma_i\)</span>, then on average each
          term in the sum is</p>
          <p><span id="eq:4" class="eqnos"><span
@@ -978,8 +1005,8 @@
          <p>The uncertainty reported by <code>curve_fit</code> comes
          from the covariance matrix and assumes:</p>
          <ol type="1">
-         <li>The only source of error is random noise in your voltage
-         measurements</li>
+         <li>The only source of error is statistical noise in your
+         voltage measurements</li>
          <li>This noise is independent for each data point</li>
          <li>Your model perfectly describes the underlying physics</li>
          </ol>
@@ -1006,27 +1033,27 @@
          uncertainty?</p></li>
          <li><p>In Week 4, you’ll extract beam waist <span
          class="math inline">\(w_0\)</span> from fits at multiple
-         positions. Besides random noise in voltage measurements, what
-         other sources of uncertainty should you consider? List at least
-         two.</p></li>
+         positions. Besides statistical noise in voltage measurements,
+         what other sources of uncertainty should you consider? List at
+         least two.</p></li>
          </ol>
          <h3 data-number="4.6.8"
-         id="random-vs.-systematic-uncertainties"><span
-         class="header-section-number">4.6.8</span> Random
+         id="statistical-vs.-systematic-uncertainties"><span
+         class="header-section-number">4.6.8</span> Statistical
          vs. Systematic Uncertainties</h3>
-         <p>Understanding the distinction between random and systematic
-         uncertainties is crucial for proper error analysis. This
-         distinction becomes especially important in Week 4 when you
-         construct an uncertainty budget.</p>
-         <p><strong>Random uncertainties</strong> are unpredictable
-         fluctuations that vary from measurement to measurement. They
-         average out over many measurements—take 100 readings and
-         compute the mean, and the random uncertainty in that mean
-         decreases by <span class="math inline">\(\sqrt{100} =
-         10\)</span>.</p>
+         <p>Understanding the distinction between statistical and
+         systematic uncertainties is crucial for proper error analysis.
+         This distinction becomes especially important in Week 4 when
+         you construct an uncertainty budget.</p>
+         <p><strong>Statistical uncertainties</strong> (also called
+         “random uncertainties”) are unpredictable fluctuations that
+         vary from measurement to measurement. They average out over
+         many measurements—take 100 readings and compute the mean, and
+         the statistical uncertainty in that mean decreases by <span
+         class="math inline">\(\sqrt{100} = 10\)</span>.</p>
          <p>Examples from this lab: - Voltage noise on the photodetector
          (varies each reading) - Thermal fluctuations in electronic
-         components - Shot noise from random photon arrival times</p>
+         components - Shot noise from photon arrival times</p>
          <p><strong>Systematic uncertainties</strong> are consistent
          biases that affect all measurements the same way. They do NOT
          average out—take 100 readings and the systematic error remains
@@ -1037,14 +1064,14 @@
          not perfectly perpendicular to knife edge (consistent
          underestimate of width)</p>
          <p><strong>Why this matters for fitting:</strong></p>
-         <p><code>curve_fit</code> only sees random scatter around your
-         fit function. It has no way to detect systematic offsets. If
-         your micrometer is miscalibrated by 0.1 mm, the fit will find
-         parameters that are systematically shifted, and
+         <p><code>curve_fit</code> only sees statistical scatter around
+         your fit function. It has no way to detect systematic offsets.
+         If your micrometer is miscalibrated by 0.1 mm, the fit will
+         find parameters that are systematically shifted, and
          <code>curve_fit</code> will not include this in the reported
          uncertainty.</p>
          <p><strong>Quick self-test:</strong> Classify each of these as
-         random (R) or systematic (S):</p>
+         statistical (St) or systematic (Sy):</p>
          <ol type="1">
          <li>The photodetector gain knob is actually at 28 dB when the
          label says 30 dB: _____</li>
@@ -1053,11 +1080,11 @@
          (tricky—think about whether it averages out)</li>
          <li>Room lights flickering: _____</li>
          </ol>
-         <p><em>Answers: 1=S, 2=R (if averaging over many cycles), 3=S
-         (drift is correlated, doesn’t average out), 4=R</em></p>
+         <p><em>Answers: 1=Sy, 2=St (if averaging over many cycles),
+         3=Sy (drift is correlated, doesn’t average out), 4=St</em></p>
          <p>In Week 4, when you construct your uncertainty budget, you
-         will need to identify the dominant sources of both random AND
-         systematic uncertainty, and combine them appropriately.</p>
+         will need to identify the dominant sources of both statistical
+         AND systematic uncertainty, and combine them appropriately.</p>
          <h2 data-number="4.7" id="error-bars"><span
          class="header-section-number">4.7</span> Error bars</h2>
          <p>The error bar is a graphical way to display the uncertainty
@@ -1334,7 +1361,7 @@
          the fit is reasonable.</p></li>
          <li><p><strong>Interpret the uncertainties:</strong> What is
          the fractional uncertainty in your beam width? Is this
-         uncertainty dominated by random noise or could there be
+         uncertainty dominated by statistical noise or could there be
          systematic effects?</p></li>
          </ol>
          <p><em>Save your fitting code—you will use this same procedure
@@ -1458,6 +1485,10 @@
          <h3 data-number="5.3.3" id="exercise-capture-a-waveform"><span
          class="header-section-number">5.3.3</span> Exercise: Capture a
          Waveform</h3>
+         <p><em>Equipment: Use the Tektronix TBS 2000 Series
+         oscilloscope and Keysight EDU33212A waveform generator at your
+         station. These are the same instruments you used in PHYS
+         3330.</em></p>
          <ol type="1">
          <li>Connect your waveform generator to both an oscilloscope and
          your DAQ device.</li>
@@ -1617,202 +1648,336 @@
          <li><p><strong>Undersampling on the oscilloscope.</strong>
          Undersampling is an issue with any device that samples data at
          regular discrete time intervals. This question requires the use
-         of a Rigol DS1052E oscilloscope and a waveform generator.</p>
+         of a Tektronix TBS 2000 Series oscilloscope and the Keysight
+         EDU33212A waveform generator.</p>
          <ol type="1">
-         <li>Figure <a href="#fig:scope-menu">4</a> is copied from the
-         Rigol Oscilloscope manual. The Horizontal menu allows you to
-         view the actual sample rate “Sa Rate” of the digital
-         acquisition on the scope.</li>
-         <li>Predict what should you observe if you set the waveform
-         generator to the same frequency as the sample rate? Try it out,
-         compare with your prediction, and explain your
-         observations.</li>
+         <li>The oscilloscope’s sample rate depends on the time/div
+         setting. On the Tektronix TBS 2000, you can see acquisition
+         information by pressing <strong>Acquire</strong> on the front
+         panel. The sample rate changes as you adjust the horizontal
+         (time) scale—slower time scales use lower sample rates.</li>
+         <li>Predict what you should observe if you set the waveform
+         generator to the same frequency as the oscilloscope’s sample
+         rate. Try it out, compare with your prediction, and explain
+         your observations.</li>
          <li>What happens if you change the oscilloscope time scale? Or
          change the waveform generator frequency slightly? Try to
          explain what you observe.</li>
-         </ol></li>
          </ol>
-         <div id="fig:scope-menu" class="fignos">
-         <figure>
-         <img
-         src="../resources/lab-guides/gaussian-laser-beams/scope-menu.png"
-         style="width:20cm"
-         alt="Figure 4: The horizontal menu on the Rigol DS1052E Oscilloscope." />
-         <figcaption aria-hidden="true"><span>Figure 4:</span> The
-         horizontal menu on the Rigol DS1052E Oscilloscope.</figcaption>
-         </figure>
-         </div>
-         <h1 data-number="7"
-         id="photodetector-noise-characterization"><span
-         class="header-section-number">7</span> Photodetector Noise
+         <p><em>Note: You may need to use the waveform generator’s
+         “Sync/Trigger out” connector to trigger the oscilloscope
+         externally for stable display at certain
+         frequencies.</em></p></li>
+         </ol>
+         <h1 data-number="7" id="noise-floor-characterization"><span
+         class="header-section-number">7</span> Noise Floor
          Characterization</h1>
          <p>In Week 1, you calibrated your photodetector’s gain and
-         offset at several settings. You may have noticed that at higher
-         gain settings, the signal becomes “noisier.” This is not a
-         flaw—it’s a fundamental tradeoff in amplified
-         photodetectors.</p>
+         offset at several settings. This week, you’ll characterize your
+         measurement system’s noise floor—and make an important
+         discovery about what actually limits your measurements.</p>
+         <p><strong>Connection to Week 1:</strong> In Week 1, you
+         measured voltage fluctuations and calculated standard
+         deviation. The “RMS noise” you measure this week IS the
+         standard deviation of repeated voltage measurements. When we
+         say the DAQ has “5 mV RMS noise,” we mean that if you take many
+         samples of a constant input, the standard deviation of those
+         samples will be about 5 mV. The DAQ noise floor therefore
+         becomes the minimum achievable uncertainty (<span
+         class="math inline">\(\sigma_V\)</span>) for any voltage
+         measurement you make with this instrument.</p>
          <p>In this section, you will:</p>
          <ol type="1">
-         <li>Measure the noise floor at different gain settings and
-         compare to datasheet specifications</li>
-         <li>Predict how signal-to-noise ratio depends on gain, then
-         verify experimentally</li>
+         <li>Measure the DAQ’s intrinsic noise floor and compare to
+         datasheet specifications</li>
+         <li>Identify which component (photodetector or DAQ) dominates
+         your system noise</li>
+         <li>Predict how signal-to-noise ratio depends on gain given a
+         fixed noise floor, then verify experimentally</li>
          <li>Select and justify a gain setting for Week 4 based on
          quantitative analysis</li>
          </ol>
          <p>This matters because in Week 4, you will measure beam
-         profiles where the signal varies over a wide range. Choosing
-         the right gain setting requires balancing amplification against
-         added noise.</p>
+         profiles where the signal varies over a wide range.
+         Understanding your actual noise floor—not just the datasheet
+         specs—is essential for making informed measurement
+         decisions.</p>
          <h2 data-number="7.1"
-         id="background-noise-in-amplified-photodetectors"><span
-         class="header-section-number">7.1</span> Background: Noise in
-         Amplified Photodetectors</h2>
-         <h3 data-number="7.1.1" id="sources-of-noise"><span
-         class="header-section-number">7.1.1</span> Sources of
-         Noise</h3>
-         <p>The photodetector datasheet specifies “Output Noise (RMS)”
-         at each gain setting. This noise comes from several
-         sources:</p>
-         <ul>
-         <li><strong>Shot noise</strong>: Random arrival times of
-         photons, proportional to √signal</li>
-         <li><strong>Johnson noise</strong>: Thermal noise in resistors,
-         independent of signal</li>
-         <li><strong>Amplifier noise</strong>: The transimpedance
-         amplifier adds its own noise</li>
-         </ul>
-         <p>At low signal levels, amplifier and Johnson noise dominate.
-         At high signal levels, shot noise becomes significant.</p>
-         <h3 data-number="7.1.2" id="the-gain-noise-tradeoff"><span
-         class="header-section-number">7.1.2</span> The Gain-Noise
-         Tradeoff</h3>
-         <p>Higher gain amplifies your signal, but also amplifies
-         internal noise sources.</p>
-         <p><strong>Important:</strong> Your lab station has either a
-         <strong>PDA36A</strong> or <strong>PDA36A2</strong>
-         photodetector. These have different noise specifications! Check
-         the label on your detector and look up the specifications in
-         the appropriate datasheet (both are available in the lab).</p>
-         <p><strong>Fill in the datasheet values for YOUR
-         detector:</strong></p>
-         <table style="width:100%;">
+         id="background-understanding-your-measurement-chain"><span
+         class="header-section-number">7.1</span> Background:
+         Understanding Your Measurement Chain</h2>
+         <h3 data-number="7.1.1" id="the-complete-signal-path"><span
+         class="header-section-number">7.1.1</span> The Complete Signal
+         Path</h3>
+         <p>Before characterizing noise, you need to understand where
+         noise enters your measurement. Here’s your complete signal
+         chain:</p>
+         <pre><code>Laser → Photodetector → BNC Cable → DAQ → Computer
+         (amplifies)                 (digitizes)</code></pre>
+         <p><strong>Each component contributes noise:</strong></p>
+         <table>
          <colgroup>
-         <col style="width: 17%" />
-         <col style="width: 27%" />
-         <col style="width: 27%" />
-         <col style="width: 27%" />
+         <col style="width: 28%" />
+         <col style="width: 33%" />
+         <col style="width: 38%" />
          </colgroup>
          <thead>
          <tr class="header">
-         <th>Gain Setting</th>
-         <th>Transimpedance (V/A)</th>
-         <th>Datasheet Noise RMS</th>
-         <th>Datasheet Bandwidth</th>
+         <th>Component</th>
+         <th>Noise Source</th>
+         <th>Typical Level</th>
          </tr>
          </thead>
          <tbody>
          <tr class="odd">
-         <td>0 dB</td>
-         <td>_______</td>
-         <td>_______</td>
-         <td>_______</td>
+         <td>Photodetector (PDA36A)</td>
+         <td>Amplifier, thermal</td>
+         <td>0.3 – 1.1 mV RMS (gain dependent)</td>
          </tr>
          <tr class="even">
-         <td>30 dB</td>
-         <td>_______</td>
-         <td>_______</td>
-         <td>_______</td>
+         <td>BNC Cable</td>
+         <td>Pickup, interference</td>
+         <td>Usually negligible</td>
          </tr>
          <tr class="odd">
-         <td>50 dB</td>
-         <td>_______</td>
-         <td>_______</td>
-         <td>_______</td>
-         </tr>
-         <tr class="even">
-         <td>70 dB</td>
-         <td>_______</td>
-         <td>_______</td>
-         <td>_______</td>
+         <td>DAQ (USB-6009)</td>
+         <td>Quantization, thermal</td>
+         <td>~5 mV RMS</td>
          </tr>
          </tbody>
          </table>
-         <p><strong>Calculate:</strong> What is the ratio of noise at 70
-         dB to noise at 0 dB for your detector? _______</p>
-         <p><em>Note: The PDA36A and PDA36A2 have quite different noise
-         characteristics—the A2 version has significantly lower noise at
-         high gain settings. The datasheet noise values assume full
-         bandwidth at each gain setting. Higher gain settings have lower
-         bandwidth, which actually reduces high-frequency noise. This is
-         one reason noise doesn’t scale directly with gain. For the
-         quasi-DC measurements in this lab, bandwidth effects are
-         negligible.</em></p>
-         <h3 data-number="7.1.3" id="signal-to-noise-ratio-snr"><span
+         <p><strong>Critical insight:</strong> The DAQ’s noise floor (~5
+         mV) is higher than the photodetector’s noise at ALL gain
+         settings. When you measure “photodetector noise” through the
+         DAQ, you’re actually measuring DAQ noise.</p>
+         <p>This is authentic experimental physics—you characterize what
+         you CAN measure and design your experiment around instrumental
+         limitations.</p>
+         <h3 data-number="7.1.2" id="why-daq-noise-dominates"><span
+         class="header-section-number">7.1.2</span> Why DAQ Noise
+         Dominates</h3>
+         <p>The USB-6009 DAQ has: - 14-bit resolution over ±10 V range -
+         Least Significant Bit (LSB) = 20 V / 2^14 ≈ 1.2 mV - Additional
+         noise from amplifiers, thermal effects: ~5 mV RMS total</p>
+         <p>Meanwhile, the PDA36A photodetector datasheet specifies: - 0
+         dB gain: ~300 µV RMS noise - 70 dB gain: ~1.1 mV RMS noise</p>
+         <p><strong>The DAQ noise (5 mV) exceeds photodetector noise
+         (0.3–1.1 mV) at every gain setting.</strong> This means:</p>
+         <ol type="1">
+         <li>You cannot directly measure photodetector noise with this
+         DAQ</li>
+         <li>Your Week 4 measurements will be limited by DAQ noise, not
+         photodetector noise</li>
+         <li>Gain still matters! Higher gain amplifies your
+         <em>signal</em> relative to the fixed DAQ noise floor</li>
+         </ol>
+         <p><strong>Why this matters:</strong> You might initially feel
+         frustrated that you “can’t measure what the lab was supposed to
+         measure.” This frustration is authentic—real experimentalists
+         regularly encounter instrumental limitations that force them to
+         redesign their approach. The skill you’re developing
+         here—characterizing what you CAN measure and designing around
+         limitations—is more valuable than simply confirming a datasheet
+         specification. When you join a research lab or start a job,
+         this ability to identify and work within instrumental
+         constraints will set you apart.</p>
+         <h3 data-number="7.1.3"
+         id="signal-to-noise-ratio-snr-with-fixed-noise"><span
          class="header-section-number">7.1.3</span> Signal-to-Noise
-         Ratio (SNR)</h3>
+         Ratio (SNR) with Fixed Noise</h3>
          <p>The signal-to-noise ratio determines measurement
          precision:</p>
          <p><span class="math display">\[\text{SNR} =
          \frac{V_{\text{signal}}}{V_{\text{noise, RMS}}}\]</span></p>
+         <p><strong>Key insight:</strong> If your noise floor is fixed
+         at ~5 mV (DAQ-limited), then:</p>
+         <table>
+         <thead>
+         <tr class="header">
+         <th>Factor</th>
+         <th>Effect of Higher Gain</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="odd">
+         <td>Signal voltage</td>
+         <td>Increases with gain</td>
+         </tr>
+         <tr class="even">
+         <td>Noise voltage</td>
+         <td>Stays fixed at ~5 mV (DAQ floor)</td>
+         </tr>
+         <tr class="odd">
+         <td>SNR</td>
+         <td>Signal / 5 mV → <strong>improves with gain!</strong></td>
+         </tr>
+         <tr class="even">
+         <td>Limitation</td>
+         <td>Saturation (signal must stay &lt; 4.5 V)</td>
+         </tr>
+         </tbody>
+         </table>
+         <p>This is why gain optimization matters: you want the highest
+         gain that doesn’t saturate.</p>
          <p>For meaningful measurements, you generally want SNR &gt; 10
          (distinguishable from noise) or SNR &gt; 100 (precise
          measurements).</p>
-         <p><strong>Prelab Questions:</strong></p>
-         <p><em>Use the datasheet values you recorded in the table
-         above.</em></p>
-         <ol type="1">
-         <li><p>If your photodetector signal is 10 mV at 0 dB gain, what
-         is the approximate SNR using your detector’s datasheet noise
-         value at 0 dB? <em>(1-2 sentences with
-         calculation)</em></p></li>
-         <li><p>If you increase to 30 dB gain (~32× voltage gain),
-         predict what happens to: (a) the signal voltage, (b) the noise
-         voltage (use your datasheet values), and (c) the SNR. Show your
-         calculation. <em>(Show numerical work for each
-         part)</em></p></li>
-         <li><p>At what gain setting would SNR reach a maximum? What
-         limits SNR at very high gain? <em>(2-3 sentences; consider what
-         happens when signal approaches saturation)</em></p></li>
-         </ol>
          <h2 data-number="7.2"
-         id="part-1-measuring-the-noise-floor"><span
-         class="header-section-number">7.2</span> Part 1: Measuring the
-         Noise Floor</h2>
-         <h3 data-number="7.2.1" id="dark-noise-measurement"><span
-         class="header-section-number">7.2.1</span> Dark Noise
-         Measurement</h3>
-         <p>You will measure the “dark noise”—the output when no light
-         reaches the photodetector.</p>
+         id="part-1-characterize-the-daq-noise-floor"><span
+         class="header-section-number">7.2</span> Part 1: Characterize
+         the DAQ Noise Floor</h2>
+         <p>In this section, you’ll measure the DAQ’s intrinsic
+         noise—isolated from any other source.</p>
+         <h3 data-number="7.2.1" id="phase-1-predict"><span
+         class="header-section-number">7.2.1</span> Phase 1:
+         Predict</h3>
+         <p>Before measuring, make quantitative predictions by working
+         through these calculations:</p>
          <ol type="1">
-         <li><p><strong>Block all light</strong> from reaching the
-         photodetector using the aperture cap. Even small amounts of
-         ambient light will affect your measurement.</p></li>
-         <li><p><strong>Configure the oscilloscope:</strong></p>
+         <li><p><strong>Quantization noise (theoretical
+         minimum):</strong> An ideal ADC’s noise floor comes from
+         digitization. For a 14-bit ADC with ±10 V range:</p>
          <ul>
-         <li>Connect photodetector output to CH1</li>
-         <li>Set vertical scale to show the noise (~1 mV/div)</li>
-         <li>Set horizontal scale to ~1 ms/div</li>
-         <li>Enable RMS measurement (Measure → Type → RMS)</li>
-         </ul></li>
-         <li><p><strong>Measure at four gain settings:</strong> 0 dB, 30
-         dB, 50 dB, and 70 dB.</p></li>
+         <li>Calculate the LSB (Least Significant Bit): LSB = 20 V /
+         2^14 = _____ mV</li>
+         <li>Quantization noise RMS: <span
+         class="math inline">\(\sigma_{\text{quantization}} =
+         \frac{\text{LSB}}{\sqrt{12}}\)</span> = _____ mV</li>
+         </ul>
+         <p><em>This is the absolute minimum noise you could ever
+         achieve with this DAQ.</em></p></li>
+         <li><p><strong>Expected actual noise (from datasheet):</strong>
+         Real ADCs have additional noise sources (thermal, amplifier)
+         beyond quantization. Look up the USB-6009 datasheet
+         specifications:</p>
+         <ul>
+         <li>Find the “Absolute Accuracy” specification for the ±10 V
+         range: _____ mV</li>
+         <li>Absolute accuracy includes both systematic offset and
+         random noise. A reasonable estimate is that RMS noise is
+         roughly 50-70% of absolute accuracy.</li>
+         <li>Your predicted RMS noise: _____ mV</li>
+         </ul>
+         <p><em>Show your reasoning for this estimate.</em></p></li>
          </ol>
-         <p><strong>Data Table:</strong> (Transfer your datasheet values
-         from the Background section)</p>
+         <p><strong>Your Prediction:</strong> If you short the DAQ input
+         and measure RMS noise, you expect approximately _____ mV. This
+         should be significantly higher than quantization noise alone
+         because: _______________________</p>
+         <h3 data-number="7.2.2" id="phase-2-measure"><span
+         class="header-section-number">7.2.2</span> Phase 2:
+         Measure</h3>
+         <p>You’ll measure the DAQ’s intrinsic noise with the input
+         shorted—this isolates the DAQ from all other noise sources.</p>
+         <ol type="1">
+         <li><p><strong>Disconnect</strong> the photodetector from the
+         DAQ.</p></li>
+         <li><p><strong>Short the DAQ input:</strong> Connect AI0+ to
+         AI0- (or connect AI0+ to ground GND). This ensures zero input
+         signal.</p></li>
+         <li><p><strong>Write a noise measurement
+         function:</strong></p></li>
+         </ol>
+         <div class="sourceCode" id="cb24"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> measure_noise(channel<span class="op">=</span><span class="st">&quot;Dev1/ai0&quot;</span>, num_samples<span class="op">=</span><span class="dv">1000</span>, sample_rate<span class="op">=</span><span class="dv">10000</span>):</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">    Measure DC level and RMS noise from a DAQ channel.</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">        channel: DAQ channel to measure</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">        num_samples: Number of samples to acquire</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">        sample_rate: Sampling rate in Hz</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co">        dc_level: Mean voltage (V)</span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co">        noise_rms: RMS noise (V)</span></span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(channel)</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> np.array(task.read(number_of_samples_per_channel<span class="op">=</span>num_samples))</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a>        dc_level <span class="op">=</span> np.mean(data)</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a>        noise_rms <span class="op">=</span> np.std(data)  <span class="co"># Standard deviation = RMS of AC component</span></span>
+<span id="cb24-30"><a href="#cb24-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-31"><a href="#cb24-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dc_level, noise_rms</span></code></pre></div>
+         <ol start="4" type="1">
+         <li><strong>Measure DAQ noise:</strong> Run your function with
+         the input shorted.</li>
+         </ol>
+         <div class="sourceCode" id="cb25"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dc, noise <span class="op">=</span> measure_noise()</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;DC level: </span><span class="sc">{</span>dc<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;RMS noise: </span><span class="sc">{</span>noise<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span></code></pre></div>
+         <ol start="5" type="1">
+         <li><strong>Record your measurement:</strong> DAQ noise (input
+         shorted) = _______ mV RMS</li>
+         </ol>
+         <h3 data-number="7.2.3" id="phase-3-compare"><span
+         class="header-section-number">7.2.3</span> Phase 3:
+         Compare</h3>
+         <p><strong>Analysis Questions:</strong></p>
+         <ol type="1">
+         <li><p><strong>Measured vs. quantization limit:</strong> Your
+         measured noise (_____ mV) vs. your calculated quantization
+         noise (_____ mV from Phase 1). The ratio is _____×. Why is
+         actual noise higher than quantization alone? <em>(List at least
+         two reasons)</em></p></li>
+         <li><p><strong>Measured vs. prediction:</strong> How does your
+         measured RMS noise compare to your Phase 1 prediction? If they
+         differ by more than 50%, identify possible reasons.</p></li>
+         <li><p><strong>Measured vs. datasheet:</strong> Compare your
+         measurement to the absolute accuracy you found in the
+         datasheet. Is your RMS noise consistent with being 50-70% of
+         absolute accuracy as estimated?</p></li>
+         <li><p><strong>Implications for Week 4:</strong> Your DAQ noise
+         floor is _____ mV. This means any signal smaller than about
+         _____ mV (SNR &lt; 1) will be buried in noise. At your typical
+         signal levels (several volts), what SNR do you expect?</p></li>
+         </ol>
+         <h2 data-number="7.3"
+         id="part-2-signal-chain-characterization"><span
+         class="header-section-number">7.3</span> Part 2: Signal Chain
+         Characterization</h2>
+         <p>Now add the photodetector and measure the complete system
+         noise. The key question: does adding the photodetector change
+         the measured noise?</p>
+         <h3 data-number="7.3.1" id="setup"><span
+         class="header-section-number">7.3.1</span> Setup</h3>
+         <ol type="1">
+         <li><strong>Connect</strong> the photodetector to the DAQ via
+         BNC cable.</li>
+         <li><strong>Cap the photodetector</strong> to block all light
+         (measuring dark noise).</li>
+         </ol>
+         <h3 data-number="7.3.2" id="measurement"><span
+         class="header-section-number">7.3.2</span> Measurement</h3>
+         <p>Measure noise at each gain setting with the photodetector
+         connected but dark:</p>
          <table>
          <colgroup>
-         <col style="width: 8%" />
-         <col style="width: 27%" />
-         <col style="width: 24%" />
-         <col style="width: 39%" />
+         <col style="width: 7%" />
+         <col style="width: 23%" />
+         <col style="width: 23%" />
+         <col style="width: 23%" />
+         <col style="width: 21%" />
          </colgroup>
          <thead>
          <tr class="header">
          <th>Gain</th>
          <th>Measured Noise RMS</th>
-         <th>Datasheet Noise</th>
-         <th>Ratio (Measured/Datasheet)</th>
+         <th>DAQ Noise (Part 1)</th>
+         <th>Datasheet PD Noise</th>
+         <th>Dominant Source</th>
          </tr>
          </thead>
          <tbody>
@@ -1820,53 +1985,111 @@
          <td>0 dB</td>
          <td>_______ mV</td>
          <td>_______ mV</td>
+         <td>0.3 mV</td>
          <td>_______</td>
          </tr>
          <tr class="even">
          <td>30 dB</td>
          <td>_______ mV</td>
          <td>_______ mV</td>
+         <td>0.5 mV</td>
          <td>_______</td>
          </tr>
          <tr class="odd">
          <td>50 dB</td>
          <td>_______ mV</td>
          <td>_______ mV</td>
+         <td>0.7 mV</td>
          <td>_______</td>
          </tr>
          <tr class="even">
          <td>70 dB</td>
          <td>_______ mV</td>
          <td>_______ mV</td>
+         <td>1.1 mV</td>
          <td>_______</td>
          </tr>
          </tbody>
          </table>
-         <p><strong>In-Lab Questions:</strong></p>
+         <p><strong>Key Question:</strong> Does the measured noise
+         change significantly with gain?</p>
+         <ul>
+         <li>If <strong>NO</strong> (noise stays ~constant at all
+         gains): DAQ noise dominates. The photodetector noise is too
+         small to detect through the DAQ.</li>
+         <li>If <strong>YES</strong> (noise increases at high gain):
+         Photodetector noise is becoming visible at high gain
+         settings.</li>
+         </ul>
+         <p><strong>Analysis Questions:</strong></p>
          <ol type="1">
-         <li><p>How do your measured values compare to the datasheet? If
-         they differ by more than 50%, identify possible reasons
-         (ambient light leaks? ground loops? cable quality?).</p></li>
-         <li><p>What noise ratio (70 dB / 0 dB) did you measure? How
-         does this compare to the datasheet ratio you calculated
-         earlier? What does this tell you about the dominant noise
-         source?</p></li>
+         <li><p>At which gain setting(s), if any, does photodetector
+         noise become comparable to DAQ noise? Show your
+         comparison.</p></li>
+         <li><p>What is the “dominant noise source” for each gain
+         setting? Fill in the last column of the table above.</p></li>
+         <li><p>Why does this matter for Week 4? If DAQ noise dominates
+         at all gains, how does that affect your gain selection
+         strategy?</p></li>
          </ol>
-         <h2 data-number="7.3"
-         id="part-2-signal-to-noise-measurement"><span
-         class="header-section-number">7.3</span> Part 2:
-         Signal-to-Noise Measurement</h2>
-         <p>Now add a known optical signal and measure how SNR changes
-         with gain.</p>
-         <h3 data-number="7.3.1" id="setup"><span
-         class="header-section-number">7.3.1</span> Setup</h3>
-         <p>Use your Week 1 laser alignment. Insert a neutral density
-         filter (ND 1.0 or ND 2.0) to attenuate the beam so you get a
-         moderate signal (~0.5 V above offset at 30 dB).</p>
-         <h3 data-number="7.3.2" id="prediction"><span
-         class="header-section-number">7.3.2</span> Prediction</h3>
-         <p>Before measuring, predict the SNR at each gain setting. Use
-         your prelab calculations and Week 1 calibration data.</p>
+         <h2 data-number="7.4"
+         id="part-3-snr-optimization-with-fixed-noise-floor"><span
+         class="header-section-number">7.4</span> Part 3: SNR
+         Optimization with Fixed Noise Floor</h2>
+         <p>Given that your noise floor is fixed at ~5 mV (DAQ-limited),
+         how do you maximize SNR? The answer: use higher gain to amplify
+         your signal!</p>
+         <h3 data-number="7.4.1" id="the-gain-snr-relationship"><span
+         class="header-section-number">7.4.1</span> The Gain-SNR
+         Relationship</h3>
+         <table>
+         <thead>
+         <tr class="header">
+         <th>Gain</th>
+         <th>Signal Multiplication</th>
+         <th>Noise</th>
+         <th>SNR = Signal/Noise</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="odd">
+         <td>0 dB (1×)</td>
+         <td>V₀</td>
+         <td>5 mV</td>
+         <td>V₀/5 mV</td>
+         </tr>
+         <tr class="even">
+         <td>10 dB (3.2×)</td>
+         <td>3.2 × V₀</td>
+         <td>5 mV</td>
+         <td>3.2 × V₀/5 mV</td>
+         </tr>
+         <tr class="odd">
+         <td>20 dB (10×)</td>
+         <td>10 × V₀</td>
+         <td>5 mV</td>
+         <td>10 × V₀/5 mV</td>
+         </tr>
+         <tr class="even">
+         <td>30 dB (32×)</td>
+         <td>32 × V₀</td>
+         <td>5 mV</td>
+         <td>32 × V₀/5 mV</td>
+         </tr>
+         </tbody>
+         </table>
+         <p><strong>SNR improves linearly with gain</strong> because
+         signal increases while noise stays fixed.</p>
+         <p><strong>The limit:</strong> Saturation. The DAQ clips at ±10
+         V, so your signal must stay below ~4.5 V to avoid saturation
+         effects.</p>
+         <h3 data-number="7.4.2" id="prediction"><span
+         class="header-section-number">7.4.2</span> Prediction</h3>
+         <p>Use your Week 1 calibration data and your measured DAQ noise
+         floor to predict SNR at each gain.</p>
+         <p>Assume you have a weak optical signal giving V₀ = _____ V at
+         0 dB gain. (Use a value from Week 1, or assume 50 mV for
+         practice.)</p>
          <table>
          <thead>
          <tr class="header">
@@ -1880,39 +2103,44 @@
          <tr class="odd">
          <td>0 dB</td>
          <td>_______</td>
-         <td>_______</td>
+         <td>_______ (DAQ floor)</td>
          <td>_______</td>
          </tr>
          <tr class="even">
          <td>30 dB</td>
          <td>_______</td>
-         <td>_______</td>
+         <td>_______ (DAQ floor)</td>
          <td>_______</td>
          </tr>
          <tr class="odd">
          <td>50 dB</td>
          <td>_______</td>
-         <td>_______</td>
+         <td>_______ (DAQ floor)</td>
          <td>_______</td>
          </tr>
          <tr class="even">
          <td>70 dB</td>
          <td>_______</td>
-         <td>_______</td>
+         <td>_______ (DAQ floor)</td>
          <td>_______</td>
          </tr>
          </tbody>
          </table>
-         <h3 data-number="7.3.3" id="measurement"><span
-         class="header-section-number">7.3.3</span> Measurement</h3>
-         <p>Now measure and compare to your predictions:</p>
+         <p><strong>Note:</strong> Use your measured DAQ noise floor (~5
+         mV) for all predictions, since DAQ noise dominates.</p>
+         <h3 data-number="7.4.3" id="measurement-1"><span
+         class="header-section-number">7.4.3</span> Measurement</h3>
+         <p>Set up your Week 1 laser alignment. Insert a neutral density
+         filter (ND 1.0 or ND 2.0) to attenuate the beam so you get a
+         moderate signal (~0.5 V at 30 dB).</p>
+         <p>Measure and compare to your predictions:</p>
          <table>
          <colgroup>
          <col style="width: 7%" />
-         <col style="width: 24%" />
-         <col style="width: 24%" />
-         <col style="width: 17%" />
          <col style="width: 25%" />
+         <col style="width: 25%" />
+         <col style="width: 17%" />
+         <col style="width: 24%" />
          </colgroup>
          <thead>
          <tr class="header">
@@ -1920,7 +2148,7 @@
          <th>Measured Signal (V)</th>
          <th>Measured Noise (mV)</th>
          <th>Measured SNR</th>
-         <th>Prediction Correct?</th>
+         <th>Prediction Match?</th>
          </tr>
          </thead>
          <tbody>
@@ -1960,136 +2188,63 @@
          reveal either a gap in your understanding or an uncontrolled
          variable in your experiment. Report your actual measurements
          honestly and investigate the cause of any disagreement.</p>
-         <p><strong>In-Lab Questions:</strong></p>
+         <p><strong>Analysis Questions:</strong></p>
          <ol type="1">
-         <li><p>At which gain setting did you measure the highest SNR?
-         Does this match your prediction?</p></li>
+         <li><p>Does SNR improve with gain as predicted? Calculate the
+         actual improvement factor from 0 dB to 30 dB.</p></li>
          <li><p>Did any measurements saturate (signal &gt; 4.5 V)? How
          does saturation affect your gain choice?</p></li>
-         <li><p>If your predictions were wrong, identify the source of
-         the discrepancy.</p></li>
+         <li><p>At which gain setting did you achieve the best SNR
+         without saturating?</p></li>
          </ol>
-         <h2 data-number="7.4"
-         id="part-3-automating-noise-measurements"><span
-         class="header-section-number">7.4</span> Part 3: Automating
-         Noise Measurements</h2>
-         <p>You will write Python code to automate noise measurements
-         using the DAQ. This uses the same DAQ you will use in Week 4,
-         so your noise characterization will directly apply.</p>
-         <h3 data-number="7.4.1" id="design-decisions"><span
-         class="header-section-number">7.4.1</span> Design
-         Decisions</h3>
-         <p>Before writing code, answer these questions:</p>
-         <ol type="1">
-         <li><p><strong>Sampling parameters:</strong> How many samples
-         do you need to get a reliable RMS estimate? What sample rate
-         should you use? (Hint: consider the Nyquist criterion and the
-         noise frequencies you want to capture.)</p></li>
-         <li><p><strong>Measurement statistics:</strong> If you take N
-         samples, what is the uncertainty in your RMS estimate? How does
-         this scale with N?</p></li>
-         <li><p><strong>What to measure:</strong> The DAQ returns raw
-         voltage samples. How will you compute: (a) the DC level, and
-         (b) the RMS noise?</p></li>
-         </ol>
-         <h3 data-number="7.4.2" id="code-framework"><span
-         class="header-section-number">7.4.2</span> Code Framework</h3>
-         <p>Write a function that measures noise using the DAQ. You may
-         use AI assistance to help write the code, but you must answer
-         the Design Decisions questions (above) BEFORE generating code,
-         and you must be able to explain your implementation.</p>
-         <div class="sourceCode" id="cb23"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> measure_noise(channel<span class="op">=</span><span class="st">&quot;Dev1/ai0&quot;</span>, num_samples<span class="op">=</span>???, sample_rate<span class="op">=</span>???):</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Measure DC level and RMS noise from the photodetector.</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="co">        channel: DAQ channel connected to photodetector</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co">        num_samples: Number of samples to acquire (you decide)</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="co">        sample_rate: Sampling rate in Hz (you decide)</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="co">        dc_level: Mean voltage (V)</span></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co">        noise_rms: RMS noise (V)</span></span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Your implementation here</span></span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Hints:</span></span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Use nidaqmx.Task() context manager</span></span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Configure with task.ai_channels.add_ai_voltage_chan()</span></span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Set timing with task.timing.cfg_samp_clk_timing()</span></span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Read data with task.read()</span></span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># - Compute statistics with numpy</span></span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre></div>
-         <p><strong>Implementation Questions:</strong></p>
-         <ol type="1">
-         <li><p>What values did you choose for <code>num_samples</code>
-         and <code>sample_rate</code>? Justify your choices based on
-         your answers to the Design Decisions questions.</p></li>
-         <li><p>Run your function with the photodetector dark (capped).
-         Compare the DAQ noise measurement to your oscilloscope
-         measurement from Part 1. Do they agree? If not, why might they
-         differ?</p></li>
-         <li><p><strong>Measure the DAQ’s intrinsic noise
-         floor:</strong> Disconnect the photodetector and short the DAQ
-         input (connect the signal wire to ground). Measure the RMS
-         noise. This is the DAQ’s contribution, independent of the
-         photodetector. At which photodetector gain settings does this
-         DAQ noise become significant compared to the photodetector
-         noise?</p></li>
-         </ol>
-         <h3 data-number="7.4.3"
+         <h3 data-number="7.4.4"
          id="understanding-your-code-required"><span
-         class="header-section-number">7.4.3</span> Understanding Your
+         class="header-section-number">7.4.4</span> Understanding Your
          Code (Required)</h3>
          <p>Whether you wrote the code yourself or with AI assistance,
          answer these questions in your notebook:</p>
          <ol type="1">
          <li><p><strong>Parameter justification:</strong> Explain in 2-3
-         sentences why your chosen <code>sample_rate</code> is
-         appropriate. What would happen if you used 100 Hz instead? What
-         about 100 kHz?</p></li>
+         sentences why you chose your <code>sample_rate</code> and
+         <code>num_samples</code>. What would happen if you used 100 Hz
+         instead of 10000 Hz? What about only 10 samples?</p></li>
          <li><p><strong>Verification test:</strong> Describe a simple
-         test you could run to verify your function is working
-         correctly. (Hint: you could compare to oscilloscope
-         measurements, or test with a known signal.)</p></li>
+         test to verify your function is working correctly. (Hint:
+         compare DAQ measurements to oscilloscope, or test with a known
+         DC voltage from the 5V rail.)</p></li>
          <li><p><strong>Extension:</strong> How would you modify this
          function to automatically measure noise at multiple gain
          settings? (You don’t need to implement this—just describe the
          approach.)</p></li>
          </ol>
-         <h3 data-number="7.4.4"
+         <h3 data-number="7.4.5"
          id="debugging-exercise-find-the-bugs"><span
-         class="header-section-number">7.4.4</span> Debugging Exercise:
+         class="header-section-number">7.4.5</span> Debugging Exercise:
          Find the Bugs</h3>
          <p>The following code was generated by an AI assistant to
          measure noise, but it contains THREE bugs. Find and fix each
          one, then explain what was wrong.</p>
-         <div class="sourceCode" id="cb24"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> measure_noise_buggy(channel<span class="op">=</span><span class="st">&quot;Dev1/ai0&quot;</span>, num_samples<span class="op">=</span><span class="dv">1000</span>, sample_rate<span class="op">=</span><span class="dv">10000</span>):</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Measure DC level and RMS noise. Contains 3 bugs!&quot;&quot;&quot;</span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(channel)</span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span><span class="dv">100</span>)  <span class="co"># Bug #1</span></span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>        dc_level <span class="op">=</span> np.mean(data)</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>        noise_rms <span class="op">=</span> np.mean((data <span class="op">-</span> dc_level)<span class="op">**</span><span class="dv">2</span>)  <span class="co"># Bug #2</span></span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dc_level, noise_rms  <span class="co"># Bug #3</span></span></code></pre></div>
+         <div class="sourceCode" id="cb26"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> measure_noise_buggy(channel<span class="op">=</span><span class="st">&quot;Dev1/ai0&quot;</span>, num_samples<span class="op">=</span><span class="dv">1000</span>, sample_rate<span class="op">=</span><span class="dv">10000</span>):</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Measure DC level and RMS noise. Contains 3 bugs!&quot;&quot;&quot;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(channel)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span><span class="dv">100</span>)  <span class="co"># Bug #1</span></span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>        dc_level <span class="op">=</span> np.mean(data)</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>        noise_rms <span class="op">=</span> np.mean((data <span class="op">-</span> dc_level)<span class="op">**</span><span class="dv">2</span>)  <span class="co"># Bug #2</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dc_level, noise_rms  <span class="co"># Bug #3</span></span></code></pre></div>
          <p><strong>Hints:</strong> - Bug #1 is a mismatch between what
          you asked for and what you read - Bug #2 is a mathematical
          error in computing RMS - Bug #3 is a subtle issue with
@@ -2118,15 +2273,18 @@
          <li>This corresponds to: _______ V at 30 dB, _______ V at 50
          dB, _______ V at 70 dB</li>
          </ul>
-         <h3 data-number="7.5.2" id="the-constraints"><span
-         class="header-section-number">7.5.2</span> The Constraints</h3>
+         <h3 data-number="7.5.2" id="the-constraints-updated"><span
+         class="header-section-number">7.5.2</span> The Constraints
+         (Updated)</h3>
          <p>You face two competing constraints:</p>
          <ol type="1">
          <li><strong>Saturation limit:</strong> Signal must stay below
          ~4.5 V</li>
-         <li><strong>Noise floor:</strong> Signal must be detectable
-         above noise (SNR &gt; 10)</li>
+         <li><strong>SNR requirement:</strong> Given ~5 mV noise floor
+         (DAQ-limited), signal must be &gt;&gt; 5 mV for good SNR</li>
          </ol>
+         <p><strong>Optimal strategy:</strong> Use the highest gain that
+         doesn’t saturate your maximum signal.</p>
          <h3 data-number="7.5.3" id="analysis"><span
          class="header-section-number">7.5.3</span> Analysis</h3>
          <p>Answer these questions to determine your optimal gain:</p>
@@ -2134,15 +2292,15 @@
          <li><p><strong>Saturation:</strong> At which gain settings
          would your maximum signal saturate? (Show
          calculation.)</p></li>
-         <li><p><strong>Noise floor:</strong> During a beam profile
-         scan, the minimum signal occurs when the beam is nearly
+         <li><p><strong>SNR at minimum signal:</strong> During a beam
+         profile scan, the minimum signal occurs when the beam is nearly
          blocked. Estimate the smallest signal you need to measure
          (hint: think about the Gaussian tail at 2-3 beam widths from
-         center). At each gain setting, would this minimum signal have
-         SNR &gt; 10?</p></li>
-         <li><p><strong>The tradeoff:</strong> Based on your answers,
-         which gain setting(s) satisfy both constraints? If multiple
-         settings work, which would you choose and why?</p></li>
+         center). Given your ~5 mV DAQ noise floor, what is the SNR for
+         this minimum signal at each gain?</p></li>
+         <li><p><strong>The optimization:</strong> Based on your
+         answers, what is the optimal gain setting? (Highest gain that
+         doesn’t saturate, giving best SNR at minimum signal.)</p></li>
          <li><p><strong>Propagation to beam width:</strong> This is the
          critical connection. Your beam width <span
          class="math inline">\(w\)</span> is extracted from fitting the
@@ -2166,19 +2324,24 @@
          this week’s prelab (see “Uncertainty in the fit parameters”
          section), and you’ll apply it to your real data in Week
          3.</em></p>
-         <p>Using your Week 1 beam width measurement (~0.5 mm) and the
-         voltage swing across the profile, estimate <span
-         class="math inline">\(\sigma_w\)</span> for your chosen gain
-         setting. Is this acceptable for your Week 4
-         measurements?</p></li>
+         <p>Using your Week 1 beam width measurement (~0.5 mm), your
+         signal amplitude at your chosen gain, and your ~5 mV noise
+         floor, estimate <span class="math inline">\(\sigma_w\)</span>.
+         Is this acceptable for your Week 4 measurements?</p></li>
          </ol>
          <h3 data-number="7.5.4" id="your-decision"><span
          class="header-section-number">7.5.4</span> Your Decision</h3>
          <p><strong>Selected gain setting for Week 4:</strong> _______
          dB</p>
-         <p><strong>Justification (2-3 sentences):</strong></p>
+         <p><strong>Justification (2-3 sentences referencing your
+         quantitative analysis):</strong></p>
          <hr />
          <hr />
+         <p><strong>Key numbers supporting your decision:</strong> -
+         Maximum signal at this gain: _______ V (below 4.5 V saturation
+         limit? ☐ Yes ☐ No) - SNR at maximum signal: _______ (using 5 mV
+         DAQ noise floor) - Expected uncertainty in beam width: _______
+         mm</p>
          <h2 data-number="7.6"
          id="peer-comparison-gain-setting-choices"><span
          class="header-section-number">7.6</span> Peer Comparison: Gain
@@ -2191,8 +2354,8 @@
          <li><p><strong>Share your selected gain setting</strong> and
          the key reasoning behind your choice.</p></li>
          <li><p><strong>Compare approaches:</strong> Did they weight the
-         tradeoffs (saturation vs. noise floor) differently? Did they
-         consider factors you overlooked?</p></li>
+         tradeoffs (saturation vs. SNR) differently? Did they consider
+         factors you overlooked?</p></li>
          <li><p><strong>Explore disagreements:</strong> If you chose
          different settings, discuss whether both choices can be valid.
          What measurement conditions favor one choice over the
@@ -2238,7 +2401,7 @@
          </thead>
          <tbody>
          <tr class="odd">
-         <td>Dark noise RMS</td>
+         <td>Noise floor RMS</td>
          <td>_______ mV</td>
          <td>_______ mV</td>
          <td>_______</td>
@@ -2259,9 +2422,8 @@
          </table>
          <p><strong>Reflection Question:</strong> What did you learn
          from this predict-measure-compare cycle? Consider: Was your
-         Week 2 prediction useful for Week 4? What would you do
-         differently if characterizing a new piece of equipment in the
-         future?</p>
+         Week 2 characterization useful for Week 4? Did understanding
+         that DAQ noise dominates help you make better decisions?</p>
          <hr />
          <hr />
          <p>This validation step closes the loop on your experimental
@@ -2273,53 +2435,85 @@
          <p>The noise measurements you made today will directly inform
          your Week 4 analysis. Here’s how the pieces connect:</p>
          <ol type="1">
-         <li><strong>Week 2 (today):</strong> You measured RMS noise at
-         your chosen gain setting</li>
+         <li><strong>Week 2 (today):</strong> You characterized the DAQ
+         noise floor (~5 mV) that limits your measurements</li>
          <li><strong>Week 3 (next week):</strong> You’ll learn error
          propagation—how uncertainties in measurements become
          uncertainties in derived quantities</li>
-         <li><strong>Week 4:</strong> The noise you measured here
-         determines the uncertainty in each beam profile point, which
-         propagates through your curve fit to give uncertainty in beam
-         width <span class="math inline">\(w\)</span> and waist position
-         <span class="math inline">\(z_w\)</span></li>
+         <li><strong>Week 4:</strong> The DAQ noise floor you measured
+         here determines the uncertainty in each beam profile point,
+         which propagates through your curve fit to give uncertainty in
+         beam width <span class="math inline">\(w\)</span> and waist
+         position <span class="math inline">\(z_w\)</span></li>
          </ol>
          <p>Keep your noise characterization data accessible—you’ll need
          it when propagating uncertainties in Week 3’s prelab
          exercises.</p>
          <h2 data-number="7.9"
+         id="optional-extension-oscilloscope-comparison"><span
+         class="header-section-number">7.9</span> Optional Extension:
+         Oscilloscope Comparison</h2>
+         <p>The oscilloscope has a much lower noise floor than the DAQ
+         (~100-500 µV vs ~5 mV). This makes it useful for revealing
+         details that the DAQ cannot see.</p>
+         <p><strong>If time permits:</strong> Repeat the photodetector
+         noise measurements from Part 2 using the oscilloscope instead
+         of the DAQ.</p>
+         <ol type="1">
+         <li>Can you now see the photodetector noise increase with gain
+         (as predicted by the datasheet)?</li>
+         <li>At what gain setting does photodetector noise become
+         visible above the oscilloscope noise floor?</li>
+         <li>Why can’t you use the oscilloscope for automated Week 4
+         measurements? (Hint: think about what automation
+         requires.)</li>
+         </ol>
+         <p>This comparison validates your understanding of the
+         measurement chain: different instruments reveal different noise
+         sources.</p>
+         <h2 data-number="7.10"
          id="noise-characterization-troubleshooting"><span
-         class="header-section-number">7.9</span> Noise Characterization
-         Troubleshooting</h2>
-         <p><strong>Noise much higher than datasheet:</strong></p>
+         class="header-section-number">7.10</span> Noise
+         Characterization Troubleshooting</h2>
+         <p><strong>DAQ noise much higher than expected (~5
+         mV):</strong></p>
          <ul>
-         <li>Check for ambient light leaks (cap the aperture
-         completely)</li>
-         <li>Verify BNC cables are properly shielded</li>
-         <li>Check for ground loops (try different USB ports, isolate
-         equipment)</li>
+         <li>Check for proper grounding—is the DAQ input truly
+         shorted?</li>
+         <li>Try a different USB port (some have more electrical
+         noise)</li>
+         <li>Verify no other signals are connected to the DAQ</li>
          </ul>
-         <p><strong>DAQ and oscilloscope give different noise
-         values:</strong></p>
+         <p><strong>Noise doesn’t change with gain
+         (expected):</strong></p>
          <ul>
-         <li>Different input impedances (oscilloscope 1 MΩ vs DAQ
-         variable)</li>
-         <li>Different sampling rates capture different noise
-         frequencies</li>
-         <li>DAQ has its own noise floor (you measured this in Part
-         3)</li>
+         <li>This confirms DAQ noise dominates—your characterization is
+         correct!</li>
+         <li>The photodetector noise is below the DAQ noise floor</li>
          </ul>
-         <p><strong>SNR doesn’t improve at higher gain:</strong></p>
+         <p><strong>Noise changes slightly with gain:</strong></p>
          <ul>
-         <li>You may be in the shot-noise-limited regime
-         (signal-dominated noise)</li>
-         <li>This is actually good—it means the signal is strong</li>
+         <li>At high gain (70 dB), photodetector noise (1.1 mV)
+         approaches DAQ noise (5 mV)</li>
+         <li>You may see a small increase in measured noise at 70
+         dB</li>
+         </ul>
+         <p><strong>SNR doesn’t improve as much as
+         predicted:</strong></p>
+         <ul>
+         <li>Check that signal isn’t saturating at high gain</li>
+         <li>Verify no ND filter or obstruction is reducing your
+         signal</li>
+         <li>Account for any changes in laser alignment from Week 1</li>
          </ul>
          <p><strong>Predictions don’t match measurements:</strong></p>
          <ul>
-         <li>Check that signal isn’t saturating</li>
-         <li>Verify ND filter is properly positioned</li>
-         <li>Account for any changes in laser alignment from Week 1</li>
+         <li>Re-check your calculations—are you using the correct gain
+         factors?</li>
+         <li>Verify your noise floor measurement (Part 1) is
+         accurate</li>
+         <li>Account for any systematic offsets in your DAQ
+         readings</li>
          </ul>
          <h1 data-number="8"
          id="saving-data-and-additional-daq-features"><span
@@ -2330,28 +2524,28 @@
          File</h2>
          <p>Save your acquired data to a CSV file for later
          analysis:</p>
-         <div class="sourceCode" id="cb25"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># After acquiring data...</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a timestamp for the filename</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>timestamp <span class="op">=</span> datetime.now().strftime(<span class="st">&quot;%Y%m</span><span class="sc">%d</span><span class="st">_%H%M%S&quot;</span>)</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="ss">f&quot;data_</span><span class="sc">{</span>timestamp<span class="sc">}</span><span class="ss">.csv&quot;</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="bu">len</span>(data)) <span class="op">/</span> sample_rate</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Save to CSV</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>np.savetxt(</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    filename,</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    np.column_stack([time, data]),</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>,</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    header<span class="op">=</span><span class="st">&#39;Time (s), Voltage (V)&#39;</span>,</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    comments<span class="op">=</span><span class="st">&#39;&#39;</span></span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Data saved to </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb27"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># After acquiring data...</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a timestamp for the filename</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>timestamp <span class="op">=</span> datetime.now().strftime(<span class="st">&quot;%Y%m</span><span class="sc">%d</span><span class="st">_%H%M%S&quot;</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="ss">f&quot;data_</span><span class="sc">{</span>timestamp<span class="sc">}</span><span class="ss">.csv&quot;</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="bu">len</span>(data)) <span class="op">/</span> sample_rate</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Save to CSV</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>np.savetxt(</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>    filename,</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>    np.column_stack([time, data]),</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>    delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>,</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>    header<span class="op">=</span><span class="st">&#39;Time (s), Voltage (V)&#39;</span>,</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>    comments<span class="op">=</span><span class="st">&#39;&#39;</span></span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Data saved to </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
          <h3 data-number="8.1.1"
          id="exercise-save-and-reload-data"><span
          class="header-section-number">8.1.1</span> Exercise: Save and
@@ -2359,19 +2553,19 @@
          <ol type="1">
          <li><p>Acquire a waveform and save it to a CSV file.</p></li>
          <li><p>Load the data back and plot it:</p>
-         <div class="sourceCode" id="cb26"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>loaded_data <span class="op">=</span> np.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>time_loaded <span class="op">=</span> loaded_data[:, <span class="dv">0</span>]</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>voltage_loaded <span class="op">=</span> loaded_data[:, <span class="dv">1</span>]</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>plt.plot(time_loaded <span class="op">*</span> <span class="dv">1000</span>, voltage_loaded)</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Loaded Data&#39;</span>)</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <div class="sourceCode" id="cb28"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>loaded_data <span class="op">=</span> np.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>time_loaded <span class="op">=</span> loaded_data[:, <span class="dv">0</span>]</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>voltage_loaded <span class="op">=</span> loaded_data[:, <span class="dv">1</span>]</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>plt.plot(time_loaded <span class="op">*</span> <span class="dv">1000</span>, voltage_loaded)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Loaded Data&#39;</span>)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          <li><p>Verify the loaded data matches your original
          acquisition.</p></li>
          </ol>
@@ -2382,15 +2576,15 @@
          limited rate of 150 S/s). Note that the USB-6009’s analog
          outputs have a range of 0-5V only, so we must specify this
          range explicitly:</p>
-         <div class="sourceCode" id="cb27"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Output a DC voltage</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    task.ao_channels.add_ao_voltage_chan(<span class="st">&quot;Dev1/ao0&quot;</span>, min_val<span class="op">=</span><span class="fl">0.0</span>, max_val<span class="op">=</span><span class="fl">5.0</span>)</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    task.write(<span class="fl">2.5</span>, auto_start<span class="op">=</span><span class="va">True</span>)  <span class="co"># Output 2.5 V</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Outputting 2.5 V on AO0&quot;</span>)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>(<span class="st">&quot;Press Enter to stop...&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb29"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Output a DC voltage</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    task.ao_channels.add_ao_voltage_chan(<span class="st">&quot;Dev1/ao0&quot;</span>, min_val<span class="op">=</span><span class="fl">0.0</span>, max_val<span class="op">=</span><span class="fl">5.0</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    task.write(<span class="fl">2.5</span>, auto_start<span class="op">=</span><span class="va">True</span>)  <span class="co"># Output 2.5 V</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Outputting 2.5 V on AO0&quot;</span>)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>(<span class="st">&quot;Press Enter to stop...&quot;</span>)</span></code></pre></div>
          <h3 data-number="8.2.1" id="exercise-test-analog-output"><span
          class="header-section-number">8.2.1</span> Exercise: Test
          Analog Output</h3>
@@ -2410,22 +2604,22 @@
          class="header-section-number">8.3</span> Error Handling</h2>
          <p>Always include error handling in your data acquisition
          code:</p>
-         <div class="sourceCode" id="cb28"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.errors <span class="im">import</span> DaqError</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>        voltage <span class="op">=</span> task.read()</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> DaqError <span class="im">as</span> e:</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;DAQ Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Check that:&quot;</span>)</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The DAQ device is connected&quot;</span>)</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The device name is correct (try &#39;Dev1&#39;, &#39;Dev2&#39;, etc.)&quot;</span>)</span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - NI-DAQmx drivers are installed&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb30"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.errors <span class="im">import</span> DaqError</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>        voltage <span class="op">=</span> task.read()</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> DaqError <span class="im">as</span> e:</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;DAQ Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Check that:&quot;</span>)</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The DAQ device is connected&quot;</span>)</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The device name is correct (try &#39;Dev1&#39;, &#39;Dev2&#39;, etc.)&quot;</span>)</span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - NI-DAQmx drivers are installed&quot;</span>)</span></code></pre></div>
          <h1 data-number="9" id="summary"><span
          class="header-section-number">9</span> Summary</h1>
          <p>In this lab, you learned to:</p>
@@ -2435,22 +2629,28 @@
          <li>Configure sample rate and acquisition timing</li>
          <li>Explain Nyquist’s theorem and recognize aliasing</li>
          <li>Choose appropriate sample rates for your signals</li>
-         <li>Characterize the photodetector’s noise floor at different
-         gain settings</li>
-         <li>Calculate and measure signal-to-noise ratio</li>
+         <li>Characterize the DAQ noise floor and understand its role in
+         your measurement chain</li>
+         <li>Identify which component (photodetector or DAQ) dominates
+         system noise</li>
+         <li>Calculate and measure signal-to-noise ratio with a fixed
+         noise floor</li>
          <li>Make a quantitative decision about optimal gain for Week 4
          measurements</li>
          <li>Save data to CSV files</li>
          <li>Generate analog output voltages</li>
          <li>Handle common errors</li>
          </ol>
-         <p>These skills form the foundation for the automated
-         measurements you’ll perform in Week 4. Your gain setting
-         decision, based on your noise characterization, will directly
-         impact the quality of your beam profile data. See the <a
-         href="/PHYS-4430/python-resources">Python Resources</a> page
-         and the example scripts in the <code>python/</code> folder for
-         more detailed examples.</p>
+         <p><strong>Key takeaway:</strong> You discovered that the DAQ
+         noise floor (~5 mV) limits your measurements, not the
+         photodetector noise. This authentic discovery—that instrument
+         limitations differ from datasheet specs in important ways—is
+         central to experimental physics. Your gain setting decision,
+         informed by this understanding, will directly impact the
+         quality of your Week 4 beam profile data.</p>
+         <p>See the <a href="/PHYS-4430/python-resources">Python
+         Resources</a> page and the example scripts in the
+         <code>python/</code> folder for more detailed examples.</p>
          <h1 data-number="10" id="deliverables-and-assessment"><span
          class="header-section-number">10</span> Deliverables and
          Assessment</h1>
@@ -2483,42 +2683,93 @@
          prediction-observation-explanation for all frequency cases</li>
          <li><strong>Noise characterization tables</strong> (Parts 1-4):
          <ul>
-         <li>Dark noise measurements at each gain setting</li>
-         <li>Signal-to-noise predictions AND measurements</li>
-         <li>DAQ intrinsic noise measurement</li>
+         <li>DAQ noise floor measurement (input shorted) with prediction
+         comparison</li>
+         <li>Signal chain characterization (photodetector connected,
+         capped) at each gain</li>
+         <li>Identification of dominant noise source at each gain
+         setting</li>
+         <li>SNR predictions AND measurements using fixed DAQ noise
+         floor</li>
          </ul></li>
          <li><strong>Gain setting decision</strong>: your selected gain
-         with written justification</li>
+         with written justification referencing your quantitative
+         data</li>
          <li><strong>Peer comparison</strong>: other group’s gain
          setting, their justification, and insight from discussion</li>
          </ol>
          <h2 data-number="10.3" id="key-data-tables"><span
          class="header-section-number">10.3</span> Key Data Tables</h2>
          <p>Make sure these tables are completed in your notebook:</p>
+         <p><strong>Part 1: DAQ Noise Floor</strong></p>
          <table>
          <thead>
          <tr class="header">
-         <th>Gain</th>
-         <th>Datasheet Noise</th>
-         <th>Measured Noise</th>
+         <th>Measurement</th>
+         <th>Predicted</th>
+         <th>Measured</th>
          <th>Ratio</th>
          </tr>
          </thead>
          <tbody>
          <tr class="odd">
-         <td>0 dB</td>
+         <td>DAQ noise (shorted)</td>
+         <td>~5 mV</td>
+         <td>_______ mV</td>
          <td>_______</td>
-         <td>_______</td>
-         <td>_______</td>
-         </tr>
-         <tr class="even">
-         <td>…</td>
-         <td>…</td>
-         <td>…</td>
-         <td>…</td>
          </tr>
          </tbody>
          </table>
+         <p><strong>Part 2: Signal Chain Characterization</strong></p>
+         <table>
+         <colgroup>
+         <col style="width: 8%" />
+         <col style="width: 22%" />
+         <col style="width: 16%" />
+         <col style="width: 27%" />
+         <col style="width: 25%" />
+         </colgroup>
+         <thead>
+         <tr class="header">
+         <th>Gain</th>
+         <th>Measured Noise</th>
+         <th>DAQ Noise</th>
+         <th>Datasheet PD Noise</th>
+         <th>Dominant Source</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="odd">
+         <td>0 dB</td>
+         <td>_______ mV</td>
+         <td>_______ mV</td>
+         <td>0.3 mV</td>
+         <td>_______</td>
+         </tr>
+         <tr class="even">
+         <td>30 dB</td>
+         <td>_______ mV</td>
+         <td>_______ mV</td>
+         <td>0.5 mV</td>
+         <td>_______</td>
+         </tr>
+         <tr class="odd">
+         <td>50 dB</td>
+         <td>_______ mV</td>
+         <td>_______ mV</td>
+         <td>0.7 mV</td>
+         <td>_______</td>
+         </tr>
+         <tr class="even">
+         <td>70 dB</td>
+         <td>_______ mV</td>
+         <td>_______ mV</td>
+         <td>1.1 mV</td>
+         <td>_______</td>
+         </tr>
+         </tbody>
+         </table>
+         <p><strong>Part 3: SNR Optimization</strong></p>
          <table>
          <thead>
          <tr class="header">
@@ -2549,12 +2800,16 @@
          class="header-section-number">10.5</span> Reflection
          Questions</h2>
          <ol type="1">
-         <li><p>Your measured noise at 70 dB is 2× higher than the
-         datasheet value. List two possible causes and describe how you
-         would test each hypothesis.</p></li>
-         <li><p>Based on your noise characterization, at what light
-         level (in mV at 0 dB) would you switch from 0 dB to 30 dB gain
-         to maintain SNR &gt; 100?</p></li>
+         <li><p>You predicted that DAQ noise would dominate at all gain
+         settings. Did your measurements confirm this? If measured noise
+         changed with gain, explain what this tells you about the noise
+         sources in your system.</p></li>
+         <li><p>Given that the DAQ noise floor is fixed at ~5 mV,
+         explain in 2-3 sentences why using higher gain improves SNR.
+         What limits how high you can set the gain?</p></li>
+         <li><p>How would your gain selection strategy change if you had
+         a DAQ with 10× lower noise floor (0.5 mV)? Would photodetector
+         noise become important?</p></li>
          </ol>
                </div>
             <!-- Mathjax -->
