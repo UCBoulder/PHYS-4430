@@ -319,16 +319,21 @@
     div.highlight { border-radius: 4px; }
     .highlight { background: var(--code-bg); }
 
-    /* Table styling */
+    /* Table styling - scrollable on mobile */
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 1em 0;
+    }
     table {
       border-collapse: collapse;
       width: 100%;
-      margin: 1em 0;
+      min-width: max-content;
     }
     th, td {
       border: 1px solid var(--border-color);
       padding: 0.5em 1em;
       text-align: left;
+      white-space: nowrap;
     }
     th {
       background-color: var(--bg-secondary);

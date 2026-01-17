@@ -89,6 +89,16 @@
 
           pre.appendChild(button);
         });
+
+        // Wrap tables in scrollable container for mobile
+        document.querySelectorAll('table').forEach(function(table) {
+          if (!table.parentElement.classList.contains('table-wrapper')) {
+            var wrapper = document.createElement('div');
+            wrapper.className = 'table-wrapper';
+            table.parentNode.insertBefore(wrapper, table);
+            wrapper.appendChild(table);
+          }
+        });
       });
     </script>
 
