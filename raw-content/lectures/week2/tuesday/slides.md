@@ -30,8 +30,8 @@ By the end of this lecture, you will be able to:
 2. Interpret Python code that reads voltages using `nidaqmx`
 3. State the Nyquist theorem and calculate appropriate sample rates
 4. Recognize aliasing and explain why it occurs
-5. Identify sources of noise in photodetector measurements
-6. Calculate signal-to-noise ratio and explain its importance
+5. Identify sources of noise in a measurement system and determine which dominates
+6. Calculate signal-to-noise ratio and explain how gain affects it
 
 ---
 
@@ -93,8 +93,7 @@ Emphasize that the DAQ does THREE things: converts, times, and multiplexes.
 | Channels | 8 SE / 4 diff | How many signals at once |
 
 <!--
-BOARD WORK: Write this table on the board as you explain each row.
-Students should have this as a reference.
+Students should have this table as a reference.
 
 Common question: "Why not just sample as fast as possible?"
 Answer: More data = more storage, slower processing. Also, 48 kS/s is shared across channels.
@@ -602,7 +601,7 @@ Johnson noise is usually smaller than shot noise at our signal levels.
 
 ---
 
-## Amplifier Noise (What You'll Measure)
+## Photodetector Noise (From Datasheet)
 
 - The transimpedance amplifier adds its own noise
 - Specified on datasheet as **"Noise (RMS)"**
@@ -610,41 +609,72 @@ Johnson noise is usually smaller than shot noise at our signal levels.
 
 <!--
 The datasheet for the PDA36A specifies "Noise (RMS)" at each gain setting.
-Students will compare their measurements to these specs in lab.
 
 From datasheet:
 - 0 dB: 300 µV    - 40 dB: 340 µV
 - 10 dB: 280 µV   - 50 dB: 400 µV
 - 20 dB: 250 µV   - 60 dB: 800 µV
 - 30 dB: 260 µV   - 70 dB: 1.10 mV
+
+Key point: These are all LESS THAN 5 mV. This matters for the next slide.
 -->
 
 ---
 
-## The Gain-Noise Tradeoff
+## The Critical Comparison
 
-| Gain Setting | Voltage Gain | Signal × | Noise × | SNR |
-|--------------|--------------|----------|---------|-----|
-| 0 dB | 1× | 1× | 1× | baseline |
-| 30 dB | ~32× | 32× | ? | ? |
-| 70 dB | ~3000× | 3000× | ? | ? |
+| Component | Noise Floor |
+|-----------|-------------|
+| Photodetector (0 dB) | ~300 µV |
+| Photodetector (70 dB) | ~1.1 mV |
+| **DAQ (USB-6009)** | **~5 mV** |
 
-**Key question:** Does noise scale the same as signal?
+**The DAQ noise is larger than the photodetector noise at ALL gain settings!**
+
+> This means you'll be measuring DAQ noise, not photodetector noise.
 
 <!--
-Leave the ? marks to prompt discussion.
-This is the central question they'll investigate in lab.
+This is the key insight that reframes the lab.
+DAQ noise (~5 mV) > photodetector noise (0.3-1.1 mV) at every gain setting.
+
+When two noise sources are in series, the larger one dominates.
+Students will verify this in lab by measuring with input shorted (DAQ only)
+vs. photodetector connected (should be the same!).
 -->
 
 ---
 
-## Answer: It's Complicated!
+## How Gain Affects SNR (When DAQ Dominates)
 
-- Internal noise (Johnson, amplifier) gets amplified
-- Shot noise depends on actual photon rate (not gain)
-- The datasheet tells you the actual output noise at each gain
+| Gain | Signal | DAQ Noise | SNR |
+|------|--------|-----------|-----|
+| 0 dB | 50 mV | 5 mV | 10 |
+| 30 dB | 1.6 V | 5 mV | 320 |
+| 70 dB | saturates! | 5 mV | — |
 
-**You'll measure this directly in lab!**
+**Key insight:** DAQ noise stays fixed at ~5 mV regardless of gain!
+
+> Increasing gain **improves** SNR because signal increases while noise stays fixed.
+
+<!--
+This is the central insight. Since DAQ noise dominates and doesn't change with gain,
+higher gain = higher signal = better SNR (until you saturate).
+
+The "tradeoff" isn't signal vs noise scaling together — it's signal vs saturation.
+-->
+
+---
+
+## The Gain Strategy
+
+**Goal:** Maximize signal relative to fixed ~5 mV DAQ noise
+
+**Strategy:**
+1. Use the highest gain that doesn't saturate
+2. Signal should stay below ~4.5 V (leave headroom)
+3. Higher gain → higher signal → better SNR
+
+**You'll verify this in lab by measuring noise at different gains!**
 
 ---
 
@@ -666,18 +696,17 @@ These rules of thumb are useful for quick assessments.
 
 ## Worked Example: Calculating SNR
 
-**Your photodetector setup:**
-- RMS noise: 5 mV (measured with beam blocked)
-- Expected signal: 1.5 V (beam fully on detector)
+**Your measurement system:**
+- RMS noise: 5 mV (DAQ noise floor — fixed)
+- Peak signal: $V_{\text{signal}}$ (depends on gain setting)
 
-$$\text{SNR} = \frac{1.5 \text{ V}}{0.005 \text{ V}} = 300$$
+$$\text{SNR} = \frac{V_{\text{signal}}}{5 \text{ mV}}$$
 
-**Interpretation:** SNR = 300 means your signal is 300× larger than the noise. Excellent for precise measurements!
+**Examples:** 50 mV signal → SNR = 10 | 500 mV signal → SNR = 100 | 2 V signal → SNR = 400
 
 <!--
-BOARD WORK: Write out this calculation.
-Emphasize: noise is measured with beam BLOCKED (dark noise).
-SNR of 300 is quite good for this type of measurement.
+Key point: Since noise is fixed at ~5 mV, SNR is directly proportional to signal amplitude.
+This is why higher gain (= higher signal) improves SNR, until you saturate.
 -->
 
 ---
@@ -686,44 +715,27 @@ SNR of 300 is quite good for this type of measurement.
 
 ## Think About It
 
-If you increase the gain by 10×, and both signal and noise increase by 10×, what happens to the SNR?
+If you increase gain by 10× and your signal increases by 10×, but DAQ noise stays at 5 mV, what happens to SNR?
 
 <!--
 Give students 30 seconds to think about this.
-It's a bit of a trick question - pure scaling doesn't change SNR.
+This reinforces the key insight: DAQ noise is fixed, so gain helps!
 -->
 
 ---
 
-## Answer: SNR Stays the Same
+## Answer: SNR Increases by 10×!
 
-$$\text{SNR} = \frac{10 \times V_{\text{signal}}}{10 \times V_{\text{noise}}} = \frac{V_{\text{signal}}}{V_{\text{noise}}}$$
+$$\text{SNR} = \frac{10 \times V_{\text{signal}}}{5 \text{ mV}} = 10 \times \frac{V_{\text{signal}}}{5 \text{ mV}}$$
 
-**But:** If the amplifier adds its own noise, increasing gain may actually **decrease** SNR.
+**When DAQ noise dominates:** Increasing gain improves SNR!
 
-This is why you'll measure it directly in lab!
-
-<!--
-Key insight: If noise scaled perfectly with signal, gain wouldn't matter for SNR.
-But amplifier noise breaks this - it's why there's an optimal gain setting.
--->
-
----
-
-## The Decision You'll Make
-
-By end of lab today, choose a gain setting for Week 4.
-
-**Constraints:**
-1. Signal must not saturate (stay below ~4.5 V)
-2. SNR must be high enough for precise beam width extraction
-3. Higher gain → more amplified noise
-
-**Your job:** Find the sweet spot using quantitative data!
+**The only limit:** Don't saturate (signal must stay below ~4.5 V)
 
 <!--
-This frames the lab objective clearly.
-They need to balance three competing factors using actual measurements.
+This is the opposite of what students might expect if they assumed noise scales with signal.
+Because the DAQ noise is a fixed floor (independent of gain), higher gain = better SNR.
+This is the key insight they'll verify in lab.
 -->
 
 ---
@@ -734,28 +746,29 @@ They need to balance three competing factors using actual measurements.
 2. **nidaqmx** provides Python control of NI hardware
 3. **Nyquist theorem:** Sample at ≥2× the highest frequency of interest
 4. **Aliasing** makes high frequencies appear as lower frequencies
-5. **Noise sources** in photodetectors: shot, Johnson, amplifier
-6. **SNR** determines measurement precision
+5. **DAQ noise** (~5 mV) dominates over photodetector noise (0.3–1.1 mV)
+6. **SNR** improves with gain because signal increases while DAQ noise stays fixed
 
 <!--
 TIMING: ~3 minutes for summary
 
-Quick review - these map directly to the learning objectives.
+Key changes from naive expectation: DAQ noise dominates, so higher gain = better SNR.
 -->
 
 ---
 
-## What You'll Do This Afternoon
+## What You'll Do Today
 
 1. Connect DAQ and verify it works
 2. Observe aliasing with function generator
-3. Measure dark noise at each gain setting
-4. Compare to datasheet specifications
+3. Measure DAQ noise floor (input shorted)
+4. Verify DAQ noise dominates at all photodetector gains
 5. Calculate SNR for your beam conditions
-6. Choose and justify a gain setting
+6. Choose highest gain that doesn't saturate
 
 <!--
-Preview of lab activities. They should feel prepared for each of these.
+Preview of lab activities. Key change: They measure DAQ noise with input shorted first,
+then verify it doesn't change when photodetector is connected (demonstrating DAQ dominance).
 -->
 
 ---
@@ -775,7 +788,7 @@ This is the single most important takeaway if they remember nothing else.
 
 # Questions?
 
-## Lab starts in Duane G2B77
+## We are here to help!
 
 <!--
 COMMON STUDENT QUESTIONS:
@@ -790,7 +803,10 @@ Q: What if my signal has frequencies I don't know about?
 A: Use an anti-aliasing filter (low-pass filter before the DAQ) to remove frequencies above Nyquist.
 
 Q: Is the photodetector noise the same as DAQ noise?
-A: No! The DAQ adds its own small noise (~1 mV), but photodetector noise at high gain (tens of mV) usually dominates.
+A: No, they're different! The PDA36A photodetector noise ranges from 0.3-1.1 mV (depending on gain), while the USB-6009 DAQ noise is ~5 mV. The DAQ noise is larger, so it dominates our measurements.
+
+Q: Then why does gain matter if DAQ noise dominates?
+A: Gain increases the SIGNAL while DAQ noise stays fixed at ~5 mV. So higher gain = better SNR! The only limit is saturation.
 
 EQUIPMENT FOR DEMOS (if available):
 - USB-6009 connected to instructor laptop
