@@ -46,7 +46,7 @@ def single_ended_vs_differential():
     """Generate single-ended vs differential wiring diagram."""
     print("  Generating: tuesday_05_single_ended_vs_differential.png")
 
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+    fig, axes = plt.subplots(1, 2, figsize=(14, 3.2))
 
     # Common styling
     box_style = dict(boxstyle='round,pad=0.3', facecolor='lightblue',
@@ -55,92 +55,98 @@ def single_ended_vs_differential():
     # === Single-Ended ===
     ax = axes[0]
     ax.set_xlim(0, 10)
-    ax.set_ylim(0, 8)
+    ax.set_ylim(2.3, 6.7)
     ax.set_aspect('equal')
     ax.axis('off')
-    ax.set_title('Single-Ended (8 channels)', fontsize=14, fontweight='bold')
+
+    # Label in upper left (no title)
+    ax.text(2.5, 6.3, 'Single-Ended', ha='center', va='center',
+            fontsize=20, fontweight='bold')
 
     # Signal source box
-    ax.text(1.5, 5, 'Signal\nSource', ha='center', va='center', fontsize=11,
+    ax.text(1.5, 4.5, 'Signal\nSource', ha='center', va='center', fontsize=16,
             bbox=box_style)
 
     # DAQ box
-    ax.add_patch(plt.Rectangle((5.5, 2), 3.5, 5, facecolor='lightyellow',
+    ax.add_patch(plt.Rectangle((5.5, 2.5), 3.5, 4, facecolor='lightyellow',
                                 edgecolor='black', linewidth=2, zorder=1))
-    ax.text(7.25, 6.3, 'USB-6009', ha='center', va='center', fontsize=12,
+    ax.text(7.25, 6.0, 'USB-6009', ha='center', va='center', fontsize=18,
             fontweight='bold')
 
     # DAQ terminals
-    ax.text(6.2, 5, 'AI0', ha='center', va='center', fontsize=10,
+    ax.text(6.2, 4.8, 'AI0', ha='center', va='center', fontsize=16,
             bbox=dict(boxstyle='square,pad=0.2', facecolor='white', edgecolor='gray'))
-    ax.text(6.2, 3.5, 'GND', ha='center', va='center', fontsize=10,
+    ax.text(6.2, 3.3, 'GND', ha='center', va='center', fontsize=16,
             bbox=dict(boxstyle='square,pad=0.2', facecolor='white', edgecolor='gray'))
 
     # Signal wire (red)
-    ax.annotate('', xy=(5.7, 5), xytext=(2.5, 5),
-                arrowprops=dict(arrowstyle='->', color='red', lw=2))
-    ax.text(4, 5.4, 'Signal', ha='center', fontsize=10, color='red')
+    ax.annotate('', xy=(5.7, 4.8), xytext=(2.5, 4.8),
+                arrowprops=dict(arrowstyle='->', color='red', lw=2.5))
+    ax.text(4, 5.2, 'Signal', ha='center', fontsize=16, color='red')
 
     # Ground wire (black)
-    ax.annotate('', xy=(5.7, 3.5), xytext=(2.5, 3.5),
-                arrowprops=dict(arrowstyle='->', color='black', lw=2))
-    ax.text(4, 3.9, 'Ground', ha='center', fontsize=10, color='black')
+    ax.annotate('', xy=(5.7, 3.3), xytext=(2.5, 3.3),
+                arrowprops=dict(arrowstyle='->', color='black', lw=2.5))
+    ax.text(4, 3.7, 'Ground', ha='center', fontsize=16, color='black')
 
     # Ground symbol at source
-    ax.plot([1.5, 1.5], [3.5, 3.0], 'k-', lw=2)
-    ax.plot([1.2, 1.8], [3.0, 3.0], 'k-', lw=2)
-    ax.plot([1.3, 1.7], [2.8, 2.8], 'k-', lw=1.5)
-    ax.plot([1.4, 1.6], [2.6, 2.6], 'k-', lw=1)
+    ax.plot([1.5, 1.5], [3.3, 2.8], 'k-', lw=2)
+    ax.plot([1.2, 1.8], [2.8, 2.8], 'k-', lw=2)
+    ax.plot([1.3, 1.7], [2.65, 2.65], 'k-', lw=1.5)
+    ax.plot([1.4, 1.6], [2.5, 2.5], 'k-', lw=1)
 
-    # Measurement annotation
-    ax.annotate('', xy=(8.5, 5), xytext=(8.5, 3.5),
-                arrowprops=dict(arrowstyle='<->', color='green', lw=2))
-    ax.text(9.2, 4.25, 'V', ha='center', va='center', fontsize=14,
+    # Measurement annotation (inside the box)
+    ax.annotate('', xy=(8.0, 4.8), xytext=(8.0, 3.3),
+                arrowprops=dict(arrowstyle='<->', color='green', lw=2.5))
+    ax.text(8.5, 4.05, 'V', ha='center', va='center', fontsize=20,
             color='green', fontweight='bold')
 
     # === Differential ===
     ax = axes[1]
     ax.set_xlim(0, 10)
-    ax.set_ylim(0, 8)
+    ax.set_ylim(2.3, 6.7)
     ax.set_aspect('equal')
     ax.axis('off')
-    ax.set_title('Differential (4 channels)', fontsize=14, fontweight='bold')
+
+    # Label in upper left (no title)
+    ax.text(2.5, 6.3, 'Differential', ha='center', va='center',
+            fontsize=20, fontweight='bold')
 
     # Signal source box
-    ax.text(1.5, 5, 'Signal\nSource', ha='center', va='center', fontsize=11,
+    ax.text(1.5, 4.5, 'Signal\nSource', ha='center', va='center', fontsize=16,
             bbox=box_style)
 
     # DAQ box
-    ax.add_patch(plt.Rectangle((5.5, 2), 3.5, 5, facecolor='lightyellow',
+    ax.add_patch(plt.Rectangle((5.5, 2.5), 3.5, 4, facecolor='lightyellow',
                                 edgecolor='black', linewidth=2, zorder=1))
-    ax.text(7.25, 6.3, 'USB-6009', ha='center', va='center', fontsize=12,
+    ax.text(7.25, 6.0, 'USB-6009', ha='center', va='center', fontsize=18,
             fontweight='bold')
 
     # DAQ terminals
-    ax.text(6.2, 5.2, 'AI0+', ha='center', va='center', fontsize=10,
+    ax.text(6.2, 5.0, 'AI0+', ha='center', va='center', fontsize=16,
             bbox=dict(boxstyle='square,pad=0.2', facecolor='white', edgecolor='gray'))
-    ax.text(6.2, 3.8, 'AI0−', ha='center', va='center', fontsize=10,
+    ax.text(6.2, 3.6, 'AI0−', ha='center', va='center', fontsize=16,
             bbox=dict(boxstyle='square,pad=0.2', facecolor='white', edgecolor='gray'))
 
     # Signal+ wire (red)
-    ax.annotate('', xy=(5.7, 5.2), xytext=(2.5, 5.5),
-                arrowprops=dict(arrowstyle='->', color='red', lw=2))
-    ax.text(4, 5.8, 'Signal +', ha='center', fontsize=10, color='red')
+    ax.annotate('', xy=(5.7, 5.0), xytext=(2.5, 5.0),
+                arrowprops=dict(arrowstyle='->', color='red', lw=2.5))
+    ax.text(4, 5.4, 'Signal +', ha='center', fontsize=16, color='red')
 
     # Signal- wire (blue)
-    ax.annotate('', xy=(5.7, 3.8), xytext=(2.5, 4.5),
-                arrowprops=dict(arrowstyle='->', color='blue', lw=2))
-    ax.text(4, 3.9, 'Signal −', ha='center', fontsize=10, color='blue')
+    ax.annotate('', xy=(5.7, 3.6), xytext=(2.5, 4.0),
+                arrowprops=dict(arrowstyle='->', color='blue', lw=2.5))
+    ax.text(4, 3.1, 'Signal −', ha='center', fontsize=16, color='blue')
 
-    # Measurement annotation
-    ax.annotate('', xy=(8.5, 5.2), xytext=(8.5, 3.8),
-                arrowprops=dict(arrowstyle='<->', color='green', lw=2))
-    ax.text(9.2, 4.5, 'V', ha='center', va='center', fontsize=14,
+    # Measurement annotation (inside the box)
+    ax.annotate('', xy=(8.0, 5.0), xytext=(8.0, 3.6),
+                arrowprops=dict(arrowstyle='<->', color='green', lw=2.5))
+    ax.text(8.5, 4.3, 'V', ha='center', va='center', fontsize=20,
             color='green', fontweight='bold')
 
     # Add note about noise rejection
-    ax.text(7.25, 2.5, 'Better noise\nrejection', ha='center', va='center',
-            fontsize=10, style='italic', color='darkgreen')
+    ax.text(7.25, 2.9, 'Better noise\nrejection', ha='center', va='center',
+            fontsize=14, style='italic', color='darkgreen')
 
     plt.tight_layout()
     plt.savefig(FIGURES_DIR / "tuesday_05_single_ended_vs_differential.png")

@@ -103,7 +103,7 @@ Answer: More data = more storage, slower processing. Also, 48 kS/s is shared acr
 
 ## Calculate Together
 
-**What is the smallest voltage change the USB-6009 can detect?**
+**What is the smallest voltage change the USB-6009 can detect at ±10 V range?**
 
 - Range = 20 V (from −10 to +10)
 - Levels = 2¹⁴ = 16,384
@@ -115,19 +115,24 @@ This is the **theoretical resolution** — the smallest step the ADC can represe
 <!--
 Walk through this calculation step by step.
 This first-principles calculation is important, but we'll immediately complicate it.
+
+Note: At ±1 V range, the theoretical resolution would be 2V/16384 ≈ 0.12 mV.
+The range setting affects both the theoretical resolution AND the noise floor.
 -->
 
 ---
 
 ## Theory vs. Reality: Reading the Datasheet
 
+At **±10 V range** (our default configuration):
+
 | Specification | Value | What it means |
 |---------------|-------|---------------|
 | Theoretical resolution | 1.2 mV | What 14 bits *could* resolve |
-| System noise (single-ended) | 5 mV RMS | Statistical fluctuations in readings |
+| System noise | 5 mV RMS | Statistical fluctuations in readings |
 | Absolute accuracy | ~8 mV | How close to the "true" value |
 
-**Practical resolution ≈ 5–8 mV**, not 1.2 mV!
+**Practical resolution ≈ 5 mV**, not 1.2 mV! (Other configurations differ—see next slide)
 
 > The bit depth tells you the *digital* precision. Noise and accuracy limit the *actual* precision.
 
@@ -143,7 +148,15 @@ Ask: "Is 5-8 mV still adequate for 1-3 V signals?" Yes! Still ~200-600 distingui
 
 ## Single-Ended vs Differential
 
-![h:450 Single-ended vs Differential wiring](figures/tuesday_05_single_ended_vs_differential.png)
+![Single-ended vs Differential wiring](figures/tuesday_05_single_ended_vs_differential.png)
+
+**RSE:** Measures relative to ground — use for single-ended signals (like photodetector)
+**DIFF:** Measures AI+ minus AI− — both must be connected or you get garbage!
+
+| Range | Noise Floor | Why it matters |
+|-------|-------------|----------------|
+| ±10 V | ~5 mV RMS | Full range |
+| ±1 V | ~0.5 mV RMS | 10× lower noise, but saturates |
 
 <!--
 Single-ended is simpler and gives more channels. Differential is better when:
@@ -189,11 +202,6 @@ Create Task → Configure Channel → Configure Timing → Acquire Data
 **2. Channel** — Which physical input to read (e.g., ai0)
 **3. Timing** — How fast and how many samples
 **4. Acquire** — Actually read the data
-
-<!--
-This mental model helps students understand the code structure.
-Each line of code maps to one of these steps.
--->
 
 ---
 
@@ -251,10 +259,6 @@ and have to restart Python. The with statement prevents this problem entirely.
 3. `task.read()` — Take one reading
 4. Result is a floating-point number in volts
 
-<!--
-Walk through each line slowly.
--->
-
 ---
 
 ## Reading Multiple Samples
@@ -279,6 +283,9 @@ with nidaqmx.Task() as task:
 <!--
 This is the pattern they'll use most often in lab.
 Point out the CAPITAL variable names - these are constants they'll change.
+
+Note: The code uses the default terminal configuration (RSE), which is correct for the
+photodetector. The lab guide shows how to specify terminal_config explicitly if needed.
 -->
 
 ---
@@ -749,6 +756,8 @@ This is the key insight they'll verify in lab.
 5. **DAQ noise** (~5 mV) dominates over photodetector noise (0.3–1.1 mV)
 6. **SNR** improves with gain because signal increases while DAQ noise stays fixed
 
+> **Remember:** Your sample rate determines what frequencies you can trust.
+
 <!--
 TIMING: ~3 minutes for summary
 
@@ -757,28 +766,33 @@ Key changes from naive expectation: DAQ noise dominates, so higher gain = better
 
 ---
 
+## Lab Structure: Predict-Measure-Compare
+
+**Phase 1: Configuration Discovery**
+- Measure DAQ noise with different settings
+- Discover that configuration affects your measurements
+
+**Phase 2: What Limits Your Measurement?**
+- Predict: Will connecting the photodetector change the noise?
+- Measure and confront your prediction
+
+**Phase 3: Gain Selection**
+- Choose optimal gain for Week 4
+- Justify with SNR calculations from your data
+
+---
+
 ## What You'll Do Today
 
-1. Connect DAQ and verify it works
-2. Observe aliasing with function generator
-3. Measure DAQ noise floor (input shorted)
-4. Verify DAQ noise dominates at all photodetector gains
-5. Calculate SNR for your beam conditions
-6. Choose highest gain that doesn't saturate
+1. **Setup:** Connect DAQ and verify it works
+2. **Aliasing:** Observe with function generator
+3. **Phase 1:** Measure DAQ noise with different configurations
+4. **Phase 2:** Connect photodetector, compare noise to prediction
+5. **Phase 3:** Choose optimal gain with SNR justification
 
 <!--
 Preview of lab activities. Key change: They measure DAQ noise with input shorted first,
 then verify it doesn't change when photodetector is connected (demonstrating DAQ dominance).
--->
-
----
-
-## One Thing to Remember
-
-> **Your sample rate determines what frequencies you can trust. Everything above the Nyquist frequency folds back down and contaminates your data.**
-
-<!--
-This is the single most important takeaway if they remember nothing else.
 -->
 
 ---
