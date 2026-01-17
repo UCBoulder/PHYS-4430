@@ -68,10 +68,9 @@ This week culminates in a decision: **which gain setting will you use for Week 4
 **In Lab:** You'll work through a predict-measure-compare cycle for noise characterization:
 
 1. **Learn DAQ fundamentals** — Read voltages with Python, understand sampling theory, observe aliasing
-2. **Characterize DAQ noise floor** — Measure the DAQ's intrinsic noise with input shorted, then understand what limits your measurement system
-3. **Understand the measurement chain** — Discover which component (photodetector or DAQ) dominates your system noise at each gain setting
-4. **Predict and measure SNR** — Before measuring, predict how signal-to-noise ratio changes with gain given a fixed DAQ noise floor. Then measure and confront your predictions.
-5. **Make your decision** — Select a gain setting for Week 4 with written justification based on your data
+2. **Discover that configuration matters** — Measure DAQ noise with different settings and discover that instrument behavior depends on configuration
+3. **Identify what limits your measurement** — Predict whether the photodetector or DAQ dominates system noise, then measure to find out
+4. **Make your decision** — Select a gain setting for Week 4 with written justification based on your data
 
 *See the detailed deliverables checklist at the end of this guide.*
 
@@ -881,457 +880,285 @@ The *Nyquist Frequency* is defined to be half the sample rate.
 
 # Noise Floor Characterization
 
-In Week 1, you calibrated your photodetector's gain and offset at several settings. This week, you'll characterize your measurement system's noise floor—and make an important discovery about what actually limits your measurements.
+You've learned how sample rate affects what you can measure—too slow, and you get aliasing. Now you'll investigate what limits how *precisely* you can measure: the noise floor.
 
-**Connection to Week 1:** In Week 1, you measured voltage fluctuations and calculated standard deviation. The "RMS noise" you measure this week IS the standard deviation of repeated voltage measurements. When we say the DAQ has "5 mV RMS noise," we mean that if you take many samples of a constant input, the standard deviation of those samples will be about 5 mV. The DAQ noise floor therefore becomes the minimum achievable uncertainty ($\sigma_V$) for any voltage measurement you make with this instrument.
+In Week 1, you calibrated your photodetector's gain and offset. This week, you'll characterize your measurement system's noise floor—and discover what actually limits your measurements.
 
-In this section, you will:
+**Connection to Week 1:** The "RMS noise" you measure here IS the standard deviation of repeated voltage measurements. When we say the DAQ has "5 mV RMS noise," we mean that if you sample a constant input many times, the standard deviation will be about 5 mV. This becomes the minimum achievable uncertainty ($\sigma_V$) for any voltage measurement.
 
-1. Measure the DAQ's intrinsic noise floor and compare to datasheet specifications
-2. Identify which component (photodetector or DAQ) dominates your system noise
-3. Predict how signal-to-noise ratio depends on gain given a fixed noise floor, then verify experimentally
-4. Select and justify a gain setting for Week 4 based on quantitative analysis
+**Connection to aliasing:** The noise you'll measure is broadband—it contains all frequencies. This is why your sample rate matters even for noise measurements: higher sample rates capture more of the noise spectrum.
 
-This matters because in Week 4, you will measure beam profiles where the signal varies over a wide range. Understanding your actual noise floor—not just the datasheet specs—is essential for making informed measurement decisions.
+**Why this matters:** In Week 4, you'll measure beam profiles where the signal varies over a wide range. Understanding your actual noise floor is essential for making informed measurement decisions.
 
-## Background: Understanding Your Measurement Chain
+## Phase 1: Configuration Discovery
 
-### The Complete Signal Path
-
-Before characterizing noise, you need to understand where noise enters your measurement. Here's your complete signal chain:
-
-```
-Laser → Photodetector → BNC Cable → DAQ → Computer
-         (amplifies)                 (digitizes)
-```
-
-**Each component contributes noise:**
-
-| Component | Noise Source | Typical Level |
-|-----------|-------------|---------------|
-| Photodetector (PDA36A) | Amplifier, thermal | 0.3 – 1.1 mV RMS (gain dependent) |
-| BNC Cable | Pickup, interference | Usually negligible |
-| DAQ (USB-6009) | Quantization, thermal | ~5 mV RMS |
-
-**Critical insight:** The DAQ's noise floor (~5 mV) is higher than the photodetector's noise at ALL gain settings. When you measure "photodetector noise" through the DAQ, you're actually measuring DAQ noise.
-
-This is authentic experimental physics—you characterize what you CAN measure and design your experiment around instrumental limitations.
-
-### Why DAQ Noise Dominates
-
-The USB-6009 DAQ has:
-- 14-bit resolution over ±10 V range
-- Least Significant Bit (LSB) = 20 V / 2^14 ≈ 1.2 mV
-- Additional noise from amplifiers, thermal effects: ~5 mV RMS total
-
-Meanwhile, the PDA36A photodetector datasheet specifies:
-- 0 dB gain: ~300 µV RMS noise
-- 70 dB gain: ~1.1 mV RMS noise
-
-**The DAQ noise (5 mV) exceeds photodetector noise (0.3–1.1 mV) at every gain setting.** This means:
-
-1. You cannot directly measure photodetector noise with this DAQ
-2. Your Week 4 measurements will be limited by DAQ noise, not photodetector noise
-3. Gain still matters! Higher gain amplifies your *signal* relative to the fixed DAQ noise floor
-
-**Why this matters:** You might initially feel frustrated that you "can't measure what the lab was supposed to measure." This frustration is authentic—real experimentalists regularly encounter instrumental limitations that force them to redesign their approach. The skill you're developing here—characterizing what you CAN measure and designing around limitations—is more valuable than simply confirming a datasheet specification. When you join a research lab or start a job, this ability to identify and work within instrumental constraints will set you apart.
-
-### Signal-to-Noise Ratio (SNR) with Fixed Noise
-
-The signal-to-noise ratio determines measurement precision:
-
-$$\text{SNR} = \frac{V_{\text{signal}}}{V_{\text{noise, RMS}}}$$
-
-**Key insight:** If your noise floor is fixed at ~5 mV (DAQ-limited), then:
-
-| Factor | Effect of Higher Gain |
-|--------|----------------------|
-| Signal voltage | Increases with gain |
-| Noise voltage | Stays fixed at ~5 mV (DAQ floor) |
-| SNR | Signal / 5 mV → **improves with gain!** |
-| Limitation | Saturation (signal must stay < 4.5 V) |
-
-This is why gain optimization matters: you want the highest gain that doesn't saturate.
-
-For meaningful measurements, you generally want SNR > 10 (distinguishable from noise) or SNR > 100 (precise measurements).
-
-## Part 1: Characterize the DAQ Noise Floor
-
-In this section, you'll measure the DAQ's intrinsic noise—isolated from any other source.
-
-### Phase 1: Predict
-
-Before measuring, make quantitative predictions by working through these calculations:
-
-1. **Quantization noise (theoretical minimum):** An ideal ADC's noise floor comes from digitization. For a 14-bit ADC with ±10 V range:
-   - Calculate the LSB (Least Significant Bit): LSB = 20 V / 2^14 = _____ mV
-   - Quantization noise RMS: $\sigma_{\text{quantization}} = \frac{\text{LSB}}{\sqrt{12}}$ = _____ mV
-
-   *This is the absolute minimum noise you could ever achieve with this DAQ.*
-
-2. **Expected actual noise (from datasheet):** Real ADCs have additional noise sources (thermal, amplifier) beyond quantization. Look up the USB-6009 datasheet specifications:
-   - Find the "Absolute Accuracy" specification for the ±10 V range: _____ mV
-   - Absolute accuracy includes both systematic offset and random noise. A reasonable estimate is that RMS noise is roughly 50-70% of absolute accuracy.
-   - Your predicted RMS noise: _____ mV
-
-   *Show your reasoning for this estimate.*
-
-**Your Prediction:** If you short the DAQ input and measure RMS noise, you expect approximately _____ mV. This should be significantly higher than quantization noise alone because: _______________________
-
-### Phase 2: Measure
-
-You'll measure the DAQ's intrinsic noise with the input shorted—this isolates the DAQ from all other noise sources.
-
-1. **Disconnect** the photodetector from the DAQ.
-
-2. **Short the DAQ input:** Connect AI0+ to AI0- (or connect AI0+ to ground GND). This ensures zero input signal.
-
-3. **Write a noise measurement function:**
-
-```python
-import nidaqmx
-import numpy as np
-from nidaqmx.constants import AcquisitionType
-
-def measure_noise(channel="Dev1/ai0", num_samples=1000, sample_rate=10000):
-    """
-    Measure DC level and RMS noise from a DAQ channel.
-
-    Parameters:
-        channel: DAQ channel to measure
-        num_samples: Number of samples to acquire
-        sample_rate: Sampling rate in Hz
-
-    Returns:
-        dc_level: Mean voltage (V)
-        noise_rms: RMS noise (V)
-    """
-    with nidaqmx.Task() as task:
-        task.ai_channels.add_ai_voltage_chan(channel)
-        task.timing.cfg_samp_clk_timing(
-            rate=sample_rate,
-            sample_mode=AcquisitionType.FINITE,
-            samps_per_chan=num_samples
-        )
-
-        data = np.array(task.read(number_of_samples_per_channel=num_samples))
-
-        dc_level = np.mean(data)
-        noise_rms = np.std(data)  # Standard deviation = RMS of AC component
-
-    return dc_level, noise_rms
-```
-
-4. **Measure DAQ noise:** Run your function with the input shorted.
-
-```python
-dc, noise = measure_noise()
-print(f"DC level: {dc*1000:.2f} mV")
-print(f"RMS noise: {noise*1000:.2f} mV")
-```
-
-5. **Record your measurement:** DAQ noise (input shorted) = _______ mV RMS
-
-### Phase 3: Compare
-
-**Analysis Questions:**
-
-1. **Measured vs. quantization limit:** Your measured noise (_____ mV) vs. your calculated quantization noise (_____ mV from Phase 1). The ratio is _____×. Why is actual noise higher than quantization alone? *(List at least two reasons)*
-
-2. **Measured vs. prediction:** How does your measured RMS noise compare to your Phase 1 prediction? If they differ by more than 50%, identify possible reasons.
-
-3. **Measured vs. datasheet:** Compare your measurement to the absolute accuracy you found in the datasheet. Is your RMS noise consistent with being 50-70% of absolute accuracy as estimated?
-
-4. **Implications for Week 4:** Your DAQ noise floor is _____ mV. This means any signal smaller than about _____ mV (SNR < 1) will be buried in noise. At your typical signal levels (several volts), what SNR do you expect?
-
-## Part 2: Signal Chain Characterization
-
-Now add the photodetector and measure the complete system noise. The key question: does adding the photodetector change the measured noise?
+You'll discover how DAQ configuration affects measurements—and what happens when configuration doesn't match your physical setup.
 
 ### Setup
 
-1. **Connect** the photodetector to the DAQ via BNC cable.
-2. **Cap the photodetector** to block all light (measuring dark noise).
+1. **Ensure nothing is connected** to the DAQ inputs.
+2. **Short AI0+ to GND.** Leave AI0- disconnected.
 
-### Measurement
+This is a reasonable setup for a single-ended measurement: one signal wire connected to ground.
 
-Measure noise at each gain setting with the photodetector connected but dark:
+### Discovery 1: Configuration Must Match Wiring
 
-| Gain | Measured Noise RMS | DAQ Noise (Part 1) | Datasheet PD Noise | Dominant Source |
-|------|-------------------|-------------------|-------------------|-----------------|
-| 0 dB  | _______ mV | _______ mV | 0.3 mV | _______ |
-| 30 dB | _______ mV | _______ mV | 0.5 mV | _______ |
-| 50 dB | _______ mV | _______ mV | 0.7 mV | _______ |
-| 70 dB | _______ mV | _______ mV | 1.1 mV | _______ |
+The USB-6009 can measure voltages in two ways:
 
-**Key Question:** Does the measured noise change significantly with gain?
+- **RSE (Referenced Single-Ended):** Measures AI0+ relative to system ground
+- **Differential:** Measures the difference between AI0+ and AI0-
 
-- If **NO** (noise stays ~constant at all gains): DAQ noise dominates. The photodetector noise is too small to detect through the DAQ.
-- If **YES** (noise increases at high gain): Photodetector noise is becoming visible at high gain settings.
+**Predict:** You've grounded AI0+ and left AI0- floating. What will happen if you measure in each mode?
 
-**Analysis Questions:**
+- Both modes will read ~0V (grounded input means zero voltage)
+- RSE will work correctly; Differential will give unexpected results
+- Differential will work correctly; RSE will give unexpected results
 
-1. At which gain setting(s), if any, does photodetector noise become comparable to DAQ noise? Show your comparison.
-
-2. What is the "dominant noise source" for each gain setting? Fill in the last column of the table above.
-
-3. Why does this matter for Week 4? If DAQ noise dominates at all gains, how does that affect your gain selection strategy?
-
-## Part 3: SNR Optimization with Fixed Noise Floor
-
-Given that your noise floor is fixed at ~5 mV (DAQ-limited), how do you maximize SNR? The answer: use higher gain to amplify your signal!
-
-### The Gain-SNR Relationship
-
-| Gain | Signal Multiplication | Noise | SNR = Signal/Noise |
-|------|----------------------|-------|-------------------|
-| 0 dB (1×) | V₀ | 5 mV | V₀/5 mV |
-| 10 dB (3.2×) | 3.2 × V₀ | 5 mV | 3.2 × V₀/5 mV |
-| 20 dB (10×) | 10 × V₀ | 5 mV | 10 × V₀/5 mV |
-| 30 dB (32×) | 32 × V₀ | 5 mV | 32 × V₀/5 mV |
-
-**SNR improves linearly with gain** because signal increases while noise stays fixed.
-
-**The limit:** Saturation. The DAQ clips at ±10 V, so your signal must stay below ~4.5 V to avoid saturation effects.
-
-### Prediction
-
-Use your Week 1 calibration data and your measured DAQ noise floor to predict SNR at each gain.
-
-Assume you have a weak optical signal giving V₀ = _____ V at 0 dB gain. (Use a value from Week 1, or assume 50 mV for practice.)
-
-| Gain | Predicted Signal (V) | Predicted Noise (mV) | Predicted SNR |
-|------|---------------------|---------------------|---------------|
-| 0 dB  | _______ | _______ (DAQ floor) | _______ |
-| 30 dB | _______ | _______ (DAQ floor) | _______ |
-| 50 dB | _______ | _______ (DAQ floor) | _______ |
-| 70 dB | _______ | _______ (DAQ floor) | _______ |
-
-**Note:** Use your measured DAQ noise floor (~5 mV) for all predictions, since DAQ noise dominates.
-
-### Measurement
-
-Set up your Week 1 laser alignment. Insert a neutral density filter (ND 1.0 or ND 2.0) to attenuate the beam so you get a moderate signal (~0.5 V at 30 dB).
-
-Measure and compare to your predictions:
-
-| Gain | Measured Signal (V) | Measured Noise (mV) | Measured SNR | Prediction Match? |
-|------|--------------------|--------------------|--------------|-------------------|
-| 0 dB  | _______ | _______ | _______ | _______ |
-| 30 dB | _______ | _______ | _______ | _______ |
-| 50 dB | _______ | _______ | _______ | _______ |
-| 70 dB | _______ | _______ | _______ | _______ |
-
-**Important:** If your predictions and measurements disagree, do NOT adjust your analysis to force agreement. Discrepancies are scientifically valuable—they reveal either a gap in your understanding or an uncontrolled variable in your experiment. Report your actual measurements honestly and investigate the cause of any disagreement.
-
-**Analysis Questions:**
-
-1. Does SNR improve with gain as predicted? Calculate the actual improvement factor from 0 dB to 30 dB.
-
-2. Did any measurements saturate (signal > 4.5 V)? How does saturation affect your gain choice?
-
-3. At which gain setting did you achieve the best SNR without saturating?
-
-### Understanding Your Code (Required)
-
-Whether you wrote the code yourself or with AI assistance, answer these questions in your notebook:
-
-1. **Parameter justification:** Explain in 2-3 sentences why you chose your `sample_rate` and `num_samples`. What would happen if you used 100 Hz instead of 10000 Hz? What about only 10 samples?
-
-2. **Verification test:** Describe a simple test to verify your function is working correctly. (Hint: compare DAQ measurements to oscilloscope, or test with a known DC voltage from the 5V rail.)
-
-3. **Extension:** How would you modify this function to automatically measure noise at multiple gain settings? (You don't need to implement this—just describe the approach.)
-
-### Debugging Exercise: Find the Bugs
-
-The following code was generated by an AI assistant to measure noise, but it contains THREE bugs. Find and fix each one, then explain what was wrong.
+**Measure:**
 
 ```python
 import nidaqmx
 import numpy as np
-from nidaqmx.constants import AcquisitionType
+from nidaqmx.constants import AcquisitionType, TerminalConfiguration
 
-def measure_noise_buggy(channel="Dev1/ai0", num_samples=1000, sample_rate=10000):
-    """Measure DC level and RMS noise. Contains 3 bugs!"""
+def measure_noise(channel="Dev1/ai0", num_samples=1000, sample_rate=10000,
+                  terminal_config=TerminalConfiguration.RSE,
+                  voltage_range=10.0):
+    """Measure noise with specified configuration."""
     with nidaqmx.Task() as task:
-        task.ai_channels.add_ai_voltage_chan(channel)
+        task.ai_channels.add_ai_voltage_chan(
+            channel,
+            terminal_config=terminal_config,
+            min_val=-voltage_range,
+            max_val=voltage_range
+        )
         task.timing.cfg_samp_clk_timing(
             rate=sample_rate,
             sample_mode=AcquisitionType.FINITE,
             samps_per_chan=num_samples
         )
+        data = np.array(task.read(number_of_samples_per_channel=num_samples))
+    return np.mean(data), np.std(data)
 
-        data = task.read(number_of_samples_per_channel=100)  # Bug #1
+# Compare terminal configurations (same ±10V range)
+dc_rse, noise_rse = measure_noise(terminal_config=TerminalConfiguration.RSE, voltage_range=10.0)
+dc_diff, noise_diff = measure_noise(terminal_config=TerminalConfiguration.DIFF, voltage_range=10.0)
 
-        dc_level = np.mean(data)
-        noise_rms = np.mean((data - dc_level)**2)  # Bug #2
-
-    return dc_level, noise_rms  # Bug #3
+print(f"RSE  ±10V: DC = {dc_rse*1000:7.2f} mV, RMS noise = {noise_rse*1000:.2f} mV")
+print(f"DIFF ±10V: DC = {dc_diff*1000:7.2f} mV, RMS noise = {noise_diff*1000:.2f} mV")
 ```
 
-**Hints:**
-- Bug #1 is a mismatch between what you asked for and what you read
-- Bug #2 is a mathematical error in computing RMS
-- Bug #3 is a subtle issue with units/interpretation
+**Record your results:**
 
-**In your notebook:**
-1. Identify each bug and explain what's wrong
-2. Write the corrected line of code for each
-3. Explain how you would detect each bug if you didn't know it was there (what test would reveal the problem?)
+| Configuration | DC (mV) | RMS Noise (mV) |
+|---------------|---------|----------------|
+| RSE ±10V      |         |                |
+| DIFF ±10V     |         |                |
 
-This exercise tests your understanding of the code, not just your ability to run it. Being able to debug code—whether AI-generated or your own—is an essential skill.
+**What happened?**
 
-## Part 4: Choosing Your Week 4 Gain Setting
+- **RSE mode** measures AI0+ relative to ground. Since AI0+ *is* grounded, you get ~0V with the expected ~5 mV noise.
+- **Differential mode** measures (AI0+) − (AI0−). AI0+ is grounded (0V), but AI0− is *floating*—picking up electrical noise from the environment. The result is unpredictable: a large, possibly unstable DC offset and high noise.
 
-In Week 4, you will measure beam profiles where signal varies from near-zero (beam blocked) to maximum (full beam). You need to choose a gain setting that works across this entire range.
+**The lesson:** Your software configuration must match your physical wiring. A floating input in differential mode doesn't give zero—it gives garbage.
 
-### Your Signal Range
+### Discovery 2: Voltage Range
 
-From your Week 1 measurements (without ND filter):
+Now let's see how voltage range affects noise with a *properly configured* measurement.
 
-- Maximum signal (full beam): _______ V at 0 dB gain
-- This corresponds to: _______ V at 30 dB, _______ V at 50 dB, _______ V at 70 dB
+**Change your wiring:** Connect both AI0+ and AI0- to GND. This creates a valid zero-volt input for differential mode.
 
-### The Constraints (Updated)
+**Predict:** The ±1V range can measure smaller voltages more precisely than ±10V. Will this affect noise?
 
-You face two competing constraints:
+- No effect—noise is noise
+- Lower noise with ±1V range
+- Higher noise with ±1V range
 
-1. **Saturation limit:** Signal must stay below ~4.5 V
-2. **SNR requirement:** Given ~5 mV noise floor (DAQ-limited), signal must be >> 5 mV for good SNR
+**Measure:**
 
-**Optimal strategy:** Use the highest gain that doesn't saturate your maximum signal.
+```python
+# Compare voltage ranges (same DIFF terminal config)
+dc_10v, noise_10v = measure_noise(terminal_config=TerminalConfiguration.DIFF, voltage_range=10.0)
+dc_1v, noise_1v = measure_noise(terminal_config=TerminalConfiguration.DIFF, voltage_range=1.0)
 
-### Analysis
+print(f"DIFF ±10V: DC = {dc_10v*1000:7.2f} mV, RMS noise = {noise_10v*1000:.2f} mV")
+print(f"DIFF ±1V:  DC = {dc_1v*1000:7.2f} mV, RMS noise = {noise_1v*1000:.2f} mV")
+```
 
-Answer these questions to determine your optimal gain:
+**Record your results:**
 
-1. **Saturation:** At which gain settings would your maximum signal saturate? (Show calculation.)
+| Configuration | DC (mV) | RMS Noise (mV) |
+|---------------|---------|----------------|
+| DIFF ±10V     |         |                |
+| DIFF ±1V      |         |                |
 
-2. **SNR at minimum signal:** During a beam profile scan, the minimum signal occurs when the beam is nearly blocked. Estimate the smallest signal you need to measure (hint: think about the Gaussian tail at 2-3 beam widths from center). Given your ~5 mV DAQ noise floor, what is the SNR for this minimum signal at each gain?
+### What You Discovered
 
-3. **The optimization:** Based on your answers, what is the optimal gain setting? (Highest gain that doesn't saturate, giving best SNR at minimum signal.)
+1. **Configuration must match wiring:** When you configured differential mode but only grounded AI0+, the floating AI0- produced garbage readings. This is a common mistake—your software settings must match your physical circuit.
 
-4. **Propagation to beam width:** This is the critical connection. Your beam width $w$ is extracted from fitting the error function to your profile data. If your voltage measurements have uncertainty $\sigma_V$ due to noise, this propagates to uncertainty $\sigma_w$ in beam width.
+2. **Range affects noise:** Narrower voltage ranges have lower noise floors. The USB-6009 datasheet confirms this:
+   - RSE ±10V: ~5 mV RMS
+   - DIFF ±1V: ~0.5 mV RMS
 
-   For an error function fit, the uncertainty in the width parameter scales approximately as:
+3. **Tradeoffs exist:** Lower noise sounds better, but the ±1V range saturates (clips) any signal above 1V. Your Week 4 beam profile will have signals from near-zero to several volts—you need the ±10V range despite its higher noise.
 
-   $$\sigma_w \approx \frac{\sigma_V}{|dV/dx|_{\text{max}}}$$
+### Configuration for This Lab
 
-   where $|dV/dx|_{\text{max}}$ is the maximum slope of your profile (at the beam center).
+For the rest of this lab and Week 4, use **RSE mode with ±10V range**:
 
-   *Note: This approximation captures the dominant effect of noise on fit precision. A rigorous treatment would use the full covariance matrix from the least-squares fit, which accounts for the number of data points and correlations between parameters. You learned about the covariance matrix earlier in this week's prelab (see "Uncertainty in the fit parameters" section), and you'll apply it to your real data in Week 3.*
+- Your photodetector outputs a single-ended signal (one wire referenced to ground)
+- Your signals can exceed 1V
+- This matches your Week 1 calibration
 
-   Using your Week 1 beam width measurement (~0.5 mm), your signal amplitude at your chosen gain, and your ~5 mV noise floor, estimate $\sigma_w$. Is this acceptable for your Week 4 measurements?
+**Use this function for all remaining measurements:**
 
-### Your Decision
+```python
+import nidaqmx
+import numpy as np
+from nidaqmx.constants import AcquisitionType, TerminalConfiguration
 
-**Selected gain setting for Week 4:** _______ dB
+def measure_noise(channel="Dev1/ai0", num_samples=1000, sample_rate=10000):
+    """Measure DC level and RMS noise. Uses RSE ±10V configuration."""
+    with nidaqmx.Task() as task:
+        task.ai_channels.add_ai_voltage_chan(
+            channel,
+            terminal_config=TerminalConfiguration.RSE,
+            min_val=-10.0,
+            max_val=10.0
+        )
+        task.timing.cfg_samp_clk_timing(
+            rate=sample_rate,
+            sample_mode=AcquisitionType.FINITE,
+            samps_per_chan=num_samples
+        )
+        data = np.array(task.read(number_of_samples_per_channel=num_samples))
+    return np.mean(data), np.std(data)
+```
 
-**Justification (2-3 sentences referencing your quantitative analysis):**
+## Phase 2: What Limits Your Measurement?
 
-_______________________________________________
+Now the key question: when you connect your photodetector, will the noise change?
 
-_______________________________________________
+### Prediction
 
-**Key numbers supporting your decision:**
-- Maximum signal at this gain: _______ V (below 4.5 V saturation limit? ☐ Yes ☐ No)
-- SNR at maximum signal: _______ (using 5 mV DAQ noise floor)
-- Expected uncertainty in beam width: _______ mm
+Before measuring, make a prediction:
 
-## Peer Comparison: Gain Setting Choices
+**Given information:**
 
-Compare your gain setting decision with another group. This discussion builds scientific argumentation skills—in research, different groups often make different but equally valid experimental choices.
+- Your DAQ noise (RSE ±10V): ~5 mV RMS (you just measured this)
+- Photodetector noise (from datasheet):
+  - 0 dB gain: ~0.3 mV RMS
+  - 70 dB gain: ~1.1 mV RMS
 
-1. **Share your selected gain setting** and the key reasoning behind your choice.
+**Your prediction:** When you connect the capped photodetector (dark, no light), the measured noise will:
 
-2. **Compare approaches:** Did they weight the tradeoffs (saturation vs. SNR) differently? Did they consider factors you overlooked?
+- Increase significantly (photodetector adds substantial noise)
+- Increase slightly (by less than 0.5 mV, since noise adds in quadrature)
+- Stay approximately the same (~5 mV)
+- Decrease (photodetector somehow reduces noise)
 
-3. **Explore disagreements:** If you chose different settings, discuss whether both choices can be valid. What measurement conditions favor one choice over the other?
+**Your reasoning (1-2 sentences):** _______________________________________________
 
-4. **Document briefly** in your notebook:
-   - The other group's chosen gain setting: _______ dB
-   - Their primary justification (1 sentence): _______________________
-   - One insight from the discussion that changed or confirmed your thinking: _______________________
+### Measurement
 
-*In science, disagreements are productive when they are grounded in evidence. Your goal is not to determine who is "right" but to understand why reasonable approaches can differ.*
+1. **Connect** the photodetector to the DAQ.
+2. **Cap the photodetector** to block all light.
+3. Measure noise at two gain settings:
 
-## Part 5: Week 4 Validation (To Complete in Week 4)
+```python
+# Measure at 0 dB gain (set on photodetector)
+dc_0db, noise_0db = measure_noise()
+print(f"0 dB gain - Noise: {noise_0db*1000:.2f} mV")
 
-Before your first automated beam profile scan, validate your gain choice:
+# Change photodetector to 70 dB gain, then measure again
+dc_70db, noise_70db = measure_noise()
+print(f"70 dB gain - Noise: {noise_70db*1000:.2f} mV")
+```
 
-1. With the beam fully blocked, acquire 100 samples. Record the mean and RMS.
+**Results:**
 
-2. With the beam fully exposed, acquire 100 samples. Record the mean and RMS.
+| Gain | Measured Noise | Photodetector Spec | DAQ Noise |
+|------|---------------|-------------------|-----------|
+| 0 dB | _______ mV | 0.3 mV | ~5 mV |
+| 70 dB | _______ mV | 1.1 mV | ~5 mV |
 
-3. Calculate your actual SNR at maximum signal. Does it match your Week 2 prediction?
+### Confront Your Prediction
 
-4. If your SNR is significantly different from predicted, identify why and decide whether to adjust your gain setting.
+1. **Was your prediction correct?** Did noise change significantly when you connected the photodetector?
 
-| Measurement | Week 2 Prediction | Week 4 Actual | Agreement? |
-|-------------|------------------|---------------|------------|
-| Noise floor RMS | _______ mV | _______ mV | _______ |
-| Max signal | _______ V | _______ V | _______ |
-| SNR at max | _______ | _______ | _______ |
+2. **Reflect on your reasoning:** If your prediction was correct, what reasoning led you to the right answer? If incorrect, what assumption failed?
 
-**Reflection Question:** What did you learn from this predict-measure-compare cycle? Consider: Was your Week 2 characterization useful for Week 4? Did understanding that DAQ noise dominates help you make better decisions?
+3. **What does this tell you?** If noise stayed at ~5 mV regardless of gain, which component dominates your system noise?
 
-_______________________________________________
+4. **Why doesn't photodetector noise show up?** The photodetector's 0.3-1.1 mV noise is real, but it's smaller than the DAQ's 5 mV noise floor. You cannot measure something smaller than your instrument's noise floor.
 
-_______________________________________________
+### The Implication for Gain Selection
 
-This validation step closes the loop on your experimental decision-making process.
+Here's the key insight: **if noise is fixed at ~5 mV regardless of gain, then increasing gain improves your signal-to-noise ratio.**
 
-## Looking Ahead: Connecting Noise to Uncertainty
+| Gain | Signal | Noise | SNR |
+|------|--------|-------|-----|
+| Low (0 dB) | Small | ~5 mV | Low |
+| High (70 dB) | Large | ~5 mV | High |
 
-The noise measurements you made today will directly inform your Week 4 analysis. Here's how the pieces connect:
+**The strategy:** Use the highest gain that doesn't saturate your signal.
 
-1. **Week 2 (today):** You characterized the DAQ noise floor (~5 mV) that limits your measurements
-2. **Week 3 (next week):** You'll learn error propagation—how uncertainties in measurements become uncertainties in derived quantities
-3. **Week 4:** The DAQ noise floor you measured here determines the uncertainty in each beam profile point, which propagates through your curve fit to give uncertainty in beam width $w$ and waist position $z_w$
+## Phase 3: Gain Selection for Week 4
 
-Keep your noise characterization data accessible—you'll need it when propagating uncertainties in Week 3's prelab exercises.
+Choose your photodetector gain setting for Week 4 beam profile measurements.
 
-## Optional Extension: Oscilloscope Comparison
+**Constraints:**
 
-The oscilloscope has a much lower noise floor than the DAQ (~100-500 µV vs ~5 mV). This makes it useful for revealing details that the DAQ cannot see.
+- DAQ saturates at ±10 V (photodetector max output is also 10 V)
+- DAQ noise floor: ~5 mV RMS
+- Your Week 1 calibration data (signal vs. gain)
 
-**If time permits:** Repeat the photodetector noise measurements from Part 2 using the oscilloscope instead of the DAQ.
+**Your task:** Select a gain that maximizes SNR without saturating on your brightest measurement.
 
-1. Can you now see the photodetector noise increase with gain (as predicted by the datasheet)?
-2. At what gain setting does photodetector noise become visible above the oscilloscope noise floor?
-3. Why can't you use the oscilloscope for automated Week 4 measurements? (Hint: think about what automation requires.)
+**Selected gain:** _______ dB
 
-This comparison validates your understanding of the measurement chain: different instruments reveal different noise sources.
+**Justification (include your reasoning about saturation margin and expected SNR):** _______________________________________________
 
-## Noise Characterization Troubleshooting
+Compare with a neighboring group. Different choices can be valid if the reasoning is sound.
 
-**DAQ noise much higher than expected (~5 mV):**
+## Looking Ahead
 
-- Check for proper grounding—is the DAQ input truly shorted?
-- Try a different USB port (some have more electrical noise)
-- Verify no other signals are connected to the DAQ
+The noise floor you measured (~5 mV) will directly affect your Week 4 beam profile uncertainty:
 
-**Noise doesn't change with gain (expected):**
+1. **Today:** You characterized the DAQ noise floor that limits your measurements
+2. **Week 3:** You'll learn how measurement uncertainties propagate through calculations
+3. **Week 4:** Your DAQ noise determines uncertainty in each data point, which propagates through curve fitting to give uncertainty in beam width
 
-- This confirms DAQ noise dominates—your characterization is correct!
-- The photodetector noise is below the DAQ noise floor
+Keep your noise measurement accessible—you'll need it for Week 3's error propagation exercises.
 
-**Noise changes slightly with gain:**
+## Optional: Oscilloscope Comparison
 
-- At high gain (70 dB), photodetector noise (1.1 mV) approaches DAQ noise (5 mV)
-- You may see a small increase in measured noise at 70 dB
+The oscilloscope has a much lower noise floor than the DAQ. If time permits, compare noise measurements.
 
-**SNR doesn't improve as much as predicted:**
+**Setup:** Connect the photodetector output to oscilloscope CH1.
 
-- Check that signal isn't saturating at high gain
-- Verify no ND filter or obstruction is reducing your signal
-- Account for any changes in laser alignment from Week 1
+```python
+import pyvisa
+import numpy as np
 
-**Predictions don't match measurements:**
+rm = pyvisa.ResourceManager()
+scope = rm.open_resource("USB0::0x0699::...")  # Your scope address
+scope.timeout = 10000
 
-- Re-check your calculations—are you using the correct gain factors?
-- Verify your noise floor measurement (Part 1) is accurate
-- Account for any systematic offsets in your DAQ readings
+# Capture waveform and compute noise (std dev)
+scope.write("DATA:SOURCE CH1")
+raw = scope.query_binary_values("CURVE?", datatype='b', container=np.array)
+v_scale = float(scope.query("WFMPRE:YMULT?"))
+v_off = float(scope.query("WFMPRE:YOFF?"))
+voltage = (raw - v_off) * v_scale
+
+print(f"RMS noise: {np.std(voltage)*1000:.2f} mV")
+scope.close()
+```
+
+See [VISA Instrument Control](/PHYS-4430/python-visa#tektronix-tbs2000-oscilloscope) for complete oscilloscope examples.
+
+**Question:** With the oscilloscope's lower noise floor, can you now see the photodetector noise increase with gain?
 
 # Saving Data and Additional DAQ Features
 
@@ -1440,15 +1267,15 @@ In this lab, you learned to:
 3. Configure sample rate and acquisition timing
 4. Explain Nyquist's theorem and recognize aliasing
 5. Choose appropriate sample rates for your signals
-6. Characterize the DAQ noise floor and understand its role in your measurement chain
-7. Identify which component (photodetector or DAQ) dominates system noise
-8. Calculate and measure signal-to-noise ratio with a fixed noise floor
+6. Discover that DAQ configuration (terminal mode, voltage range) affects noise performance
+7. Characterize the DAQ noise floor and identify it as the dominant noise source
+8. Reason through why gain improves SNR when noise is fixed
 9. Make a quantitative decision about optimal gain for Week 4 measurements
 10. Save data to CSV files
 11. Generate analog output voltages
 12. Handle common errors
 
-**Key takeaway:** You discovered that the DAQ noise floor (~5 mV) limits your measurements, not the photodetector noise. This authentic discovery—that instrument limitations differ from datasheet specs in important ways—is central to experimental physics. Your gain setting decision, informed by this understanding, will directly impact the quality of your Week 4 beam profile data.
+**Key takeaway:** You discovered that instrument behavior depends on configuration—default settings are not always what you expect. You also found that the DAQ noise floor (~5 mV in RSE mode) limits your measurements, not the photodetector noise. These authentic discoveries—that understanding your instruments matters—are central to experimental physics.
 
 See the [Python Resources](/PHYS-4430/python-resources) page and the example scripts in the `python/` folder for more detailed examples.
 
@@ -1468,48 +1295,35 @@ Your lab notebook should include the following for this week:
 1. **DAQ verification**: screenshot or plot showing successful voltage reading
 2. **Waveform capture**: comparison of Python plot vs. oscilloscope display
 3. **Aliasing exercises**: completed prediction-observation-explanation for all frequency cases
-4. **Noise characterization tables** (Parts 1-4):
-   - DAQ noise floor measurement (input shorted) with prediction comparison
-   - Signal chain characterization (photodetector connected, capped) at each gain
-   - Identification of dominant noise source at each gain setting
-   - SNR predictions AND measurements using fixed DAQ noise floor
-5. **Gain setting decision**: your selected gain with written justification referencing your quantitative data
-6. **Peer comparison**: other group's gain setting, their justification, and insight from discussion
+4. **Configuration discovery** (Phase 1):
+   - DAQ noise with default settings: _______ mV
+   - DAQ noise with explicit RSE ±10V: _______ mV
+   - Explanation of why configuration affects noise
+5. **Noise source identification** (Phase 2):
+   - Prediction of whether photodetector changes noise
+   - Measurements at 0 dB and 70 dB gain
+   - Conclusion about dominant noise source
+6. **Gain setting decision** (Phase 3): your selected gain with written justification
+7. **Peer comparison**: other group's gain setting and brief discussion
 
-## Key Data Tables
+## Key Data Table
 
-Make sure these tables are completed in your notebook:
+**Photodetector Noise Test**
 
-**Part 1: DAQ Noise Floor**
-
-| Measurement | Predicted | Measured | Ratio |
-|-------------|-----------|----------|-------|
-| DAQ noise (shorted) | ~5 mV | _______ mV | _______ |
-
-**Part 2: Signal Chain Characterization**
-
-| Gain | Measured Noise | DAQ Noise | Datasheet PD Noise | Dominant Source |
-|------|---------------|-----------|-------------------|-----------------|
-| 0 dB  | _______ mV | _______ mV | 0.3 mV | _______ |
-| 30 dB | _______ mV | _______ mV | 0.5 mV | _______ |
-| 50 dB | _______ mV | _______ mV | 0.7 mV | _______ |
-| 70 dB | _______ mV | _______ mV | 1.1 mV | _______ |
-
-**Part 3: SNR Optimization**
-
-| Gain | Predicted SNR | Measured SNR | Agreement? |
-|------|---------------|--------------|------------|
-| ... | ... | ... | ... |
+| Gain | Measured Noise | Photodetector Spec | DAQ Noise | Dominant Source |
+|------|---------------|-------------------|-----------|-----------------|
+| 0 dB | _______ mV | 0.3 mV | ~5 mV | _______ |
+| 70 dB | _______ mV | 1.1 mV | ~5 mV | _______ |
 
 ## Code Deliverables
 
-1. Working `measure_noise()` function with your chosen parameters
+1. Working `measure_noise()` function with explicit RSE configuration
 2. Python script for waveform acquisition and plotting
 
 ## Reflection Questions
 
-1. You predicted that DAQ noise would dominate at all gain settings. Did your measurements confirm this? If measured noise changed with gain, explain what this tells you about the noise sources in your system.
+1. You measured DAQ noise with two different configurations. Why does the choice of terminal mode and voltage range affect the noise level? What lesson does this teach about working with instruments?
 
-2. Given that the DAQ noise floor is fixed at ~5 mV, explain in 2-3 sentences why using higher gain improves SNR. What limits how high you can set the gain?
+2. Given that the DAQ noise floor is fixed at ~5 mV (in RSE mode), explain in 2-3 sentences why using higher gain improves SNR. What limits how high you can set the gain?
 
-3. How would your gain selection strategy change if you had a DAQ with 10× lower noise floor (0.5 mV)? Would photodetector noise become important?
+3. You discovered that differential mode with ±1V range has ~0.5 mV noise—10× lower than RSE mode. Why can't you use this lower-noise configuration for your Week 4 measurements?
