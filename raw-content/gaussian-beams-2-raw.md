@@ -6,9 +6,9 @@ title: "Gaussian Beams - Week 2"
 
 **Week 2 of 4: Instrumentation and Noise Characterization**
 
-Last week you calibrated your photodetector and learned to measure beam width manually. This week you'll learn Python-based data acquisition and—critically—characterize your measurement system's noise floor. Your goal: make a quantitative, evidence-based decision about which gain setting to use for Week 4's automated measurements.
+Last week you calibrated your photodetector and learned the knife-edge technique for measuring beam width. This week you'll learn Python-based data acquisition and—critically—characterize your measurement system's noise floor. Your goal: make a quantitative, evidence-based decision about which gain setting to use for Week 4's automated measurements.
 
-**Last week:** Aligned optics, calibrated photodetector, measured beam width manually
+**Last week:** Aligned optics, calibrated photodetector, introduced knife-edge technique
 
 **This week:** Learn DAQ programming → Characterize measurement system noise → Choose optimal gain setting
 
@@ -387,7 +387,7 @@ popt, pcov = curve_fit(
    # Weighted fit
    popt, pcov = curve_fit(
        beam_profile, x_data, y_data,
-       p0=[1.4, 0.01, 1.45, 0.0005],
+       p0=[1.4, 0.01, 0.0005, 1.45],
        sigma=y_err,
        absolute_sigma=True
    )

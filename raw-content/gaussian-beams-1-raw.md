@@ -103,7 +103,7 @@ The two videos linked below provide information and tips on how to use and mount
 Now, we will begin assembling the components.
 
 1.  Get a laser and power supply from the "He-Ne Laser" drawer in the colored drawer cabinet found in your chosen or assigned optics bay. You'll also need two sets of 3D-printed laser tube mounts which you can find in the same drawer (see Figure @fig:tube-mount). The bottom mount first gets mounted to an optical post and then the top of the mount can be assembled with ¼-20 socket head cap screw and nut. After both sets of tube mounts are attached to the laser, insert the optical posts into post holders and attach the assembly to the optical table. We recommend placing the laser towards the rear of the optical table (under the shelf), oriented so the beam travels along the length of the table (parallel to the shelf). This layout leaves the front of the table clear for mounting the photodetector and translation stage you'll add later.
-2. Each person in your group is responsible for assembling a mirror as shown in Figure @fig:mount-assembley. In the end, you will need at least 2 mirrors to complete the next task. **Remember to wear latex/nitrile gloves or finger cots while handling optical components.** Mount one mirror at the far end of the table (opposite the laser) and the second closer to you, so that the laser beam propagates across the table and gives you plenty of space to mount additional components.
+2. Each person in your group is responsible for assembling a mirror as shown in Figure @fig:mount-assembly. In the end, you will need at least 2 mirrors to complete the next task. **Remember to wear latex/nitrile gloves or finger cots while handling optical components.** Mount one mirror at the far end of the table (opposite the laser) and the second closer to you, so that the laser beam propagates across the table and gives you plenty of space to mount additional components.
 
 *As you are mounting the optics, choose the heights so that the laser hits the center of each optic and the beam is parallel to the table.*
 
@@ -117,7 +117,7 @@ Next, you will align your laser such that beam is aligned parallel to the table.
 2. Use only two mirrors to get the beam to pass through the center of each disc. Having two mirrors allows you to independently adjust the angle and position of your beam.
 3. Draw a diagram in your lab notebook of the configuration of your laser, mirrors, and alignment discs.
 
-![Mounting assemblies for a mirror (left) and a lens (right).](../resources/lab-guides/gaussian-laser-beams/mount-assembly.png){#fig:mount-assembley width="15cm"}
+![Mounting assemblies for a mirror (left) and a lens (right).](../resources/lab-guides/gaussian-laser-beams/mount-assembly.png){#fig:mount-assembly width="15cm"}
 
 # Modeling Characteristics of the Photodetector
 
@@ -309,9 +309,9 @@ The goal of this section is to develop a measurement technique and analysis sche
 
 3. **Optional (good practice):** Try the curve fitting practice exercise with test data. This prepares you for Week 2, but fitting is covered in detail in Week 2's prelab.
 
-The basic scheme involves measuring the power in the laser beam as the beam is gradually blocked by a knife edge (razor blade) using a setup similar to Figure @fig:knife-assembley.
+The basic scheme involves measuring the power in the laser beam as the beam is gradually blocked by a knife edge (razor blade) using a setup similar to Figure @fig:knife-assembly.
 
-![Razor blade mounted on a translation stage.](../resources/lab-guides/gaussian-laser-beams/knife-assembley.png){#fig:knife-assembley width="15cm"}
+![Razor blade mounted on a translation stage.](../resources/lab-guides/gaussian-laser-beams/knife-assembly.png){#fig:knife-assembly width="15cm"}
 
 1. Suppose a laser beam has a Gaussian intensity profile $I(x,y) = I_{max}e^{-2(x^2+y^2)/w^2}$, and is incident upon a photodiode. What is the expression for the power hitting the photodiode when a portion of the beam is blocked by a razor blade?
    1. Draw a diagram showing the beam and the razor.

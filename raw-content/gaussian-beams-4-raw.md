@@ -112,14 +112,22 @@ If you encounter issues, refer back to the troubleshooting section in Week 3's l
 
 ## Validate Your Gain Setting
 
-Before your first automated scan, complete the **Week 4 Validation** section from Week 2's noise characterization (Part 5). This closes the loop on your photodetector characterization:
+Before your first automated scan, verify that your measurement system performs as expected. This closes the loop on your Week 2 noise characterization:
 
-1. With the beam fully blocked, acquire 100 samples and record the mean and RMS
-2. With the beam fully exposed, acquire 100 samples and record the mean and RMS
-3. Calculate your actual SNR and compare to your Week 2 prediction
-4. If the SNR differs significantly from your prediction, decide whether to adjust your gain setting
+1. **Measure dark noise:** With the beam fully blocked, acquire 100 samples and record the mean and RMS voltage.
+2. **Measure signal:** With the beam fully exposed (knife-edge retracted), acquire 100 samples and record the mean and RMS voltage.
+3. **Calculate SNR:** Signal-to-noise ratio = (signal mean − dark mean) / dark RMS
+4. **Compare to prediction:** Does your measured SNR match what you predicted in Week 2 based on the DAQ noise floor (~5 mV RMS)?
+5. **Decide:** If the SNR differs significantly from your prediction, identify the cause and decide whether to adjust your gain setting.
 
-**Your selected gain setting from Week 2:** _______ dB
+| Measurement | Mean (V) | RMS (mV) |
+|-------------|----------|----------|
+| Dark (blocked) | _______ | _______ |
+| Signal (exposed) | _______ | _______ |
+
+**Calculated SNR:** _______
+**Week 2 predicted SNR:** _______
+**Your selected gain setting:** _______ dB
 
 # Automation of the Measurement
 
@@ -260,7 +268,7 @@ This closes the loop on your noise characterization work and validates your inst
 
 ## How Does a Lens Change a Gaussian Beam?
 
-Pick a non-compound lens (not the fancy camera lenses) with focal length in the range 100-200 mm and assemble it in a lens mount with a retaining ring (see Figure @fig:mount-assembley). Recall that it's very important that you **do not handle optical components** (lenses, mirrors, polarizers, wave plates, beam splitters, etc.) **with your bare hands**. The oils on your skin can damage the optics and degrade the light in your experiment. Always handle these components while using **latex/nitrile gloves or finger cots**.
+Pick a non-compound lens (not the fancy camera lenses) with focal length in the range 100-200 mm and assemble it in a lens mount with a retaining ring (see Figure @fig:mount-assembly). Recall that it's very important that you **do not handle optical components** (lenses, mirrors, polarizers, wave plates, beam splitters, etc.) **with your bare hands**. The oils on your skin can damage the optics and degrade the light in your experiment. Always handle these components while using **latex/nitrile gloves or finger cots**.
 
 Design and carry out an experiment to quantitatively answer the questions below. Consider carefully where to put the lens. Your data for this section can be used in the next section.
 
@@ -271,7 +279,7 @@ Design and carry out an experiment to quantitatively answer the questions below.
 5. What factors affect the beam profile after the lens?
 6. Does the measured $w(z)$ match the Gaussian beam prediction $w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$?
 
-![Mounting assemblies for a mirror (left) and a lens (right).](../resources/lab-guides/gaussian-laser-beams/mount-assembly.png){#fig:mount-assembley width="15cm"}
+![Mounting assemblies for a mirror (left) and a lens (right).](../resources/lab-guides/gaussian-laser-beams/mount-assembly.png){#fig:mount-assembly width="15cm"}
 
 ## Quantitatively Modeling the Effect of a Lens
 
@@ -408,10 +416,11 @@ Your lab notebook should include the following for this week:
 
 ## Setup Validation
 
-1. **Week 2 noise validation** (Part 5 from Week 2):
-   - Completed prediction vs. measurement table
-   - Reflection on the predict-measure-compare cycle
-2. **Gain setting confirmation**: your selected gain with any adjustments from Week 2
+1. **Gain setting validation**:
+   - Completed dark/signal measurement table
+   - Calculated SNR compared to Week 2 prediction
+   - Decision on whether gain setting needed adjustment
+2. **Gain setting confirmation**: your selected gain (_______ dB)
 
 ## Beam Profile Without Lenses
 
