@@ -391,22 +391,49 @@
          <h2 data-number="6.1" id="validate-your-gain-setting"><span
          class="header-section-number">6.1</span> Validate Your Gain
          Setting</h2>
-         <p>Before your first automated scan, complete the <strong>Week
-         4 Validation</strong> section from Week 2’s noise
-         characterization (Part 5). This closes the loop on your
-         photodetector characterization:</p>
+         <p>Before your first automated scan, verify that your
+         measurement system performs as expected. This closes the loop
+         on your Week 2 noise characterization:</p>
          <ol type="1">
-         <li>With the beam fully blocked, acquire 100 samples and record
-         the mean and RMS</li>
-         <li>With the beam fully exposed, acquire 100 samples and record
-         the mean and RMS</li>
-         <li>Calculate your actual SNR and compare to your Week 2
-         prediction</li>
-         <li>If the SNR differs significantly from your prediction,
-         decide whether to adjust your gain setting</li>
+         <li><strong>Measure dark noise:</strong> With the beam fully
+         blocked, acquire 100 samples and record the mean and RMS
+         voltage.</li>
+         <li><strong>Measure signal:</strong> With the beam fully
+         exposed (knife-edge retracted), acquire 100 samples and record
+         the mean and RMS voltage.</li>
+         <li><strong>Calculate SNR:</strong> Signal-to-noise ratio =
+         (signal mean − dark mean) / dark RMS</li>
+         <li><strong>Compare to prediction:</strong> Does your measured
+         SNR match what you predicted in Week 2 based on the DAQ noise
+         floor (~5 mV RMS)?</li>
+         <li><strong>Decide:</strong> If the SNR differs significantly
+         from your prediction, identify the cause and decide whether to
+         adjust your gain setting.</li>
          </ol>
-         <p><strong>Your selected gain setting from Week 2:</strong>
-         _______ dB</p>
+         <table>
+         <thead>
+         <tr class="header">
+         <th>Measurement</th>
+         <th>Mean (V)</th>
+         <th>RMS (mV)</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="odd">
+         <td>Dark (blocked)</td>
+         <td>_______</td>
+         <td>_______</td>
+         </tr>
+         <tr class="even">
+         <td>Signal (exposed)</td>
+         <td>_______</td>
+         <td>_______</td>
+         </tr>
+         </tbody>
+         </table>
+         <p><strong>Calculated SNR:</strong> _______ <strong>Week 2
+         predicted SNR:</strong> _______ <strong>Your selected gain
+         setting:</strong> _______ dB</p>
          <h1 data-number="7" id="automation-of-the-measurement"><span
          class="header-section-number">7</span> Automation of the
          Measurement</h1>
@@ -638,7 +665,7 @@
          <p>Pick a non-compound lens (not the fancy camera lenses) with
          focal length in the range 100-200 mm and assemble it in a lens
          mount with a retaining ring (see Figure <a
-         href="#fig:mount-assembley">1</a>). Recall that it’s very
+         href="#fig:mount-assembly">1</a>). Recall that it’s very
          important that you <strong>do not handle optical
          components</strong> (lenses, mirrors, polarizers, wave plates,
          beam splitters, etc.) <strong>with your bare hands</strong>.
@@ -667,7 +694,7 @@
          class="math inline">\(w(z)=w_0\sqrt{1+\left(\frac{\lambda
          z}{\pi w_0^2}\right)^2}\)</span>?</li>
          </ol>
-         <div id="fig:mount-assembley" class="fignos">
+         <div id="fig:mount-assembly" class="fignos">
          <figure>
          <img
          src="../resources/lab-guides/gaussian-laser-beams/mount-assembly.png"
@@ -917,14 +944,14 @@
          <h2 data-number="10.1" id="setup-validation"><span
          class="header-section-number">10.1</span> Setup Validation</h2>
          <ol type="1">
-         <li><strong>Week 2 noise validation</strong> (Part 5 from Week
-         2):
+         <li><strong>Gain setting validation</strong>:
          <ul>
-         <li>Completed prediction vs. measurement table</li>
-         <li>Reflection on the predict-measure-compare cycle</li>
+         <li>Completed dark/signal measurement table</li>
+         <li>Calculated SNR compared to Week 2 prediction</li>
+         <li>Decision on whether gain setting needed adjustment</li>
          </ul></li>
          <li><strong>Gain setting confirmation</strong>: your selected
-         gain with any adjustments from Week 2</li>
+         gain (_______ dB)</li>
          </ol>
          <h2 data-number="10.2" id="beam-profile-without-lenses"><span
          class="header-section-number">10.2</span> Beam Profile Without

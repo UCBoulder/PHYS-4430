@@ -271,14 +271,14 @@
          Sequence</h1>
          <p><strong>Week 2 of 4: Instrumentation and Noise
          Characterization</strong></p>
-         <p>Last week you calibrated your photodetector and learned to
-         measure beam width manually. This week you’ll learn
-         Python-based data acquisition and—critically—characterize your
-         measurement system’s noise floor. Your goal: make a
+         <p>Last week you calibrated your photodetector and learned the
+         knife-edge technique for measuring beam width. This week you’ll
+         learn Python-based data acquisition and—critically—characterize
+         your measurement system’s noise floor. Your goal: make a
          quantitative, evidence-based decision about which gain setting
          to use for Week 4’s automated measurements.</p>
          <p><strong>Last week:</strong> Aligned optics, calibrated
-         photodetector, measured beam width manually</p>
+         photodetector, introduced knife-edge technique</p>
          <p><strong>This week:</strong> Learn DAQ programming →
          Characterize measurement system noise → Choose optimal gain
          setting</p>
@@ -872,7 +872,7 @@
          class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weighted fit</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    beam_profile, x_data, y_data,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    p0<span class="op">=</span>[<span class="fl">1.4</span>, <span class="fl">0.01</span>, <span class="fl">1.45</span>, <span class="fl">0.0005</span>],</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    p0<span class="op">=</span>[<span class="fl">1.4</span>, <span class="fl">0.01</span>, <span class="fl">0.0005</span>, <span class="fl">1.45</span>],</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    sigma<span class="op">=</span>y_err,</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    absolute_sigma<span class="op">=</span><span class="va">True</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
