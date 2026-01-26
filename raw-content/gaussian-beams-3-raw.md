@@ -79,7 +79,7 @@ $$\left(\frac{\partial^2A}{\partial x^2} +\frac{\partial^2A}{\partial y^2} +\fra
 
 So far, we have made no approximation to the solution or the wave equation, but now we apply the assumption that $\partial{A}(x,y,z)/\partial{z}$ changes slowly over a wavelength $\lambda = 2\pi /k$, so we neglect the term
 
-$$\left| \frac{\partial^2A}{\partial z^2} \right| \ll \left|2k\frac{\partial A}{\partial z}\right|\text{.}$$ {#eq:6}
+$$\left| \frac{\partial^2A}{\partial z^2} \right| \ll \left|2ik\frac{\partial A}{\partial z}\right|\text{.}$$ {#eq:6}
 
 Finally, we get the paraxial wave equation,
 
@@ -101,7 +101,7 @@ $$R(z)=z\left(1+\left(\frac{\pi w_0^2}{\lambda z}\right)^2\right)\text{,}$$ {#eq
 
 and the Gouy phase is given by
 
-$$\zeta(z)=arctan\frac{\pi w_0^2}{\lambda z}\text{.}$$ {#eq:11}
+$$\zeta(z)=\arctan\frac{\lambda z}{\pi w_0^2}\text{.}$$ {#eq:11}
 
 The remarkable thing about all these equations is that only two parameters need to be specified to give the whole beam profile: the wavelength $\lambda$ and the beam waist $w_0$, which is the narrowest point in the beam profile. There is a more general set of Hermite Gaussian modes which are shown in Figure @fig:gauss-hermite. The laser cavity typically produces the (0,0) mode shown in the upper left corner, but an optical cavity can also be used to create these other modes – a topic that can be explored in the final projects.
 
@@ -184,22 +184,26 @@ For characterizing a laser beam's propagation, $w(z)$ is often the most practica
 
 In Week 4, you will use Python to automate beam profile measurements by controlling a motorized translation stage. This section guides you through setting up and verifying the motor controller hardware. Getting this working now will save significant time later.
 
+**If you did not complete section 10 from week 1 (manual data collection), you must do that now before proceeding as you will need to remove the micrometer installed in the translation stage in the next section.**
+
 ## Hardware Overview
 
-The Thorlabs KST101 is a stepper motor controller that can precisely position a translation stage. You will use it to move a razor blade across the laser beam while the DAQ records the photodetector signal.
+The Thorlabs KST101 and ZST225B is a stepper motor controller and stepper motor that can precisely position a translation stage. You will use it to move a razor blade across the laser beam while the DAQ records the photodetector signal.
 
 The physical connections are:
 
 1. **Motor Controller (KST101)**:
    - Connect the USB cable from the KST101 cube to your computer
    - Connect the power supply to the KST101
-   - The motor should already be mechanically connected to the translation stage with the razor
-
+   - Install the ZST225B stepper motor into the translation stage (removing the manual micrometer that was used in week 1)
+   - Connect the ZST225B stepper motor to the KST101 controller
 2. **Optical Setup** (for testing):
    - Position the photodetector after the knife-edge in the beam path
    - Ensure the beam passes cleanly through when the razor is fully retracted
 
 ## Software Prerequisites
+
+**This section is for users who want to install the software on their personal devices. The lab laptops already have this installed.**
 
 ### 1. Thorlabs Kinesis SDK
 
