@@ -6,7 +6,7 @@ title: "Gaussian Beams - Week 2"
 
 **Week 2 of 4: Instrumentation and Noise Characterization**
 
-Last week you calibrated your photodetector and learned the knife-edge technique for measuring beam width. This week you'll learn Python-based data acquisition and—critically—characterize your measurement system's noise floor. Your goal: make a quantitative, evidence-based decision about which gain setting to use for Week 4's automated measurements.
+Last week you calibrated your photodetector and learned the knife-edge technique for measuring beam size. This week you'll learn Python-based data acquisition and—critically—characterize your measurement system's noise floor. Your goal: make a quantitative, evidence-based decision about which gain setting to use for Week 4's automated measurements.
 
 **Last week:** Aligned optics, calibrated photodetector, introduced knife-edge technique
 
@@ -63,7 +63,7 @@ After completing the lab, you will be able to:
 
 This week culminates in a decision: **which gain setting will you use for Week 4's automated beam profiling?** This isn't arbitrary—you'll build the quantitative evidence to justify your choice.
 
-**Prelab:** Develop curve-fitting skills you'll use throughout this course. You'll learn to minimize χ², interpret residuals, and assess goodness of fit. These skills are essential for extracting beam widths from your knife-edge data.
+**Prelab:** Develop curve-fitting skills you'll use throughout this course. You'll learn to minimize χ², interpret residuals, and assess goodness of fit. These skills are essential for extracting beam radii from your knife-edge data.
 
 **In Lab:** You'll work through a predict-measure-compare cycle for noise characterization:
 
@@ -151,7 +151,7 @@ where there are where $N$ data points, $(x_i,y_i )$, and the fit function is giv
            x: position (m)
            amplitude: half the voltage swing (V)
            center: beam center position (m)
-           width: beam width w (m)
+           width: beam size w (m)
            offset: vertical offset (V)
        """
        return amplitude * erf(np.sqrt(2) * (x - center) / width) + offset
@@ -172,7 +172,7 @@ where there are where $N$ data points, $(x_i,y_i )$, and the fit function is giv
 
    1. What shape do you expect the $\chi^2$ contours to have? (Circular? Elliptical? Irregular?) Why?
    2. If the contours are elliptical, what would it mean if the ellipse is tilted (major axis not aligned with $w$ or $b$ axes)?
-   3. Where in the $(w, b)$ plane should the minimum $\chi^2$ occur—at the true beam width and position, or somewhere else?
+   3. Where in the $(w, b)$ plane should the minimum $\chi^2$ occur—at the true beam size and position, or somewhere else?
 
 6. Make a contour plot of $\chi^2(w,b)$ and tweak the plot range until you see the minimum. You can use AI assistance or the code below. The goal is to *interpret* the result, not to write the code from scratch.
 
@@ -371,7 +371,7 @@ popt, pcov = curve_fit(
 )
 ```
 
-1. Download [this data set](../resources/lab-guides/gaussian-laser-beams/profile_data_with_errors.csv) for a beam width measurement with uncertainties. The first column is razor position in meters, the second column is photodetector output voltage, and the third column is the uncertainty on the photodetector output voltage.
+1. Download [this data set](../resources/lab-guides/gaussian-laser-beams/profile_data_with_errors.csv) for a beam size measurement with uncertainties. The first column is razor position in meters, the second column is photodetector output voltage, and the third column is the uncertainty on the photodetector output voltage.
 
    ```python
    # Load data with uncertainties
@@ -436,12 +436,12 @@ The uncertainty reported by `curve_fit` comes from the covariance matrix and ass
 2. This noise is independent for each data point
 3. Your model perfectly describes the underlying physics
 
-In real experiments, these assumptions often fail. Consider these scenarios relevant to your beam width measurements:
+In real experiments, these assumptions often fail. Consider these scenarios relevant to your beam size measurements:
 
 **Systematic errors in position:**
 - If your micrometer has a 0.01 mm systematic offset, this affects all measurements the same way
 - `curve_fit` doesn't know about this, so it can't include it in the parameter uncertainty
-- The true uncertainty in beam width includes uncertainty in position calibration
+- The true uncertainty in beam size includes uncertainty in position calibration
 
 **Model limitations:**
 - The error function model assumes a perfectly Gaussian beam
@@ -515,7 +515,7 @@ plt.errorbar(x, y, yerr=y_err, fmt='o', capsize=3,
              label='Data with uncertainties')
 plt.xlabel('Micrometer Position (inches)')
 plt.ylabel('Photodetector Voltage (V)')
-plt.title('Gaussian Beam Width Measurement')
+plt.title('Gaussian Beam Size Measurement')
 plt.legend()
 plt.grid(True, alpha=0.3)
 plt.show()
@@ -527,7 +527,7 @@ The `errorbar()` function parameters:
 - `fmt='o'`: Marker style (circles)
 - `capsize=3`: Size of error bar caps
 
-### Example: Gaussian laser beam width measurement
+### Example: Gaussian laser beam size measurement
 
 Suppose you had estimated the uncertainty at every point in a width measurement of your Gaussian laser beam to be $0.04 \ V$. This error was chosen to demonstrate the mechanics of making a plot with error bars, but the uncertainty in the actual data was probably smaller than this.
 
@@ -576,7 +576,7 @@ plt.errorbar(position, voltage, yerr=uncertainty,
              fmt='o', capsize=3, markersize=5)
 plt.xlabel('Position (inches)')
 plt.ylabel('Photodetector Output (V)')
-plt.title('Gaussian Beam Width Measurement')
+plt.title('Gaussian Beam Size Measurement')
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.show()
@@ -586,7 +586,7 @@ plt.show()
 
 ## Prelab Exercise: Error Function Fitting Practice
 
-Now that you understand curve fitting, apply it to beam width analysis. This exercise prepares you for analyzing your own knife-edge measurements.
+Now that you understand curve fitting, apply it to beam size analysis. This exercise prepares you for analyzing your own knife-edge measurements.
 
 **Note on AI assistance:** You may use AI tools to help write your curve fitting code. However, the learning goal is to understand what the code does and why. Be prepared to explain: (1) what the fit parameters mean physically, (2) why the error function is the appropriate model, and (3) how to interpret the uncertainties reported by `curve_fit`.
 
@@ -596,7 +596,7 @@ In Week 1, you derived that blocking a Gaussian beam with a knife edge produces 
 
 $$P(x) = \frac{P_0}{2}\left[1 + \text{erf}\left(\frac{\sqrt{2}(x-x_0)}{w}\right)\right]$$
 
-where $w$ is the beam width, $x_0$ is the beam center position, and $P_0$ is the total power.
+where $w$ is the beam size, $x_0$ is the beam center position, and $P_0$ is the total power.
 
 For fitting, we use a slightly more general form that accounts for offsets:
 
@@ -605,7 +605,7 @@ $$y(x) = a \cdot \text{erf}\left(\frac{\sqrt{2}}{w}(x-b)\right) + c$$
 where:
 - $a$ = amplitude (half the voltage swing)
 - $b$ = beam center position
-- $w$ = beam width (what we want!)
+- $w$ = beam size (what we want!)
 - $c$ = vertical offset
 
 ### Practice Exercise
@@ -625,7 +625,7 @@ Download [Test_Profile_Data.csv](../resources/lab-guides/gaussian-laser-beams/Te
            x: position (m)
            amplitude: half the voltage swing (V)
            center: beam center position (m)
-           width: beam width w (m)
+           width: beam size w (m)
            offset: vertical offset (V)
        """
        return amplitude * erf(np.sqrt(2) * (x - center) / width) + offset
@@ -648,14 +648,14 @@ Download [Test_Profile_Data.csv](../resources/lab-guides/gaussian-laser-beams/Te
    popt, pcov = curve_fit(beam_profile, x, y, p0=p0)
    perr = np.sqrt(np.diag(pcov))  # Standard errors
 
-   print(f"Beam width w = {popt[2]:.2e} ± {perr[2]:.2e} m")
+   print(f"Beam size w = {popt[2]:.2e} ± {perr[2]:.2e} m")
    ```
 
 4. **Verify your result:** You should get $w = 4.52 \times 10^{-4}$ m (approximately 0.45 mm).
 
 5. **Plot data and fit together** to verify the fit is reasonable.
 
-6. **Interpret the uncertainties:** What is the fractional uncertainty in your beam width? Is this uncertainty dominated by statistical noise or could there be systematic effects?
+6. **Interpret the uncertainties:** What is the fractional uncertainty in your beam size? Is this uncertainty dominated by statistical noise or could there be systematic effects?
 
 *Save your fitting code—you will use this same procedure to analyze your own knife-edge data in lab.*
 
@@ -1127,7 +1127,7 @@ The noise floor you measured (~5 mV) will directly affect your Week 4 beam profi
 
 1. **Today:** You characterized the DAQ noise floor that limits your measurements
 2. **Week 3:** You'll learn how measurement uncertainties propagate through calculations
-3. **Week 4:** Your DAQ noise determines uncertainty in each data point, which propagates through curve fitting to give uncertainty in beam width
+3. **Week 4:** Your DAQ noise determines uncertainty in each data point, which propagates through curve fitting to give uncertainty in beam size
 
 Keep your noise measurement accessible—you'll need it for Week 3's error propagation exercises.
 

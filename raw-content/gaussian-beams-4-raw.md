@@ -22,7 +22,7 @@ After completing this week's lab, you will be able to:
 
 1. Run automated beam profile measurements using Python to control the motor and DAQ.
 2. Validate that your automated measurement system produces results consistent with manual methods.
-3. Measure beam width $w(z)$ at multiple positions and fit to extract $w_0$ and $z_w$ with uncertainties.
+3. Measure beam size $w(z)$ at multiple positions and fit to extract $w_0$ and $z_w$ with uncertainties.
 4. Test the Gaussian beam model by comparing measured $w(z)$ to theoretical predictions.
 5. Explain how a lens modifies a Gaussian beam and compare to geometric optics predictions.
 6. Evaluate whether the thin lens equation accurately predicts image location for Gaussian beams.
@@ -32,7 +32,7 @@ After completing this week's lab, you will be able to:
 
 This week brings together everything you've built: you'll test the Gaussian beam model with automated measurements and investigate how lenses modify the beam.
 
-**The scientific question:** Does the Gaussian beam model accurately predict how beam width varies with position? Does the thin lens equation work for focused Gaussian beams?
+**The scientific question:** Does the Gaussian beam model accurately predict how beam radius varies with position? Does the thin lens equation work for focused Gaussian beams?
 
 **Your approach:**
 
@@ -48,9 +48,9 @@ This week brings together everything you've built: you'll test the Gaussian beam
 
 This week you'll test the Gaussian beam model with automated measurements. Before collecting data, make quantitative predictions—this transforms the lab from "taking data" to "testing your understanding."
 
-## Prediction Exercise 1: Beam Width vs. Position
+## Prediction Exercise 1: Beam Radius vs. Position
 
-**Transfer your predictions from Week 3.** In Week 3, you measured a beam profile, applied error propagation, and predicted beam widths at several positions. Copy those predictions here:
+**Transfer your predictions from Week 3.** In Week 3, you measured a beam profile, applied error propagation, and predicted beam radii at several positions. Copy those predictions here:
 
 | Position $z$ (m) | Predicted $w(z)$ (mm) | Predicted uncertainty |
 |------------------|----------------------|----------------------|
@@ -63,7 +63,7 @@ This week you'll test the Gaussian beam model with automated measurements. Befor
 
 $$w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$$
 
-Use your Week 3 beam width measurement and estimated $w_0$ to calculate predictions with propagated uncertainties.
+Use your Week 3 beam size measurement and estimated $w_0$ to calculate predictions with propagated uncertainties.
 
 ## Prediction Exercise 2: Lens Effects
 
@@ -133,7 +133,7 @@ Before your first automated scan, verify that your measurement system performs a
 
 Before we begin this week's lab, reflect on your experience from Week 1 (and perhaps refer to your lab notebook entry to help guide your memory).
 
-1. In Week 1, how long did the total process of data taking through analysis take to make a measurement of the beam width $w$?
+1. In Week 1, how long did the total process of data taking through analysis take to make a measurement of the beam size $w$?
 2. In this lab, you may have to take 20-30 beam profiles in order to measure $w_0$ and $z_w$. How long would this take with your manual method?
 3. What are the most time-consuming portions of the process? Which parts benefit most from automation?
 
@@ -220,9 +220,9 @@ The Gaussian beam model of light is useful because it often describes the beam o
 
 There is a straightforward reason that a He-Ne laser should produce a Gaussian beam. The laser light builds up between two mirrors, and the electromagnetic mode that best matches the shape of the mirrors is the Gaussian beam.
 
-1. Considering the Gaussian beam equations from Week 3's prelab (the electric field, beam width $w(z)$, radius of curvature $R(z)$, and Gouy phase $\zeta(z)$), which aspects of the Gaussian beam model can you test? Are there any parts of the model you cannot test?
+1. Considering the Gaussian beam equations from Week 3's prelab (the electric field, beam radius $w(z)$, radius of curvature $R(z)$, and Gouy phase $\zeta(z)$), which aspects of the Gaussian beam model can you test? Are there any parts of the model you cannot test?
 
-2. Measure the beam width $w$ at various distances from the laser.
+2. Measure the beam size $w$ at various distances from the laser.
 
    **Measurement strategy guidance:**
    - **Number of positions:** Take measurements at 5-10 different $z$ positions. Fewer than 5 makes it difficult to constrain both $w_0$ and $z_w$ in your fit; more than 10 offers diminishing returns.
@@ -293,7 +293,7 @@ $$ \frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}$$
 
    1. **Predict:** Using the thin lens equation, calculate the predicted image position $S_2$ from your measured object distance $S_1$ and the lens focal length $f$. Propagate the uncertainties in $S_1$ and $f$ to get an uncertainty in $S_2$.
 
-   2. **Measure:** From your beam width data, determine the actual position of the beam waist (image location) after the lens. Include uncertainty from your fit.
+   2. **Measure:** From your beam size data, determine the actual position of the beam waist (image location) after the lens. Include uncertainty from your fit.
 
    3. **Compare:** Calculate the discrepancy between predicted and measured image positions. Is the discrepancy smaller than the combined uncertainty? If $|S_{2,predicted} - S_{2,measured}| < \sqrt{\sigma_{pred}^2 + \sigma_{meas}^2}$, the agreement is consistent with your uncertainties.
 
@@ -424,7 +424,7 @@ Your lab notebook should include the following for this week:
 
 ## Beam Profile Without Lenses
 
-1. **Automated vs. manual comparison**: beam width from both methods with uncertainties
+1. **Automated vs. manual comparison**: beam size from both methods with uncertainties
 2. **Multiple position measurements**: table of $z$ positions and corresponding $w$ values
 3. **Gaussian beam fit**:
    - Plot of $w(z)$ data with fit curve

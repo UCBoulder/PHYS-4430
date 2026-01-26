@@ -103,9 +103,9 @@
             class="toc-section-number">4.7.1</span> Error bars in Python
             with Matplotlib</a></li>
             <li><a
-            href="#example-gaussian-laser-beam-width-measurement"><span
+            href="#example-gaussian-laser-beam-size-measurement"><span
             class="toc-section-number">4.7.2</span> Example: Gaussian
-            laser beam width measurement</a></li>
+            laser beam size measurement</a></li>
             </ul></li>
             <li><a
             href="#prelab-exercise-error-function-fitting-practice"><span
@@ -272,7 +272,7 @@
          <p><strong>Week 2 of 4: Instrumentation and Noise
          Characterization</strong></p>
          <p>Last week you calibrated your photodetector and learned the
-         knife-edge technique for measuring beam width. This week you’ll
+         knife-edge technique for measuring beam size. This week you’ll
          learn Python-based data acquisition and—critically—characterize
          your measurement system’s noise floor. Your goal: make a
          quantitative, evidence-based decision about which gain setting
@@ -377,7 +377,7 @@
          <p><strong>Prelab:</strong> Develop curve-fitting skills you’ll
          use throughout this course. You’ll learn to minimize χ²,
          interpret residuals, and assess goodness of fit. These skills
-         are essential for extracting beam widths from your knife-edge
+         are essential for extracting beam radii from your knife-edge
          data.</p>
          <p><strong>In Lab:</strong> You’ll work through a
          predict-measure-compare cycle for noise characterization:</p>
@@ -521,7 +521,7 @@
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">        x: position (m)</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">        amplitude: half the voltage swing (V)</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">        center: beam center position (m)</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">        width: beam width w (m)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">        width: beam size w (m)</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">        offset: vertical offset (V)</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> amplitude <span class="op">*</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">*</span> (x <span class="op">-</span> center) <span class="op">/</span> width) <span class="op">+</span> offset</span></code></pre></div></li>
@@ -561,7 +561,7 @@
          <li>Where in the <span class="math inline">\((w, b)\)</span>
          plane should the minimum <span
          class="math inline">\(\chi^2\)</span> occur—at the true beam
-         width and position, or somewhere else?</li>
+         size and position, or somewhere else?</li>
          </ol></li>
          <li><p>Make a contour plot of <span
          class="math inline">\(\chi^2(w,b)\)</span> and tweak the plot
@@ -855,7 +855,7 @@
          <ol type="1">
          <li><p>Download <a
          href="../resources/lab-guides/gaussian-laser-beams/profile_data_with_errors.csv">this
-         data set</a> for a beam width measurement with uncertainties.
+         data set</a> for a beam size measurement with uncertainties.
          The first column is razor position in meters, the second column
          is photodetector output voltage, and the third column is the
          uncertainty on the photodetector output voltage.</p>
@@ -957,12 +957,12 @@
          <li>Your model perfectly describes the underlying physics</li>
          </ol>
          <p>In real experiments, these assumptions often fail. Consider
-         these scenarios relevant to your beam width measurements:</p>
+         these scenarios relevant to your beam size measurements:</p>
          <p><strong>Systematic errors in position:</strong> - If your
          micrometer has a 0.01 mm systematic offset, this affects all
          measurements the same way - <code>curve_fit</code> doesn’t know
          about this, so it can’t include it in the parameter uncertainty
-         - The true uncertainty in beam width includes uncertainty in
+         - The true uncertainty in beam size includes uncertainty in
          position calibration</p>
          <p><strong>Model limitations:</strong> - The error function
          model assumes a perfectly Gaussian beam - Real laser beams may
@@ -1063,7 +1063,7 @@
 <span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">&#39;Data with uncertainties&#39;</span>)</span>
 <span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Micrometer Position (inches)&#39;</span>)</span>
 <span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Photodetector Voltage (V)&#39;</span>)</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Gaussian Beam Width Measurement&#39;</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Gaussian Beam Size Measurement&#39;</span>)</span>
 <span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
 <span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
@@ -1074,9 +1074,9 @@
          <code>fmt='o'</code>: Marker style (circles) -
          <code>capsize=3</code>: Size of error bar caps</p>
          <h3 data-number="4.7.2"
-         id="example-gaussian-laser-beam-width-measurement"><span
+         id="example-gaussian-laser-beam-size-measurement"><span
          class="header-section-number">4.7.2</span> Example: Gaussian
-         laser beam width measurement</h3>
+         laser beam size measurement</h3>
          <p>Suppose you had estimated the uncertainty at every point in
          a width measurement of your Gaussian laser beam to be <span
          class="math inline">\(0.04 \ V\)</span>. This error was chosen
@@ -1208,7 +1208,7 @@
 <span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>             fmt<span class="op">=</span><span class="st">&#39;o&#39;</span>, capsize<span class="op">=</span><span class="dv">3</span>, markersize<span class="op">=</span><span class="dv">5</span>)</span>
 <span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (inches)&#39;</span>)</span>
 <span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Photodetector Output (V)&#39;</span>)</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Gaussian Beam Width Measurement&#39;</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Gaussian Beam Size Measurement&#39;</span>)</span>
 <span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
 <span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
@@ -1227,9 +1227,9 @@
          id="prelab-exercise-error-function-fitting-practice"><span
          class="header-section-number">4.8</span> Prelab Exercise: Error
          Function Fitting Practice</h2>
-         <p>Now that you understand curve fitting, apply it to beam
-         width analysis. This exercise prepares you for analyzing your
-         own knife-edge measurements.</p>
+         <p>Now that you understand curve fitting, apply it to beam size
+         analysis. This exercise prepares you for analyzing your own
+         knife-edge measurements.</p>
          <p><strong>Note on AI assistance:</strong> You may use AI tools
          to help write your curve fitting code. However, the learning
          goal is to understand what the code does and why. Be prepared
@@ -1245,7 +1245,7 @@
          <p><span class="math display">\[P(x) = \frac{P_0}{2}\left[1 +
          \text{erf}\left(\frac{\sqrt{2}(x-x_0)}{w}\right)\right]\]</span></p>
          <p>where <span class="math inline">\(w\)</span> is the beam
-         width, <span class="math inline">\(x_0\)</span> is the beam
+         size, <span class="math inline">\(x_0\)</span> is the beam
          center position, and <span class="math inline">\(P_0\)</span>
          is the total power.</p>
          <p>For fitting, we use a slightly more general form that
@@ -1255,7 +1255,7 @@
          <p>where: - <span class="math inline">\(a\)</span> = amplitude
          (half the voltage swing) - <span
          class="math inline">\(b\)</span> = beam center position - <span
-         class="math inline">\(w\)</span> = beam width (what we want!) -
+         class="math inline">\(w\)</span> = beam size (what we want!) -
          <span class="math inline">\(c\)</span> = vertical offset</p>
          <h3 data-number="4.8.2" id="practice-exercise"><span
          class="header-section-number">4.8.2</span> Practice
@@ -1278,7 +1278,7 @@
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">        x: position (m)</span></span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">        amplitude: half the voltage swing (V)</span></span>
 <span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">        center: beam center position (m)</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">        width: beam width w (m)</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">        width: beam size w (m)</span></span>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">        offset: vertical offset (V)</span></span>
 <span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
 <span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> amplitude <span class="op">*</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">*</span> (x <span class="op">-</span> center) <span class="op">/</span> width) <span class="op">+</span> offset</span></code></pre></div></li>
@@ -1299,14 +1299,14 @@
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(beam_profile, x, y, p0<span class="op">=</span>p0)</span>
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))  <span class="co"># Standard errors</span></span>
 <span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam width w = </span><span class="sc">{</span>popt[<span class="dv">2</span>]<span class="sc">:.2e}</span><span class="ss"> ± </span><span class="sc">{</span>perr[<span class="dv">2</span>]<span class="sc">:.2e}</span><span class="ss"> m&quot;</span>)</span></code></pre></div></li>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam size w = </span><span class="sc">{</span>popt[<span class="dv">2</span>]<span class="sc">:.2e}</span><span class="ss"> ± </span><span class="sc">{</span>perr[<span class="dv">2</span>]<span class="sc">:.2e}</span><span class="ss"> m&quot;</span>)</span></code></pre></div></li>
          <li><p><strong>Verify your result:</strong> You should get
          <span class="math inline">\(w = 4.52 \times 10^{-4}\)</span> m
          (approximately 0.45 mm).</p></li>
          <li><p><strong>Plot data and fit together</strong> to verify
          the fit is reasonable.</p></li>
          <li><p><strong>Interpret the uncertainties:</strong> What is
-         the fractional uncertainty in your beam width? Is this
+         the fractional uncertainty in your beam size? Is this
          uncertainty dominated by statistical noise or could there be
          systematic effects?</p></li>
          </ol>
@@ -2005,7 +2005,7 @@
          uncertainties propagate through calculations</li>
          <li><strong>Week 4:</strong> Your DAQ noise determines
          uncertainty in each data point, which propagates through curve
-         fitting to give uncertainty in beam width</li>
+         fitting to give uncertainty in beam size</li>
          </ol>
          <p>Keep your noise measurement accessible—you’ll need it for
          Week 3’s error propagation exercises.</p>

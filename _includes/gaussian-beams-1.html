@@ -80,17 +80,17 @@
             class="toc-section-number">9.2</span> Connecting to Your
             Experiment</a></li>
             </ul></li>
-            <li><a href="#measuring-the-beam-width"><span
+            <li><a href="#measuring-the-beam-size"><span
             class="toc-section-number">10</span> Measuring the Beam
-            Width</a>
+            Size</a>
             <ul>
             <li><a href="#sec:analysis"><span
             class="toc-section-number">10.1</span> Before you take data:
             prepare for analysis</a></li>
             <li><a
-            href="#build-your-setup-for-measuring-the-beam-width-of-your-laser"><span
+            href="#build-your-setup-for-measuring-the-beam-size-of-your-laser"><span
             class="toc-section-number">10.2</span> Build your setup for
-            measuring the beam width of your laser</a></li>
+            measuring the beam size of your laser</a></li>
             <li><a
             href="#analysis-of-the-random-uncertainty-sources"><span
             class="toc-section-number">10.3</span> Analysis of the
@@ -146,11 +146,11 @@
          <p><strong>Week 1 of 4: Foundations</strong></p>
          <p>This week you build the foundational skills for the entire
          Gaussian Beams sequence: optical alignment, photodetector
-         operation, and beam width measurement. The calibration data and
+         operation, and beam size measurement. The calibration data and
          measurement techniques you develop this week will be used
          directly in Weeks 2-4.</p>
          <p><strong>This week:</strong> Align optics → Calibrate
-         photodetector → Measure beam width</p>
+         photodetector → Measure beam size</p>
          <p><strong>Next week:</strong> Learn data acquisition →
          Characterize noise → Choose optimal gain setting</p>
          <h1 data-number="2" id="learning-goals"><span
@@ -195,8 +195,8 @@
          You’ll observe voltage fluctuations, identify their character
          (random noise vs. drift), and make decisions about your
          measurement strategy for beam profiling.</p>
-         <p><strong>If time permits:</strong> Begin knife-edge beam
-         width measurements. If not, you’ll complete this in Week 3.</p>
+         <p><strong>If time permits:</strong> Begin knife-edge beam size
+         measurements. If not, you’ll complete this in Week 3.</p>
          <p><em>See the detailed deliverables checklist at the end of
          this guide.</em></p>
          <h1 data-number="4" id="python-preparation"><span
@@ -454,7 +454,7 @@
          class="header-section-number">8.2</span> Calibrating the
          photodetector offset and gain</h2>
          <p>Calibrating the photodetector is essential when working with
-         multiple gain settings. Imagine you’re measuring beam width
+         multiple gain settings. Imagine you’re measuring beam size
          later today (or in Week 4’s automated measurements): at one
          position the signal saturates at 40 dB gain, but gives good
          readings at 30 dB. How would you combine these measurements
@@ -641,7 +641,7 @@
          class="header-section-number">8.4</span> Reflection: Using Your
          Calibration</h2>
          <p>You’ll use this photodetector throughout the lab
-         sequence—for beam width measurements today and for automated
+         sequence—for beam size measurements today and for automated
          profiling in Week 4. Before moving on, consider how you will
          use your calibration results:</p>
          <ol type="1">
@@ -731,7 +731,7 @@
          Calculate how many measurements would give you 1% relative
          uncertainty in the mean (i.e., <span
          class="math inline">\(\sigma_{\overline{V}}/\overline{V} =
-         0.01\)</span>). Is this practical for your beam width
+         0.01\)</span>). Is this practical for your beam size
          measurements?</p></li>
          <li><p><strong>What’s your measurement strategy?</strong> For
          the knife-edge scan, will you record single readings at each
@@ -741,16 +741,16 @@
          <h2 data-number="9.2" id="connecting-to-your-experiment"><span
          class="header-section-number">9.2</span> Connecting to Your
          Experiment</h2>
-         <p>These decisions matter for your beam width measurement. If
+         <p>These decisions matter for your beam size measurement. If
          drift is present during a knife-edge scan, it could
-         systematically bias your fitted beam width. If you’re averaging
+         systematically bias your fitted beam size. If you’re averaging
          at each position, you’re trading measurement time for
          precision.</p>
          <p>In Week 2, you’ll characterize noise more systematically and
          learn to make these trade-offs quantitatively.</p>
-         <h1 data-number="10" id="measuring-the-beam-width"><span
+         <h1 data-number="10" id="measuring-the-beam-size"><span
          class="header-section-number">10</span> Measuring the Beam
-         Width</h1>
+         Size</h1>
          <p>The goal of this section is to develop a measurement
          technique and analysis scheme to measure the width of a laser
          beam. The scheme will let you measure the width in one
@@ -820,7 +820,7 @@
          <li>Is it a linear or nonlinear fit function? Why?</li>
          <li>What are the fit parameters? Why do you need this
          many?</li>
-         <li>How do the fit parameters relate to the beam width?</li>
+         <li>How do the fit parameters relate to the beam size?</li>
          </ol>
          <p><strong>Optional practice (if time permits):</strong></p>
          <p>If you want to get a head start on curve fitting, you can
@@ -837,7 +837,7 @@
          <ol type="1">
          <li>Make a plot of the data.</li>
          <li>Make a fit and plot it with the data.</li>
-         <li>Check that the fit looks good and you get a beam width of
+         <li>Check that the fit looks good and you get a beam size of
          <span class="math inline">\(w=4.52 \times 10^{-4}\ m\)</span>.
          If you get a different value, check with your instructor to
          understand the problem. What is the uncertainty on your
@@ -845,9 +845,9 @@
          </ol></li>
          </ol>
          <h2 data-number="10.2"
-         id="build-your-setup-for-measuring-the-beam-width-of-your-laser"><span
+         id="build-your-setup-for-measuring-the-beam-size-of-your-laser"><span
          class="header-section-number">10.2</span> Build your setup for
-         measuring the beam width of your laser</h2>
+         measuring the beam size of your laser</h2>
          <ol type="1">
          <li>Draw a detailed schematic of the setup (from the laser all
          the way to the photodetector).</li>
@@ -878,7 +878,7 @@
          data</h2>
          <ol type="1">
          <li>Use the analysis procedures verified in section <a
-         href="#sec:analysis">10.1</a> to find the beam width for your
+         href="#sec:analysis">10.1</a> to find the beam size for your
          data. Be sure to include the uncertainty.</li>
          <li>Plot your fit together with your data to make sure it is
          good.</li>
@@ -912,7 +912,7 @@
          <li><p>The raw position data is in meters, but the plot
          displays millimeters. Why might millimeters (or smaller units)
          be preferable for displaying a beam profile measurement? (Hint:
-         think about typical laser beam widths.)</p></li>
+         think about typical laser beam radii.)</p></li>
          </ol>
          <h2 data-number="11.2" id="step-2-run-and-verify"><span
          class="header-section-number">11.2</span> Step 2: Run and
@@ -1038,7 +1038,7 @@
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> amplitude <span class="op">*</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">*</span> (x <span class="op">-</span> center) <span class="op">/</span> width) <span class="op">+</span> offset</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(beam_profile, x_data, y_data, p0<span class="op">=</span>[<span class="fl">1.4</span>, <span class="fl">0.01</span>, <span class="fl">0.0005</span>, <span class="fl">1.4</span>])</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam width: </span><span class="sc">{</span>popt[<span class="dv">2</span>]<span class="sc">:.4f}</span><span class="ss"> m&quot;</span>)</span></code></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam size w: </span><span class="sc">{</span>popt[<span class="dv">2</span>]<span class="sc">:.4f}</span><span class="ss"> m&quot;</span>)</span></code></pre></div>
          <p>You don’t need to understand <code>curve_fit</code>
          yet—that’s Week 2’s content. But you <em>do</em> need to
          understand:</p>
@@ -1082,8 +1082,8 @@
          converts light to voltage</p></li>
          <li><p><strong>Calibration comparison</strong>: quantitative
          comparison of your measurements to datasheet values</p></li>
-         <li><p><strong>Beam width measurement</strong> (if completed):
-         fit plot, extracted beam width with uncertainty</p></li>
+         <li><p><strong>Beam size measurement</strong> (if completed):
+         fit plot, extracted beam size with uncertainty</p></li>
          <li><p><strong>Reflection questions</strong>:</p>
          <ol type="a">
          <li>Your photodetector offset voltage differs from the

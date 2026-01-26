@@ -24,13 +24,13 @@ After completing the prelab, you will be able to:
 
 1. Derive the paraxial wave equation from Maxwell's equations by applying the slowly-varying envelope approximation.
 2. Explain the physical meaning of Gaussian beam parameters ($w_0$, $w(z)$, $R(z)$, $\zeta(z)$) and how they relate to observable properties.
-3. Predict how beam width changes with position using the Gaussian beam equations.
+3. Predict how beam radius changes with position using the Gaussian beam equations.
 
 After completing the lab, you will be able to:
 
 1. Set up and operate the motor controller for automated measurements.
 2. Take a complete beam profile using motor-controlled positioning.
-3. Fit beam profile data to extract beam width with uncertainty.
+3. Fit beam profile data to extract beam size with uncertainty.
 4. Propagate uncertainties from measured quantities to derived quantities.
 5. Make quantitative predictions for Week 4 measurements based on your data.
 
@@ -42,7 +42,7 @@ This week has three phases:
 
 **Phase 2 - Measurement (Lab, ~60 min):** Set up the motor controller and take a complete beam profile. This is your first automated measurement—a trial run before Week 4's systematic data collection.
 
-**Phase 3 - Analysis (Lab, ~60 min):** Apply error propagation to your actual beam width measurement. Fit your data, calculate uncertainties, and make predictions for Week 4. This is where theory meets your measurements.
+**Phase 3 - Analysis (Lab, ~60 min):** Apply error propagation to your actual beam size measurement. Fit your data, calculate uncertainties, and make predictions for Week 4. This is where theory meets your measurements.
 
 *See the detailed deliverables checklist at the end of this guide.*
 
@@ -95,7 +95,9 @@ where $\vec{E_0}$ is a time-independent vector (orthogonal to propagation direct
 
 $$w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}\text{.}$$ {#eq:9}
 
-$R(z)$,the radius of curvature of the wavefront, is given by
+> **Terminology note:** The parameter $w$ is called the **beam radius**—the distance from the beam axis to where the intensity falls to $1/e^2$ of its peak value. This follows from the Gaussian intensity profile $I \propto e^{-2r^2/w^2}$: at $r = w$, the intensity is $e^{-2} = 1/e^2$ of the maximum. You'll explore this connection further below. The **beam diameter** would be $2w$. Some texts use "beam width" for $w$, but we use "beam radius" consistently in this lab to avoid confusion with the everyday meaning of "width" as a full extent.
+
+$R(z)$, the radius of curvature of the wavefront, is given by
 
 $$R(z)=z\left(1+\left(\frac{\pi w_0^2}{\lambda z}\right)^2\right)\text{,}$$ {#eq:10}
 
@@ -103,21 +105,26 @@ and the Gouy phase is given by
 
 $$\zeta(z)=\arctan\frac{\lambda z}{\pi w_0^2}\text{.}$$ {#eq:11}
 
-The remarkable thing about all these equations is that only two parameters need to be specified to give the whole beam profile: the wavelength $\lambda$ and the beam waist $w_0$, which is the narrowest point in the beam profile. There is a more general set of Hermite Gaussian modes which are shown in Figure @fig:gauss-hermite. The laser cavity typically produces the (0,0) mode shown in the upper left corner, but an optical cavity can also be used to create these other modes – a topic that can be explored in the final projects.
+The remarkable thing about all these equations is that only two parameters need to be specified to give the whole beam profile: the wavelength $\lambda$ and the beam waist $w_0$, which is the narrowest point in the beam profile.
 
-![Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam width, $w$.](../resources/lab-guides/gaussian-laser-beams/gauss-hermite.png){#fig:gauss-hermite width="20cm"}
+![Gaussian beam propagation showing the beam waist $w_0$, Rayleigh range $z_R$, and divergence angle $\theta$. The wavefronts (dashed gray lines) are flat at the waist and curved in the far field.](../resources/lab-guides/gaussian-laser-beams/gaussian_beam_diagram.png){#fig:gaussian-beam}
+
+There is a more general set of Hermite Gaussian modes which are shown in Figure @fig:gauss-hermite. The laser cavity typically produces the (0,0) mode shown in the upper left corner, but an optical cavity can also be used to create these other modes – a topic that can be explored in the final projects.
+
+![Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam radius, $w$.](../resources/lab-guides/gaussian-laser-beams/gauss-hermite.png){#fig:gauss-hermite width="20cm"}
 
 ## Physical Intuition Check
 
 Before applying these equations, test your physical understanding. Answer each question without looking at the equations, then verify with a calculation.
 
 1. **Scaling the waist:** If you double the beam waist $w_0$, what happens to:
+
    - The divergence angle $\theta = \lambda / (\pi w_0)$ in the far field?
    - The Rayleigh range $z_R = \pi w_0^2 / \lambda$?
 
    *Intuition check:* A wider waist means the beam is more collimated (less divergent). Does your answer reflect this?
 
-2. **Distance to double:** At what distance from the waist does the beam width double (i.e., $w(z) = 2w_0$)?
+2. **Distance to double:** At what distance from the waist does the beam radius double (i.e., $w(z) = 2w_0$)?
 
    *Hint:* Set up the equation and solve for $z$ in terms of $z_R$. The answer is a simple multiple of the Rayleigh range.
 
@@ -125,7 +132,7 @@ Before applying these equations, test your physical understanding. Answer each q
 
 4. **Conservation of energy:** As the beam expands, the width increases but the total power stays constant. What must happen to the peak intensity $I_{max}$ as $z$ increases? Write a proportionality relationship.
 
-5. **Beam quality check:** You measure a beam width of 0.8 mm at $z = 1$ m from the laser. Assuming $\lambda = 633$ nm, what is the minimum possible beam waist? (Hint: The waist could be inside or outside the laser cavity.)
+5. **Beam quality check:** You measure a beam radius of $w = 0.8$ mm at $z = 1$ m from the laser. Assuming $\lambda = 633$ nm, what is the minimum possible beam waist? (Hint: The waist could be inside or outside the laser cavity.)
 
 *Record your answers in your notebook. Getting physical intuition wrong is valuable—it reveals gaps in understanding that equations alone can hide.*
 
@@ -141,15 +148,15 @@ The Gaussian beam equations given in Equations @eq:8 -@eq:11 assume the beam com
 3.  How would you rewrite these four equations assuming the beam waist occurs at a different position $z=z_w$?
 4.  One way to check your answer is to make sure the equations simplify to Equations @eq:8 -@eq:11 in the special case of $z_w=0$.
 
-*You will fit actual beam width data in lab today using these modified equations.*
+*You will fit actual beam radius data in lab today using these modified equations.*
 
-## Beyond Beam Width: The Unmeasured Parameters
+## Beyond Beam Radius: The Unmeasured Parameters
 
-The Gaussian beam solution contains four key quantities: the beam width $w(z)$, the wavefront radius of curvature $R(z)$, the Gouy phase $\zeta(z)$, and the peak amplitude. In Week 4, you will measure only $w(z)$ using the knife-edge technique. What about the others?
+The Gaussian beam solution contains three key z-dependent quantities: the beam radius $w(z)$, the wavefront radius of curvature $R(z)$, and the Gouy phase $\zeta(z)$. In Week 4, you will measure only $w(z)$ using the knife-edge technique. What about the others?
 
 ### What we can and cannot measure with a knife edge
 
-The knife-edge profiler measures **intensity** as a function of position. This directly gives you $w(z)$, the beam width. However:
+The knife-edge profiler measures **intensity** as a function of position. This directly gives you $w(z)$, the beam radius. However:
 
 - **$R(z)$ (radius of curvature):** This describes how the wavefronts are curved—flat at the waist, increasingly curved far away. A knife edge only sees intensity, not phase, so it cannot measure $R(z)$ directly.
 
@@ -170,15 +177,15 @@ The Gouy phase shift is subtle—it's a $\pi$ total phase change as the beam goe
 
 The Gouy phase has practical consequences: it affects the resonant frequencies of laser cavities and the focal properties of lens systems.
 
-### Why does w(z) suffice for this lab?
+### Why does the beam radius w(z) suffice for this lab?
 
 For characterizing a laser beam's propagation, $w(z)$ is often the most practically important parameter because:
 
 1. It determines the spot size for any application (machining, microscopy, communications)
-2. Combined with the wavelength $\lambda$, it uniquely determines the waist $w_0$ and waist position $z_w$
+2. Combined with the wavelength $\lambda$, measurements of $w(z)$ at multiple positions uniquely determine the waist $w_0$ and waist position $z_w$
 3. Once you know $w_0$, you can *calculate* $R(z)$ and $\zeta(z)$ from the equations—you don't need to measure them separately
 
-**Reflection:** In what applications might you actually need to measure $R(z)$ or $\zeta(z)$ rather than just calculating them from $w_0$? (Hint: When might the theoretical relationship break down?)
+**Reflection:** In what applications might you actually need to measure $R(z)$ or $\zeta(z)$ rather than just calculating them from $w_0$? (Hint: The theoretical equations assume a perfect Gaussian beam. Consider what happens with aberrated optics, higher-order modes, or beams of unknown origin.)
 
 # Setting Up the Motor Controller
 
@@ -436,7 +443,7 @@ This section connects the Gaussian beam theory from your prelab to your actual m
 
 ## Error Propagation: From Measured to Derived Quantities
 
-The quantity of interest in an experiment is often derived from other measured quantities. For example, you'll derive beam width $w$ from your knife-edge data, then use $w$ at multiple positions to determine the beam waist $w_0$.
+The quantity of interest in an experiment is often derived from other measured quantities. For example, you'll derive beam radius $w$ from your knife-edge data, then use $w$ at multiple positions to determine the beam waist $w_0$.
 
 ### The General Formula
 
@@ -465,7 +472,7 @@ print(f"R = {R}")  # Shows value ± uncertainty
 
 ## Fitting Your Beam Profile Data
 
-Now fit your beam profile data to extract the beam width.
+Now fit your beam profile data to extract the beam size.
 
 ### Step 1: Load and Plot Your Data
 
@@ -505,7 +512,7 @@ def beam_profile(x, V_max, V_min, center, width):
         V_max: maximum voltage when beam is unblocked (V)
         V_min: minimum voltage when beam is blocked (V)
         center: beam center position (mm)
-        width: beam width w (mm)
+        width: beam radius w (mm)
 
     Note: This form uses V_max/V_min instead of amplitude/offset
     for physical clarity. The forms are equivalent:
@@ -530,7 +537,7 @@ perr = np.sqrt(np.diag(pcov))
 V_max, V_min, center, width = popt
 V_max_err, V_min_err, center_err, width_err = perr
 
-print(f"Beam width: w = {width:.4f} ± {width_err:.4f} mm")
+print(f"Beam size: w = {width:.4f} ± {width_err:.4f} mm")
 print(f"Beam center: x0 = {center:.4f} ± {center_err:.4f} mm")
 ```
 
@@ -554,14 +561,14 @@ plt.show()
 ```
 
 **Record in your notebook:**
-- Beam width: $w = $ _______ $\pm$ _______ mm
+- Beam size: $w = $ _______ $\pm$ _______ mm
 - Measurement position: $z = $ _______ m from laser
 
 **Connection to Week 2:** The uncertainty in your fit parameters depends on the noise level in your voltage measurements. Your Week 2 noise characterization tells you what σ_V to expect at your gain setting. Look at the residuals (data minus fit)—does their scatter match your predicted noise level? If the residuals are much larger than expected, you may have additional noise sources (vibration, beam drift) affecting your measurement.
 
 ## Predicting Week 4 Results
 
-Now use your measured beam width to make predictions for Week 4. This is where error propagation becomes practical.
+Now use your measured beam radius to make predictions for Week 4. This is where error propagation becomes practical.
 
 ### Step 1: Estimate Beam Waist from Your Measurement
 
@@ -593,15 +600,15 @@ w0_approx = z_measured * wavelength / (np.pi * w_m)
 print(f"Approximate beam waist: w0 ≈ {w0_approx*1e6:.1f} μm")
 ```
 
-### Step 2: Predict Beam Widths at Other Positions
+### Step 2: Predict Beam Radii at Other Positions
 
 Use error propagation to predict what you'll measure in Week 4:
 
 ```python
-# Predict beam width at different positions
+# Predict beam radius at different positions
 positions = [0.5, 1.0, 1.5, 2.0]  # meters
 
-print("\nPredicted beam widths for Week 4:")
+print("\nPredicted beam radii for Week 4:")
 print("-" * 40)
 for z in positions:
     z_val = ufloat(z, 0.01)
@@ -625,9 +632,9 @@ Fill in this table in your notebook:
 
 ## Comparing Manual vs. Motor-Controlled Measurements
 
-If you took beam width measurements manually in Week 1, compare them to today's motor-controlled measurement:
+If you took beam size measurements manually in Week 1, compare them to today's motor-controlled measurement:
 
-| Method | Beam width | Uncertainty | Notes |
+| Method | Beam size | Uncertainty | Notes |
 |--------|-----------|-------------|-------|
 | Week 1 (manual) | _______ mm | ± _______ mm | |
 | Week 3 (motor) | _______ mm | ± _______ mm | |
@@ -643,7 +650,7 @@ Your lab notebook should include the following for this week:
 1. **Paraxial wave equation derivation**: show the key steps from Maxwell's equations to Equation 7
 2. **Physical Intuition Check**: answers to all 5 questions
 3. **Gaussian beam model questions**: answers to questions 1-4 in "Trying out the Gaussian beam model"
-4. **Beyond Beam Width reflection**: when might you need to measure $R(z)$ or $\zeta(z)$ directly?
+4. **Beyond Beam Radius reflection**: when might you need to measure $R(z)$ or $\zeta(z)$ directly?
 
 ## In-Lab Documentation
 
@@ -660,13 +667,13 @@ Your lab notebook should include the following for this week:
 ### Phase 3: Analysis (~60 min)
 3. **Beam profile fit**:
    - Fit plot showing data and error function model
-   - Extracted beam width: $w = $ _______ $\pm$ _______ mm
+   - Extracted beam size: $w = $ _______ $\pm$ _______ mm
 4. **Error propagation and predictions**:
    - Estimated beam waist $w_0$
-   - Predicted beam widths at 4 positions for Week 4
+   - Predicted beam radii at 4 positions for Week 4
    - Prediction reflection (what could cause disagreement?)
 5. **Comparison** (if Week 1 data available):
-   - Manual vs. motor-controlled beam width comparison
+   - Manual vs. motor-controlled beam size comparison
 
 ## Code Deliverables
 
@@ -675,8 +682,8 @@ Your lab notebook should include the following for this week:
 
 ## Reflection Questions
 
-1. What was the dominant source of uncertainty in your beam width measurement? How could you reduce it?
+1. What was the dominant source of uncertainty in your beam size measurement? How could you reduce it?
 
 2. Based on your motor controller setup experience, what was the most challenging part? How would you help a classmate who encountered the same issue?
 
-3. Look at your predicted beam widths for Week 4. Which measurement position will have the largest *relative* uncertainty (σ_w / w)? Why?
+3. Look at your predicted beam radii for Week 4. Which measurement position will have the largest *relative* uncertainty (σ_w / w)? Why?

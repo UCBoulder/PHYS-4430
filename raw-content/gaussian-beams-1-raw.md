@@ -6,9 +6,9 @@ title: "Gaussian Beams - Week 1"
 
 **Week 1 of 4: Foundations**
 
-This week you build the foundational skills for the entire Gaussian Beams sequence: optical alignment, photodetector operation, and beam width measurement. The calibration data and measurement techniques you develop this week will be used directly in Weeks 2-4.
+This week you build the foundational skills for the entire Gaussian Beams sequence: optical alignment, photodetector operation, and beam size measurement. The calibration data and measurement techniques you develop this week will be used directly in Weeks 2-4.
 
-**This week:** Align optics → Calibrate photodetector → Measure beam width
+**This week:** Align optics → Calibrate photodetector → Measure beam size
 
 **Next week:** Learn data acquisition → Characterize noise → Choose optimal gain setting
 
@@ -35,7 +35,7 @@ This week you'll build the foundation for the entire lab sequence. Your work cen
 
 **3. Characterize measurement uncertainty.** You'll observe voltage fluctuations, identify their character (random noise vs. drift), and make decisions about your measurement strategy for beam profiling.
 
-**If time permits:** Begin knife-edge beam width measurements. If not, you'll complete this in Week 3.
+**If time permits:** Begin knife-edge beam size measurements. If not, you'll complete this in Week 3.
 
 *See the detailed deliverables checklist at the end of this guide.*
 
@@ -134,7 +134,7 @@ The goal of this part of the lab is to understand a lot about the specifications
 
 ## Calibrating the photodetector offset and gain
 
-Calibrating the photodetector is essential when working with multiple gain settings. Imagine you're measuring beam width later today (or in Week 4's automated measurements): at one position the signal saturates at 40 dB gain, but gives good readings at 30 dB. How would you combine these measurements onto a single scale? That's what calibration enables—it lets you stitch data from different gain settings together accurately.
+Calibrating the photodetector is essential when working with multiple gain settings. Imagine you're measuring beam size later today (or in Week 4's automated measurements): at one position the signal saturates at 40 dB gain, but gives good readings at 30 dB. How would you combine these measurements onto a single scale? That's what calibration enables—it lets you stitch data from different gain settings together accurately.
 
 1. The photodetector gain is specified in **decibels (dB)**, a logarithmic scale commonly used in electronics. Here's how it works:
 
@@ -239,7 +239,7 @@ Write both directions: (1) $P_{in} \rightarrow V$ and (2) $V \rightarrow P_{in}$
 
 ## Reflection: Using Your Calibration
 
-You'll use this photodetector throughout the lab sequence—for beam width measurements today and for automated profiling in Week 4. Before moving on, consider how you will use your calibration results:
+You'll use this photodetector throughout the lab sequence—for beam size measurements today and for automated profiling in Week 4. Before moving on, consider how you will use your calibration results:
 
 1. **Datasheet vs. measured values:** Based on your calibration, would you trust the datasheet gain values, or would you use your measured values? Under what conditions might the datasheet values be inadequate?
 
@@ -287,17 +287,17 @@ Based on your observations, answer these questions in your notebook:
 
 1. **Does σ capture your uncertainty?** If you observed drift, the standard deviation of random samples may not accurately represent your measurement uncertainty. Why not?
 
-2. **How many measurements do you need?** Calculate how many measurements would give you 1% relative uncertainty in the mean (i.e., $\sigma_{\overline{V}}/\overline{V} = 0.01$). Is this practical for your beam width measurements?
+2. **How many measurements do you need?** Calculate how many measurements would give you 1% relative uncertainty in the mean (i.e., $\sigma_{\overline{V}}/\overline{V} = 0.01$). Is this practical for your beam size measurements?
 
 3. **What's your measurement strategy?** For the knife-edge scan, will you record single readings at each position or average multiple readings? What's the trade-off between speed and precision?
 
 ## Connecting to Your Experiment
 
-These decisions matter for your beam width measurement. If drift is present during a knife-edge scan, it could systematically bias your fitted beam width. If you're averaging at each position, you're trading measurement time for precision.
+These decisions matter for your beam size measurement. If drift is present during a knife-edge scan, it could systematically bias your fitted beam size. If you're averaging at each position, you're trading measurement time for precision.
 
 In Week 2, you'll characterize noise more systematically and learn to make these trade-offs quantitatively.
 
-# Measuring the Beam Width
+# Measuring the Beam Size
 
 The goal of this section is to develop a measurement technique and analysis scheme to measure the width of a laser beam. The scheme will let you measure the width in one dimension. The technique is most useful for beams that have an approximately Gaussian intensity profile. You will improve and refine this technique in the upcoming weeks of this lab.
 
@@ -326,7 +326,7 @@ The basic scheme involves measuring the power in the laser beam as the beam is g
 1. What is the functional form for your fit function? (You derived this from the Gaussian integral above.)
 2. Is it a linear or nonlinear fit function? Why?
 3. What are the fit parameters? Why do you need this many?
-4. How do the fit parameters relate to the beam width?
+4. How do the fit parameters relate to the beam size?
 
 **Optional practice (if time permits):**
 
@@ -335,9 +335,9 @@ If you want to get a head start on curve fitting, you can practice with test dat
 5. Download [this data set](../resources/lab-guides/gaussian-laser-beams/Test_Profile_Data.csv).
    1. Make a plot of the data.
    2. Make a fit and plot it with the data.
-   3. Check that the fit looks good and you get a beam width of $w=4.52 \times 10^{-4}\ m$. If you get a different value, check with your instructor to understand the problem. What is the uncertainty on your measurement?
+   3. Check that the fit looks good and you get a beam size of $w=4.52 \times 10^{-4}\ m$. If you get a different value, check with your instructor to understand the problem. What is the uncertainty on your measurement?
 
-## Build your setup for measuring the beam width of your laser
+## Build your setup for measuring the beam size of your laser
 
 1. Draw a detailed schematic of the setup (from the laser all the way to the photodetector).
 2. After assembling your experiment, but prior to taking a lot of data, how can you quickly determine if the measurement is working?
@@ -352,7 +352,7 @@ If you want to get a head start on curve fitting, you can practice with test dat
 
 ## Analysis of the real data
 
-1. Use the analysis procedures verified in section @sec:analysis to find the beam width for your data. Be sure to include the uncertainty.
+1. Use the analysis procedures verified in section @sec:analysis to find the beam size for your data. Be sure to include the uncertainty.
 2. Plot your fit together with your data to make sure it is good.
 
 # Postlab - Preparation for Week 2
@@ -369,7 +369,7 @@ Open the file in a text editor or spreadsheet to see its structure. Then, **befo
 
 2. The code below uses `data[:, 0]` and `data[:, 1]`. In plain English, what does the `:` mean? What does the `0` mean?
 
-3. The raw position data is in meters, but the plot displays millimeters. Why might millimeters (or smaller units) be preferable for displaying a beam profile measurement? (Hint: think about typical laser beam widths.)
+3. The raw position data is in meters, but the plot displays millimeters. Why might millimeters (or smaller units) be preferable for displaying a beam profile measurement? (Hint: think about typical laser beam radii.)
 
 ## Step 2: Run and Verify
 
@@ -438,7 +438,7 @@ def beam_profile(x, amplitude, center, width, offset):
     return amplitude * erf(np.sqrt(2) * (x - center) / width) + offset
 
 popt, pcov = curve_fit(beam_profile, x_data, y_data, p0=[1.4, 0.01, 0.0005, 1.4])
-print(f"Beam width: {popt[2]:.4f} m")
+print(f"Beam size w: {popt[2]:.4f} m")
 ```
 
 You don't need to understand `curve_fit` yet—that's Week 2's content. But you *do* need to understand:
@@ -464,7 +464,7 @@ Your lab notebook should include the following for this week:
 
 1. **Photodetector physics explanation**: diagram and written explanation of how the photodetector converts light to voltage
 2. **Calibration comparison**: quantitative comparison of your measurements to datasheet values
-3. **Beam width measurement** (if completed): fit plot, extracted beam width with uncertainty
+3. **Beam size measurement** (if completed): fit plot, extracted beam size with uncertainty
 4. **Reflection questions**:
 
    a. Your photodetector offset voltage differs from the datasheet by 15%. What would you do before using this detector for precision measurements?

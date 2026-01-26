@@ -51,9 +51,9 @@
             class="toc-section-number">5.4</span> Trying out the
             Gaussian beam model</a></li>
             <li><a
-            href="#beyond-beam-width-the-unmeasured-parameters"><span
-            class="toc-section-number">5.5</span> Beyond Beam Width: The
-            Unmeasured Parameters</a>
+            href="#beyond-beam-radius-the-unmeasured-parameters"><span
+            class="toc-section-number">5.5</span> Beyond Beam Radius:
+            The Unmeasured Parameters</a>
             <ul>
             <li><a
             href="#what-we-can-and-cannot-measure-with-a-knife-edge"><span
@@ -65,9 +65,10 @@
             <li><a href="#how-would-you-measure-ζz"><span
             class="toc-section-number">5.5.3</span> How would you
             measure ζ(z)?</a></li>
-            <li><a href="#why-does-wz-suffice-for-this-lab"><span
-            class="toc-section-number">5.5.4</span> Why does w(z)
-            suffice for this lab?</a></li>
+            <li><a
+            href="#why-does-the-beam-radius-wz-suffice-for-this-lab"><span
+            class="toc-section-number">5.5.4</span> Why does the beam
+            radius w(z) suffice for this lab?</a></li>
             </ul></li>
             </ul></li>
             <li><a href="#setting-up-the-motor-controller"><span
@@ -163,9 +164,9 @@
             class="toc-section-number">8.3.1</span> Step 1: Estimate
             Beam Waist from Your Measurement</a></li>
             <li><a
-            href="#step-2-predict-beam-widths-at-other-positions"><span
+            href="#step-2-predict-beam-radii-at-other-positions"><span
             class="toc-section-number">8.3.2</span> Step 2: Predict Beam
-            Widths at Other Positions</a></li>
+            Radii at Other Positions</a></li>
             <li><a href="#step-3-record-your-predictions"><span
             class="toc-section-number">8.3.3</span> Step 3: Record Your
             Predictions</a></li>
@@ -243,7 +244,7 @@
          class="math inline">\(R(z)\)</span>, <span
          class="math inline">\(\zeta(z)\)</span>) and how they relate to
          observable properties.</li>
-         <li>Predict how beam width changes with position using the
+         <li>Predict how beam radius changes with position using the
          Gaussian beam equations.</li>
          </ol>
          <p>After completing the lab, you will be able to:</p>
@@ -252,7 +253,7 @@
          measurements.</li>
          <li>Take a complete beam profile using motor-controlled
          positioning.</li>
-         <li>Fit beam profile data to extract beam width with
+         <li>Fit beam profile data to extract beam size with
          uncertainty.</li>
          <li>Propagate uncertainties from measured quantities to derived
          quantities.</li>
@@ -272,7 +273,7 @@
          is your first automated measurement—a trial run before Week 4’s
          systematic data collection.</p>
          <p><strong>Phase 3 - Analysis (Lab, ~60 min):</strong> Apply
-         error propagation to your actual beam width measurement. Fit
+         error propagation to your actual beam size measurement. Fit
          your data, calculate uncertainties, and make predictions for
          Week 4. This is where theory meets your measurements.</p>
          <p><em>See the detailed deliverables checklist at the end of
@@ -364,7 +365,7 @@
          the term</p>
          <p><span id="eq:6" class="eqnos"><span
          class="math display">\[\left| \frac{\partial^2A}{\partial z^2}
-         \right| \ll \left|2k\frac{\partial A}{\partial
+         \right| \ll \left|2ik\frac{\partial A}{\partial
          z}\right|\text{.}\]</span><span class="eqnos-number">(6)</span></span>
          </p>
          <p>Finally, we get the paraxial wave equation,</p>
@@ -376,7 +377,7 @@
          </p>
          <p>One set of solutions to the paraxial wave equation are
          Gauss-Hermite beams, which have an intensity profiles like
-         those shown in Figure <a href="#fig:gauss-hermite">1</a>. These
+         those shown in Figure <a href="#fig:gauss-hermite">2</a>. These
          are the same solutions as for the quantum simple harmonic
          oscillator, a topic that could be further explored as a final
          project.</p>
@@ -399,7 +400,23 @@
          z}{\pi
          w_0^2}\right)^2}\text{.}\]</span><span class="eqnos-number">(9)</span></span>
          </p>
-         <p><span class="math inline">\(R(z)\)</span>,the radius of
+         <blockquote>
+         <p><strong>Terminology note:</strong> The parameter <span
+         class="math inline">\(w\)</span> is called the <strong>beam
+         radius</strong>—the distance from the beam axis to where the
+         intensity falls to <span class="math inline">\(1/e^2\)</span>
+         of its peak value. This follows from the Gaussian intensity
+         profile <span class="math inline">\(I \propto
+         e^{-2r^2/w^2}\)</span>: at <span class="math inline">\(r =
+         w\)</span>, the intensity is <span class="math inline">\(e^{-2}
+         = 1/e^2\)</span> of the maximum. You’ll explore this connection
+         further below. The <strong>beam diameter</strong> would be
+         <span class="math inline">\(2w\)</span>. Some texts use “beam
+         width” for <span class="math inline">\(w\)</span>, but we use
+         “beam radius” consistently in this lab to avoid confusion with
+         the everyday meaning of “width” as a full extent.</p>
+         </blockquote>
+         <p><span class="math inline">\(R(z)\)</span>, the radius of
          curvature of the wavefront, is given by</p>
          <p><span id="eq:10" class="eqnos"><span
          class="math display">\[R(z)=z\left(1+\left(\frac{\pi
@@ -408,30 +425,45 @@
          </p>
          <p>and the Gouy phase is given by</p>
          <p><span id="eq:11" class="eqnos"><span
-         class="math display">\[\zeta(z)=arctan\frac{\pi w_0^2}{\lambda
-         z}\text{.}\]</span><span class="eqnos-number">(11)</span></span>
+         class="math display">\[\zeta(z)=\arctan\frac{\lambda z}{\pi
+         w_0^2}\text{.}\]</span><span class="eqnos-number">(11)</span></span>
          </p>
          <p>The remarkable thing about all these equations is that only
          two parameters need to be specified to give the whole beam
          profile: the wavelength <span
          class="math inline">\(\lambda\)</span> and the beam waist <span
          class="math inline">\(w_0\)</span>, which is the narrowest
-         point in the beam profile. There is a more general set of
-         Hermite Gaussian modes which are shown in Figure <a
-         href="#fig:gauss-hermite">1</a>. The laser cavity typically
-         produces the (0,0) mode shown in the upper left corner, but an
-         optical cavity can also be used to create these other modes – a
-         topic that can be explored in the final projects.</p>
+         point in the beam profile.</p>
+         <div id="fig:gaussian-beam" class="fignos">
+         <figure>
+         <img
+         src="../resources/lab-guides/gaussian-laser-beams/gaussian_beam_diagram.png"
+         alt="Figure 1: Gaussian beam propagation showing the beam waist w_0, Rayleigh range z_R, and divergence angle \theta. The wavefronts (dashed gray lines) are flat at the waist and curved in the far field." />
+         <figcaption aria-hidden="true"><span>Figure 1:</span> Gaussian
+         beam propagation showing the beam waist <span
+         class="math inline">\(w_0\)</span>, Rayleigh range <span
+         class="math inline">\(z_R\)</span>, and divergence angle <span
+         class="math inline">\(\theta\)</span>. The wavefronts (dashed
+         gray lines) are flat at the waist and curved in the far
+         field.</figcaption>
+         </figure>
+         </div>
+         <p>There is a more general set of Hermite Gaussian modes which
+         are shown in Figure <a href="#fig:gauss-hermite">2</a>. The
+         laser cavity typically produces the (0,0) mode shown in the
+         upper left corner, but an optical cavity can also be used to
+         create these other modes – a topic that can be explored in the
+         final projects.</p>
          <div id="fig:gauss-hermite" class="fignos">
          <figure>
          <img
          src="../resources/lab-guides/gaussian-laser-beams/gauss-hermite.png"
          style="width:20cm"
-         alt="Figure 1: Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam width, w." />
-         <figcaption aria-hidden="true"><span>Figure 1:</span> Intensity
+         alt="Figure 2: Intensity distributions for the lowest order Gauss-Hermite solutions to the paraxial wave equation. The axes are in units of the beam radius, w." />
+         <figcaption aria-hidden="true"><span>Figure 2:</span> Intensity
          distributions for the lowest order Gauss-Hermite solutions to
          the paraxial wave equation. The axes are in units of the beam
-         width, <span class="math inline">\(w\)</span>.</figcaption>
+         radius, <span class="math inline">\(w\)</span>.</figcaption>
          </figure>
          </div>
          <h2 data-number="5.3" id="physical-intuition-check"><span
@@ -454,7 +486,7 @@
          more collimated (less divergent). Does your answer reflect
          this?</p></li>
          <li><p><strong>Distance to double:</strong> At what distance
-         from the waist does the beam width double (i.e., <span
+         from the waist does the beam radius double (i.e., <span
          class="math inline">\(w(z) = 2w_0\)</span>)?</p>
          <p><em>Hint:</em> Set up the equation and solve for <span
          class="math inline">\(z\)</span> in terms of <span
@@ -471,11 +503,11 @@
          class="math inline">\(z\)</span> increases? Write a
          proportionality relationship.</p></li>
          <li><p><strong>Beam quality check:</strong> You measure a beam
-         width of 0.8 mm at <span class="math inline">\(z = 1\)</span> m
-         from the laser. Assuming <span class="math inline">\(\lambda =
-         633\)</span> nm, what is the minimum possible beam waist?
-         (Hint: The waist could be inside or outside the laser
-         cavity.)</p></li>
+         radius of <span class="math inline">\(w = 0.8\)</span> mm at
+         <span class="math inline">\(z = 1\)</span> m from the laser.
+         Assuming <span class="math inline">\(\lambda = 633\)</span> nm,
+         what is the minimum possible beam waist? (Hint: The waist could
+         be inside or outside the laser cavity.)</p></li>
          </ol>
          <p><em>Record your answers in your notebook. Getting physical
          intuition wrong is valuable—it reveals gaps in understanding
@@ -511,18 +543,18 @@
          href="#eq:11">11</a> in the special case of <span
          class="math inline">\(z_w=0\)</span>.</li>
          </ol>
-         <p><em>You will fit actual beam width data in lab today using
+         <p><em>You will fit actual beam radius data in lab today using
          these modified equations.</em></p>
          <h2 data-number="5.5"
-         id="beyond-beam-width-the-unmeasured-parameters"><span
-         class="header-section-number">5.5</span> Beyond Beam Width: The
-         Unmeasured Parameters</h2>
-         <p>The Gaussian beam solution contains four key quantities: the
-         beam width <span class="math inline">\(w(z)\)</span>, the
-         wavefront radius of curvature <span
-         class="math inline">\(R(z)\)</span>, the Gouy phase <span
-         class="math inline">\(\zeta(z)\)</span>, and the peak
-         amplitude. In Week 4, you will measure only <span
+         id="beyond-beam-radius-the-unmeasured-parameters"><span
+         class="header-section-number">5.5</span> Beyond Beam Radius:
+         The Unmeasured Parameters</h2>
+         <p>The Gaussian beam solution contains three key z-dependent
+         quantities: the beam radius <span
+         class="math inline">\(w(z)\)</span>, the wavefront radius of
+         curvature <span class="math inline">\(R(z)\)</span>, and the
+         Gouy phase <span class="math inline">\(\zeta(z)\)</span>. In
+         Week 4, you will measure only <span
          class="math inline">\(w(z)\)</span> using the knife-edge
          technique. What about the others?</p>
          <h3 data-number="5.5.1"
@@ -531,7 +563,7 @@
          cannot measure with a knife edge</h3>
          <p>The knife-edge profiler measures <strong>intensity</strong>
          as a function of position. This directly gives you <span
-         class="math inline">\(w(z)\)</span>, the beam width.
+         class="math inline">\(w(z)\)</span>, the beam radius.
          However:</p>
          <ul>
          <li><p><strong><span class="math inline">\(R(z)\)</span>
@@ -578,9 +610,9 @@
          resonant frequencies of laser cavities and the focal properties
          of lens systems.</p>
          <h3 data-number="5.5.4"
-         id="why-does-wz-suffice-for-this-lab"><span
-         class="header-section-number">5.5.4</span> Why does w(z)
-         suffice for this lab?</h3>
+         id="why-does-the-beam-radius-wz-suffice-for-this-lab"><span
+         class="header-section-number">5.5.4</span> Why does the beam
+         radius w(z) suffice for this lab?</h3>
          <p>For characterizing a laser beam’s propagation, <span
          class="math inline">\(w(z)\)</span> is often the most
          practically important parameter because:</p>
@@ -588,9 +620,11 @@
          <li>It determines the spot size for any application (machining,
          microscopy, communications)</li>
          <li>Combined with the wavelength <span
-         class="math inline">\(\lambda\)</span>, it uniquely determines
-         the waist <span class="math inline">\(w_0\)</span> and waist
-         position <span class="math inline">\(z_w\)</span></li>
+         class="math inline">\(\lambda\)</span>, measurements of <span
+         class="math inline">\(w(z)\)</span> at multiple positions
+         uniquely determine the waist <span
+         class="math inline">\(w_0\)</span> and waist position <span
+         class="math inline">\(z_w\)</span></li>
          <li>Once you know <span class="math inline">\(w_0\)</span>, you
          can <em>calculate</em> <span
          class="math inline">\(R(z)\)</span> and <span
@@ -602,7 +636,9 @@
          class="math inline">\(R(z)\)</span> or <span
          class="math inline">\(\zeta(z)\)</span> rather than just
          calculating them from <span class="math inline">\(w_0\)</span>?
-         (Hint: When might the theoretical relationship break down?)</p>
+         (Hint: The theoretical equations assume a perfect Gaussian
+         beam. Consider what happens with aberrated optics, higher-order
+         modes, or beams of unknown origin.)</p>
          <h1 data-number="6" id="setting-up-the-motor-controller"><span
          class="header-section-number">6</span> Setting Up the Motor
          Controller</h1>
@@ -611,12 +647,17 @@
          section guides you through setting up and verifying the motor
          controller hardware. Getting this working now will save
          significant time later.</p>
+         <p><strong>If you did not complete section 10 from week 1
+         (manual data collection), you must do that now before
+         proceeding as you will need to remove the micrometer installed
+         in the translation stage in the next section.</strong></p>
          <h2 data-number="6.1" id="hardware-overview"><span
          class="header-section-number">6.1</span> Hardware Overview</h2>
-         <p>The Thorlabs KST101 is a stepper motor controller that can
-         precisely position a translation stage. You will use it to move
-         a razor blade across the laser beam while the DAQ records the
-         photodetector signal.</p>
+         <p>The Thorlabs KST101 and ZST225B is a stepper motor
+         controller and stepper motor that can precisely position a
+         translation stage. You will use it to move a razor blade across
+         the laser beam while the DAQ records the photodetector
+         signal.</p>
          <p>The physical connections are:</p>
          <ol type="1">
          <li><strong>Motor Controller (KST101)</strong>:
@@ -624,8 +665,11 @@
          <li>Connect the USB cable from the KST101 cube to your
          computer</li>
          <li>Connect the power supply to the KST101</li>
-         <li>The motor should already be mechanically connected to the
-         translation stage with the razor</li>
+         <li>Install the ZST225B stepper motor into the translation
+         stage (removing the manual micrometer that was used in week
+         1)</li>
+         <li>Connect the ZST225B stepper motor to the KST101
+         controller</li>
          </ul></li>
          <li><strong>Optical Setup</strong> (for testing):
          <ul>
@@ -638,6 +682,9 @@
          <h2 data-number="6.2" id="software-prerequisites"><span
          class="header-section-number">6.2</span> Software
          Prerequisites</h2>
+         <p><strong>This section is for users who want to install the
+         software on their personal devices. The lab laptops already
+         have this installed.</strong></p>
          <h3 data-number="6.2.1" id="thorlabs-kinesis-sdk"><span
          class="header-section-number">6.2.1</span> 1. Thorlabs Kinesis
          SDK</h3>
@@ -909,7 +956,7 @@
          From Measured to Derived Quantities</h2>
          <p>The quantity of interest in an experiment is often derived
          from other measured quantities. For example, you’ll derive beam
-         width <span class="math inline">\(w\)</span> from your
+         radius <span class="math inline">\(w\)</span> from your
          knife-edge data, then use <span
          class="math inline">\(w\)</span> at multiple positions to
          determine the beam waist <span
@@ -950,8 +997,7 @@
          <h2 data-number="8.2" id="fitting-your-beam-profile-data"><span
          class="header-section-number">8.2</span> Fitting Your Beam
          Profile Data</h2>
-         <p>Now fit your beam profile data to extract the beam
-         width.</p>
+         <p>Now fit your beam profile data to extract the beam size.</p>
          <h3 data-number="8.2.1"
          id="step-1-load-and-plot-your-data"><span
          class="header-section-number">8.2.1</span> Step 1: Load and
@@ -993,7 +1039,7 @@
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">        V_max: maximum voltage when beam is unblocked (V)</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">        V_min: minimum voltage when beam is blocked (V)</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">        center: beam center position (mm)</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">        width: beam width w (mm)</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">        width: beam radius w (mm)</span></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Note: This form uses V_max/V_min instead of amplitude/offset</span></span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">    for physical clarity. The forms are equivalent:</span></span>
@@ -1018,7 +1064,7 @@
 <span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>V_max, V_min, center, width <span class="op">=</span> popt</span>
 <span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>V_max_err, V_min_err, center_err, width_err <span class="op">=</span> perr</span>
 <span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam width: w = </span><span class="sc">{</span>width<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>width_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam size: w = </span><span class="sc">{</span>width<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>width_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span>
 <span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam center: x0 = </span><span class="sc">{</span>center<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>center_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span></code></pre></div>
          <h3 data-number="8.2.3" id="step-3-plot-the-fit"><span
          class="header-section-number">8.2.3</span> Step 3: Plot the
@@ -1038,7 +1084,7 @@
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">&#39;beam_profile_fit.png&#39;</span>, dpi<span class="op">=</span><span class="dv">150</span>)</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-         <p><strong>Record in your notebook:</strong> - Beam width: $w =
+         <p><strong>Record in your notebook:</strong> - Beam size: $w =
          $ _______ <span class="math inline">\(\pm\)</span> _______ mm -
          Measurement position: $z = $ _______ m from laser</p>
          <p><strong>Connection to Week 2:</strong> The uncertainty in
@@ -1052,7 +1098,7 @@
          <h2 data-number="8.3" id="predicting-week-4-results"><span
          class="header-section-number">8.3</span> Predicting Week 4
          Results</h2>
-         <p>Now use your measured beam width to make predictions for
+         <p>Now use your measured beam radius to make predictions for
          Week 4. This is where error propagation becomes practical.</p>
          <h3 data-number="8.3.1"
          id="step-1-estimate-beam-waist-from-your-measurement"><span
@@ -1087,16 +1133,16 @@
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Approximate beam waist: w0 ≈ </span><span class="sc">{</span>w0_approx<span class="op">*</span><span class="fl">1e6</span><span class="sc">:.1f}</span><span class="ss"> μm&quot;</span>)</span></code></pre></div>
          <h3 data-number="8.3.2"
-         id="step-2-predict-beam-widths-at-other-positions"><span
+         id="step-2-predict-beam-radii-at-other-positions"><span
          class="header-section-number">8.3.2</span> Step 2: Predict Beam
-         Widths at Other Positions</h3>
+         Radii at Other Positions</h3>
          <p>Use error propagation to predict what you’ll measure in Week
          4:</p>
          <div class="sourceCode" id="cb11"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict beam width at different positions</span></span>
+         class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict beam radius at different positions</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>positions <span class="op">=</span> [<span class="fl">0.5</span>, <span class="fl">1.0</span>, <span class="fl">1.5</span>, <span class="fl">2.0</span>]  <span class="co"># meters</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Predicted beam widths for Week 4:&quot;</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Predicted beam radii for Week 4:&quot;</span>)</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;-&quot;</span> <span class="op">*</span> <span class="dv">40</span>)</span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> z <span class="kw">in</span> positions:</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    z_val <span class="op">=</span> ufloat(z, <span class="fl">0.01</span>)</span>
@@ -1151,13 +1197,13 @@
          id="comparing-manual-vs.-motor-controlled-measurements"><span
          class="header-section-number">8.4</span> Comparing Manual
          vs. Motor-Controlled Measurements</h2>
-         <p>If you took beam width measurements manually in Week 1,
+         <p>If you took beam size measurements manually in Week 1,
          compare them to today’s motor-controlled measurement:</p>
          <table>
          <thead>
          <tr class="header">
          <th>Method</th>
-         <th>Beam width</th>
+         <th>Beam size</th>
          <th>Uncertainty</th>
          <th>Notes</th>
          </tr>
@@ -1195,7 +1241,7 @@
          questions</li>
          <li><strong>Gaussian beam model questions</strong>: answers to
          questions 1-4 in “Trying out the Gaussian beam model”</li>
-         <li><strong>Beyond Beam Width reflection</strong>: when might
+         <li><strong>Beyond Beam Radius reflection</strong>: when might
          you need to measure <span class="math inline">\(R(z)\)</span>
          or <span class="math inline">\(\zeta(z)\)</span> directly?</li>
          </ol>
@@ -1227,19 +1273,19 @@
          <li><strong>Beam profile fit</strong>:
          <ul>
          <li>Fit plot showing data and error function model</li>
-         <li>Extracted beam width: $w = $ _______ <span
+         <li>Extracted beam size: $w = $ _______ <span
          class="math inline">\(\pm\)</span> _______ mm</li>
          </ul></li>
          <li><strong>Error propagation and predictions</strong>:
          <ul>
          <li>Estimated beam waist <span
          class="math inline">\(w_0\)</span></li>
-         <li>Predicted beam widths at 4 positions for Week 4</li>
+         <li>Predicted beam radii at 4 positions for Week 4</li>
          <li>Prediction reflection (what could cause disagreement?)</li>
          </ul></li>
          <li><strong>Comparison</strong> (if Week 1 data available):
          <ul>
-         <li>Manual vs. motor-controlled beam width comparison</li>
+         <li>Manual vs. motor-controlled beam size comparison</li>
          </ul></li>
          </ol>
          <h2 data-number="9.3" id="code-deliverables"><span
@@ -1253,11 +1299,11 @@
          Questions</h2>
          <ol type="1">
          <li><p>What was the dominant source of uncertainty in your beam
-         width measurement? How could you reduce it?</p></li>
+         size measurement? How could you reduce it?</p></li>
          <li><p>Based on your motor controller setup experience, what
          was the most challenging part? How would you help a classmate
          who encountered the same issue?</p></li>
-         <li><p>Look at your predicted beam widths for Week 4. Which
+         <li><p>Look at your predicted beam radii for Week 4. Which
          measurement position will have the largest <em>relative</em>
          uncertainty (σ_w / w)? Why?</p></li>
          </ol>
