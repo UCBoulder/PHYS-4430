@@ -1077,6 +1077,131 @@ def thursday_14_aliasing_table():
 
 
 # =============================================================================
+# THURSDAY LECTURE FIGURES - GAUSSIAN BEAMS
+# =============================================================================
+
+def thursday_gaussian_beam_diagram():
+    """Generate Gaussian beam propagation diagram showing key parameters."""
+    print("  Generating: thursday_gaussian_beam_diagram.png")
+
+    fig, ax = plt.subplots(figsize=(14, 7))
+
+    # Parameters (normalized units for clarity)
+    w0 = 1.0  # beam waist
+    z_R = 3.0  # Rayleigh range
+    lambda_eff = np.pi * w0**2 / z_R  # effective wavelength
+
+    # z positions
+    z = np.linspace(-8, 8, 500)
+
+    # Beam width function: w(z) = w0 * sqrt(1 + (z/z_R)^2)
+    def w(z_val):
+        return w0 * np.sqrt(1 + (z_val / z_R)**2)
+
+    # Upper and lower beam envelope
+    w_z = w(z)
+    ax.fill_between(z, -w_z, w_z, alpha=0.2, color='red', label='Beam intensity (1/e²)')
+
+    # Beam envelope lines
+    ax.plot(z, w_z, 'r-', linewidth=2)
+    ax.plot(z, -w_z, 'r-', linewidth=2)
+
+    # Asymptotic divergence lines (far field)
+    theta = w0 / z_R  # divergence half-angle
+    z_far = np.array([3, 8])
+    ax.plot(z_far, theta * z_far, 'b--', linewidth=1.5, alpha=0.7)
+    ax.plot(z_far, -theta * z_far, 'b--', linewidth=1.5, alpha=0.7)
+    ax.plot(-z_far, theta * z_far, 'b--', linewidth=1.5, alpha=0.7)
+    ax.plot(-z_far, -theta * z_far, 'b--', linewidth=1.5, alpha=0.7)
+
+    # Beam axis (z-axis)
+    ax.axhline(y=0, color='gray', linewidth=1, linestyle='-', alpha=0.5)
+    ax.axvline(x=0, color='gray', linewidth=1, linestyle='--', alpha=0.5)
+
+    # Mark beam waist w0
+    ax.plot([0, 0], [-w0, w0], 'g-', linewidth=3, label=f'Beam waist w₀')
+    ax.annotate('', xy=(0, w0), xytext=(0, 0),
+                arrowprops=dict(arrowstyle='<->', color='green', lw=2))
+    ax.text(0.4, w0/2, r'$w_0$', fontsize=16, color='green', fontweight='bold')
+
+    # Mark w(z) at z = z_R (√2 * w0)
+    w_at_zR = w(z_R)
+    ax.plot([z_R, z_R], [-w_at_zR, w_at_zR], 'purple', linewidth=2, linestyle='-')
+    ax.annotate('', xy=(z_R, w_at_zR), xytext=(z_R, 0),
+                arrowprops=dict(arrowstyle='<->', color='purple', lw=2))
+    ax.text(z_R + 0.3, w_at_zR/2, r'$w(z_R) = \sqrt{2}w_0$', fontsize=12, color='purple')
+
+    # Mark Rayleigh range on z-axis
+    ax.annotate('', xy=(z_R, -0.15), xytext=(0, -0.15),
+                arrowprops=dict(arrowstyle='<->', color='blue', lw=2))
+    ax.text(z_R/2, -0.5, r'$z_R$', fontsize=16, color='blue', ha='center', fontweight='bold')
+
+    # Mark -z_R as well
+    ax.annotate('', xy=(-z_R, -0.15), xytext=(0, -0.15),
+                arrowprops=dict(arrowstyle='<->', color='blue', lw=2))
+    ax.text(-z_R/2, -0.5, r'$z_R$', fontsize=16, color='blue', ha='center', fontweight='bold')
+
+    # Mark divergence angle theta
+    angle_z = 6
+    angle_y = theta * angle_z
+    ax.annotate('', xy=(angle_z, angle_y), xytext=(angle_z, 0),
+                arrowprops=dict(arrowstyle='<->', color='darkblue', lw=1.5))
+    ax.text(angle_z + 0.3, angle_y/2, r'$\theta$', fontsize=14, color='darkblue', fontweight='bold')
+
+    # Add wavefront curvature indicators (curved lines at key positions)
+    for z_pos in [-5, -2, 2, 5]:
+        w_pos = w(z_pos)
+        # Draw curved wavefront
+        y_wf = np.linspace(-w_pos * 0.8, w_pos * 0.8, 50)
+        if z_pos != 0:
+            # Approximate curvature visualization
+            R_z = z_pos * (1 + (z_R / z_pos)**2)
+            curvature = 0.02 * np.sign(z_pos) * y_wf**2
+            ax.plot(z_pos + curvature, y_wf, 'gray', linewidth=1, alpha=0.5)
+
+    # At z=0, wavefront is flat
+    ax.plot([0, 0], [-w0 * 0.8, w0 * 0.8], 'gray', linewidth=1.5, alpha=0.7)
+
+    # Labels and annotations
+    ax.set_xlabel('Propagation distance z', fontsize=14)
+    ax.set_ylabel('Transverse position', fontsize=14)
+    ax.set_title('Gaussian Beam Propagation', fontsize=16, fontweight='bold')
+
+    # Key equations box
+    eq_text = (r'$w(z) = w_0\sqrt{1 + \left(\frac{z}{z_R}\right)^2}$' + '\n\n' +
+               r'$z_R = \frac{\pi w_0^2}{\lambda}$ (Rayleigh range)' + '\n\n' +
+               r'$\theta = \frac{\lambda}{\pi w_0}$ (divergence)')
+    ax.text(0.02, 0.98, eq_text, transform=ax.transAxes, fontsize=12,
+            verticalalignment='top', horizontalalignment='left',
+            bbox=dict(boxstyle='round', facecolor='wheat', alpha=0.9))
+
+    # Physical meaning box
+    meaning_text = ('Key Features:\n'
+                    '• Waist w₀: minimum beam radius\n'
+                    '• Rayleigh range z_R: distance to √2·w₀\n'
+                    '• Far field: beam expands linearly with angle θ\n'
+                    '• Wavefronts: flat at waist, curved elsewhere')
+    ax.text(0.98, 0.02, meaning_text, transform=ax.transAxes, fontsize=10,
+            verticalalignment='bottom', horizontalalignment='right',
+            bbox=dict(boxstyle='round', facecolor='lightblue', alpha=0.9))
+
+    ax.set_xlim(-8.5, 8.5)
+    ax.set_ylim(-3.5, 3.5)
+    ax.set_aspect('equal')
+
+    # Remove y-axis numbers (not meaningful)
+    ax.set_yticks([])
+
+    # Custom x-axis labels
+    ax.set_xticks([-z_R, 0, z_R])
+    ax.set_xticklabels([r'$-z_R$', '0', r'$z_R$'], fontsize=12)
+
+    plt.tight_layout()
+    plt.savefig(THURSDAY_DIR / "thursday_gaussian_beam_diagram.png")
+    plt.close()
+
+
+# =============================================================================
 # MAIN
 # =============================================================================
 
@@ -1107,6 +1232,10 @@ def main():
     thursday_12_frequency_resolution()
     thursday_13_waveform_spectra()
     thursday_14_aliasing_table()
+
+    # Thursday figures - Gaussian Beams
+    print("\n--- Gaussian Beams ---")
+    thursday_gaussian_beam_diagram()
 
     print("\n" + "=" * 60)
     print("All figures generated successfully!")
