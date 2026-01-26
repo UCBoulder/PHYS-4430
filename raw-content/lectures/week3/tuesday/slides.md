@@ -28,7 +28,7 @@ By the end of this lecture, you will be able to:
 
 1. Explain the role of motor control in automated measurements
 2. Describe the software architecture for controlling Thorlabs motors from Python
-3. Apply the general error propagation formula to derive uncertainties
+3. Apply the general error propagation equation to derive uncertainties
 4. Use the `uncertainties` package for automatic error propagation
 5. Connect measurement uncertainties to predictions for future experiments
 
@@ -109,7 +109,7 @@ Connect to their Week 1 experience. They know how tedious manual measurements ar
 
 ---
 
-## Key Specifications
+## Key Specifications for ZST225B
 
 | Specification | Value | What it means |
 |---------------|-------|---------------|
@@ -117,7 +117,11 @@ Connect to their Week 1 experience. They know how tedious manual measurements ar
 | Travel range | 25 mm | Total distance available |
 | Velocity | 1–2 mm/s typical | Speed for beam profiling |
 
+<center>
+
 **The hardware is not the limiting factor for this experiment.**
+
+</center>
 
 ---
 
@@ -215,14 +219,6 @@ device.Disconnect()
 
 ---
 
-## Systematic Troubleshooting
-
-![h:380 Troubleshooting flowchart](figures/tuesday_03_troubleshooting.png)
-
-**This systematic approach saves hours of frustration!**
-
----
-
 ## Troubleshooting Steps
 
 **1. Is the hardware connected?**
@@ -244,11 +240,11 @@ device.Disconnect()
 
 You measure quantities with uncertainty:
 - Position: $z = 1.50 \pm 0.01$ m
-- Beam width: $w = 0.52 \pm 0.03$ mm
+- Beam size: $w = 0.52 \pm 0.03$ mm
 
 You calculate derived quantities:
 - Rayleigh range: $z_R = \pi w_0^2 / \lambda$
-- Predicted beam width at new position
+- Predicted beam radius at new position
 
 **Question:** What is the uncertainty in the derived quantities?
 
@@ -259,21 +255,9 @@ Connect to what they'll actually do in lab.
 
 ---
 
-## Why This Matters
-
-In Week 4, you will:
-1. Measure $w(z)$ at multiple positions
-2. Fit to extract $w_0$ and $z_w$
-3. **Predict** beam widths at other positions
-4. Compare predictions to measurements
-
-> If you don't track uncertainties, you can't tell if theory and experiment agree!
-
----
-
 ## The Connection to Week 1
 
-You already learned the formula:
+Recall from Week 1:
 
 $$\sigma_z = \sqrt{\left(\frac{\partial z}{\partial a}\right)^2 \sigma_a^2 + \left(\frac{\partial z}{\partial b}\right)^2 \sigma_b^2 + \cdots}$$
 
@@ -281,7 +265,7 @@ $$\sigma_z = \sqrt{\left(\frac{\partial z}{\partial a}\right)^2 \sigma_a^2 + \le
 
 ---
 
-## The General Formula
+## The General Equation
 
 For a derived quantity $z = f(a, b, c, \ldots)$:
 
@@ -293,7 +277,7 @@ $$\boxed{\sigma_z^2 = \left(\frac{\partial z}{\partial a}\right)^2 \sigma_a^2 + 
 
 <!--
 TIMING: ~10 minutes for error propagation math
-This is the core formula. Make sure it's on the board.
+This is the core equation. Make sure it's on the board.
 -->
 
 ---
@@ -373,11 +357,10 @@ This is why beam waist measurements need to be precise!
 
 ## The Problem with Manual Propagation
 
-For complex calculations (like Gaussian beam propagation), manual error propagation is:
+For complex calculations, manual error propagation is:
 
 - **Tedious** — many partial derivatives
 - **Error-prone** — easy to make mistakes
-- **Hard to verify** — did you get all the terms?
 
 > There's a better way!
 
@@ -429,25 +412,27 @@ print(exp(x))     # e^2 with propagated uncertainty
 
 ---
 
-## Example: Beam Width Calculation
+## Example: Predicting from a Measurement
 
 ```python
 from uncertainties import ufloat
 from uncertainties.umath import sqrt
 import numpy as np
 
-# Measured values
-w0 = ufloat(0.10, 0.01)      # Beam waist: 0.10 ± 0.01 mm
-z = ufloat(1500, 10)         # Position: 1500 ± 10 mm
-wavelength = 632.8e-6        # He-Ne wavelength in mm (exact)
+# What you MEASURE today
+w_measured = ufloat(0.52, 0.03)  # Beam size from fit (mm)
+z_measured = ufloat(1.50, 0.01)  # Distance from laser (m)
+wavelength = 632.8e-9            # He-Ne wavelength (m)
 
-# Calculate Rayleigh range
-z_R = np.pi * w0**2 / wavelength
-print(f"Rayleigh range: {z_R:.1f} mm")
+# ESTIMATE beam waist (far-field approximation: z >> z_R)
+w0_est = z_measured * wavelength / (np.pi * w_measured * 1e-3)
+print(f"Estimated waist: {w0_est*1e6:.1f} μm")
 
-# Calculate beam width at position z
-w_z = w0 * sqrt(1 + (z / z_R)**2)
-print(f"Beam width at z: {w_z:.3f} mm")
+# PREDICT beam radius at new position (for Week 4)
+z_new = ufloat(2.0, 0.01)
+z_R = np.pi * w0_est**2 / wavelength
+w_pred = w0_est * sqrt(1 + (z_new / z_R)**2)
+print(f"Predicted w at z=2m: {w_pred*1e3:.2f} mm")
 ```
 
 ---
@@ -455,14 +440,13 @@ print(f"Beam width at z: {w_z:.3f} mm")
 ## Output Shows Value ± Uncertainty
 
 ```
-Rayleigh range: 49.7+/-9.9 mm
-Beam width at z: 3.02+/-0.02 mm
+Estimated waist: 581+/-34 μm
+Predicted w at z=2m: 0.90+/-0.01 mm
 ```
 
 **The propagation is automatic!**
 
-- Rayleigh range: 20% uncertainty (from squaring $w_0$)
-- Beam width: smaller uncertainty (far from waist, less sensitive)
+- Measured → Estimated → Predicted: uncertainties flow through
 
 ---
 
@@ -501,34 +485,14 @@ Connect to what they'll actually do.
 
 ---
 
-## The Predict-Measure-Compare Cycle
-
-![h:380 Predict-measure-compare cycle](figures/tuesday_05_predict_cycle.png)
-
----
-
 ## What You'll Do Today
 
-1. **Measure** beam width $w$ at one position $z$
+1. **Measure** beam size $w$ at one position $z$
 2. **Estimate** beam waist $w_0$ (with uncertainty from fit)
-3. **Predict** beam widths at other positions for Week 4
+3. **Predict** beam radii at other positions for Week 4
 4. **Record** predictions in your notebook
 
 > Write down your predictions **before** measuring next week!
-
----
-
-## Agreement and Disagreement
-
-**How to compare prediction and measurement:**
-
-$$\text{Discrepancy} = |x_{\text{pred}} - x_{\text{meas}}|$$
-
-$$\text{Combined uncertainty} = \sqrt{\sigma_{\text{pred}}^2 + \sigma_{\text{meas}}^2}$$
-
-**Rule of thumb:**
-- Discrepancy < 2σ: Good agreement
-- Discrepancy > 3σ: Significant disagreement (investigate!)
 
 ---
 
@@ -538,7 +502,7 @@ $$\text{Combined uncertainty} = \sqrt{\sigma_{\text{pred}}^2 + \sigma_{\text{mea
    - KST101 + pythonnet + Kinesis SDK
    - Systematic troubleshooting saves time
 
-2. **Error propagation formula:**
+2. **Error propagation equation:**
    $$\sigma_z^2 = \sum_i \left(\frac{\partial z}{\partial x_i}\right)^2 \sigma_{x_i}^2$$
 
 3. **`uncertainties` package** automates error propagation
@@ -557,7 +521,7 @@ TIMING: ~2 minutes for summary
 
 1. Set up motor controller and verify communication
 2. Take your first automated beam profile
-3. Fit to extract beam width with uncertainty
+3. Fit to extract beam size with uncertainty
 4. Use `uncertainties` to predict Week 4 results
 
 **Start with the troubleshooting steps if things don't work!**
@@ -578,7 +542,7 @@ Q: Why can't I just use numpy with ufloat?
 A: numpy functions don't know how to propagate uncertainties. Use uncertainties.umath or unumpy for array operations.
 
 Q: What if my errors are correlated?
-A: The formula assumes uncorrelated errors. For correlated errors, you need the full covariance matrix treatment (beyond this course, but uncertainties can handle it).
+A: The equation assumes uncorrelated errors. For correlated errors, you need the full covariance matrix treatment (beyond this course, but uncertainties can handle it).
 
 Q: How does uncertainties know the partial derivatives?
 A: It uses automatic differentiation — tracking how small changes in inputs affect outputs through the chain rule.

@@ -115,9 +115,9 @@ def software_stack_diagram():
     """Generate software architecture stack diagram."""
     print("  Generating: tuesday_02_software_stack.png")
 
-    fig, ax = plt.subplots(figsize=(10, 8))
+    fig, ax = plt.subplots(figsize=(10, 7))
     ax.set_xlim(0, 10)
-    ax.set_ylim(0, 10)
+    ax.set_ylim(0, 8.5)
     ax.axis('off')
 
     # Layer positions (bottom to top)
@@ -131,8 +131,8 @@ def software_stack_diagram():
     ]
 
     box_width = 6
-    box_height = 0.9
-    x_center = 5
+    box_height = 1.1
+    x_center = 5.5
 
     for name, subtitle, color, y in layers:
         # Main box
@@ -142,10 +142,10 @@ def software_stack_diagram():
         ax.add_patch(rect)
 
         # Text
-        ax.text(x_center, y + box_height/2 + 0.1, name, ha='center', va='center',
-                fontsize=14, fontweight='bold')
-        ax.text(x_center, y + box_height/2 - 0.25, subtitle, ha='center', va='center',
-                fontsize=10, color='gray', style='italic')
+        ax.text(x_center, y + box_height/2 + 0.15, name, ha='center', va='center',
+                fontsize=22, fontweight='bold')
+        ax.text(x_center, y + box_height/2 - 0.3, subtitle, ha='center', va='center',
+                fontsize=16, color='gray', style='italic')
 
     # Arrows between layers
     arrow_x = x_center
@@ -156,30 +156,26 @@ def software_stack_diagram():
         ax.annotate('', xy=(arrow_x, y_top), xytext=(arrow_x, y_bottom),
                     arrowprops=dict(arrowstyle='<->', color='gray', lw=1.5))
 
-    # Title
-    ax.text(5, 9.2, 'Software Architecture', ha='center', va='center',
-            fontsize=18, fontweight='bold')
+    # Side labels (centered vertically with each bracket section)
+    ax.text(0.6, 2.15, 'Physical\nHardware', ha='center', va='center',
+            fontsize=18, color='#2E86AB', fontweight='bold')
+    ax.text(0.6, 4.55, 'System\nSoftware', ha='center', va='center',
+            fontsize=18, color='#2E86AB', fontweight='bold')
+    ax.text(0.6, 6.95, 'Python\nLayer', ha='center', va='center',
+            fontsize=18, color='#2E86AB', fontweight='bold')
 
-    # Side labels
-    ax.text(1.2, 1.6, 'Physical\nHardware', ha='center', va='center',
-            fontsize=11, color='#2E86AB', fontweight='bold')
-    ax.text(1.2, 4.0, 'System\nSoftware', ha='center', va='center',
-            fontsize=11, color='#2E86AB', fontweight='bold')
-    ax.text(1.2, 6.4, 'Python\nLayer', ha='center', va='center',
-            fontsize=11, color='#2E86AB', fontweight='bold')
+    # Bracket indicators (moved to not overlap with text)
+    ax.plot([1.5, 1.5], [1.0, 3.3], 'k-', lw=1.5)
+    ax.plot([1.45, 1.55], [1.0, 1.0], 'k-', lw=1.5)
+    ax.plot([1.45, 1.55], [3.3, 3.3], 'k-', lw=1.5)
 
-    # Bracket indicators
-    ax.plot([1.8, 1.8], [1.0, 3.1], 'k-', lw=1.5)
-    ax.plot([1.75, 1.85], [1.0, 1.0], 'k-', lw=1.5)
-    ax.plot([1.75, 1.85], [3.1, 3.1], 'k-', lw=1.5)
+    ax.plot([1.5, 1.5], [3.4, 5.7], 'k-', lw=1.5)
+    ax.plot([1.45, 1.55], [3.4, 3.4], 'k-', lw=1.5)
+    ax.plot([1.45, 1.55], [5.7, 5.7], 'k-', lw=1.5)
 
-    ax.plot([1.8, 1.8], [3.4, 5.5], 'k-', lw=1.5)
-    ax.plot([1.75, 1.85], [3.4, 3.4], 'k-', lw=1.5)
-    ax.plot([1.75, 1.85], [5.5, 5.5], 'k-', lw=1.5)
-
-    ax.plot([1.8, 1.8], [5.8, 7.9], 'k-', lw=1.5)
-    ax.plot([1.75, 1.85], [5.8, 5.8], 'k-', lw=1.5)
-    ax.plot([1.75, 1.85], [7.9, 7.9], 'k-', lw=1.5)
+    ax.plot([1.5, 1.5], [5.8, 8.1], 'k-', lw=1.5)
+    ax.plot([1.45, 1.55], [5.8, 5.8], 'k-', lw=1.5)
+    ax.plot([1.45, 1.55], [8.1, 8.1], 'k-', lw=1.5)
 
     plt.tight_layout()
     plt.savefig(FIGURES_DIR / "tuesday_02_software_stack.png")
