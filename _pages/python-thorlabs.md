@@ -48,13 +48,20 @@ C:\Program Files\Thorlabs\Kinesis\
 
 **Important:** Before using Python, the KST101 must be configured with the correct stage type. This is a one-time setup stored in the controller's memory.
 
-1. Power on the KST101
+1. **Without** connecting the USB cable from the KST101 to your PC, power on the KST101
 2. Press the Menu button
 3. Use the wheel to navigate to "10 Select Stage"
 4. Press the Menu button again
-4. Select your actuator type (ZST225) by using the wheel to navigate
-5. Press the Menu button again to save and exit
-6. Power cycle the controller using the power switch (unplugging it will not save the settings)
+5. Select your actuator type (ZST225) by using the wheel to navigate
+6. Press the Menu button again to save and exit
+7. Power cycle the controller using the power switch on the KST101 (unplugging it will not save the settings)
+8. After power cycling, plug the USB cable from the KST101 into your PC
+9. Open the Kinesis app
+10. Connect to the KST101 from the Kinesis app if it's not connected automatically
+11. Verify that the section in the bottom right corner of the `KCube Stepper Motor Controller` window indicates `Actuator: HS ZST225B` - if it's listed as another type, click on this section to change it 
+12. Close the Kinesis app
+
+After completing these steps, you should not need to do this again as long as you continue to use the same laptop and KST101.
 
 ---
 
@@ -319,12 +326,6 @@ def run_position_scan(serial_no, start_mm, end_mm, step_mm):
 # Run scan from 0 to 10 mm in 0.5 mm steps
 positions = run_position_scan("26004813", 0, 10, 0.5)
 ```
-
----
-
-# Integrating with DAQ
-
-For the beam profiler (Week 4), you combine motor control with DAQ voltage readings. See the complete [`04_beam_profiler.py`](/PHYS-4430/resources/lab-guides/gaussian-laser-beams/python/04_beam_profiler.py) script which demonstrates moving the motor through positions while recording photodetector voltages.
 
 ---
 

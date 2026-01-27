@@ -94,6 +94,7 @@ Which source do you expect to dominate the uncertainty in $w_0$? Justify your an
 ## Connecting Your Previous Work
 
 This lab brings together everything from the sequence:
+
 - **Week 1:** Optical alignment, photodetector calibration, knife-edge technique
 - **Week 2:** Noise characterization, gain selection, curve fitting
 - **Week 3:** Error propagation, Gaussian beam theory, motor control
@@ -134,13 +135,50 @@ Before your first automated scan, verify that your measurement system performs a
 Before we begin this week's lab, reflect on your experience from Week 1 (and perhaps refer to your lab notebook entry to help guide your memory).
 
 1. In Week 1, how long did the total process of data taking through analysis take to make a measurement of the beam size $w$?
-2. In this lab, you may have to take 20-30 beam profiles in order to measure $w_0$ and $z_w$. How long would this take with your manual method?
+2. In this lab, you may have to take 10-20 beam profiles in order to measure $w_0$ and $z_w$. How long would this take with your manual method?
 3. What are the most time-consuming portions of the process? Which parts benefit most from automation?
 
 ## Running the Beam Profiler
 
-The automation script is available at:
-`resources/lab-guides/gaussian-laser-beams/python/04_beam_profiler.py`
+The automation script is available at: [`04_beam_profiler.py`](/PHYS-4430/resources/lab-guides/gaussian-laser-beams/python/04_beam_profiler.py)
+
+### Connection to Your Week 3 Code
+
+In Week 3, you wrote code that combined motor positioning with DAQ reading. The beam profiler script does the same thing, with three production enhancements:
+
+- It saves data to files as it runs (so you don't lose data if something crashes)
+- It shows a real-time plot (so you can see problems early)
+- It handles errors gracefully (so one bad reading doesn't stop the entire scan)
+
+The core loop—move, wait, read, record—is identical to what you wrote. Here's a simplified view of the essential structure (the actual script adds real-time plotting and data management around these steps):
+
+```python
+for step_num in range(max_steps):
+    # 1. Read current position
+    position = self.get_position()
+
+    # 2. Read photodetector voltage
+    voltage = self.read_voltage()
+
+    # 3. Save data point immediately
+    writer.writerow([position, voltage])
+
+    # 4. Move to next position
+    self.move_to(position + step)
+
+    # 5. Wait for vibrations to settle
+    time.sleep(wait_time_ms / 1000)
+```
+
+### Before You Run: Guided Code Reading
+
+Before running the script, open `04_beam_profiler.py` in a text editor and find:
+
+1. The line where the motor moves to a new position (hint: look in the `run_scan` method)
+2. The line where the photodetector voltage is read
+3. Where the wait time gets used
+
+This exercise takes about 5 minutes and will dramatically improve your ability to troubleshoot if something goes wrong.
 
 ### Basic Usage
 
@@ -181,9 +219,25 @@ The script automatically generates two files with timestamps:
 
 ### Validating the Automation
 
-4. Test and run the automated Python program and evaluate the result using the same Python analysis from Week 1.
-5. Before you go on, make sure the automated acquisition and analysis routine gives the same result as the method you used in Week 1.
-6. How long does your new measurement method take? (2-3 minutes per $w$ measurement is very good.)
+**Critical checkpoint:** Before taking production data, validate that your automated system produces results consistent with your manual method.
+
+1. Take one automated beam profile at the same position you measured in Week 1 (or Week 3).
+2. Fit the data using your analysis code and compare:
+
+| Method | Beam radius $w$ | Uncertainty |
+|--------|-----------------|-------------|
+| Week 1 (manual) | _______ mm | ± _______ mm |
+| Week 4 (automated) | _______ mm | ± _______ mm |
+
+3. **If these agree within 2σ:** Your system is validated. Proceed with data collection.
+
+4. **If these disagree by more than 2σ:** Stop and troubleshoot before taking more data. Check:
+   - Motor position units (does Python position match KST101 display?)
+   - Photodetector gain setting (same as Week 1?)
+   - Ambient light contamination
+   - Whether the knife-edge is at the same z-position
+
+5. How long does your new measurement method take? (2-3 minutes per $w$ measurement is very good.)
 
 ## Customizing the Script (Optional)
 
@@ -333,9 +387,9 @@ If time permits, investigate the following:
 2. How does this relate to the concept of the "diffraction limit"?
 3. Try using a lens with shorter focal length. Does it produce a smaller spot? What are the tradeoffs?
 
-# Appendix: Understanding the Beam Profiler Code
+# Appendix: Beam Profiler Code Reference
 
-The beam profiler script uses a class-based structure. Understanding the code will help you modify it if needed and troubleshoot issues.
+This appendix provides reference material for troubleshooting and extending the beam profiler script. The core measurement loop is explained in the main text (see "Connection to Your Week 3 Code" above).
 
 ## The `BeamProfiler` Class
 
@@ -359,33 +413,6 @@ class BeamProfiler:
     def run_scan(self, step_size_mm, wait_time_ms, direction, max_steps):
         """Execute the automated scan with real-time plotting."""
 ```
-
-## The Main Measurement Loop
-
-The core logic in `run_scan()` follows this pattern:
-
-```python
-for step_num in range(max_steps):
-    # 1. Read current position
-    position = self.get_position()
-
-    # 2. Read photodetector voltage
-    voltage = self.read_voltage()
-
-    # 3. Save data point immediately
-    writer.writerow([position, voltage])
-
-    # 4. Update real-time plot
-    # (matplotlib code)
-
-    # 5. Move to next position
-    self.move_to(position + step)
-
-    # 6. Wait for vibrations to settle
-    time.sleep(wait_time_ms / 1000)
-```
-
-This is essentially the same logic you would use when taking data manually, just automated.
 
 ## Troubleshooting
 

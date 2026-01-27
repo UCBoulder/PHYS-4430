@@ -245,11 +245,23 @@ pip install pythonnet uncertainties
 
 ### Test that Windows Recognizes the Device
 
-1. Connect the USB to the KST101, then turn on power
-2. Open **Device Manager** and look for the device under "USB devices" or "Thorlabs APT Device"
-3. Note the serial number (displayed on the KST101 screen)
+**Important:** Before using Python, the KST101 must be configured with the correct stage type. This is a one-time setup stored in the controller's memory.
 
-If you get a driver error, you may need to disable Memory Integrity in Windows Security (ask technical staff for help if this occurs on a lab computer).
+1. **Without** connecting the USB cable from the KST101 to your PC, power on the KST101
+2. Press the Menu button
+3. Use the wheel to navigate to "10 Select Stage"
+4. Press the Menu button again
+5. Select your actuator type (ZST225) by using the wheel to navigate
+6. Press the Menu button again to save and exit
+7. Power cycle the controller using the power switch on the KST101 (unplugging it will not save the settings)
+8. After power cycling, plug the USB cable from the KST101 into your PC
+9. Open the Kinesis app
+10. Connect to the KST101 from the Kinesis app if it's not connected automatically
+11. Verify that the section in the bottom right corner of the `KCube Stepper Motor Controller` window indicates `Actuator: HS ZST225B` - if it's listed as another type, click on this section to change it 
+12. Close the Kinesis app
+
+After completing these steps, you should not need to do this again as long as you continue to use the same laptop and KST101.
+
 
 ### Test Basic Motor Communication
 
@@ -288,7 +300,6 @@ If this shows your device serial number, the connection is working.
 import clr
 import sys
 import time
-from decimal import Decimal
 
 sys.path.append(r"C:\Program Files\Thorlabs\Kinesis")
 clr.AddReference("Thorlabs.MotionControl.DeviceManagerCLI")
@@ -297,6 +308,7 @@ clr.AddReference("Thorlabs.MotionControl.GenericMotorCLI")
 
 from Thorlabs.MotionControl.DeviceManagerCLI import DeviceManagerCLI
 from Thorlabs.MotionControl.KCube.StepperMotorCLI import KCubeStepper
+from System import Decimal
 
 # Replace with your serial number
 SERIAL_NUMBER = "26004813"  # Check the display on your KST101
@@ -336,19 +348,24 @@ finally:
     print("Disconnected")
 ```
 
+After you've successfuly run the code above, verify that the position value reported from Python matches the position that is indicated on the screen of the KST101 - if these numbers disagree, please let your instructor or the technical staff know before proceeding.
+
 ## Motor Controller Troubleshooting
 
 **"Device not found" Error:**
+
 - Check USB connection
 - Verify serial number matches the display on the KST101
 - Make sure no other software (APT User, Kinesis) is using the motor
 
 **Motor Doesn't Move:**
+
 - Ensure power is connected to the KST101
 - Check that the stage isn't at a travel limit
 - Verify the stage type is configured correctly in Kinesis (ZST225B)
 
 **Python Import Errors:**
+
 - Ensure Kinesis SDK is installed and matches Python architecture (32/64-bit)
 - Check that the path to Kinesis DLLs is correct
 
@@ -372,6 +389,7 @@ Developing systematic troubleshooting skills is essential for experimental physi
 **If the motor doesn't respond to Python commands, what troubleshooting steps would you take?**
 
 List at least three things you would check, *in order of likelihood*, and explain your reasoning. Consider:
+
 - What are the most common failure modes?
 - What's the quickest way to isolate hardware vs. software issues?
 - How would you determine if the problem is with Python, the USB connection, or the motor itself?
@@ -380,26 +398,51 @@ This systematic approach to troubleshooting will serve you well in Week 4 and be
 
 # Taking Your First Automated Beam Profile
 
-Now that you have the motor controller working, take a complete beam profile measurement. This serves two purposes: (1) verify your entire measurement system works end-to-end, and (2) generate real data for the analysis section.
+Now that you have the motor controller working, take a complete beam profile measurement. Think of this as a **trial run**—you're getting the kinks out before Week 4's systematic data collection. This serves two purposes: (1) verify your entire measurement system works end-to-end, and (2) generate real data for the error propagation analysis later in this lab session.
+
+**Before you start, make a prediction:** Will your automated data be more or less noisy than your manual measurements from Week 1? Why? Record your prediction in your notebook—you'll revisit this after taking data.
 
 ## Measurement Procedure
+
+Here is an overview of the measurement process. The sections that follow provide details on integrating your code and checking your data quality.
 
 1. **Position the knife-edge assembly** at a known distance from the laser (measure and record this distance—you'll need it for analysis).
 
 2. **Set up the measurement:**
+
    - Ensure the photodetector is receiving the full beam when the knife-edge is retracted
    - Use the gain setting you determined in Week 2
    - Verify DAQ is reading reasonable voltages
 
-3. **Take the beam profile:**
-   - Move the knife-edge across the beam in steps of 0.05-0.1 mm
+3. **Choose your measurement parameters:**
+
+   Think about what step size will give you good data:
+   - Recall your beam radius $w$ from your Week 1 manual measurement
+   - The transition region where voltage changes spans roughly $2w$
+   - You want at least 10-15 points in the transition region to constrain your fit
+   - What step size does this imply?
+
+   In Week 4, you will revisit this choice more systematically based on your specific beam size and measurement goals.
+
+4. **Take the beam profile:**
+
+   - Move the knife-edge across the beam using your chosen step size
    - At each position, record the motor position and photodetector voltage
    - Continue until the beam is fully blocked (voltage reaches dark level)
-   - Aim for 20-30 data points across the transition
 
-4. **Save your data** with a descriptive filename including the date and z-position.
+5. **Save your data** with a descriptive filename including the date and z-position (e.g., `beam_profile_2024-01-15_z50cm.csv`). In Week 4, you'll collect profiles at multiple z-positions, so systematic naming will help you keep track of which data came from where.
 
-**Tip:** If using manual motor commands, you can automate data collection with a simple loop:
+## Integrating Motor and DAQ
+
+To automate beam profiling, you need to combine motor positioning with voltage reading. The code below shows the DAQ portion, but the motor movement is commented out.
+
+**To complete this code, you need a `move_to()` function.** You have two options:
+
+1. **Adapt the relative movement code** from the verification section above (hint: use `device.MoveTo(Decimal(position_mm), timeout_ms)` for absolute positioning)
+
+2. **Reference the complete motor control documentation** at [Thorlabs Motor Control with Python](/PHYS-4430/python-thorlabs), which includes a working `move_to()` function and a complete `run_position_scan()` example.
+
+Some decisions you'll need to make: How long should you wait for vibrations to settle after each move? What position range covers the full transition from unblocked to fully blocked? How many samples should you average at each position to reduce noise?
 
 ```python
 import time
@@ -430,12 +473,15 @@ np.savetxt('beam_profile_week3.csv', data, delimiter=',',
 
 ## Quick Check
 
-Before proceeding to analysis, verify your data looks reasonable:
-- Does the voltage transition smoothly from high to low?
-- Is the transition region clearly visible?
-- Do you have enough points in the transition region (where the voltage changes)?
+Before proceeding to the analysis section (where you'll fit this data to extract beam radius $w$), verify your data looks reasonable:
 
-If the data looks noisy or the transition is unclear, retake the measurement with smaller step sizes or more averaging.
+- Does the voltage transition smoothly from high to low? (Some scatter is normal, but the trend should be clear.)
+- Does your data span the full range from maximum voltage (beam unblocked) to minimum voltage (beam fully blocked)?
+- Do you have at least 10 points in the transition region where the voltage is changing?
+
+If the transition is unclear or you have too few points, retake the measurement with smaller step sizes or a different position range.
+
+**Revisit your prediction:** Was your automated data more or less noisy than your Week 1 manual data? What might explain the difference?
 
 # Applying Theory to Your Measurements
 
@@ -445,7 +491,7 @@ This section connects the Gaussian beam theory from your prelab to your actual m
 
 The quantity of interest in an experiment is often derived from other measured quantities. For example, you'll derive beam radius $w$ from your knife-edge data, then use $w$ at multiple positions to determine the beam waist $w_0$.
 
-### The General Formula
+### The General Equation
 
 Suppose you want to derive a quantity $z$ from measured quantities $a, b, c, ...$. The mathematical function is $z = z(a, b, c, ...)$. The propagated uncertainty in $z$ is:
 

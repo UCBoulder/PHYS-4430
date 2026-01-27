@@ -61,16 +61,22 @@
             class="toc-section-number">7.1</span> Running the Beam
             Profiler</a>
             <ul>
+            <li><a href="#connection-to-your-week-3-code"><span
+            class="toc-section-number">7.1.1</span> Connection to Your
+            Week 3 Code</a></li>
+            <li><a href="#before-you-run-guided-code-reading"><span
+            class="toc-section-number">7.1.2</span> Before You Run:
+            Guided Code Reading</a></li>
             <li><a href="#basic-usage"><span
-            class="toc-section-number">7.1.1</span> Basic Usage</a></li>
+            class="toc-section-number">7.1.3</span> Basic Usage</a></li>
             <li><a href="#choosing-parameters"><span
-            class="toc-section-number">7.1.2</span> Choosing
+            class="toc-section-number">7.1.4</span> Choosing
             Parameters</a></li>
             <li><a href="#output-files"><span
-            class="toc-section-number">7.1.3</span> Output
+            class="toc-section-number">7.1.5</span> Output
             Files</a></li>
             <li><a href="#validating-the-automation"><span
-            class="toc-section-number">7.1.4</span> Validating the
+            class="toc-section-number">7.1.6</span> Validating the
             Automation</a></li>
             </ul></li>
             <li><a href="#customizing-the-script-optional"><span
@@ -115,31 +121,27 @@
             class="toc-section-number">8.5</span> Advanced
             Investigation: Minimum Spot Size</a></li>
             </ul></li>
-            <li><a
-            href="#appendix-understanding-the-beam-profiler-code"><span
-            class="toc-section-number">9</span> Appendix: Understanding
-            the Beam Profiler Code</a>
+            <li><a href="#appendix-beam-profiler-code-reference"><span
+            class="toc-section-number">9</span> Appendix: Beam Profiler
+            Code Reference</a>
             <ul>
             <li><a href="#the-beamprofiler-class"><span
             class="toc-section-number">9.1</span> The
             <code>BeamProfiler</code> Class</a></li>
-            <li><a href="#the-main-measurement-loop"><span
-            class="toc-section-number">9.2</span> The Main Measurement
-            Loop</a></li>
             <li><a href="#troubleshooting"><span
-            class="toc-section-number">9.3</span> Troubleshooting</a>
+            class="toc-section-number">9.2</span> Troubleshooting</a>
             <ul>
             <li><a href="#device-not-found-error"><span
-            class="toc-section-number">9.3.1</span> “Device not found”
+            class="toc-section-number">9.2.1</span> “Device not found”
             Error</a></li>
             <li><a href="#motor-doesnt-move"><span
-            class="toc-section-number">9.3.2</span> Motor Doesn’t
+            class="toc-section-number">9.2.2</span> Motor Doesn’t
             Move</a></li>
             <li><a href="#voltage-reads-zero"><span
-            class="toc-section-number">9.3.3</span> Voltage Reads
+            class="toc-section-number">9.2.3</span> Voltage Reads
             Zero</a></li>
             <li><a href="#noisy-data"><span
-            class="toc-section-number">9.3.4</span> Noisy Data</a></li>
+            class="toc-section-number">9.2.4</span> Noisy Data</a></li>
             </ul></li>
             </ul></li>
             <li><a href="#deliverables-and-assessment"><span
@@ -361,12 +363,15 @@
          <h2 data-number="5.4" id="connecting-your-previous-work"><span
          class="header-section-number">5.4</span> Connecting Your
          Previous Work</h2>
-         <p>This lab brings together everything from the sequence: -
-         <strong>Week 1:</strong> Optical alignment, photodetector
-         calibration, knife-edge technique - <strong>Week 2:</strong>
-         Noise characterization, gain selection, curve fitting -
-         <strong>Week 3:</strong> Error propagation, Gaussian beam
-         theory, motor control</p>
+         <p>This lab brings together everything from the sequence:</p>
+         <ul>
+         <li><strong>Week 1:</strong> Optical alignment, photodetector
+         calibration, knife-edge technique</li>
+         <li><strong>Week 2:</strong> Noise characterization, gain
+         selection, curve fitting</li>
+         <li><strong>Week 3:</strong> Error propagation, Gaussian beam
+         theory, motor control</li>
+         </ul>
          <p>Your predictions above use results from all three previous
          weeks. If any predictions seem unreasonable, review the
          relevant material before lab.</p>
@@ -443,7 +448,7 @@
          <li>In Week 1, how long did the total process of data taking
          through analysis take to make a measurement of the beam size
          <span class="math inline">\(w\)</span>?</li>
-         <li>In this lab, you may have to take 20-30 beam profiles in
+         <li>In this lab, you may have to take 10-20 beam profiles in
          order to measure <span class="math inline">\(w_0\)</span> and
          <span class="math inline">\(z_w\)</span>. How long would this
          take with your manual method?</li>
@@ -453,13 +458,63 @@
          <h2 data-number="7.1" id="running-the-beam-profiler"><span
          class="header-section-number">7.1</span> Running the Beam
          Profiler</h2>
-         <p>The automation script is available at:
-         <code>resources/lab-guides/gaussian-laser-beams/python/04_beam_profiler.py</code></p>
-         <h3 data-number="7.1.1" id="basic-usage"><span
-         class="header-section-number">7.1.1</span> Basic Usage</h3>
-         <p>Navigate to the script directory and run:</p>
+         <p>The automation script is available at: <a
+         href="/PHYS-4430/resources/lab-guides/gaussian-laser-beams/python/04_beam_profiler.py"><code>04_beam_profiler.py</code></a></p>
+         <h3 data-number="7.1.1"
+         id="connection-to-your-week-3-code"><span
+         class="header-section-number">7.1.1</span> Connection to Your
+         Week 3 Code</h3>
+         <p>In Week 3, you wrote code that combined motor positioning
+         with DAQ reading. The beam profiler script does the same thing,
+         with three production enhancements:</p>
+         <ul>
+         <li>It saves data to files as it runs (so you don’t lose data
+         if something crashes)</li>
+         <li>It shows a real-time plot (so you can see problems
+         early)</li>
+         <li>It handles errors gracefully (so one bad reading doesn’t
+         stop the entire scan)</li>
+         </ul>
+         <p>The core loop—move, wait, read, record—is identical to what
+         you wrote. Here’s a simplified view of the essential structure
+         (the actual script adds real-time plotting and data management
+         around these steps):</p>
          <div class="sourceCode" id="cb1"><pre
-         class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> 04_beam_profiler.py</span></code></pre></div>
+         class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step_num <span class="kw">in</span> <span class="bu">range</span>(max_steps):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1. Read current position</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    position <span class="op">=</span> <span class="va">self</span>.get_position()</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2. Read photodetector voltage</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    voltage <span class="op">=</span> <span class="va">self</span>.read_voltage()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3. Save data point immediately</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    writer.writerow([position, voltage])</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 4. Move to next position</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.move_to(position <span class="op">+</span> step)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 5. Wait for vibrations to settle</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    time.sleep(wait_time_ms <span class="op">/</span> <span class="dv">1000</span>)</span></code></pre></div>
+         <h3 data-number="7.1.2"
+         id="before-you-run-guided-code-reading"><span
+         class="header-section-number">7.1.2</span> Before You Run:
+         Guided Code Reading</h3>
+         <p>Before running the script, open
+         <code>04_beam_profiler.py</code> in a text editor and find:</p>
+         <ol type="1">
+         <li>The line where the motor moves to a new position (hint:
+         look in the <code>run_scan</code> method)</li>
+         <li>The line where the photodetector voltage is read</li>
+         <li>Where the wait time gets used</li>
+         </ol>
+         <p>This exercise takes about 5 minutes and will dramatically
+         improve your ability to troubleshoot if something goes
+         wrong.</p>
+         <h3 data-number="7.1.3" id="basic-usage"><span
+         class="header-section-number">7.1.3</span> Basic Usage</h3>
+         <p>Navigate to the script directory and run:</p>
+         <div class="sourceCode" id="cb2"><pre
+         class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> 04_beam_profiler.py</span></code></pre></div>
          <p>The script will prompt you for:</p>
          <ol type="1">
          <li><strong>Motor serial number</strong>: Found on the KST101
@@ -470,8 +525,8 @@
          (recommend 500 ms)</li>
          <li><strong>Direction</strong>: “forward” or “backward”</li>
          </ol>
-         <h3 data-number="7.1.2" id="choosing-parameters"><span
-         class="header-section-number">7.1.2</span> Choosing
+         <h3 data-number="7.1.4" id="choosing-parameters"><span
+         class="header-section-number">7.1.4</span> Choosing
          Parameters</h3>
          <p><strong>Step Size</strong>: Smaller step sizes give higher
          resolution but take longer: - 0.05 mm is a good starting point
@@ -481,8 +536,8 @@
          <p><strong>Wait Time</strong>: This ensures measurements are
          taken after vibrations settle: - 500 ms is usually sufficient -
          Increase if you see noisy data</p>
-         <h3 data-number="7.1.3" id="output-files"><span
-         class="header-section-number">7.1.3</span> Output Files</h3>
+         <h3 data-number="7.1.5" id="output-files"><span
+         class="header-section-number">7.1.5</span> Output Files</h3>
          <p>The script automatically generates two files with
          timestamps:</p>
          <ol type="1">
@@ -498,18 +553,53 @@
          <li>Quick visualization of the measured profile</li>
          </ul></li>
          </ol>
-         <h3 data-number="7.1.4" id="validating-the-automation"><span
-         class="header-section-number">7.1.4</span> Validating the
+         <h3 data-number="7.1.6" id="validating-the-automation"><span
+         class="header-section-number">7.1.6</span> Validating the
          Automation</h3>
-         <ol start="4" type="1">
-         <li>Test and run the automated Python program and evaluate the
-         result using the same Python analysis from Week 1.</li>
-         <li>Before you go on, make sure the automated acquisition and
-         analysis routine gives the same result as the method you used
-         in Week 1.</li>
-         <li>How long does your new measurement method take? (2-3
+         <p><strong>Critical checkpoint:</strong> Before taking
+         production data, validate that your automated system produces
+         results consistent with your manual method.</p>
+         <ol type="1">
+         <li>Take one automated beam profile at the same position you
+         measured in Week 1 (or Week 3).</li>
+         <li>Fit the data using your analysis code and compare:</li>
+         </ol>
+         <table>
+         <thead>
+         <tr class="header">
+         <th>Method</th>
+         <th>Beam radius <span class="math inline">\(w\)</span></th>
+         <th>Uncertainty</th>
+         </tr>
+         </thead>
+         <tbody>
+         <tr class="odd">
+         <td>Week 1 (manual)</td>
+         <td>_______ mm</td>
+         <td>± _______ mm</td>
+         </tr>
+         <tr class="even">
+         <td>Week 4 (automated)</td>
+         <td>_______ mm</td>
+         <td>± _______ mm</td>
+         </tr>
+         </tbody>
+         </table>
+         <ol start="3" type="1">
+         <li><p><strong>If these agree within 2σ:</strong> Your system
+         is validated. Proceed with data collection.</p></li>
+         <li><p><strong>If these disagree by more than 2σ:</strong> Stop
+         and troubleshoot before taking more data. Check:</p>
+         <ul>
+         <li>Motor position units (does Python position match KST101
+         display?)</li>
+         <li>Photodetector gain setting (same as Week 1?)</li>
+         <li>Ambient light contamination</li>
+         <li>Whether the knife-edge is at the same z-position</li>
+         </ul></li>
+         <li><p>How long does your new measurement method take? (2-3
          minutes per <span class="math inline">\(w\)</span> measurement
-         is very good.)</li>
+         is very good.)</p></li>
          </ol>
          <h2 data-number="7.2"
          id="customizing-the-script-optional"><span
@@ -521,22 +611,22 @@
          Channel</h3>
          <p>If your photodetector is connected to a different channel
          (e.g., AI1):</p>
-         <div class="sourceCode" id="cb2"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>profiler <span class="op">=</span> BeamProfiler(serial_number, daq_channel<span class="op">=</span><span class="st">&quot;ai1&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb3"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>profiler <span class="op">=</span> BeamProfiler(serial_number, daq_channel<span class="op">=</span><span class="st">&quot;ai1&quot;</span>)</span></code></pre></div>
          <h3 data-number="7.2.2" id="adding-averaging"><span
          class="header-section-number">7.2.2</span> Adding
          Averaging</h3>
          <p>For noisy signals, you can modify
          <code>read_voltage()</code> to average multiple samples:</p>
-         <div class="sourceCode" id="cb3"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_voltage(<span class="va">self</span>, num_samples<span class="op">=</span><span class="dv">10</span>):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Read averaged voltage from DAQ.&quot;&quot;&quot;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>daq_device<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>daq_channel<span class="sc">}</span><span class="ss">&quot;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        voltages <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>num_samples)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.mean(voltages)</span></code></pre></div>
+         <div class="sourceCode" id="cb4"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> read_voltage(<span class="va">self</span>, num_samples<span class="op">=</span><span class="dv">10</span>):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Read averaged voltage from DAQ.&quot;&quot;&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>daq_device<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>daq_channel<span class="sc">}</span><span class="ss">&quot;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        voltages <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>num_samples)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.mean(voltages)</span></code></pre></div>
          <h1 data-number="8" id="the-experiment"><span
          class="header-section-number">8</span> The Experiment</h1>
          <p>The Gaussian beam model of light is useful because it often
@@ -844,64 +934,39 @@
          a smaller spot? What are the tradeoffs?</li>
          </ol>
          <h1 data-number="9"
-         id="appendix-understanding-the-beam-profiler-code"><span
-         class="header-section-number">9</span> Appendix: Understanding
-         the Beam Profiler Code</h1>
-         <p>The beam profiler script uses a class-based structure.
-         Understanding the code will help you modify it if needed and
-         troubleshoot issues.</p>
+         id="appendix-beam-profiler-code-reference"><span
+         class="header-section-number">9</span> Appendix: Beam Profiler
+         Code Reference</h1>
+         <p>This appendix provides reference material for
+         troubleshooting and extending the beam profiler script. The
+         core measurement loop is explained in the main text (see
+         “Connection to Your Week 3 Code” above).</p>
          <h2 data-number="9.1" id="the-beamprofiler-class"><span
          class="header-section-number">9.1</span> The
          <code>BeamProfiler</code> Class</h2>
-         <div class="sourceCode" id="cb4"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BeamProfiler:</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, serial_number, daq_device<span class="op">=</span><span class="st">&quot;Dev1&quot;</span>, daq_channel<span class="op">=</span><span class="st">&quot;ai0&quot;</span>):</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Initialize with motor serial number and DAQ settings.&quot;&quot;&quot;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="ex">connect</span>(<span class="va">self</span>):</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Connect to motor controller, configure velocity.&quot;&quot;&quot;</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_position(<span class="va">self</span>):</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Read current position in mm.&quot;&quot;&quot;</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> move_to(<span class="va">self</span>, position_mm):</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Move to absolute position.&quot;&quot;&quot;</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> read_voltage(<span class="va">self</span>):</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Read single voltage from DAQ.&quot;&quot;&quot;</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> run_scan(<span class="va">self</span>, step_size_mm, wait_time_ms, direction, max_steps):</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Execute the automated scan with real-time plotting.&quot;&quot;&quot;</span></span></code></pre></div>
-         <h2 data-number="9.2" id="the-main-measurement-loop"><span
-         class="header-section-number">9.2</span> The Main Measurement
-         Loop</h2>
-         <p>The core logic in <code>run_scan()</code> follows this
-         pattern:</p>
          <div class="sourceCode" id="cb5"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> step_num <span class="kw">in</span> <span class="bu">range</span>(max_steps):</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1. Read current position</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    position <span class="op">=</span> <span class="va">self</span>.get_position()</span>
+         class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> BeamProfiler:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, serial_number, daq_device<span class="op">=</span><span class="st">&quot;Dev1&quot;</span>, daq_channel<span class="op">=</span><span class="st">&quot;ai0&quot;</span>):</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Initialize with motor serial number and DAQ settings.&quot;&quot;&quot;</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2. Read photodetector voltage</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    voltage <span class="op">=</span> <span class="va">self</span>.read_voltage()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="ex">connect</span>(<span class="va">self</span>):</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Connect to motor controller, configure velocity.&quot;&quot;&quot;</span></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 3. Save data point immediately</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    writer.writerow([position, voltage])</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> get_position(<span class="va">self</span>):</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Read current position in mm.&quot;&quot;&quot;</span></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 4. Update real-time plot</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (matplotlib code)</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> move_to(<span class="va">self</span>, position_mm):</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Move to absolute position.&quot;&quot;&quot;</span></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 5. Move to next position</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="va">self</span>.move_to(position <span class="op">+</span> step)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> read_voltage(<span class="va">self</span>):</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Read single voltage from DAQ.&quot;&quot;&quot;</span></span>
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 6. Wait for vibrations to settle</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    time.sleep(wait_time_ms <span class="op">/</span> <span class="dv">1000</span>)</span></code></pre></div>
-         <p>This is essentially the same logic you would use when taking
-         data manually, just automated.</p>
-         <h2 data-number="9.3" id="troubleshooting"><span
-         class="header-section-number">9.3</span> Troubleshooting</h2>
-         <h3 data-number="9.3.1" id="device-not-found-error"><span
-         class="header-section-number">9.3.1</span> “Device not found”
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> run_scan(<span class="va">self</span>, step_size_mm, wait_time_ms, direction, max_steps):</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">&quot;&quot;&quot;Execute the automated scan with real-time plotting.&quot;&quot;&quot;</span></span></code></pre></div>
+         <h2 data-number="9.2" id="troubleshooting"><span
+         class="header-section-number">9.2</span> Troubleshooting</h2>
+         <h3 data-number="9.2.1" id="device-not-found-error"><span
+         class="header-section-number">9.2.1</span> “Device not found”
          Error</h3>
          <ul>
          <li>Check USB connection</li>
@@ -909,8 +974,8 @@
          <li>Make sure no other software (APT User, Kinesis) is using
          the motor</li>
          </ul>
-         <h3 data-number="9.3.2" id="motor-doesnt-move"><span
-         class="header-section-number">9.3.2</span> Motor Doesn’t
+         <h3 data-number="9.2.2" id="motor-doesnt-move"><span
+         class="header-section-number">9.2.2</span> Motor Doesn’t
          Move</h3>
          <ul>
          <li>Ensure power is connected to the KST101</li>
@@ -918,16 +983,16 @@
          <li>Verify the stage type is configured correctly in Kinesis
          (ZST225B)</li>
          </ul>
-         <h3 data-number="9.3.3" id="voltage-reads-zero"><span
-         class="header-section-number">9.3.3</span> Voltage Reads
+         <h3 data-number="9.2.3" id="voltage-reads-zero"><span
+         class="header-section-number">9.2.3</span> Voltage Reads
          Zero</h3>
          <ul>
          <li>Check photodetector power</li>
          <li>Verify BNC cable connections to DAQ</li>
          <li>Make sure the beam actually hits the photodetector</li>
          </ul>
-         <h3 data-number="9.3.4" id="noisy-data"><span
-         class="header-section-number">9.3.4</span> Noisy Data</h3>
+         <h3 data-number="9.2.4" id="noisy-data"><span
+         class="header-section-number">9.2.4</span> Noisy Data</h3>
          <ul>
          <li>Increase wait time between steps</li>
          <li>Check for mechanical vibrations in your setup</li>

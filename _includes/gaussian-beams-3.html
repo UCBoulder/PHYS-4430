@@ -121,8 +121,11 @@
             <li><a href="#measurement-procedure"><span
             class="toc-section-number">7.1</span> Measurement
             Procedure</a></li>
+            <li><a href="#integrating-motor-and-daq"><span
+            class="toc-section-number">7.2</span> Integrating Motor and
+            DAQ</a></li>
             <li><a href="#quick-check"><span
-            class="toc-section-number">7.2</span> Quick Check</a></li>
+            class="toc-section-number">7.3</span> Quick Check</a></li>
             </ul></li>
             <li><a href="#applying-theory-to-your-measurements"><span
             class="toc-section-number">8</span> Applying Theory to Your
@@ -133,9 +136,9 @@
             class="toc-section-number">8.1</span> Error Propagation:
             From Measured to Derived Quantities</a>
             <ul>
-            <li><a href="#the-general-formula"><span
+            <li><a href="#the-general-equation"><span
             class="toc-section-number">8.1.1</span> The General
-            Formula</a></li>
+            Equation</a></li>
             <li><a href="#error-propagation-in-python"><span
             class="toc-section-number">8.1.2</span> Error Propagation in
             Python</a></li>
@@ -720,16 +723,34 @@
          id="test-that-windows-recognizes-the-device"><span
          class="header-section-number">6.3.1</span> Test that Windows
          Recognizes the Device</h3>
+         <p><strong>Important:</strong> Before using Python, the KST101
+         must be configured with the correct stage type. This is a
+         one-time setup stored in the controller’s memory.</p>
          <ol type="1">
-         <li>Connect the USB to the KST101, then turn on power</li>
-         <li>Open <strong>Device Manager</strong> and look for the
-         device under “USB devices” or “Thorlabs APT Device”</li>
-         <li>Note the serial number (displayed on the KST101
-         screen)</li>
+         <li><strong>Without</strong> connecting the USB cable from the
+         KST101 to your PC, power on the KST101</li>
+         <li>Press the Menu button</li>
+         <li>Use the wheel to navigate to “10 Select Stage”</li>
+         <li>Press the Menu button again</li>
+         <li>Select your actuator type (ZST225) by using the wheel to
+         navigate</li>
+         <li>Press the Menu button again to save and exit</li>
+         <li>Power cycle the controller using the power switch on the
+         KST101 (unplugging it will not save the settings)</li>
+         <li>After power cycling, plug the USB cable from the KST101
+         into your PC</li>
+         <li>Open the Kinesis app</li>
+         <li>Connect to the KST101 from the Kinesis app if it’s not
+         connected automatically</li>
+         <li>Verify that the section in the bottom right corner of the
+         <code>KCube Stepper Motor Controller</code> window indicates
+         <code>Actuator: HS ZST225B</code> - if it’s listed as another
+         type, click on this section to change it</li>
+         <li>Close the Kinesis app</li>
          </ol>
-         <p>If you get a driver error, you may need to disable Memory
-         Integrity in Windows Security (ask technical staff for help if
-         this occurs on a lab computer).</p>
+         <p>After completing these steps, you should not need to do this
+         again as long as you continue to use the same laptop and
+         KST101.</p>
          <h3 data-number="6.3.2"
          id="test-basic-motor-communication"><span
          class="header-section-number">6.3.2</span> Test Basic Motor
@@ -769,15 +790,15 @@
          class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> clr</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> decimal <span class="im">import</span> Decimal</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:\Program Files\Thorlabs\Kinesis&quot;</span>)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.DeviceManagerCLI&quot;</span>)</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.KCube.StepperMotorCLI&quot;</span>)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.GenericMotorCLI&quot;</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.DeviceManagerCLI <span class="im">import</span> DeviceManagerCLI</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.KCube.StepperMotorCLI <span class="im">import</span> KCubeStepper</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>sys.path.append(<span class="vs">r&quot;C:\Program Files\Thorlabs\Kinesis&quot;</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.DeviceManagerCLI&quot;</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.KCube.StepperMotorCLI&quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>clr.AddReference(<span class="st">&quot;Thorlabs.MotionControl.GenericMotorCLI&quot;</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.DeviceManagerCLI <span class="im">import</span> DeviceManagerCLI</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> Thorlabs.MotionControl.KCube.StepperMotorCLI <span class="im">import</span> KCubeStepper</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> System <span class="im">import</span> Decimal</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace with your serial number</span></span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>SERIAL_NUMBER <span class="op">=</span> <span class="st">&quot;26004813&quot;</span>  <span class="co"># Check the display on your KST101</span></span>
@@ -815,21 +836,35 @@
 <span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    device.StopPolling()</span>
 <span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    device.Disconnect()</span>
 <span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Disconnected&quot;</span>)</span></code></pre></div>
+         <p>After you’ve successfuly run the code above, verify that the
+         position value reported from Python matches the position that
+         is indicated on the screen of the KST101 - if these numbers
+         disagree, please let your instructor or the technical staff
+         know before proceeding.</p>
          <h2 data-number="6.4"
          id="motor-controller-troubleshooting"><span
          class="header-section-number">6.4</span> Motor Controller
          Troubleshooting</h2>
-         <p><strong>“Device not found” Error:</strong> - Check USB
-         connection - Verify serial number matches the display on the
-         KST101 - Make sure no other software (APT User, Kinesis) is
-         using the motor</p>
-         <p><strong>Motor Doesn’t Move:</strong> - Ensure power is
-         connected to the KST101 - Check that the stage isn’t at a
-         travel limit - Verify the stage type is configured correctly in
-         Kinesis (ZST225B)</p>
-         <p><strong>Python Import Errors:</strong> - Ensure Kinesis SDK
-         is installed and matches Python architecture (32/64-bit) -
-         Check that the path to Kinesis DLLs is correct</p>
+         <p><strong>“Device not found” Error:</strong></p>
+         <ul>
+         <li>Check USB connection</li>
+         <li>Verify serial number matches the display on the KST101</li>
+         <li>Make sure no other software (APT User, Kinesis) is using
+         the motor</li>
+         </ul>
+         <p><strong>Motor Doesn’t Move:</strong></p>
+         <ul>
+         <li>Ensure power is connected to the KST101</li>
+         <li>Check that the stage isn’t at a travel limit</li>
+         <li>Verify the stage type is configured correctly in Kinesis
+         (ZST225B)</li>
+         </ul>
+         <p><strong>Python Import Errors:</strong></p>
+         <ul>
+         <li>Ensure Kinesis SDK is installed and matches Python
+         architecture (32/64-bit)</li>
+         <li>Check that the path to Kinesis DLLs is correct</li>
+         </ul>
          <h2 data-number="6.5" id="exercise-verify-your-setup"><span
          class="header-section-number">6.5</span> Exercise: Verify Your
          Setup</h2>
@@ -864,11 +899,14 @@
          <p><strong>If the motor doesn’t respond to Python commands,
          what troubleshooting steps would you take?</strong></p>
          <p>List at least three things you would check, <em>in order of
-         likelihood</em>, and explain your reasoning. Consider: - What
-         are the most common failure modes? - What’s the quickest way to
-         isolate hardware vs. software issues? - How would you determine
-         if the problem is with Python, the USB connection, or the motor
-         itself?</p>
+         likelihood</em>, and explain your reasoning. Consider:</p>
+         <ul>
+         <li>What are the most common failure modes?</li>
+         <li>What’s the quickest way to isolate hardware vs. software
+         issues?</li>
+         <li>How would you determine if the problem is with Python, the
+         USB connection, or the motor itself?</li>
+         </ul>
          <p>This systematic approach to troubleshooting will serve you
          well in Week 4 and beyond.</p>
          <h1 data-number="7"
@@ -876,12 +914,22 @@
          class="header-section-number">7</span> Taking Your First
          Automated Beam Profile</h1>
          <p>Now that you have the motor controller working, take a
-         complete beam profile measurement. This serves two purposes:
+         complete beam profile measurement. Think of this as a
+         <strong>trial run</strong>—you’re getting the kinks out before
+         Week 4’s systematic data collection. This serves two purposes:
          (1) verify your entire measurement system works end-to-end, and
-         (2) generate real data for the analysis section.</p>
+         (2) generate real data for the error propagation analysis later
+         in this lab session.</p>
+         <p><strong>Before you start, make a prediction:</strong> Will
+         your automated data be more or less noisy than your manual
+         measurements from Week 1? Why? Record your prediction in your
+         notebook—you’ll revisit this after taking data.</p>
          <h2 data-number="7.1" id="measurement-procedure"><span
          class="header-section-number">7.1</span> Measurement
          Procedure</h2>
+         <p>Here is an overview of the measurement process. The sections
+         that follow provide details on integrating your code and
+         checking your data quality.</p>
          <ol type="1">
          <li><p><strong>Position the knife-edge assembly</strong> at a
          known distance from the laser (measure and record this
@@ -893,21 +941,63 @@
          <li>Use the gain setting you determined in Week 2</li>
          <li>Verify DAQ is reading reasonable voltages</li>
          </ul></li>
+         <li><p><strong>Choose your measurement parameters:</strong></p>
+         <p>Think about what step size will give you good data:</p>
+         <ul>
+         <li>Recall your beam radius <span
+         class="math inline">\(w\)</span> from your Week 1 manual
+         measurement</li>
+         <li>The transition region where voltage changes spans roughly
+         <span class="math inline">\(2w\)</span></li>
+         <li>You want at least 10-15 points in the transition region to
+         constrain your fit</li>
+         <li>What step size does this imply?</li>
+         </ul>
+         <p>In Week 4, you will revisit this choice more systematically
+         based on your specific beam size and measurement
+         goals.</p></li>
          <li><p><strong>Take the beam profile:</strong></p>
          <ul>
-         <li>Move the knife-edge across the beam in steps of 0.05-0.1
-         mm</li>
+         <li>Move the knife-edge across the beam using your chosen step
+         size</li>
          <li>At each position, record the motor position and
          photodetector voltage</li>
          <li>Continue until the beam is fully blocked (voltage reaches
          dark level)</li>
-         <li>Aim for 20-30 data points across the transition</li>
          </ul></li>
          <li><p><strong>Save your data</strong> with a descriptive
-         filename including the date and z-position.</p></li>
+         filename including the date and z-position (e.g.,
+         <code>beam_profile_2024-01-15_z50cm.csv</code>). In Week 4,
+         you’ll collect profiles at multiple z-positions, so systematic
+         naming will help you keep track of which data came from
+         where.</p></li>
          </ol>
-         <p><strong>Tip:</strong> If using manual motor commands, you
-         can automate data collection with a simple loop:</p>
+         <h2 data-number="7.2" id="integrating-motor-and-daq"><span
+         class="header-section-number">7.2</span> Integrating Motor and
+         DAQ</h2>
+         <p>To automate beam profiling, you need to combine motor
+         positioning with voltage reading. The code below shows the DAQ
+         portion, but the motor movement is commented out.</p>
+         <p><strong>To complete this code, you need a
+         <code>move_to()</code> function.</strong> You have two
+         options:</p>
+         <ol type="1">
+         <li><p><strong>Adapt the relative movement code</strong> from
+         the verification section above (hint: use
+         <code>device.MoveTo(Decimal(position_mm), timeout_ms)</code>
+         for absolute positioning)</p></li>
+         <li><p><strong>Reference the complete motor control
+         documentation</strong> at <a
+         href="/PHYS-4430/python-thorlabs">Thorlabs Motor Control with
+         Python</a>, which includes a working <code>move_to()</code>
+         function and a complete <code>run_position_scan()</code>
+         example.</p></li>
+         </ol>
+         <p>Some decisions you’ll need to make: How long should you wait
+         for vibrations to settle after each move? What position range
+         covers the full transition from unblocked to fully blocked? How
+         many samples should you average at each position to reduce
+         noise?</p>
          <div class="sourceCode" id="cb5"><pre
          class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -933,15 +1023,26 @@
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Save data</span></span>
 <span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>np.savetxt(<span class="st">&#39;beam_profile_week3.csv&#39;</span>, data, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>,</span>
 <span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>           header<span class="op">=</span><span class="st">&#39;Position (mm), Voltage (V)&#39;</span>, comments<span class="op">=</span><span class="st">&#39;&#39;</span>)</span></code></pre></div>
-         <h2 data-number="7.2" id="quick-check"><span
-         class="header-section-number">7.2</span> Quick Check</h2>
-         <p>Before proceeding to analysis, verify your data looks
-         reasonable: - Does the voltage transition smoothly from high to
-         low? - Is the transition region clearly visible? - Do you have
-         enough points in the transition region (where the voltage
-         changes)?</p>
-         <p>If the data looks noisy or the transition is unclear, retake
-         the measurement with smaller step sizes or more averaging.</p>
+         <h2 data-number="7.3" id="quick-check"><span
+         class="header-section-number">7.3</span> Quick Check</h2>
+         <p>Before proceeding to the analysis section (where you’ll fit
+         this data to extract beam radius <span
+         class="math inline">\(w\)</span>), verify your data looks
+         reasonable:</p>
+         <ul>
+         <li>Does the voltage transition smoothly from high to low?
+         (Some scatter is normal, but the trend should be clear.)</li>
+         <li>Does your data span the full range from maximum voltage
+         (beam unblocked) to minimum voltage (beam fully blocked)?</li>
+         <li>Do you have at least 10 points in the transition region
+         where the voltage is changing?</li>
+         </ul>
+         <p>If the transition is unclear or you have too few points,
+         retake the measurement with smaller step sizes or a different
+         position range.</p>
+         <p><strong>Revisit your prediction:</strong> Was your automated
+         data more or less noisy than your Week 1 manual data? What
+         might explain the difference?</p>
          <h1 data-number="8"
          id="applying-theory-to-your-measurements"><span
          class="header-section-number">8</span> Applying Theory to Your
@@ -961,9 +1062,9 @@
          class="math inline">\(w\)</span> at multiple positions to
          determine the beam waist <span
          class="math inline">\(w_0\)</span>.</p>
-         <h3 data-number="8.1.1" id="the-general-formula"><span
+         <h3 data-number="8.1.1" id="the-general-equation"><span
          class="header-section-number">8.1.1</span> The General
-         Formula</h3>
+         Equation</h3>
          <p>Suppose you want to derive a quantity <span
          class="math inline">\(z\)</span> from measured quantities <span
          class="math inline">\(a, b, c, ...\)</span>. The mathematical
