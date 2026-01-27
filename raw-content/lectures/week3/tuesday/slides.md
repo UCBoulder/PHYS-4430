@@ -9,7 +9,7 @@ footer: '![logo](../../themes/Physics_rev_left.png)'
 <!-- _class: title -->
 <!-- _paginate: false -->
 
-# Motor Control and Error Propagation
+# Thorlabs Motor Control and Error Propagation
 
 ## PHYS 4430 — Week 3 Tuesday
 January 27, 2026
@@ -125,6 +125,21 @@ Connect to their Week 1 experience. They know how tedious manual measurements ar
 
 ---
 
+## First-Time Setup (One Time Only)
+
+Before Python can control the motor, configure the stage type:
+
+1. Power on KST101 (USB **not** connected)
+2. Menu → "10 Select Stage" → Select **ZST225**
+3. Power cycle to save settings
+4. Connect USB, verify in Kinesis app → `Actuator: HS ZST225B`
+
+This process only needs to be completed once if using the same laptop and controller.
+
+**See lab guide for detailed steps.**
+
+---
+
 ## Software Architecture
 
 ![h:400 Software stack diagram](figures/tuesday_02_software_stack.png)
@@ -181,21 +196,28 @@ device = KCubeStepper.CreateKCubeStepper("26004813")  # Your serial #
 device.Connect("26004813")
 
 # 4. Initialize (required sequence)
-device.WaitForSettingsInitialized(5000)
-device.StartPolling(50)
+device.WaitForSettingsInitialized(5000)  # 5000 ms timeout
+device.StartPolling(50)                  # Poll every 50 ms
 device.EnableDevice()
 ```
 
 **Serial number:** Found on the KST101 controller.
+
+**Polling:** The software periodically asks the device for its status (position, moving/stopped, etc.). 50 ms = 20 updates/second.
 
 ---
 
 ## Moving and Reading Position
 
 ```python
+from System import Decimal
+
 # 5. Move!
-device.MoveTo(5.0)        # Move to 5.0 mm (absolute)
-device.MoveRelative(0.5)  # Move 0.5 mm forward
+device.MoveTo(Decimal(5.0), 60000)  # Move to 5.0 mm, 60s timeout
+
+# Or move relative (use negative value to move backwards):
+device.SetMoveRelativeDistance(Decimal(0.5))  # or Decimal(-0.5)
+device.MoveRelative(60000)  # Move 0.5 mm forward, 60s timeout
 
 # Read current position
 position = device.Position  # Returns position in mm
@@ -204,6 +226,19 @@ position = device.Position  # Returns position in mm
 device.StopPolling()
 device.Disconnect()
 ```
+
+---
+
+## Homing the Stage
+
+After power-on, the stage doesn't know its position. **Homing** moves to a reference point.
+
+```python
+device.Home(60000)  # Move to home position (60s timeout)
+```
+
+- Do this once when you start your measurement session
+- Required if troubleshooting says "Home the stage"
 
 ---
 
@@ -216,6 +251,7 @@ device.Disconnect()
 | Import error | Wrong Python bitness | Match 32/64-bit to Kinesis |
 | Motor doesn't move | No power | Check power supply |
 | Motor doesn't move | At travel limit | Home the stage |
+| Motor moves wrong distance | Stage type not configured | Set ZST225 in KST101 menu |
 
 ---
 
@@ -434,6 +470,16 @@ z_R = np.pi * w0_est**2 / wavelength
 w_pred = w0_est * sqrt(1 + (z_new / z_R)**2)
 print(f"Predicted w at z=2m: {w_pred*1e3:.2f} mm")
 ```
+
+<!--
+TEACHING MOMENT: The far-field approximation (z >> z_R) may not be valid!
+
+With w0 ≈ 0.5 mm and λ = 633 nm, z_R ≈ 1.2 m. At z = 1.5 m, we have z/z_R ≈ 1.2,
+which is NOT in the far field. Ask students: "How would you check if this
+approximation is valid?" Have them calculate z_R from their estimated w0 and
+compare to their measurement distance. This motivates why Week 4 uses multiple
+positions and a proper fit rather than a single-point estimate.
+-->
 
 ---
 

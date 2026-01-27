@@ -61,14 +61,16 @@
             cannot measure with a knife edge</a></li>
             <li><a href="#how-would-you-measure-rz"><span
             class="toc-section-number">5.5.2</span> How would you
-            measure R(z)?</a></li>
-            <li><a href="#how-would-you-measure-ζz"><span
+            measure <span class="math inline">\(R(z)\)</span>?</a></li>
+            <li><a href="#how-would-you-measure-zetaz"><span
             class="toc-section-number">5.5.3</span> How would you
-            measure ζ(z)?</a></li>
+            measure <span
+            class="math inline">\(\zeta(z)\)</span>?</a></li>
             <li><a
             href="#why-does-the-beam-radius-wz-suffice-for-this-lab"><span
             class="toc-section-number">5.5.4</span> Why does the beam
-            radius w(z) suffice for this lab?</a></li>
+            radius <span class="math inline">\(w(z)\)</span> suffice for
+            this lab?</a></li>
             </ul></li>
             </ul></li>
             <li><a href="#setting-up-the-motor-controller"><span
@@ -102,6 +104,9 @@
             <li><a href="#test-motor-movement"><span
             class="toc-section-number">6.3.3</span> Test Motor
             Movement</a></li>
+            <li><a href="#homing-the-stage"><span
+            class="toc-section-number">6.3.4</span> Homing the
+            Stage</a></li>
             </ul></li>
             <li><a href="#motor-controller-troubleshooting"><span
             class="toc-section-number">6.4</span> Motor Controller
@@ -571,10 +576,14 @@
          <ul>
          <li><p><strong><span class="math inline">\(R(z)\)</span>
          (radius of curvature):</strong> This describes how the
-         wavefronts are curved—flat at the waist, increasingly curved
-         far away. A knife edge only sees intensity, not phase, so it
-         cannot measure <span class="math inline">\(R(z)\)</span>
-         directly.</p></li>
+         wavefronts are curved. Larger <span
+         class="math inline">\(R\)</span> means flatter (less curved);
+         <span class="math inline">\(R = \infty\)</span> is perfectly
+         flat. The wavefronts are flattest at the waist, most curved at
+         <span class="math inline">\(z = z_R\)</span>, then become
+         flatter again far away. A knife edge only sees intensity, not
+         phase, so it cannot measure <span
+         class="math inline">\(R(z)\)</span> directly.</p></li>
          <li><p><strong><span class="math inline">\(\zeta(z)\)</span>
          (Gouy phase):</strong> This is a phase shift that accumulates
          as the beam passes through its waist. Like <span
@@ -583,7 +592,7 @@
          </ul>
          <h3 data-number="5.5.2" id="how-would-you-measure-rz"><span
          class="header-section-number">5.5.2</span> How would you
-         measure R(z)?</h3>
+         measure <span class="math inline">\(R(z)\)</span>?</h3>
          <p>If you wanted to measure the wavefront curvature, you would
          need <strong>interferometry</strong>—combining your beam with a
          reference beam and analyzing the interference pattern. The
@@ -591,13 +600,18 @@
          class="math inline">\(R(z)\)</span>.</p>
          <p><strong>Think about it:</strong> Near the waist, <span
          class="math inline">\(R(z) \to \infty\)</span> (flat
-         wavefronts). Far from the waist, <span
-         class="math inline">\(R(z) \approx z\)</span> (spherical
-         wavefronts centered on the waist). What does this tell you
-         about how the beam’s wavefronts evolve?</p>
-         <h3 data-number="5.5.3" id="how-would-you-measure-ζz"><span
+         wavefronts). At <span class="math inline">\(z = z_R\)</span>,
+         <span class="math inline">\(R\)</span> reaches its minimum
+         value of <span class="math inline">\(2z_R\)</span> (maximum
+         curvature). Far from the waist, <span
+         class="math inline">\(R(z) \approx z\)</span>—the wavefronts
+         are spherical surfaces centered on the waist, but with large
+         radius (gentle curvature). This non-monotonic behavior means
+         the wavefronts curve most strongly at one Rayleigh range from
+         the waist, not at large distances.</p>
+         <h3 data-number="5.5.3" id="how-would-you-measure-zetaz"><span
          class="header-section-number">5.5.3</span> How would you
-         measure ζ(z)?</h3>
+         measure <span class="math inline">\(\zeta(z)\)</span>?</h3>
          <p>The Gouy phase shift is subtle—it’s a <span
          class="math inline">\(\pi\)</span> total phase change as the
          beam goes from <span class="math inline">\(z = -\infty\)</span>
@@ -615,7 +629,8 @@
          <h3 data-number="5.5.4"
          id="why-does-the-beam-radius-wz-suffice-for-this-lab"><span
          class="header-section-number">5.5.4</span> Why does the beam
-         radius w(z) suffice for this lab?</h3>
+         radius <span class="math inline">\(w(z)\)</span> suffice for
+         this lab?</h3>
          <p>For characterizing a laser beam’s propagation, <span
          class="math inline">\(w(z)\)</span> is often the most
          practically important parameter because:</p>
@@ -645,11 +660,11 @@
          <h1 data-number="6" id="setting-up-the-motor-controller"><span
          class="header-section-number">6</span> Setting Up the Motor
          Controller</h1>
-         <p>In Week 4, you will use Python to automate beam profile
-         measurements by controlling a motorized translation stage. This
-         section guides you through setting up and verifying the motor
-         controller hardware. Getting this working now will save
-         significant time later.</p>
+         <p>You will use Python to automate beam profile measurements by
+         controlling a motorized translation stage. This section guides
+         you through setting up and verifying the motor controller
+         hardware this week, so you’re ready for systematic data
+         collection in Week 4.</p>
          <p><strong>If you did not complete section 10 from week 1
          (manual data collection), you must do that now before
          proceeding as you will need to remove the micrometer installed
@@ -657,22 +672,26 @@
          <h2 data-number="6.1" id="hardware-overview"><span
          class="header-section-number">6.1</span> Hardware Overview</h2>
          <p>The Thorlabs KST101 and ZST225B is a stepper motor
-         controller and stepper motor that can precisely position a
-         translation stage. You will use it to move a razor blade across
-         the laser beam while the DAQ records the photodetector
-         signal.</p>
+         controller and stepper motor actuator that can precisely
+         position a translation stage. You will use it to move a razor
+         blade across the laser beam while the DAQ records the
+         photodetector signal.</p>
+         <p>For detailed specifications and documentation, see the <a
+         href="https://www.thorlabs.com/thorproduct.cfm?partnumber=KST101">KST101
+         controller</a> and <a
+         href="https://www.thorlabs.com/thorproduct.cfm?partnumber=ZST225B">ZST225B
+         actuator</a> product pages on the Thorlabs website.</p>
          <p>The physical connections are:</p>
          <ol type="1">
          <li><strong>Motor Controller (KST101)</strong>:
          <ul>
-         <li>Connect the USB cable from the KST101 cube to your
-         computer</li>
+         <li>Install the ZST225B actuator into the translation stage
+         (removing the manual micrometer that was used in week 1)</li>
+         <li>Connect the ZST225B actuator to the KST101 controller</li>
          <li>Connect the power supply to the KST101</li>
-         <li>Install the ZST225B stepper motor into the translation
-         stage (removing the manual micrometer that was used in week
-         1)</li>
-         <li>Connect the ZST225B stepper motor to the KST101
-         controller</li>
+         <li><strong>Do not connect USB yet</strong> — you must first
+         configure the stage type (see “Verifying the Motor Connection”
+         below)</li>
          </ul></li>
          <li><strong>Optical Setup</strong> (for testing):
          <ul>
@@ -693,10 +712,13 @@
          SDK</h3>
          <p>Download and install from the Thorlabs website: <a
          href="https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control">https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control</a></p>
-         <p><strong>Important</strong>: Choose the correct version: - If
-         you have 32-bit Python: Install the 32-bit Kinesis software -
-         If you have 64-bit Python: Install the 64-bit Kinesis
-         software</p>
+         <p><strong>Important</strong>: Choose the correct version:</p>
+         <ul>
+         <li>If you have 32-bit Python: Install the 32-bit Kinesis
+         software</li>
+         <li>If you have 64-bit Python: Install the 64-bit Kinesis
+         software</li>
+         </ul>
          <p>To check your Python version, run:</p>
          <div class="sourceCode" id="cb1"><pre
          class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
@@ -786,6 +808,9 @@
          <p><strong>Caution</strong>: Make sure the translation stage
          has room to move before running this test. Check that nothing
          is blocking the stage mechanically.</p>
+         <p><strong>Note</strong>: This test uses relative movement, so
+         you don’t need to home first. However, you should home the
+         stage (see next section) before taking actual measurements.</p>
          <div class="sourceCode" id="cb4"><pre
          class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> clr</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
@@ -836,11 +861,34 @@
 <span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    device.StopPolling()</span>
 <span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    device.Disconnect()</span>
 <span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Disconnected&quot;</span>)</span></code></pre></div>
-         <p>After you’ve successfuly run the code above, verify that the
-         position value reported from Python matches the position that
-         is indicated on the screen of the KST101 - if these numbers
-         disagree, please let your instructor or the technical staff
-         know before proceeding.</p>
+         <p>After you’ve successfully run the code above, verify that
+         the position value reported from Python matches the position
+         that is indicated on the screen of the KST101 - if these
+         numbers disagree, please let your instructor or the technical
+         staff know before proceeding.</p>
+         <h3 data-number="6.3.4" id="homing-the-stage"><span
+         class="header-section-number">6.3.4</span> Homing the
+         Stage</h3>
+         <p>When the motor controller is powered on, it doesn’t know the
+         stage’s absolute position. <strong>Homing</strong> moves the
+         stage to a known reference point (typically one end of travel),
+         establishing a reliable zero position.</p>
+         <p><strong>When to home:</strong></p>
+         <ul>
+         <li>Once at the start of each measurement session</li>
+         <li>After the stage hits a travel limit</li>
+         <li>If the reported position seems incorrect</li>
+         </ul>
+         <p><strong>To home the stage in Python:</strong></p>
+         <div class="sourceCode" id="cb5"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># After device.EnableDevice() and loading configuration:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Homing...&quot;</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>device.Home(<span class="dv">60000</span>)  <span class="co"># 60 second timeout</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Homed. Position: </span><span class="sc">{</span>device<span class="sc">.</span>Position<span class="sc">}</span><span class="ss"> mm&quot;</span>)</span></code></pre></div>
+         <p>The stage will move to its home position (near 0 mm). This
+         may take several seconds. You can also home the stage using the
+         front panel: press the Menu button and use the wheel to
+         navigate to the Home option.</p>
          <h2 data-number="6.4"
          id="motor-controller-troubleshooting"><span
          class="header-section-number">6.4</span> Motor Controller
@@ -876,6 +924,8 @@
          Python can connect to the motor controller</li>
          <li><input type="checkbox" disabled="" />
          The motor moves when commanded</li>
+         <li><input type="checkbox" disabled="" />
+         The stage has been homed successfully</li>
          <li><input type="checkbox" disabled="" />
          You have noted your motor’s serial number: ____________</li>
          </ol>
@@ -967,7 +1017,7 @@
          </ul></li>
          <li><p><strong>Save your data</strong> with a descriptive
          filename including the date and z-position (e.g.,
-         <code>beam_profile_2024-01-15_z50cm.csv</code>). In Week 4,
+         <code>beam_profile_2026-01-27_z50cm.csv</code>). In Week 4,
          you’ll collect profiles at multiple z-positions, so systematic
          naming will help you keep track of which data came from
          where.</p></li>
@@ -998,31 +1048,31 @@
          covers the full transition from unblocked to fully blocked? How
          many samples should you average at each position to reduce
          noise?</p>
-         <div class="sourceCode" id="cb5"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>positions <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">3</span>, <span class="fl">0.1</span>)  <span class="co"># 0 to 3 mm in 0.1 mm steps</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> pos <span class="kw">in</span> positions:</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Move motor to position (use your motor control code)</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># motor.MoveTo(pos)</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.3</span>)  <span class="co"># Wait for motor to settle</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Read voltage</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        voltage <span class="op">=</span> np.mean(task.read(number_of_samples_per_channel<span class="op">=</span><span class="dv">100</span>))</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    data.append([pos, voltage])</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Position: </span><span class="sc">{</span>pos<span class="sc">:.2f}</span><span class="ss"> mm, Voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Save data</span></span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>np.savetxt(<span class="st">&#39;beam_profile_week3.csv&#39;</span>, data, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>,</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>           header<span class="op">=</span><span class="st">&#39;Position (mm), Voltage (V)&#39;</span>, comments<span class="op">=</span><span class="st">&#39;&#39;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb6"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>positions <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">3</span>, <span class="fl">0.1</span>)  <span class="co"># 0 to 3 mm in 0.1 mm steps</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> pos <span class="kw">in</span> positions:</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Move motor to position (use your motor control code)</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># device.MoveTo(Decimal(pos), 60000)</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.3</span>)  <span class="co"># Wait for motor to settle</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Read voltage (change &quot;Dev1/ai0&quot; to match your DAQ channel if needed)</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        voltage <span class="op">=</span> np.mean(task.read(number_of_samples_per_channel<span class="op">=</span><span class="dv">100</span>))</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    data.append([pos, voltage])</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Position: </span><span class="sc">{</span>pos<span class="sc">:.2f}</span><span class="ss"> mm, Voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Save data</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>np.savetxt(<span class="st">&#39;beam_profile_week3.csv&#39;</span>, data, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>,</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>           header<span class="op">=</span><span class="st">&#39;Position (mm), Voltage (V)&#39;</span>, comments<span class="op">=</span><span class="st">&#39;&#39;</span>)</span></code></pre></div>
          <h2 data-number="7.3" id="quick-check"><span
          class="header-section-number">7.3</span> Quick Check</h2>
          <p>Before proceeding to the analysis section (where you’ll fit
@@ -1084,17 +1134,17 @@
          Python</h3>
          <p>For complex calculations, the <code>uncertainties</code>
          package automatically tracks error propagation:</p>
-         <div class="sourceCode" id="cb6"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> uncertainties <span class="im">import</span> ufloat</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> uncertainties.umath <span class="im">import</span> sqrt</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define values with uncertainties</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> ufloat(<span class="fl">5.0</span>, <span class="fl">0.1</span>)   <span class="co"># 5.0 ± 0.1 V</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>I <span class="op">=</span> ufloat(<span class="fl">0.5</span>, <span class="fl">0.02</span>)  <span class="co"># 0.5 ± 0.02 A</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate - uncertainty propagates automatically</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> V <span class="op">/</span> I</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;R = </span><span class="sc">{</span>R<span class="sc">}</span><span class="ss">&quot;</span>)  <span class="co"># Shows value ± uncertainty</span></span></code></pre></div>
+         <div class="sourceCode" id="cb7"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> uncertainties <span class="im">import</span> ufloat</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> uncertainties.umath <span class="im">import</span> sqrt</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define values with uncertainties</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>V <span class="op">=</span> ufloat(<span class="fl">5.0</span>, <span class="fl">0.1</span>)   <span class="co"># 5.0 ± 0.1 V</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>I <span class="op">=</span> ufloat(<span class="fl">0.5</span>, <span class="fl">0.02</span>)  <span class="co"># 0.5 ± 0.02 A</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate - uncertainty propagates automatically</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> V <span class="op">/</span> I</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;R = </span><span class="sc">{</span>R<span class="sc">}</span><span class="ss">&quot;</span>)  <span class="co"># Shows value ± uncertainty</span></span></code></pre></div>
          <h2 data-number="8.2" id="fitting-your-beam-profile-data"><span
          class="header-section-number">8.2</span> Fitting Your Beam
          Profile Data</h2>
@@ -1103,25 +1153,25 @@
          id="step-1-load-and-plot-your-data"><span
          class="header-section-number">8.2.1</span> Step 1: Load and
          Plot Your Data</h3>
-         <div class="sourceCode" id="cb7"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> curve_fit</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> erf</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load your data</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;beam_profile_week3.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>position <span class="op">=</span> data[:, <span class="dv">0</span>]  <span class="co"># mm</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>voltage <span class="op">=</span> data[:, <span class="dv">1</span>]   <span class="co"># V</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot raw data</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>plt.plot(position, voltage, <span class="st">&#39;bo&#39;</span>, label<span class="op">=</span><span class="st">&#39;Data&#39;</span>)</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (mm)&#39;</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Beam Profile - Week 3&#39;</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+         <div class="sourceCode" id="cb8"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> curve_fit</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> erf</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Load your data</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;beam_profile_week3.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>position <span class="op">=</span> data[:, <span class="dv">0</span>]  <span class="co"># mm</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>voltage <span class="op">=</span> data[:, <span class="dv">1</span>]   <span class="co"># V</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot raw data</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>plt.plot(position, voltage, <span class="st">&#39;bo&#39;</span>, label<span class="op">=</span><span class="st">&#39;Data&#39;</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (mm)&#39;</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Beam Profile - Week 3&#39;</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
          <h3 data-number="8.2.2"
          id="step-2-define-and-fit-the-error-function-model"><span
          class="header-section-number">8.2.2</span> Step 2: Define and
@@ -1131,63 +1181,80 @@
          <p><span class="math display">\[V(x) = \frac{V_{max} -
          V_{min}}{2} \left[1 - \text{erf}\left(\frac{\sqrt{2}(x -
          x_0)}{w}\right)\right] + V_{min}\]</span></p>
-         <div class="sourceCode" id="cb8"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> beam_profile(x, V_max, V_min, center, width):</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Error function model for knife-edge beam profile.</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">        x: position (mm)</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">        V_max: maximum voltage when beam is unblocked (V)</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">        V_min: minimum voltage when beam is blocked (V)</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">        center: beam center position (mm)</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">        width: beam radius w (mm)</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Note: This form uses V_max/V_min instead of amplitude/offset</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">    for physical clarity. The forms are equivalent:</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">        amplitude = (V_max - V_min) / 2</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">        offset = (V_max + V_min) / 2</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (V_max <span class="op">-</span> V_min) <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">*</span> (x <span class="op">-</span> center) <span class="op">/</span> width)) <span class="op">+</span> V_min</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial guesses</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>V_max_guess <span class="op">=</span> np.<span class="bu">max</span>(voltage)</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>V_min_guess <span class="op">=</span> np.<span class="bu">min</span>(voltage)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>center_guess <span class="op">=</span> position[<span class="bu">len</span>(position)<span class="op">//</span><span class="dv">2</span>]</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>width_guess <span class="op">=</span> <span class="fl">0.5</span>  <span class="co"># mm</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> [V_max_guess, V_min_guess, center_guess, width_guess]</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the data</span></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(beam_profile, position, voltage, p0<span class="op">=</span>p0)</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))</span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract results</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>V_max, V_min, center, width <span class="op">=</span> popt</span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>V_max_err, V_min_err, center_err, width_err <span class="op">=</span> perr</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam size: w = </span><span class="sc">{</span>width<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>width_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam center: x0 = </span><span class="sc">{</span>center<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>center_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb9"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> beam_profile(x, V_max, V_min, center, width):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Error function model for knife-edge beam profile.</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">        x: position (mm)</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">        V_max: maximum voltage when beam is unblocked (V)</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">        V_min: minimum voltage when beam is blocked (V)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">        center: beam center position (mm)</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">        width: beam radius w (mm)</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Note: This form uses V_max/V_min instead of amplitude/offset</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">    for physical clarity. The forms are equivalent:</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">        amplitude = (V_max - V_min) / 2</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">        offset = (V_max + V_min) / 2</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (V_max <span class="op">-</span> V_min) <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">*</span> (x <span class="op">-</span> center) <span class="op">/</span> width)) <span class="op">+</span> V_min</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial guesses</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>V_max_guess <span class="op">=</span> np.<span class="bu">max</span>(voltage)</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>V_min_guess <span class="op">=</span> np.<span class="bu">min</span>(voltage)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>center_guess <span class="op">=</span> position[<span class="bu">len</span>(position)<span class="op">//</span><span class="dv">2</span>]</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>width_guess <span class="op">=</span> <span class="fl">0.5</span>  <span class="co"># mm</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> [V_max_guess, V_min_guess, center_guess, width_guess]</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit the data (bounds ensure width stays positive)</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>bounds <span class="op">=</span> ([<span class="dv">0</span>, <span class="dv">0</span>, <span class="op">-</span>np.inf, <span class="dv">0</span>], [np.inf, np.inf, np.inf, np.inf])</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(beam_profile, position, voltage, p0<span class="op">=</span>p0, bounds<span class="op">=</span>bounds)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract results</span></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>V_max, V_min, center, width <span class="op">=</span> popt</span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>V_max_err, V_min_err, center_err, width_err <span class="op">=</span> perr</span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam size: w = </span><span class="sc">{</span>width<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>width_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam center: x0 = </span><span class="sc">{</span>center<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>center_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span></code></pre></div>
+         <p><strong>Troubleshooting fit issues:</strong></p>
+         <ul>
+         <li><strong>Fit doesn’t converge:</strong> Check that your
+         initial guesses are reasonable. Try adjusting
+         <code>width_guess</code> based on your data’s transition
+         region.</li>
+         <li><strong>Very large uncertainties:</strong> You may not have
+         enough points in the transition region. Retake data with
+         smaller step sizes.</li>
+         <li><strong>Fit looks wrong:</strong> Plot your data first and
+         verify it shows a clear S-curve transition. If the curve is
+         inverted, check the sign in the error function model.</li>
+         </ul>
          <h3 data-number="8.2.3" id="step-3-plot-the-fit"><span
          class="header-section-number">8.2.3</span> Step 3: Plot the
          Fit</h3>
-         <div class="sourceCode" id="cb9"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate smooth curve for plotting</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>x_fit <span class="op">=</span> np.linspace(position.<span class="bu">min</span>(), position.<span class="bu">max</span>(), <span class="dv">200</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>v_fit <span class="op">=</span> beam_profile(x_fit, <span class="op">*</span>popt)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.plot(position, voltage, <span class="st">&#39;bo&#39;</span>, label<span class="op">=</span><span class="st">&#39;Data&#39;</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.plot(x_fit, v_fit, <span class="st">&#39;r-&#39;</span>, label<span class="op">=</span><span class="ss">f&#39;Fit: w = </span><span class="sc">{</span>width<span class="sc">:.3f}</span><span class="ss"> ± </span><span class="sc">{</span>width_err<span class="sc">:.3f}</span><span class="ss"> mm&#39;</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (mm)&#39;</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Beam Profile with Error Function Fit&#39;</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">&#39;beam_profile_fit.png&#39;</span>, dpi<span class="op">=</span><span class="dv">150</span>)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
-         <p><strong>Record in your notebook:</strong> - Beam size: $w =
-         $ _______ <span class="math inline">\(\pm\)</span> _______ mm -
-         Measurement position: $z = $ _______ m from laser</p>
+         <div class="sourceCode" id="cb10"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate smooth curve for plotting</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>x_fit <span class="op">=</span> np.linspace(position.<span class="bu">min</span>(), position.<span class="bu">max</span>(), <span class="dv">200</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>v_fit <span class="op">=</span> beam_profile(x_fit, <span class="op">*</span>popt)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>plt.plot(position, voltage, <span class="st">&#39;bo&#39;</span>, label<span class="op">=</span><span class="st">&#39;Data&#39;</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>plt.plot(x_fit, v_fit, <span class="st">&#39;r-&#39;</span>, label<span class="op">=</span><span class="ss">f&#39;Fit: w = </span><span class="sc">{</span>width<span class="sc">:.3f}</span><span class="ss"> ± </span><span class="sc">{</span>width_err<span class="sc">:.3f}</span><span class="ss"> mm&#39;</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (mm)&#39;</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Beam Profile with Error Function Fit&#39;</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">&#39;beam_profile_fit.png&#39;</span>, dpi<span class="op">=</span><span class="dv">150</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+         <p><strong>Record in your notebook:</strong></p>
+         <ul>
+         <li>Beam size: $w = $ _______ <span
+         class="math inline">\(\pm\)</span> _______ mm</li>
+         <li>Measurement position: $z = $ _______ m from laser</li>
+         </ul>
          <p><strong>Connection to Week 2:</strong> The uncertainty in
          your fit parameters depends on the noise level in your voltage
          measurements. Your Week 2 noise characterization tells you what
@@ -1213,43 +1280,53 @@
          0\)</span> (beam waist at laser output), we can estimate <span
          class="math inline">\(w_0\)</span> from a single measurement.
          Rearranging:</p>
-         <div class="sourceCode" id="cb10"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> uncertainties <span class="im">import</span> ufloat</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> uncertainties.umath <span class="im">import</span> sqrt</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Your measured values (replace with your actual data)</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>w_measured <span class="op">=</span> ufloat(<span class="fl">0.52</span>, <span class="fl">0.03</span>)  <span class="co"># mm - USE YOUR VALUE</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>z_measured <span class="op">=</span> ufloat(<span class="fl">1.5</span>, <span class="fl">0.01</span>)   <span class="co"># m - USE YOUR VALUE</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>wavelength <span class="op">=</span> <span class="fl">632.8e-9</span>  <span class="co"># m (He-Ne laser)</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert w to meters</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>w_m <span class="op">=</span> w_measured <span class="op">*</span> <span class="fl">1e-3</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co"># For a beam at distance z from waist, we can estimate w0</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co"># This is approximate - assumes z &gt;&gt; z_R (far from waist)</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co"># w ≈ w0 * z * λ / (π * w0²) = z * λ / (π * w0)</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co"># So w0 ≈ z * λ / (π * w)</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>w0_approx <span class="op">=</span> z_measured <span class="op">*</span> wavelength <span class="op">/</span> (np.pi <span class="op">*</span> w_m)</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Approximate beam waist: w0 ≈ </span><span class="sc">{</span>w0_approx<span class="op">*</span><span class="fl">1e6</span><span class="sc">:.1f}</span><span class="ss"> μm&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb11"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> uncertainties <span class="im">import</span> ufloat</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> uncertainties.umath <span class="im">import</span> sqrt</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Your measured values (replace with your actual data)</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>w_measured <span class="op">=</span> ufloat(<span class="fl">0.52</span>, <span class="fl">0.03</span>)  <span class="co"># mm - USE YOUR VALUE</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>z_measured <span class="op">=</span> ufloat(<span class="fl">1.5</span>, <span class="fl">0.01</span>)   <span class="co"># m - USE YOUR VALUE</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>wavelength <span class="op">=</span> <span class="fl">632.8e-9</span>  <span class="co"># m (He-Ne laser)</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert w to meters</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>w_m <span class="op">=</span> w_measured <span class="op">*</span> <span class="fl">1e-3</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># For a beam at distance z from waist, we can estimate w0</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># This is approximate - assumes z &gt;&gt; z_R (far from waist)</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># w ≈ w0 * z * λ / (π * w0²) = z * λ / (π * w0)</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co"># So w0 ≈ z * λ / (π * w)</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>w0_approx <span class="op">=</span> z_measured <span class="op">*</span> wavelength <span class="op">/</span> (np.pi <span class="op">*</span> w_m)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Approximate beam waist: w0 ≈ </span><span class="sc">{</span>w0_approx<span class="op">*</span><span class="fl">1e6</span><span class="sc">:.1f}</span><span class="ss"> μm&quot;</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Check if far-field approximation is valid (z &gt;&gt; z_R)</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>z_R_approx <span class="op">=</span> np.pi <span class="op">*</span> w0_approx<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> wavelength</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Estimated Rayleigh range: z_R ≈ </span><span class="sc">{</span>z_R_approx<span class="sc">:.2f}</span><span class="ss"> m&quot;</span>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;z / z_R = </span><span class="sc">{</span>z_measured<span class="sc">.</span>n <span class="op">/</span> z_R_approx<span class="sc">.</span>n<span class="sc">:.1f}</span><span class="ss"> (should be &gt;&gt; 1 for far-field)&quot;</span>)</span></code></pre></div>
+         <p><strong>Note:</strong> If z/z_R is close to 1, you are
+         <em>not</em> in the far field and this approximation may be
+         inaccurate. This is expected—Week 4’s multi-position
+         measurements and proper fitting will give a more reliable
+         estimate of <span class="math inline">\(w_0\)</span>.</p>
          <h3 data-number="8.3.2"
          id="step-2-predict-beam-radii-at-other-positions"><span
          class="header-section-number">8.3.2</span> Step 2: Predict Beam
          Radii at Other Positions</h3>
          <p>Use error propagation to predict what you’ll measure in Week
          4:</p>
-         <div class="sourceCode" id="cb11"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict beam radius at different positions</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>positions <span class="op">=</span> [<span class="fl">0.5</span>, <span class="fl">1.0</span>, <span class="fl">1.5</span>, <span class="fl">2.0</span>]  <span class="co"># meters</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Predicted beam radii for Week 4:&quot;</span>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;-&quot;</span> <span class="op">*</span> <span class="dv">40</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> z <span class="kw">in</span> positions:</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    z_val <span class="op">=</span> ufloat(z, <span class="fl">0.01</span>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    z_R <span class="op">=</span> np.pi <span class="op">*</span> w0_approx<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> wavelength</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    w_pred <span class="op">=</span> w0_approx <span class="op">*</span> sqrt(<span class="dv">1</span> <span class="op">+</span> (z_val <span class="op">/</span> z_R)<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;z = </span><span class="sc">{</span>z<span class="sc">:.1f}</span><span class="ss"> m:  w = </span><span class="sc">{</span>w_pred<span class="op">*</span><span class="fl">1e3</span><span class="sc">:.3f}</span><span class="ss"> mm&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb12"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Predict beam radius at different positions</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>positions <span class="op">=</span> [<span class="fl">0.5</span>, <span class="fl">1.0</span>, <span class="fl">1.5</span>, <span class="fl">2.0</span>]  <span class="co"># meters</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Predicted beam radii for Week 4:&quot;</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;-&quot;</span> <span class="op">*</span> <span class="dv">40</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> z <span class="kw">in</span> positions:</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    z_val <span class="op">=</span> ufloat(z, <span class="fl">0.01</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    z_R <span class="op">=</span> np.pi <span class="op">*</span> w0_approx<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> wavelength</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    w_pred <span class="op">=</span> w0_approx <span class="op">*</span> sqrt(<span class="dv">1</span> <span class="op">+</span> (z_val <span class="op">/</span> z_R)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;z = </span><span class="sc">{</span>z<span class="sc">:.1f}</span><span class="ss"> m:  w = </span><span class="sc">{</span>w_pred<span class="op">*</span><span class="fl">1e3</span><span class="sc">:.3f}</span><span class="ss"> mm&quot;</span>)</span></code></pre></div>
          <h3 data-number="8.3.3"
          id="step-3-record-your-predictions"><span
          class="header-section-number">8.3.3</span> Step 3: Record Your

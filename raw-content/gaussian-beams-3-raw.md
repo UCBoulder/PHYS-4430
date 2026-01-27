@@ -56,7 +56,6 @@ Light is a propagating oscillation of the electromagnetic field. The general pri
 
 $$ \nabla^2\vec{E}=\mu_0\epsilon_0 \frac{\partial^2\vec{E}}{\partial t^2}\text{.}$$ {#eq:1}
 
-
 One of the simplest solutions is that of a plane wave propagating in the $\hat{z}$ direction:
 
 $$\vec{E}(x,y,z,t)=E_x\hat{x}cos(kz-\omega t+\phi_x)+E_y\hat{y}cos(kz-\omega t+\phi_y)\text{.}\quad\quad$$ {#eq:2}
@@ -158,17 +157,17 @@ The Gaussian beam solution contains three key z-dependent quantities: the beam r
 
 The knife-edge profiler measures **intensity** as a function of position. This directly gives you $w(z)$, the beam radius. However:
 
-- **$R(z)$ (radius of curvature):** This describes how the wavefronts are curved—flat at the waist, increasingly curved far away. A knife edge only sees intensity, not phase, so it cannot measure $R(z)$ directly.
+- **$R(z)$ (radius of curvature):** This describes how the wavefronts are curved. Larger $R$ means flatter (less curved); $R = \infty$ is perfectly flat. The wavefronts are flattest at the waist, most curved at $z = z_R$, then become flatter again far away. A knife edge only sees intensity, not phase, so it cannot measure $R(z)$ directly.
 
 - **$\zeta(z)$ (Gouy phase):** This is a phase shift that accumulates as the beam passes through its waist. Like $R(z)$, it requires phase-sensitive measurements.
 
-### How would you measure R(z)?
+### How would you measure $R(z)$?
 
 If you wanted to measure the wavefront curvature, you would need **interferometry**—combining your beam with a reference beam and analyzing the interference pattern. The spacing and curvature of interference fringes reveals $R(z)$.
 
-**Think about it:** Near the waist, $R(z) \to \infty$ (flat wavefronts). Far from the waist, $R(z) \approx z$ (spherical wavefronts centered on the waist). What does this tell you about how the beam's wavefronts evolve?
+**Think about it:** Near the waist, $R(z) \to \infty$ (flat wavefronts). At $z = z_R$, $R$ reaches its minimum value of $2z_R$ (maximum curvature). Far from the waist, $R(z) \approx z$—the wavefronts are spherical surfaces centered on the waist, but with large radius (gentle curvature). This non-monotonic behavior means the wavefronts curve most strongly at one Rayleigh range from the waist, not at large distances.
 
-### How would you measure ζ(z)?
+### How would you measure $\zeta(z)$?
 
 The Gouy phase shift is subtle—it's a $\pi$ total phase change as the beam goes from $z = -\infty$ to $z = +\infty$ through the waist. Detecting it requires:
 
@@ -177,7 +176,7 @@ The Gouy phase shift is subtle—it's a $\pi$ total phase change as the beam goe
 
 The Gouy phase has practical consequences: it affects the resonant frequencies of laser cavities and the focal properties of lens systems.
 
-### Why does the beam radius w(z) suffice for this lab?
+### Why does the beam radius $w(z)$ suffice for this lab?
 
 For characterizing a laser beam's propagation, $w(z)$ is often the most practically important parameter because:
 
@@ -189,21 +188,24 @@ For characterizing a laser beam's propagation, $w(z)$ is often the most practica
 
 # Setting Up the Motor Controller
 
-In Week 4, you will use Python to automate beam profile measurements by controlling a motorized translation stage. This section guides you through setting up and verifying the motor controller hardware. Getting this working now will save significant time later.
+You will use Python to automate beam profile measurements by controlling a motorized translation stage. This section guides you through setting up and verifying the motor controller hardware this week, so you're ready for systematic data collection in Week 4.
 
 **If you did not complete section 10 from week 1 (manual data collection), you must do that now before proceeding as you will need to remove the micrometer installed in the translation stage in the next section.**
 
 ## Hardware Overview
 
-The Thorlabs KST101 and ZST225B is a stepper motor controller and stepper motor that can precisely position a translation stage. You will use it to move a razor blade across the laser beam while the DAQ records the photodetector signal.
+The Thorlabs KST101 and ZST225B is a stepper motor controller and stepper motor actuator that can precisely position a translation stage. You will use it to move a razor blade across the laser beam while the DAQ records the photodetector signal.
+
+For detailed specifications and documentation, see the [KST101 controller](https://www.thorlabs.com/thorproduct.cfm?partnumber=KST101) and [ZST225B actuator](https://www.thorlabs.com/thorproduct.cfm?partnumber=ZST225B) product pages on the Thorlabs website.
 
 The physical connections are:
 
 1. **Motor Controller (KST101)**:
-   - Connect the USB cable from the KST101 cube to your computer
+   - Install the ZST225B actuator into the translation stage (removing the manual micrometer that was used in week 1)
+   - Connect the ZST225B actuator to the KST101 controller
    - Connect the power supply to the KST101
-   - Install the ZST225B stepper motor into the translation stage (removing the manual micrometer that was used in week 1)
-   - Connect the ZST225B stepper motor to the KST101 controller
+   - **Do not connect USB yet** — you must first configure the stage type (see "Verifying the Motor Connection" below)
+
 2. **Optical Setup** (for testing):
    - Position the photodetector after the knife-edge in the beam path
    - Ensure the beam passes cleanly through when the razor is fully retracted
@@ -218,6 +220,7 @@ Download and install from the Thorlabs website:
 [https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control](https://www.thorlabs.com/software_pages/ViewSoftwarePage.cfm?Code=Motion_Control)
 
 **Important**: Choose the correct version:
+
 - If you have 32-bit Python: Install the 32-bit Kinesis software
 - If you have 64-bit Python: Install the 64-bit Kinesis software
 
@@ -296,6 +299,8 @@ If this shows your device serial number, the connection is working.
 
 **Caution**: Make sure the translation stage has room to move before running this test. Check that nothing is blocking the stage mechanically.
 
+**Note**: This test uses relative movement, so you don't need to home first. However, you should home the stage (see next section) before taking actual measurements.
+
 ```python
 import clr
 import sys
@@ -348,7 +353,28 @@ finally:
     print("Disconnected")
 ```
 
-After you've successfuly run the code above, verify that the position value reported from Python matches the position that is indicated on the screen of the KST101 - if these numbers disagree, please let your instructor or the technical staff know before proceeding.
+After you've successfully run the code above, verify that the position value reported from Python matches the position that is indicated on the screen of the KST101 - if these numbers disagree, please let your instructor or the technical staff know before proceeding.
+
+### Homing the Stage
+
+When the motor controller is powered on, it doesn't know the stage's absolute position. **Homing** moves the stage to a known reference point (typically one end of travel), establishing a reliable zero position.
+
+**When to home:**
+
+- Once at the start of each measurement session
+- After the stage hits a travel limit
+- If the reported position seems incorrect
+
+**To home the stage in Python:**
+
+```python
+# After device.EnableDevice() and loading configuration:
+print("Homing...")
+device.Home(60000)  # 60 second timeout
+print(f"Homed. Position: {device.Position} mm")
+```
+
+The stage will move to its home position (near 0 mm). This may take several seconds. You can also home the stage using the front panel: press the Menu button and use the wheel to navigate to the Home option.
 
 ## Motor Controller Troubleshooting
 
@@ -376,7 +402,8 @@ Before leaving lab today, verify that:
 1. [ ] The DAQ can read voltages from the photodetector
 2. [ ] Python can connect to the motor controller
 3. [ ] The motor moves when commanded
-4. [ ] You have noted your motor's serial number: ____________
+4. [ ] The stage has been homed successfully
+5. [ ] You have noted your motor's serial number: ____________
 
 This setup will be essential for the automated measurements in Week 4.
 
@@ -430,7 +457,7 @@ Here is an overview of the measurement process. The sections that follow provide
    - At each position, record the motor position and photodetector voltage
    - Continue until the beam is fully blocked (voltage reaches dark level)
 
-5. **Save your data** with a descriptive filename including the date and z-position (e.g., `beam_profile_2024-01-15_z50cm.csv`). In Week 4, you'll collect profiles at multiple z-positions, so systematic naming will help you keep track of which data came from where.
+5. **Save your data** with a descriptive filename including the date and z-position (e.g., `beam_profile_2026-01-27_z50cm.csv`). In Week 4, you'll collect profiles at multiple z-positions, so systematic naming will help you keep track of which data came from where.
 
 ## Integrating Motor and DAQ
 
@@ -455,10 +482,10 @@ data = []
 
 for pos in positions:
     # Move motor to position (use your motor control code)
-    # motor.MoveTo(pos)
+    # device.MoveTo(Decimal(pos), 60000)
     time.sleep(0.3)  # Wait for motor to settle
 
-    # Read voltage
+    # Read voltage (change "Dev1/ai0" to match your DAQ channel if needed)
     with nidaqmx.Task() as task:
         task.ai_channels.add_ai_voltage_chan("Dev1/ai0")
         voltage = np.mean(task.read(number_of_samples_per_channel=100))
@@ -575,8 +602,9 @@ width_guess = 0.5  # mm
 
 p0 = [V_max_guess, V_min_guess, center_guess, width_guess]
 
-# Fit the data
-popt, pcov = curve_fit(beam_profile, position, voltage, p0=p0)
+# Fit the data (bounds ensure width stays positive)
+bounds = ([0, 0, -np.inf, 0], [np.inf, np.inf, np.inf, np.inf])
+popt, pcov = curve_fit(beam_profile, position, voltage, p0=p0, bounds=bounds)
 perr = np.sqrt(np.diag(pcov))
 
 # Extract results
@@ -586,6 +614,12 @@ V_max_err, V_min_err, center_err, width_err = perr
 print(f"Beam size: w = {width:.4f} ± {width_err:.4f} mm")
 print(f"Beam center: x0 = {center:.4f} ± {center_err:.4f} mm")
 ```
+
+**Troubleshooting fit issues:**
+
+- **Fit doesn't converge:** Check that your initial guesses are reasonable. Try adjusting `width_guess` based on your data's transition region.
+- **Very large uncertainties:** You may not have enough points in the transition region. Retake data with smaller step sizes.
+- **Fit looks wrong:** Plot your data first and verify it shows a clear S-curve transition. If the curve is inverted, check the sign in the error function model.
 
 ### Step 3: Plot the Fit
 
@@ -607,6 +641,7 @@ plt.show()
 ```
 
 **Record in your notebook:**
+
 - Beam size: $w = $ _______ $\pm$ _______ mm
 - Measurement position: $z = $ _______ m from laser
 
@@ -644,7 +679,14 @@ w_m = w_measured * 1e-3
 w0_approx = z_measured * wavelength / (np.pi * w_m)
 
 print(f"Approximate beam waist: w0 ≈ {w0_approx*1e6:.1f} μm")
+
+# Check if far-field approximation is valid (z >> z_R)
+z_R_approx = np.pi * w0_approx**2 / wavelength
+print(f"Estimated Rayleigh range: z_R ≈ {z_R_approx:.2f} m")
+print(f"z / z_R = {z_measured.n / z_R_approx.n:.1f} (should be >> 1 for far-field)")
 ```
+
+**Note:** If z/z_R is close to 1, you are *not* in the far field and this approximation may be inaccurate. This is expected—Week 4's multi-position measurements and proper fitting will give a more reliable estimate of $w_0$.
 
 ### Step 2: Predict Beam Radii at Other Positions
 
@@ -701,6 +743,7 @@ Your lab notebook should include the following for this week:
 ## In-Lab Documentation
 
 ### Phase 2: Measurement (~60 min)
+
 1. **Motor controller verification**:
    - Completed setup checklist (DAQ, motor connection, movement test)
    - Motor serial number recorded
@@ -711,6 +754,7 @@ Your lab notebook should include the following for this week:
    - Quick check: does data show clean transition?
 
 ### Phase 3: Analysis (~60 min)
+
 3. **Beam profile fit**:
    - Fit plot showing data and error function model
    - Extracted beam size: $w = $ _______ $\pm$ _______ mm

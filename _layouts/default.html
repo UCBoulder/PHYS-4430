@@ -99,6 +99,28 @@
             wrapper.appendChild(table);
           }
         });
+
+        // Make checkboxes interactive with localStorage persistence
+        var pageKey = 'checkboxes-' + window.location.pathname;
+        var savedState = JSON.parse(localStorage.getItem(pageKey) || '{}');
+
+        document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox, index) {
+          // Remove disabled attribute to make clickable
+          checkbox.removeAttribute('disabled');
+          checkbox.style.cursor = 'pointer';
+
+          // Restore saved state
+          var checkboxId = 'checkbox-' + index;
+          if (savedState[checkboxId]) {
+            checkbox.checked = true;
+          }
+
+          // Save state on change
+          checkbox.addEventListener('change', function() {
+            savedState[checkboxId] = checkbox.checked;
+            localStorage.setItem(pageKey, JSON.stringify(savedState));
+          });
+        });
       });
     </script>
 
