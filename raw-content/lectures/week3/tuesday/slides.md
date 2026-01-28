@@ -22,18 +22,6 @@ This afternoon they'll use everything covered here.
 
 ---
 
-## Learning Objectives
-
-By the end of this lecture, you will be able to:
-
-1. Explain the role of motor control in automated measurements
-2. Describe the software architecture for controlling Thorlabs motors from Python
-3. Apply the general error propagation equation to derive uncertainties
-4. Use the `uncertainties` package for automatic error propagation
-5. Connect measurement uncertainties to predictions for future experiments
-
----
-
 ## Where We Are
 
 **Weeks 1–2:** Manual measurements, learned DAQ, characterized noise, derived Gaussian beam theory
@@ -82,17 +70,6 @@ TIMING: ~15 minutes for motor control section
 
 Connect to their Week 1 experience. They know how tedious manual measurements are.
 -->
-
----
-
-## Automated Measurements (Weeks 3–4)
-
-- Computer controls position
-- Computer records data
-- Can take 100+ points easily
-- Reproducible and systematic
-
-> The motor controller is the key to moving from ~20 points to ~100 points.
 
 ---
 
@@ -353,41 +330,6 @@ $$\sigma_{z_R} = \frac{2 \times 50}{0.10} \times 0.01 = 10 \text{ mm}$$
 **Result:** $z_R = 50 \pm 10$ mm (20% relative uncertainty)
 
 > **Key insight:** The relative uncertainty **doubles** when you square!
-
----
-
-## Useful Shortcut: Relative Uncertainties
-
-For products and quotients, add relative uncertainties in quadrature:
-
-If $z = \frac{a \cdot b}{c}$, then:
-
-$$\frac{\sigma_z}{|z|} = \sqrt{\left(\frac{\sigma_a}{a}\right)^2 + \left(\frac{\sigma_b}{b}\right)^2 + \left(\frac{\sigma_c}{c}\right)^2}$$
-
-For powers: If $z = a^n$, then $\frac{\sigma_z}{|z|} = |n| \frac{\sigma_a}{|a|}$
-
----
-
-<!-- _class: question -->
-
-## Quick Check
-
-If $z_R \propto w_0^2$ and $w_0$ has 10% uncertainty, what is the relative uncertainty in $z_R$?
-
-<!--
-Give students 30 seconds to think.
-Answer: 20% (the power of 2 doubles the relative uncertainty)
--->
-
----
-
-## Answer: 20%
-
-$$\frac{\sigma_{z_R}}{z_R} = |2| \times \frac{\sigma_{w_0}}{w_0} = 2 \times 10\% = 20\%$$
-
-**When you square a quantity, the relative uncertainty doubles.**
-
-This is why beam waist measurements need to be precise!
 
 ---
 

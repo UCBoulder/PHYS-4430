@@ -521,10 +521,18 @@
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">        x: position (m)</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">        amplitude: half the voltage swing (V)</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">        center: beam center position (m)</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">        width: beam size w (m)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">        width: beam radius w (m)</span></span>
 <span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">        offset: vertical offset (V)</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> amplitude <span class="op">*</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">*</span> (x <span class="op">-</span> center) <span class="op">/</span> width) <span class="op">+</span> offset</span></code></pre></div></li>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> amplitude <span class="op">*</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">*</span> (x <span class="op">-</span> center) <span class="op">/</span> width) <span class="op">+</span> offset</span></code></pre></div>
+         <p><strong>Note on terminology:</strong> The parameter <span
+         class="math inline">\(w\)</span> is the <strong>beam
+         radius</strong>—specifically, the <span
+         class="math inline">\(1/e^2\)</span> radius where intensity
+         drops to <span class="math inline">\(1/e^2\)</span> of the peak
+         value. This is not the beam diameter (which would be <span
+         class="math inline">\(2w\)</span>) or the FWHM. Gaussian beam
+         parameters are discussed further in Week 3.</p></li>
          <li><p>Reduce the fit to two free parameters. This step is only
          necessary because it is hard to visualize more than 3
          dimensions. Assume <span
@@ -565,40 +573,46 @@
          </ol></li>
          <li><p>Make a contour plot of <span
          class="math inline">\(\chi^2(w,b)\)</span> and tweak the plot
-         range until you see the minimum. You can use AI assistance or
-         the code below. The goal is to <em>interpret</em> the result,
-         not to write the code from scratch.</p>
+         range until you see the minimum (see Figure <a
+         href="#fig:contour">1</a> for an example of what a well-tuned
+         plot looks like). You can use AI assistance or the code below.
+         The goal is to <em>interpret</em> the result, not to write the
+         code from scratch.</p>
          <div class="sourceCode" id="cb4"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a grid of width and center values</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>width_range <span class="op">=</span> np.linspace(<span class="fl">0.0003</span>, <span class="fl">0.0007</span>, <span class="dv">100</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>center_range <span class="op">=</span> np.linspace(<span class="fl">0.009</span>, <span class="fl">0.011</span>, <span class="dv">100</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>W, C <span class="op">=</span> np.meshgrid(width_range, center_range)</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate chi-squared for each combination</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>amplitude_fixed <span class="op">=</span> <span class="fl">1.4375</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>offset_fixed <span class="op">=</span> <span class="fl">1.45195</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> np.zeros_like(W)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(center_range)):</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(width_range)):</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        Z[i, j] <span class="op">=</span> chi_squared(width_range[j], center_range[i], x_data, y_data,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                              amplitude_fixed, offset_fixed)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Make contour plot</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.contour(W <span class="op">*</span> <span class="dv">1000</span>, C <span class="op">*</span> <span class="dv">1000</span>, Z, levels<span class="op">=</span><span class="dv">20</span>)</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">&#39;$</span><span class="ch">\\</span><span class="st">chi^2$&#39;</span>)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;width (mm)&#39;</span>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;center (mm)&#39;</span>)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;$</span><span class="ch">\\</span><span class="st">chi^2$ Contour Plot&#39;</span>)</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a grid of center and width values</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: These ranges may need adjustment to clearly show the minimum!</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>center_range <span class="op">=</span> np.linspace(<span class="fl">0.010</span>, <span class="fl">0.012</span>, <span class="dv">100</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>width_range <span class="op">=</span> np.linspace(<span class="fl">0.0001</span>, <span class="fl">0.0006</span>, <span class="dv">100</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>B, W <span class="op">=</span> np.meshgrid(center_range, width_range)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate chi-squared for each combination</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>amplitude_fixed <span class="op">=</span> <span class="fl">1.4375</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>offset_fixed <span class="op">=</span> <span class="fl">1.45195</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>Z <span class="op">=</span> np.zeros_like(B)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(width_range)):</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(center_range)):</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        Z[i, j] <span class="op">=</span> chi_squared(width_range[i], center_range[j], x_data, y_data,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                              amplitude_fixed, offset_fixed)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Make contour plot</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.contour(B, W, Z, levels<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>plt.colorbar(label<span class="op">=</span><span class="st">&#39;$</span><span class="ch">\\</span><span class="st">chi^2$&#39;</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;center of beam, $b$ (m)&#39;</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;beam radius, $w$ (m)&#39;</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;$</span><span class="ch">\\</span><span class="st">chi^2$ Contour Plot&#39;</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          </ol>
          <div id="fig:contour" class="fignos">
          <figure>
          <img
          src="../resources/lab-guides/gaussian-laser-beams/contour.png"
-         style="width:15cm" alt="Figure 1: Contour plot example." />
-         <figcaption aria-hidden="true"><span>Figure 1:</span> Contour
-         plot example.</figcaption>
+         style="width:15cm"
+         alt="Figure 1: Example of a well-tuned \chi^2 contour plot. Adjust your ranges until your plot clearly shows the minimum like this one." />
+         <figcaption aria-hidden="true"><span>Figure 1:</span> Example
+         of a well-tuned <span class="math inline">\(\chi^2\)</span>
+         contour plot. Adjust your ranges until your plot clearly shows
+         the minimum like this one.</figcaption>
          </figure>
          </div>
          <ol start="7" type="1">
@@ -617,25 +631,79 @@
          spread out or contract?</li>
          </ol></li>
          <li><p>Graphically determine the best fit parameters to 3
-         significant digits.</p></li>
+         significant digits. <strong>Record these values in your
+         notebook—you will use them in step 9.</strong></p>
+         <p><strong>Checkpoint:</strong> Before proceeding, confirm you
+         have recorded your graphical estimates:</p>
+         <ul>
+         <li>center <span class="math inline">\(b\)</span> = _______
+         m</li>
+         <li>width <span class="math inline">\(w\)</span> = _______
+         m</li>
+         </ul></li>
          <li><p>Compare with the best fit result from
          <code>scipy.optimize.curve_fit</code> (allow all 4 parameters
-         to vary). Do the fits agree for those three digits of
-         precision?</p>
+         to vary).</p>
+         <p><strong>Before running this code</strong>, examine the
+         initial guesses below. Compare the center guess (0.01 m) to
+         your data’s position range. What do you predict will happen
+         when you run the fit?</p>
+         <blockquote>
+         <p><strong>Warning: You may get a
+         <code>RuntimeError</code>!</strong></p>
+         Nonlinear fitting algorithms like <code>curve_fit</code> are
+         iterative—they start at your initial guess and search for a
+         minimum. If your initial guess is far from the true minimum,
+         the algorithm may:
+         <ul>
+         <li>Wander into regions where the function behaves badly</li>
+         <li>Exceed its maximum number of iterations without
+         converging</li>
+         <li>Return a
+         <code>RuntimeError: Optimal parameters not found: maxfev exceeded</code></li>
+         </ul>
+         <p><strong>This is expected behavior with poor initial guesses,
+         not a bug in your code.</strong> Your <span
+         class="math inline">\(\chi^2\)</span> contour plot shows
+         exactly why this happens: an initial guess outside the “valley”
+         containing the minimum has no gradient pointing toward the
+         solution.</p>
+         <p>If you encounter this error, proceed to the fix below using
+         your graphically-determined values.</p>
+         </blockquote>
          <div class="sourceCode" id="cb5"><pre
          class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> curve_fit</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial guesses: [amplitude, center, width, offset]</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> [<span class="fl">1.4375</span>, <span class="fl">0.01</span>, <span class="fl">0.0005</span>, <span class="fl">1.45195</span>]</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the fit</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(beam_profile, x_data, y_data, p0<span class="op">=</span>p0)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Best fit parameters:&quot;</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  amplitude = </span><span class="sc">{</span>popt[<span class="dv">0</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  center    = </span><span class="sc">{</span>popt[<span class="dv">1</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  width     = </span><span class="sc">{</span>popt[<span class="dv">2</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  offset    = </span><span class="sc">{</span>popt[<span class="dv">3</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: These are placeholder values that may not work for your data!</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> [<span class="fl">1.4375</span>, <span class="fl">0.01</span>, <span class="fl">0.0005</span>, <span class="fl">1.45195</span>]</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform the fit</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(beam_profile, x_data, y_data, p0<span class="op">=</span>p0)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Best fit parameters:&quot;</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  amplitude = </span><span class="sc">{</span>popt[<span class="dv">0</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  center    = </span><span class="sc">{</span>popt[<span class="dv">1</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  width     = </span><span class="sc">{</span>popt[<span class="dv">2</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  offset    = </span><span class="sc">{</span>popt[<span class="dv">3</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+         <p><strong>If the fit fails (RuntimeError) or produces
+         unreasonable results:</strong> Replace the initial guesses with
+         your graphically-determined values from step 8. This is
+         standard practice—graphical exploration provides the physical
+         insight needed to initialize numerical optimization.</p>
+         <div class="sourceCode" id="cb6"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use YOUR graphically-determined values as starting points</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> [amplitude_fixed, your_center_estimate, your_width_estimate, offset_fixed]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(beam_profile, x_data, y_data, p0<span class="op">=</span>p0)</span></code></pre></div>
+         <p><strong>After getting a successful fit:</strong> Do your
+         graphical and computational results agree to 3 significant
+         figures?</p>
+         <p><strong>Reflection:</strong> Why did the original initial
+         guesses fail (if they did)? Look at your <span
+         class="math inline">\(\chi^2\)</span> contour plot—where does
+         the initial guess <code>center = 0.01</code> fall relative to
+         the valley containing the minimum?</p></li>
          </ol>
          <h2 data-number="4.4"
          id="uncertainty-in-the-fit-parameters"><span
@@ -681,15 +749,15 @@
          </p>
          <p>The parameter uncertainties are then extracted from the
          covariance matrix:</p>
-         <div class="sourceCode" id="cb6"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get parameter uncertainties from the covariance matrix</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Parameter uncertainties:&quot;</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  σ_amplitude = </span><span class="sc">{</span>perr[<span class="dv">0</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  σ_center    = </span><span class="sc">{</span>perr[<span class="dv">1</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  σ_width     = </span><span class="sc">{</span>perr[<span class="dv">2</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  σ_offset    = </span><span class="sc">{</span>perr[<span class="dv">3</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb7"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get parameter uncertainties from the covariance matrix</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Parameter uncertainties:&quot;</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  σ_amplitude = </span><span class="sc">{</span>perr[<span class="dv">0</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  σ_center    = </span><span class="sc">{</span>perr[<span class="dv">1</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  σ_width     = </span><span class="sc">{</span>perr[<span class="dv">2</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;  σ_offset    = </span><span class="sc">{</span>perr[<span class="dv">3</span>]<span class="sc">:.6f}</span><span class="ss">&quot;</span>)</span></code></pre></div>
          <h2 data-number="4.5"
          id="estimating-the-uncertainty-in-the-data"><span
          class="header-section-number">4.5</span> Estimating the
@@ -699,18 +767,18 @@
          parameters to estimate <span
          class="math inline">\(\sigma_y^2\)</span>, the statistical
          error of each data point given by your data.</p>
-         <div class="sourceCode" id="cb7"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate residuals</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>y_fit <span class="op">=</span> beam_profile(x_data, <span class="op">*</span>popt)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>residuals <span class="op">=</span> y_data <span class="op">-</span> y_fit</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate variance (N data points, n=4 parameters)</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="bu">len</span>(y_data)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">4</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>sigma_y_squared <span class="op">=</span> np.<span class="bu">sum</span>(residuals<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> (N <span class="op">-</span> n)</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>sigma_y <span class="op">=</span> np.sqrt(sigma_y_squared)</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Estimated σ_y = </span><span class="sc">{</span>sigma_y<span class="sc">:.6f}</span><span class="ss"> V&quot;</span>)</span></code></pre></div></li>
+         <div class="sourceCode" id="cb8"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate residuals</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>y_fit <span class="op">=</span> beam_profile(x_data, <span class="op">*</span>popt)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>residuals <span class="op">=</span> y_data <span class="op">-</span> y_fit</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimate variance (N data points, n=4 parameters)</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="bu">len</span>(y_data)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>sigma_y_squared <span class="op">=</span> np.<span class="bu">sum</span>(residuals<span class="op">**</span><span class="dv">2</span>) <span class="op">/</span> (N <span class="op">-</span> n)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>sigma_y <span class="op">=</span> np.sqrt(sigma_y_squared)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Estimated σ_y = </span><span class="sc">{</span>sigma_y<span class="sc">:.6f}</span><span class="ss"> V&quot;</span>)</span></code></pre></div></li>
          <li><p>Compare your result with the estimate from the fit. The
          estimated variance can be calculated from the
          residuals.</p></li>
@@ -735,18 +803,18 @@
          )\]</span></p>
          <ol type="1">
          <li><p>Make a plot of the residuals:</p>
-         <div class="sourceCode" id="cb8"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate and plot residuals</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>residuals <span class="op">=</span> y_data <span class="op">-</span> beam_profile(x_data, <span class="op">*</span>popt)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_data, residuals)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">&#39;r&#39;</span>, linestyle<span class="op">=</span><span class="st">&#39;--&#39;</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (m)&#39;</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Residuals (V)&#39;</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Fit Residuals&#39;</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <div class="sourceCode" id="cb9"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate and plot residuals</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>residuals <span class="op">=</span> y_data <span class="op">-</span> beam_profile(x_data, <span class="op">*</span>popt)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>plt.scatter(x_data, residuals)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>plt.axhline(y<span class="op">=</span><span class="dv">0</span>, color<span class="op">=</span><span class="st">&#39;r&#39;</span>, linestyle<span class="op">=</span><span class="st">&#39;--&#39;</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (m)&#39;</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Residuals (V)&#39;</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Fit Residuals&#39;</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          <li><p>Since we didn’t provide any estimates of the
          uncertainties, the fitting assumed the uncertainty of every
          point is the same. Based on the plot of residuals, was this a
@@ -842,16 +910,16 @@
          less information when choosing the best fit parameters.</p>
          <p>In Python’s <code>curve_fit</code>, you provide
          uncertainties using the <code>sigma</code> parameter:</p>
-         <div class="sourceCode" id="cb9"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weighted fit with known uncertainties</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    beam_profile,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    x_data,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    y_data,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    p0<span class="op">=</span>p0,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    sigma<span class="op">=</span>sigma_list,        <span class="co"># Your uncertainty estimates</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    absolute_sigma<span class="op">=</span><span class="va">True</span>      <span class="co"># Use actual sigma values (not relative)</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+         <div class="sourceCode" id="cb10"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weighted fit with known uncertainties</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    beam_profile,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    x_data,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    y_data,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    p0<span class="op">=</span>p0,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    sigma<span class="op">=</span>sigma_list,        <span class="co"># Your uncertainty estimates</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    absolute_sigma<span class="op">=</span><span class="va">True</span>      <span class="co"># Use actual sigma values (not relative)</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
          <ol type="1">
          <li><p>Download <a
          href="../resources/lab-guides/gaussian-laser-beams/profile_data_with_errors.csv">this
@@ -859,36 +927,36 @@
          The first column is razor position in meters, the second column
          is photodetector output voltage, and the third column is the
          uncertainty on the photodetector output voltage.</p>
-         <div class="sourceCode" id="cb10"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data with uncertainties</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;profile_data_with_errors.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>x_data <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>y_data <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>y_err <span class="op">=</span> data[:, <span class="dv">2</span>]</span></code></pre></div></li>
+         <div class="sourceCode" id="cb11"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data with uncertainties</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;profile_data_with_errors.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>x_data <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>y_data <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>y_err <span class="op">=</span> data[:, <span class="dv">2</span>]</span></code></pre></div></li>
          <li><p>Do a weighted fit using the same fit function as in
          Section <a href="#sec:min-graph">4.3</a>. Use the uncertainty
          estimates in the third column.</p>
-         <div class="sourceCode" id="cb11"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weighted fit</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    beam_profile, x_data, y_data,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    p0<span class="op">=</span>[<span class="fl">1.4</span>, <span class="fl">0.01</span>, <span class="fl">0.0005</span>, <span class="fl">1.45</span>],</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    sigma<span class="op">=</span>y_err,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    absolute_sigma<span class="op">=</span><span class="va">True</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))</span></code></pre></div></li>
+         <div class="sourceCode" id="cb12"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Weighted fit</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    beam_profile, x_data, y_data,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    p0<span class="op">=</span>[<span class="fl">1.4</span>, <span class="fl">0.01</span>, <span class="fl">0.0005</span>, <span class="fl">1.45</span>],</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    sigma<span class="op">=</span>y_err,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    absolute_sigma<span class="op">=</span><span class="va">True</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))</span></code></pre></div></li>
          <li><p>Calculate <span
          class="math inline">\(\chi^2\)</span>:</p>
-         <div class="sourceCode" id="cb12"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate chi-squared</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>y_fit <span class="op">=</span> beam_profile(x_data, <span class="op">*</span>popt)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>chi2 <span class="op">=</span> np.<span class="bu">sum</span>(((y_data <span class="op">-</span> y_fit) <span class="op">/</span> y_err)<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>dof <span class="op">=</span> <span class="bu">len</span>(y_data) <span class="op">-</span> <span class="bu">len</span>(popt)  <span class="co"># degrees of freedom</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>chi2_red <span class="op">=</span> chi2 <span class="op">/</span> dof</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Chi-squared: </span><span class="sc">{</span>chi2<span class="sc">:.2f}</span><span class="ss">&quot;</span>)</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Degrees of freedom: </span><span class="sc">{</span>dof<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Reduced chi-squared: </span><span class="sc">{</span>chi2_red<span class="sc">:.2f}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
+         <div class="sourceCode" id="cb13"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate chi-squared</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>y_fit <span class="op">=</span> beam_profile(x_data, <span class="op">*</span>popt)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>chi2 <span class="op">=</span> np.<span class="bu">sum</span>(((y_data <span class="op">-</span> y_fit) <span class="op">/</span> y_err)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>dof <span class="op">=</span> <span class="bu">len</span>(y_data) <span class="op">-</span> <span class="bu">len</span>(popt)  <span class="co"># degrees of freedom</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>chi2_red <span class="op">=</span> chi2 <span class="op">/</span> dof</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Chi-squared: </span><span class="sc">{</span>chi2<span class="sc">:.2f}</span><span class="ss">&quot;</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Degrees of freedom: </span><span class="sc">{</span>dof<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Reduced chi-squared: </span><span class="sc">{</span>chi2_red<span class="sc">:.2f}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
          <li><p>How close is the reduced chi-squared to 1?</p></li>
          <li><p><strong>The “chi-squared test”.</strong> This part helps
          us understand if the value of <span
@@ -901,12 +969,12 @@
          (CDF) for the chi-squared distribution. Use the graph to
          estimate the likelihood this value of <span
          class="math inline">\(\chi^2\)</span> occurred by chance.</p>
-         <div class="sourceCode" id="cb13"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate p-value (probability of getting this chi2 or higher by chance)</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> stats.chi2.cdf(chi2, dof)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;P-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
+         <div class="sourceCode" id="cb14"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate p-value (probability of getting this chi2 or higher by chance)</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>p_value <span class="op">=</span> <span class="dv">1</span> <span class="op">-</span> stats.chi2.cdf(chi2, dof)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;P-value: </span><span class="sc">{</span>p_value<span class="sc">:.4f}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
          </ol>
          <div id="fig:cdf" class="fignos">
          <figure>
@@ -1047,26 +1115,26 @@
          with Matplotlib</h3>
          <p>Creating plots with error bars in Python is straightforward
          using <code>plt.errorbar()</code>:</p>
-         <div class="sourceCode" id="cb14"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data with uncertainties</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;gaussian_data_with_errors.txt&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> data[:, <span class="dv">0</span>]      <span class="co"># Position</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data[:, <span class="dv">1</span>]      <span class="co"># Voltage</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>y_err <span class="op">=</span> data[:, <span class="dv">2</span>]  <span class="co"># Uncertainty</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot with error bars</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>plt.errorbar(x, y, yerr<span class="op">=</span>y_err, fmt<span class="op">=</span><span class="st">&#39;o&#39;</span>, capsize<span class="op">=</span><span class="dv">3</span>,</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">&#39;Data with uncertainties&#39;</span>)</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Micrometer Position (inches)&#39;</span>)</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Photodetector Voltage (V)&#39;</span>)</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Gaussian Beam Size Measurement&#39;</span>)</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+         <div class="sourceCode" id="cb15"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data with uncertainties</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;gaussian_data_with_errors.txt&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> data[:, <span class="dv">0</span>]      <span class="co"># Position</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data[:, <span class="dv">1</span>]      <span class="co"># Voltage</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>y_err <span class="op">=</span> data[:, <span class="dv">2</span>]  <span class="co"># Uncertainty</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot with error bars</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>plt.errorbar(x, y, yerr<span class="op">=</span>y_err, fmt<span class="op">=</span><span class="st">&#39;o&#39;</span>, capsize<span class="op">=</span><span class="dv">3</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>             label<span class="op">=</span><span class="st">&#39;Data with uncertainties&#39;</span>)</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Micrometer Position (inches)&#39;</span>)</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Photodetector Voltage (V)&#39;</span>)</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Gaussian Beam Size Measurement&#39;</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
          <p>The <code>errorbar()</code> function parameters: -
          <code>x</code>, <code>y</code>: Data points -
          <code>yerr</code>: Uncertainty values (can also use
@@ -1192,26 +1260,26 @@
          href="../resources/lab-guides/gaussian-laser-beams/gaussian_data_with_errors.txt">this
          data set</a> and create a plot with error bars like Figure <a
          href="#fig:gauss-example">3</a>.</p>
-         <div class="sourceCode" id="cb15"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;gaussian_data_with_errors.txt&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>position <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>voltage <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>uncertainty <span class="op">=</span> data[:, <span class="dv">2</span>]</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>plt.errorbar(position, voltage, yerr<span class="op">=</span>uncertainty,</span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>             fmt<span class="op">=</span><span class="st">&#39;o&#39;</span>, capsize<span class="op">=</span><span class="dv">3</span>, markersize<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (inches)&#39;</span>)</span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Photodetector Output (V)&#39;</span>)</span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Gaussian Beam Size Measurement&#39;</span>)</span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+         <div class="sourceCode" id="cb16"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;gaussian_data_with_errors.txt&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>position <span class="op">=</span> data[:, <span class="dv">0</span>]</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>voltage <span class="op">=</span> data[:, <span class="dv">1</span>]</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>uncertainty <span class="op">=</span> data[:, <span class="dv">2</span>]</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create plot</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>plt.errorbar(position, voltage, yerr<span class="op">=</span>uncertainty,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>             fmt<span class="op">=</span><span class="st">&#39;o&#39;</span>, capsize<span class="op">=</span><span class="dv">3</span>, markersize<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Position (inches)&#39;</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Photodetector Output (V)&#39;</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Gaussian Beam Size Measurement&#39;</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
          <div id="fig:gauss-example" class="fignos">
          <figure>
          <img
@@ -1245,7 +1313,7 @@
          <p><span class="math display">\[P(x) = \frac{P_0}{2}\left[1 +
          \text{erf}\left(\frac{\sqrt{2}(x-x_0)}{w}\right)\right]\]</span></p>
          <p>where <span class="math inline">\(w\)</span> is the beam
-         size, <span class="math inline">\(x_0\)</span> is the beam
+         radius, <span class="math inline">\(x_0\)</span> is the beam
          center position, and <span class="math inline">\(P_0\)</span>
          is the total power.</p>
          <p>For fitting, we use a slightly more general form that
@@ -1255,8 +1323,16 @@
          <p>where: - <span class="math inline">\(a\)</span> = amplitude
          (half the voltage swing) - <span
          class="math inline">\(b\)</span> = beam center position - <span
-         class="math inline">\(w\)</span> = beam size (what we want!) -
-         <span class="math inline">\(c\)</span> = vertical offset</p>
+         class="math inline">\(w\)</span> = beam radius (what we want!)
+         - <span class="math inline">\(c\)</span> = vertical offset</p>
+         <p><strong>Note on terminology:</strong> The parameter <span
+         class="math inline">\(w\)</span> is the <strong>beam
+         radius</strong>—specifically, the <span
+         class="math inline">\(1/e^2\)</span> radius where intensity
+         drops to <span class="math inline">\(1/e^2\)</span> of the peak
+         value. This is not the beam diameter (which would be <span
+         class="math inline">\(2w\)</span>) or the FWHM. Gaussian beam
+         parameters are discussed further in Week 3.</p>
          <h3 data-number="4.8.2" id="practice-exercise"><span
          class="header-section-number">4.8.2</span> Practice
          Exercise</h3>
@@ -1268,38 +1344,38 @@
          vs. voltage). Does it look like an error function?</p></li>
          <li><p><strong>Define the fit function</strong> (same as used
          earlier):</p>
-         <div class="sourceCode" id="cb16"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> erf</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> beam_profile(x, amplitude, center, width, offset):</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Error function model for knife-edge beam profile.</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">        x: position (m)</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">        amplitude: half the voltage swing (V)</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">        center: beam center position (m)</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">        width: beam size w (m)</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">        offset: vertical offset (V)</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> amplitude <span class="op">*</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">*</span> (x <span class="op">-</span> center) <span class="op">/</span> width) <span class="op">+</span> offset</span></code></pre></div></li>
-         <li><p><strong>Perform the fit:</strong></p>
          <div class="sourceCode" id="cb17"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> curve_fit</span>
+         class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> erf</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;Test_Profile_Data.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> data[:, <span class="dv">0</span>]  <span class="co"># Position (m)</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data[:, <span class="dv">1</span>]  <span class="co"># Voltage (V)</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial guesses (estimate from your plot)</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Order: [amplitude, center, width, offset]</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.001</span>, <span class="fl">0.0005</span>, <span class="fl">0.5</span>]</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(beam_profile, x, y, p0<span class="op">=</span>p0)</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))  <span class="co"># Standard errors</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam size w = </span><span class="sc">{</span>popt[<span class="dv">2</span>]<span class="sc">:.2e}</span><span class="ss"> ± </span><span class="sc">{</span>perr[<span class="dv">2</span>]<span class="sc">:.2e}</span><span class="ss"> m&quot;</span>)</span></code></pre></div></li>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> beam_profile(x, amplitude, center, width, offset):</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Error function model for knife-edge beam profile.</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co">        x: position (m)</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co">        amplitude: half the voltage swing (V)</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co">        center: beam center position (m)</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co">        width: beam radius w (m)</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">        offset: vertical offset (V)</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co">    &quot;&quot;&quot;</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> amplitude <span class="op">*</span> erf(np.sqrt(<span class="dv">2</span>) <span class="op">*</span> (x <span class="op">-</span> center) <span class="op">/</span> width) <span class="op">+</span> offset</span></code></pre></div></li>
+         <li><p><strong>Perform the fit:</strong></p>
+         <div class="sourceCode" id="cb18"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> curve_fit</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.loadtxt(<span class="st">&#39;Test_Profile_Data.csv&#39;</span>, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> data[:, <span class="dv">0</span>]  <span class="co"># Position (m)</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> data[:, <span class="dv">1</span>]  <span class="co"># Voltage (V)</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial guesses (estimate from your plot)</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Order: [amplitude, center, width, offset]</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>p0 <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">0.001</span>, <span class="fl">0.0005</span>, <span class="fl">0.5</span>]</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>popt, pcov <span class="op">=</span> curve_fit(beam_profile, x, y, p0<span class="op">=</span>p0)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>perr <span class="op">=</span> np.sqrt(np.diag(pcov))  <span class="co"># Standard errors</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam size w = </span><span class="sc">{</span>popt[<span class="dv">2</span>]<span class="sc">:.2e}</span><span class="ss"> ± </span><span class="sc">{</span>perr[<span class="dv">2</span>]<span class="sc">:.2e}</span><span class="ss"> m&quot;</span>)</span></code></pre></div></li>
          <li><p><strong>Verify your result:</strong> You should get
          <span class="math inline">\(w = 4.52 \times 10^{-4}\)</span> m
          (approximately 0.45 mm).</p></li>
@@ -1348,26 +1424,26 @@
          <li>Open the “Test Panel” to test analog inputs manually</li>
          </ul></li>
          <li><p>Use Python to list available DAQ devices:</p>
-         <div class="sourceCode" id="cb18"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.system <span class="im">import</span> System</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># List all connected DAQ devices</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>system <span class="op">=</span> System.local()</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> device <span class="kw">in</span> system.devices:</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Device: </span><span class="sc">{</span>device<span class="sc">.</span>name<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  Product Type: </span><span class="sc">{</span>device<span class="sc">.</span>product_type<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  AI Channels: </span><span class="sc">{</span>[ch.name <span class="cf">for</span> ch <span class="kw">in</span> device.ai_physical_chans]<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
+         <div class="sourceCode" id="cb19"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.system <span class="im">import</span> System</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># List all connected DAQ devices</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>system <span class="op">=</span> System.local()</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> device <span class="kw">in</span> system.devices:</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Device: </span><span class="sc">{</span>device<span class="sc">.</span>name<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  Product Type: </span><span class="sc">{</span>device<span class="sc">.</span>product_type<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;  AI Channels: </span><span class="sc">{</span>[ch.name <span class="cf">for</span> ch <span class="kw">in</span> device.ai_physical_chans]<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div></li>
          <li><p>Connect the 5V power rail to <code>AI0+</code> and
          ground to <code>AI0-</code>. You must connect both wires since
          the device measures a potential difference between the two
          terminals.</p></li>
          <li><p>Read a voltage to verify the connection:</p>
-         <div class="sourceCode" id="cb19"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    voltage <span class="op">=</span> task.read()</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Measured voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span></code></pre></div></li>
+         <div class="sourceCode" id="cb20"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    voltage <span class="op">=</span> task.read()</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;Measured voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span></code></pre></div></li>
          </ol>
          <h2 data-number="5.3" id="reading-multiple-samples"><span
          class="header-section-number">5.3</span> Reading Multiple
@@ -1396,38 +1472,38 @@
          <h3 data-number="5.3.2" id="sec:analogmeas"><span
          class="header-section-number">5.3.2</span> Acquiring Multiple
          Samples</h3>
-         <div class="sourceCode" id="cb20"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">20000</span>  <span class="co"># Hz</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>samples_to_read <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire data</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    task.timing.cfg_samp_clk_timing(</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>        rate<span class="op">=</span>sample_rate,</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>        sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>        samps_per_chan<span class="op">=</span>samples_to_read</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>samples_to_read)</span>
-<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
-<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(samples_to_read) <span class="op">/</span> sample_rate</span>
-<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
-<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>plt.plot(time <span class="op">*</span> <span class="dv">1000</span>, data)  <span class="co"># Time in ms</span></span>
-<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
-<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Acquired Signal&#39;</span>)</span>
-<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+         <div class="sourceCode" id="cb21"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>sample_rate <span class="op">=</span> <span class="dv">20000</span>  <span class="co"># Hz</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>samples_to_read <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire data</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    task.timing.cfg_samp_clk_timing(</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        rate<span class="op">=</span>sample_rate,</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        samps_per_chan<span class="op">=</span>samples_to_read</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>samples_to_read)</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(samples_to_read) <span class="op">/</span> sample_rate</span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the data</span></span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>plt.plot(time <span class="op">*</span> <span class="dv">1000</span>, data)  <span class="co"># Time in ms</span></span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Acquired Signal&#39;</span>)</span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
          <h3 data-number="5.3.3" id="exercise-capture-a-waveform"><span
          class="header-section-number">5.3.3</span> Exercise: Capture a
          Waveform</h3>
@@ -1463,28 +1539,28 @@
          <li><p>Modify your Python script so that the <em>Number of
          Samples</em> and <em>Sample Rate</em> are easily configurable
          variables at the top:</p>
-         <div class="sourceCode" id="cb21"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration - easily adjustable</span></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>SAMPLE_RATE <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Samples per second</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>NUM_SAMPLES <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Total samples (1 second of data)</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>DAQ_CHANNEL <span class="op">=</span> <span class="st">&quot;Dev1/ai0&quot;</span></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> acquire_data(sample_rate, num_samples, channel):</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Acquire data from DAQ with specified parameters.&quot;&quot;&quot;</span></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(channel)</span>
-<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>num_samples)</span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array(data)</span></code></pre></div></li>
+         <div class="sourceCode" id="cb22"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Configuration - easily adjustable</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>SAMPLE_RATE <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Samples per second</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>NUM_SAMPLES <span class="op">=</span> <span class="dv">500</span>     <span class="co"># Total samples (1 second of data)</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>DAQ_CHANNEL <span class="op">=</span> <span class="st">&quot;Dev1/ai0&quot;</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> acquire_data(sample_rate, num_samples, channel):</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Acquire data from DAQ with specified parameters.&quot;&quot;&quot;</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(channel)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> task.read(number_of_samples_per_channel<span class="op">=</span>num_samples)</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array(data)</span></code></pre></div></li>
          <li><p>Set up a function generator to produce a <strong>1 kHz
          sine wave</strong>.</p></li>
          <li><p>Connect the function generator’s output to both the
@@ -1501,18 +1577,18 @@
          the DAQ. Make sure that the time range on the oscilloscope is
          set such that it is on the same order as the data being
          recorded by the DAQ.</p>
-         <div class="sourceCode" id="cb22"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire and plot data</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> acquire_data(SAMPLE_RATE, NUM_SAMPLES, DAQ_CHANNEL)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(NUM_SAMPLES) <span class="op">/</span> SAMPLE_RATE</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>plt.plot(time, data)</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (s)&#39;</span>)</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f&#39;Acquired Signal (</span><span class="sc">{</span>SAMPLE_RATE<span class="sc">}</span><span class="ss"> Hz sample rate)&#39;</span>)</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <div class="sourceCode" id="cb23"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Acquire and plot data</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> acquire_data(SAMPLE_RATE, NUM_SAMPLES, DAQ_CHANNEL)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(NUM_SAMPLES) <span class="op">/</span> SAMPLE_RATE</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>plt.plot(time, data)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (s)&#39;</span>)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f&#39;Acquired Signal (</span><span class="sc">{</span>SAMPLE_RATE<span class="sc">}</span><span class="ss"> Hz sample rate)&#39;</span>)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          <li><p>Compare the two plots. What are the major differences
          between the two?</p></li>
          <li><p>Why might one or both of these plots be giving an
@@ -1681,36 +1757,36 @@
          results</li>
          </ul>
          <p><strong>Measure:</strong></p>
-         <div class="sourceCode" id="cb23"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType, TerminalConfiguration</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> measure_noise(channel<span class="op">=</span><span class="st">&quot;Dev1/ai0&quot;</span>, num_samples<span class="op">=</span><span class="dv">1000</span>, sample_rate<span class="op">=</span><span class="dv">10000</span>,</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                  terminal_config<span class="op">=</span>TerminalConfiguration.RSE,</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                  voltage_range<span class="op">=</span><span class="fl">10.0</span>):</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Measure noise with specified configuration.&quot;&quot;&quot;</span></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>            channel,</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>            terminal_config<span class="op">=</span>terminal_config,</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>            min_val<span class="op">=-</span>voltage_range,</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>            max_val<span class="op">=</span>voltage_range</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> np.array(task.read(number_of_samples_per_channel<span class="op">=</span>num_samples))</span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(data), np.std(data)</span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare terminal configurations (same ±10V range)</span></span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>dc_rse, noise_rse <span class="op">=</span> measure_noise(terminal_config<span class="op">=</span>TerminalConfiguration.RSE, voltage_range<span class="op">=</span><span class="fl">10.0</span>)</span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>dc_diff, noise_diff <span class="op">=</span> measure_noise(terminal_config<span class="op">=</span>TerminalConfiguration.DIFF, voltage_range<span class="op">=</span><span class="fl">10.0</span>)</span>
-<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;RSE  ±10V: DC = </span><span class="sc">{</span>dc_rse<span class="op">*</span><span class="dv">1000</span><span class="sc">:7.2f}</span><span class="ss"> mV, RMS noise = </span><span class="sc">{</span>noise_rse<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span>
-<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;DIFF ±10V: DC = </span><span class="sc">{</span>dc_diff<span class="op">*</span><span class="dv">1000</span><span class="sc">:7.2f}</span><span class="ss"> mV, RMS noise = </span><span class="sc">{</span>noise_diff<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb24"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType, TerminalConfiguration</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> measure_noise(channel<span class="op">=</span><span class="st">&quot;Dev1/ai0&quot;</span>, num_samples<span class="op">=</span><span class="dv">1000</span>, sample_rate<span class="op">=</span><span class="dv">10000</span>,</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>                  terminal_config<span class="op">=</span>TerminalConfiguration.RSE,</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>                  voltage_range<span class="op">=</span><span class="fl">10.0</span>):</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Measure noise with specified configuration.&quot;&quot;&quot;</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>            channel,</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>            terminal_config<span class="op">=</span>terminal_config,</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>            min_val<span class="op">=-</span>voltage_range,</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>            max_val<span class="op">=</span>voltage_range</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> np.array(task.read(number_of_samples_per_channel<span class="op">=</span>num_samples))</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(data), np.std(data)</span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare terminal configurations (same ±10V range)</span></span>
+<span id="cb24-25"><a href="#cb24-25" aria-hidden="true" tabindex="-1"></a>dc_rse, noise_rse <span class="op">=</span> measure_noise(terminal_config<span class="op">=</span>TerminalConfiguration.RSE, voltage_range<span class="op">=</span><span class="fl">10.0</span>)</span>
+<span id="cb24-26"><a href="#cb24-26" aria-hidden="true" tabindex="-1"></a>dc_diff, noise_diff <span class="op">=</span> measure_noise(terminal_config<span class="op">=</span>TerminalConfiguration.DIFF, voltage_range<span class="op">=</span><span class="fl">10.0</span>)</span>
+<span id="cb24-27"><a href="#cb24-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-28"><a href="#cb24-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;RSE  ±10V: DC = </span><span class="sc">{</span>dc_rse<span class="op">*</span><span class="dv">1000</span><span class="sc">:7.2f}</span><span class="ss"> mV, RMS noise = </span><span class="sc">{</span>noise_rse<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span>
+<span id="cb24-29"><a href="#cb24-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;DIFF ±10V: DC = </span><span class="sc">{</span>dc_diff<span class="op">*</span><span class="dv">1000</span><span class="sc">:7.2f}</span><span class="ss"> mV, RMS noise = </span><span class="sc">{</span>noise_diff<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span></code></pre></div>
          <p><strong>Record your results:</strong></p>
          <table>
          <thead>
@@ -1763,13 +1839,13 @@
          <li>Higher noise with ±1V range</li>
          </ul>
          <p><strong>Measure:</strong></p>
-         <div class="sourceCode" id="cb24"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare voltage ranges (same DIFF terminal config)</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>dc_10v, noise_10v <span class="op">=</span> measure_noise(terminal_config<span class="op">=</span>TerminalConfiguration.DIFF, voltage_range<span class="op">=</span><span class="fl">10.0</span>)</span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>dc_1v, noise_1v <span class="op">=</span> measure_noise(terminal_config<span class="op">=</span>TerminalConfiguration.DIFF, voltage_range<span class="op">=</span><span class="fl">1.0</span>)</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;DIFF ±10V: DC = </span><span class="sc">{</span>dc_10v<span class="op">*</span><span class="dv">1000</span><span class="sc">:7.2f}</span><span class="ss"> mV, RMS noise = </span><span class="sc">{</span>noise_10v<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;DIFF ±1V:  DC = </span><span class="sc">{</span>dc_1v<span class="op">*</span><span class="dv">1000</span><span class="sc">:7.2f}</span><span class="ss"> mV, RMS noise = </span><span class="sc">{</span>noise_1v<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb25"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare voltage ranges (same DIFF terminal config)</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>dc_10v, noise_10v <span class="op">=</span> measure_noise(terminal_config<span class="op">=</span>TerminalConfiguration.DIFF, voltage_range<span class="op">=</span><span class="fl">10.0</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>dc_1v, noise_1v <span class="op">=</span> measure_noise(terminal_config<span class="op">=</span>TerminalConfiguration.DIFF, voltage_range<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;DIFF ±10V: DC = </span><span class="sc">{</span>dc_10v<span class="op">*</span><span class="dv">1000</span><span class="sc">:7.2f}</span><span class="ss"> mV, RMS noise = </span><span class="sc">{</span>noise_10v<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;DIFF ±1V:  DC = </span><span class="sc">{</span>dc_1v<span class="op">*</span><span class="dv">1000</span><span class="sc">:7.2f}</span><span class="ss"> mV, RMS noise = </span><span class="sc">{</span>noise_1v<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span></code></pre></div>
          <p><strong>Record your results:</strong></p>
          <table>
          <thead>
@@ -1827,27 +1903,27 @@
          </ul>
          <p><strong>Use this function for all remaining
          measurements:</strong></p>
-         <div class="sourceCode" id="cb25"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType, TerminalConfiguration</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> measure_noise(channel<span class="op">=</span><span class="st">&quot;Dev1/ai0&quot;</span>, num_samples<span class="op">=</span><span class="dv">1000</span>, sample_rate<span class="op">=</span><span class="dv">10000</span>):</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Measure DC level and RMS noise. Uses RSE ±10V configuration.&quot;&quot;&quot;</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>            channel,</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>            terminal_config<span class="op">=</span>TerminalConfiguration.RSE,</span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>            min_val<span class="op">=-</span><span class="fl">10.0</span>,</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>            max_val<span class="op">=</span><span class="fl">10.0</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> np.array(task.read(number_of_samples_per_channel<span class="op">=</span>num_samples))</span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(data), np.std(data)</span></code></pre></div>
+         <div class="sourceCode" id="cb26"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.constants <span class="im">import</span> AcquisitionType, TerminalConfiguration</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> measure_noise(channel<span class="op">=</span><span class="st">&quot;Dev1/ai0&quot;</span>, num_samples<span class="op">=</span><span class="dv">1000</span>, sample_rate<span class="op">=</span><span class="dv">10000</span>):</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Measure DC level and RMS noise. Uses RSE ±10V configuration.&quot;&quot;&quot;</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>            channel,</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>            terminal_config<span class="op">=</span>TerminalConfiguration.RSE,</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>            min_val<span class="op">=-</span><span class="fl">10.0</span>,</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>            max_val<span class="op">=</span><span class="fl">10.0</span></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>        task.timing.cfg_samp_clk_timing(</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>            rate<span class="op">=</span>sample_rate,</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>            sample_mode<span class="op">=</span>AcquisitionType.FINITE,</span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>            samps_per_chan<span class="op">=</span>num_samples</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> np.array(task.read(number_of_samples_per_channel<span class="op">=</span>num_samples))</span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.mean(data), np.std(data)</span></code></pre></div>
          <h2 data-number="7.2"
          id="phase-2-what-limits-your-measurement"><span
          class="header-section-number">7.2</span> Phase 2: What Limits
@@ -1888,14 +1964,14 @@
          light.</li>
          <li>Measure noise at two gain settings:</li>
          </ol>
-         <div class="sourceCode" id="cb26"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Measure at 0 dB gain (set on photodetector)</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>dc_0db, noise_0db <span class="op">=</span> measure_noise()</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;0 dB gain - Noise: </span><span class="sc">{</span>noise_0db<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Change photodetector to 70 dB gain, then measure again</span></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>dc_70db, noise_70db <span class="op">=</span> measure_noise()</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;70 dB gain - Noise: </span><span class="sc">{</span>noise_70db<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb27"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Measure at 0 dB gain (set on photodetector)</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>dc_0db, noise_0db <span class="op">=</span> measure_noise()</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;0 dB gain - Noise: </span><span class="sc">{</span>noise_0db<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Change photodetector to 70 dB gain, then measure again</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>dc_70db, noise_70db <span class="op">=</span> measure_noise()</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;70 dB gain - Noise: </span><span class="sc">{</span>noise_70db<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span></code></pre></div>
          <p><strong>Results:</strong></p>
          <table>
          <thead>
@@ -2017,23 +2093,23 @@
          If time permits, compare noise measurements.</p>
          <p><strong>Setup:</strong> Connect the photodetector output to
          oscilloscope CH1.</p>
-         <div class="sourceCode" id="cb27"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyvisa</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>rm <span class="op">=</span> pyvisa.ResourceManager()</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>scope <span class="op">=</span> rm.open_resource(<span class="st">&quot;USB0::0x0699::...&quot;</span>)  <span class="co"># Your scope address</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>scope.timeout <span class="op">=</span> <span class="dv">10000</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture waveform and compute noise (std dev)</span></span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>scope.write(<span class="st">&quot;DATA:SOURCE CH1&quot;</span>)</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>raw <span class="op">=</span> scope.query_binary_values(<span class="st">&quot;CURVE?&quot;</span>, datatype<span class="op">=</span><span class="st">&#39;b&#39;</span>, container<span class="op">=</span>np.array)</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>v_scale <span class="op">=</span> <span class="bu">float</span>(scope.query(<span class="st">&quot;WFMPRE:YMULT?&quot;</span>))</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>v_off <span class="op">=</span> <span class="bu">float</span>(scope.query(<span class="st">&quot;WFMPRE:YOFF?&quot;</span>))</span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>voltage <span class="op">=</span> (raw <span class="op">-</span> v_off) <span class="op">*</span> v_scale</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;RMS noise: </span><span class="sc">{</span>np<span class="sc">.</span>std(voltage)<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>scope.close()</span></code></pre></div>
+         <div class="sourceCode" id="cb28"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyvisa</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>rm <span class="op">=</span> pyvisa.ResourceManager()</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>scope <span class="op">=</span> rm.open_resource(<span class="st">&quot;USB0::0x0699::...&quot;</span>)  <span class="co"># Your scope address</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>scope.timeout <span class="op">=</span> <span class="dv">10000</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Capture waveform and compute noise (std dev)</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>scope.write(<span class="st">&quot;DATA:SOURCE CH1&quot;</span>)</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>raw <span class="op">=</span> scope.query_binary_values(<span class="st">&quot;CURVE?&quot;</span>, datatype<span class="op">=</span><span class="st">&#39;b&#39;</span>, container<span class="op">=</span>np.array)</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>v_scale <span class="op">=</span> <span class="bu">float</span>(scope.query(<span class="st">&quot;WFMPRE:YMULT?&quot;</span>))</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>v_off <span class="op">=</span> <span class="bu">float</span>(scope.query(<span class="st">&quot;WFMPRE:YOFF?&quot;</span>))</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>voltage <span class="op">=</span> (raw <span class="op">-</span> v_off) <span class="op">*</span> v_scale</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;RMS noise: </span><span class="sc">{</span>np<span class="sc">.</span>std(voltage)<span class="op">*</span><span class="dv">1000</span><span class="sc">:.2f}</span><span class="ss"> mV&quot;</span>)</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>scope.close()</span></code></pre></div>
          <p>See <a
          href="/PHYS-4430/python-visa#tektronix-tbs2000-oscilloscope">VISA
          Instrument Control</a> for complete oscilloscope examples.</p>
@@ -2049,28 +2125,28 @@
          File</h2>
          <p>Save your acquired data to a CSV file for later
          analysis:</p>
-         <div class="sourceCode" id="cb28"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># After acquiring data...</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a timestamp for the filename</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>timestamp <span class="op">=</span> datetime.now().strftime(<span class="st">&quot;%Y%m</span><span class="sc">%d</span><span class="st">_%H%M%S&quot;</span>)</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="ss">f&quot;data_</span><span class="sc">{</span>timestamp<span class="sc">}</span><span class="ss">.csv&quot;</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="bu">len</span>(data)) <span class="op">/</span> sample_rate</span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Save to CSV</span></span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>np.savetxt(</span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    filename,</span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    np.column_stack([time, data]),</span>
-<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>,</span>
-<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    header<span class="op">=</span><span class="st">&#39;Time (s), Voltage (V)&#39;</span>,</span>
-<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    comments<span class="op">=</span><span class="st">&#39;&#39;</span></span>
-<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Data saved to </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb29"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># After acquiring data...</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a timestamp for the filename</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>timestamp <span class="op">=</span> datetime.now().strftime(<span class="st">&quot;%Y%m</span><span class="sc">%d</span><span class="st">_%H%M%S&quot;</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>filename <span class="op">=</span> <span class="ss">f&quot;data_</span><span class="sc">{</span>timestamp<span class="sc">}</span><span class="ss">.csv&quot;</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create time array</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.arange(<span class="bu">len</span>(data)) <span class="op">/</span> sample_rate</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Save to CSV</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>np.savetxt(</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>    filename,</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>    np.column_stack([time, data]),</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>,</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    header<span class="op">=</span><span class="st">&#39;Time (s), Voltage (V)&#39;</span>,</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    comments<span class="op">=</span><span class="st">&#39;&#39;</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Data saved to </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">&quot;</span>)</span></code></pre></div>
          <h3 data-number="8.1.1"
          id="exercise-save-and-reload-data"><span
          class="header-section-number">8.1.1</span> Exercise: Save and
@@ -2078,19 +2154,19 @@
          <ol type="1">
          <li><p>Acquire a waveform and save it to a CSV file.</p></li>
          <li><p>Load the data back and plot it:</p>
-         <div class="sourceCode" id="cb29"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>loaded_data <span class="op">=</span> np.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>time_loaded <span class="op">=</span> loaded_data[:, <span class="dv">0</span>]</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>voltage_loaded <span class="op">=</span> loaded_data[:, <span class="dv">1</span>]</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>plt.plot(time_loaded <span class="op">*</span> <span class="dv">1000</span>, voltage_loaded)</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Loaded Data&#39;</span>)</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
+         <div class="sourceCode" id="cb30"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>loaded_data <span class="op">=</span> np.loadtxt(filename, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>, skiprows<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>time_loaded <span class="op">=</span> loaded_data[:, <span class="dv">0</span>]</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>voltage_loaded <span class="op">=</span> loaded_data[:, <span class="dv">1</span>]</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>plt.plot(time_loaded <span class="op">*</span> <span class="dv">1000</span>, voltage_loaded)</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Time (ms)&#39;</span>)</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Voltage (V)&#39;</span>)</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Loaded Data&#39;</span>)</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div></li>
          <li><p>Verify the loaded data matches your original
          acquisition.</p></li>
          </ol>
@@ -2101,15 +2177,15 @@
          limited rate of 150 S/s). Note that the USB-6009’s analog
          outputs have a range of 0-5V only, so we must specify this
          range explicitly:</p>
-         <div class="sourceCode" id="cb30"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Output a DC voltage</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>    task.ao_channels.add_ao_voltage_chan(<span class="st">&quot;Dev1/ao0&quot;</span>, min_val<span class="op">=</span><span class="fl">0.0</span>, max_val<span class="op">=</span><span class="fl">5.0</span>)</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>    task.write(<span class="fl">2.5</span>, auto_start<span class="op">=</span><span class="va">True</span>)  <span class="co"># Output 2.5 V</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Outputting 2.5 V on AO0&quot;</span>)</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>(<span class="st">&quot;Press Enter to stop...&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb31"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Output a DC voltage</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    task.ao_channels.add_ao_voltage_chan(<span class="st">&quot;Dev1/ao0&quot;</span>, min_val<span class="op">=</span><span class="fl">0.0</span>, max_val<span class="op">=</span><span class="fl">5.0</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    task.write(<span class="fl">2.5</span>, auto_start<span class="op">=</span><span class="va">True</span>)  <span class="co"># Output 2.5 V</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Outputting 2.5 V on AO0&quot;</span>)</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    <span class="bu">input</span>(<span class="st">&quot;Press Enter to stop...&quot;</span>)</span></code></pre></div>
          <h3 data-number="8.2.1" id="exercise-test-analog-output"><span
          class="header-section-number">8.2.1</span> Exercise: Test
          Analog Output</h3>
@@ -2129,22 +2205,22 @@
          class="header-section-number">8.3</span> Error Handling</h2>
          <p>Always include error handling in your data acquisition
          code:</p>
-         <div class="sourceCode" id="cb31"><pre
-         class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.errors <span class="im">import</span> DaqError</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>        voltage <span class="op">=</span> task.read()</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> DaqError <span class="im">as</span> e:</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;DAQ Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">&quot;</span>)</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Check that:&quot;</span>)</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The DAQ device is connected&quot;</span>)</span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The device name is correct (try &#39;Dev1&#39;, &#39;Dev2&#39;, etc.)&quot;</span>)</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - NI-DAQmx drivers are installed&quot;</span>)</span></code></pre></div>
+         <div class="sourceCode" id="cb32"><pre
+         class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nidaqmx</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nidaqmx.errors <span class="im">import</span> DaqError</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> nidaqmx.Task() <span class="im">as</span> task:</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        task.ai_channels.add_ai_voltage_chan(<span class="st">&quot;Dev1/ai0&quot;</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>        voltage <span class="op">=</span> task.read()</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f&quot;Voltage: </span><span class="sc">{</span>voltage<span class="sc">:.4f}</span><span class="ss"> V&quot;</span>)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> DaqError <span class="im">as</span> e:</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f&quot;DAQ Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">&quot;</span>)</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;Check that:&quot;</span>)</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The DAQ device is connected&quot;</span>)</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - The device name is correct (try &#39;Dev1&#39;, &#39;Dev2&#39;, etc.)&quot;</span>)</span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;  - NI-DAQmx drivers are installed&quot;</span>)</span></code></pre></div>
          <h1 data-number="9" id="summary"><span
          class="header-section-number">9</span> Summary</h1>
          <p>In this lab, you learned to:</p>

@@ -151,11 +151,13 @@ where there are where $N$ data points, $(x_i,y_i )$, and the fit function is giv
            x: position (m)
            amplitude: half the voltage swing (V)
            center: beam center position (m)
-           width: beam size w (m)
+           width: beam radius w (m)
            offset: vertical offset (V)
        """
        return amplitude * erf(np.sqrt(2) * (x - center) / width) + offset
    ```
+
+   **Note on terminology:** The parameter $w$ is the **beam radius**—specifically, the $1/e^2$ radius where intensity drops to $1/e^2$ of the peak value. This is not the beam diameter (which would be $2w$) or the FWHM. Gaussian beam parameters are discussed further in Week 3.
 
 3. Reduce the fit to two free parameters. This step is only necessary because it is hard to visualize more than 3 dimensions. Assume $a_{fit}=(V_{max}-V_{min})/2 = 1.4375$ and $c_{fit} =(V_{max}+V_{min})/2 = 1.45195$. These were determined by averaging the first 6 data points to get $V_{min}$ and the last 5 to get $V_{max}$.
 
@@ -174,34 +176,35 @@ where there are where $N$ data points, $(x_i,y_i )$, and the fit function is giv
    2. If the contours are elliptical, what would it mean if the ellipse is tilted (major axis not aligned with $w$ or $b$ axes)?
    3. Where in the $(w, b)$ plane should the minimum $\chi^2$ occur—at the true beam size and position, or somewhere else?
 
-6. Make a contour plot of $\chi^2(w,b)$ and tweak the plot range until you see the minimum. You can use AI assistance or the code below. The goal is to *interpret* the result, not to write the code from scratch.
+6. Make a contour plot of $\chi^2(w,b)$ and tweak the plot range until you see the minimum (see Figure @fig:contour for an example of what a well-tuned plot looks like). You can use AI assistance or the code below. The goal is to *interpret* the result, not to write the code from scratch.
 
    ```python
-   # Create a grid of width and center values
-   width_range = np.linspace(0.0003, 0.0007, 100)
-   center_range = np.linspace(0.009, 0.011, 100)
-   W, C = np.meshgrid(width_range, center_range)
+   # Create a grid of center and width values
+   # NOTE: These ranges may need adjustment to clearly show the minimum!
+   center_range = np.linspace(0.010, 0.012, 100)
+   width_range = np.linspace(0.0001, 0.0006, 100)
+   B, W = np.meshgrid(center_range, width_range)
 
    # Calculate chi-squared for each combination
    amplitude_fixed = 1.4375
    offset_fixed = 1.45195
-   Z = np.zeros_like(W)
-   for i in range(len(center_range)):
-       for j in range(len(width_range)):
-           Z[i, j] = chi_squared(width_range[j], center_range[i], x_data, y_data,
+   Z = np.zeros_like(B)
+   for i in range(len(width_range)):
+       for j in range(len(center_range)):
+           Z[i, j] = chi_squared(width_range[i], center_range[j], x_data, y_data,
                                  amplitude_fixed, offset_fixed)
 
    # Make contour plot
    plt.figure(figsize=(10, 8))
-   plt.contour(W * 1000, C * 1000, Z, levels=20)
+   plt.contour(B, W, Z, levels=20)
    plt.colorbar(label='$\\chi^2$')
-   plt.xlabel('width (mm)')
-   plt.ylabel('center (mm)')
+   plt.xlabel('center of beam, $b$ (m)')
+   plt.ylabel('beam radius, $w$ (m)')
    plt.title('$\\chi^2$ Contour Plot')
    plt.show()
    ```
 
-![Contour plot example.](../resources/lab-guides/gaussian-laser-beams/contour.png){#fig:contour width="15cm"}
+![Example of a well-tuned $\chi^2$ contour plot. Adjust your ranges until your plot clearly shows the minimum like this one.](../resources/lab-guides/gaussian-laser-beams/contour.png){#fig:contour width="15cm"}
 
 7. **Interpretation questions** (answer in your notebook):
 
@@ -209,14 +212,33 @@ where there are where $N$ data points, $(x_i,y_i )$, and the fit function is giv
    2. The contours are likely elliptical and possibly tilted. Explain in 2-3 sentences why the parameters $w$ and $b$ might be correlated (i.e., why changing one affects the best value of the other).
    3. If the noise in the data were doubled, how would the contour plot change? Would the minimum move? Would the contours spread out or contract?
 
-8. Graphically determine the best fit parameters to 3 significant digits.
+8. Graphically determine the best fit parameters to 3 significant digits. **Record these values in your notebook—you will use them in step 9.**
 
-9. Compare with the best fit result from `scipy.optimize.curve_fit` (allow all 4 parameters to vary). Do the fits agree for those three digits of precision?
+   **Checkpoint:** Before proceeding, confirm you have recorded your graphical estimates:
+
+   - center $b$ = _______ m
+   - width $w$ = _______ m
+
+9. Compare with the best fit result from `scipy.optimize.curve_fit` (allow all 4 parameters to vary).
+
+   **Before running this code**, examine the initial guesses below. Compare the center guess (0.01 m) to your data's position range. What do you predict will happen when you run the fit?
+
+   > **Warning: You may get a `RuntimeError`!**
+   >
+   > Nonlinear fitting algorithms like `curve_fit` are iterative—they start at your initial guess and search for a minimum. If your initial guess is far from the true minimum, the algorithm may:
+   > - Wander into regions where the function behaves badly
+   > - Exceed its maximum number of iterations without converging
+   > - Return a `RuntimeError: Optimal parameters not found: maxfev exceeded`
+   >
+   > **This is expected behavior with poor initial guesses, not a bug in your code.** Your $\chi^2$ contour plot shows exactly why this happens: an initial guess outside the "valley" containing the minimum has no gradient pointing toward the solution.
+   >
+   > If you encounter this error, proceed to the fix below using your graphically-determined values.
 
    ```python
    from scipy.optimize import curve_fit
 
    # Initial guesses: [amplitude, center, width, offset]
+   # NOTE: These are placeholder values that may not work for your data!
    p0 = [1.4375, 0.01, 0.0005, 1.45195]
 
    # Perform the fit
@@ -228,6 +250,19 @@ where there are where $N$ data points, $(x_i,y_i )$, and the fit function is giv
    print(f"  width     = {popt[2]:.6f}")
    print(f"  offset    = {popt[3]:.6f}")
    ```
+
+   **If the fit fails (RuntimeError) or produces unreasonable results:** Replace the initial guesses with your graphically-determined values from step 8. This is standard practice—graphical exploration provides the physical insight needed to initialize numerical optimization.
+
+   ```python
+   # Use YOUR graphically-determined values as starting points
+   p0 = [amplitude_fixed, your_center_estimate, your_width_estimate, offset_fixed]
+
+   popt, pcov = curve_fit(beam_profile, x_data, y_data, p0=p0)
+   ```
+
+   **After getting a successful fit:** Do your graphical and computational results agree to 3 significant figures?
+
+   **Reflection:** Why did the original initial guesses fail (if they did)? Look at your $\chi^2$ contour plot—where does the initial guess `center = 0.01` fall relative to the valley containing the minimum?
 
 ## Uncertainty in the fit parameters
 
@@ -596,7 +631,7 @@ In Week 1, you derived that blocking a Gaussian beam with a knife edge produces 
 
 $$P(x) = \frac{P_0}{2}\left[1 + \text{erf}\left(\frac{\sqrt{2}(x-x_0)}{w}\right)\right]$$
 
-where $w$ is the beam size, $x_0$ is the beam center position, and $P_0$ is the total power.
+where $w$ is the beam radius, $x_0$ is the beam center position, and $P_0$ is the total power.
 
 For fitting, we use a slightly more general form that accounts for offsets:
 
@@ -605,8 +640,10 @@ $$y(x) = a \cdot \text{erf}\left(\frac{\sqrt{2}}{w}(x-b)\right) + c$$
 where:
 - $a$ = amplitude (half the voltage swing)
 - $b$ = beam center position
-- $w$ = beam size (what we want!)
+- $w$ = beam radius (what we want!)
 - $c$ = vertical offset
+
+**Note on terminology:** The parameter $w$ is the **beam radius**—specifically, the $1/e^2$ radius where intensity drops to $1/e^2$ of the peak value. This is not the beam diameter (which would be $2w$) or the FWHM. Gaussian beam parameters are discussed further in Week 3.
 
 ### Practice Exercise
 
@@ -625,7 +662,7 @@ Download [Test_Profile_Data.csv](../resources/lab-guides/gaussian-laser-beams/Te
            x: position (m)
            amplitude: half the voltage swing (V)
            center: beam center position (m)
-           width: beam size w (m)
+           width: beam radius w (m)
            offset: vertical offset (V)
        """
        return amplitude * erf(np.sqrt(2) * (x - center) / width) + offset

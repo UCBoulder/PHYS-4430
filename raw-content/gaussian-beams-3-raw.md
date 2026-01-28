@@ -30,7 +30,7 @@ After completing the lab, you will be able to:
 
 1. Set up and operate the motor controller for automated measurements.
 2. Take a complete beam profile using motor-controlled positioning.
-3. Fit beam profile data to extract beam size with uncertainty.
+3. Fit beam profile data to extract beam radius with uncertainty.
 4. Propagate uncertainties from measured quantities to derived quantities.
 5. Make quantitative predictions for Week 4 measurements based on your data.
 
@@ -42,7 +42,7 @@ This week has three phases:
 
 **Phase 2 - Measurement (Lab, ~60 min):** Set up the motor controller and take a complete beam profile. This is your first automated measurement—a trial run before Week 4's systematic data collection.
 
-**Phase 3 - Analysis (Lab, ~60 min):** Apply error propagation to your actual beam size measurement. Fit your data, calculate uncertainties, and make predictions for Week 4. This is where theory meets your measurements.
+**Phase 3 - Analysis (Lab, ~60 min):** Apply error propagation to your actual beam radius measurement. Fit your data, calculate uncertainties, and make predictions for Week 4. This is where theory meets your measurements.
 
 *See the detailed deliverables checklist at the end of this guide.*
 
@@ -449,7 +449,7 @@ Here is an overview of the measurement process. The sections that follow provide
    - You want at least 10-15 points in the transition region to constrain your fit
    - What step size does this imply?
 
-   In Week 4, you will revisit this choice more systematically based on your specific beam size and measurement goals.
+   In Week 4, you will revisit this choice more systematically based on your specific beam radius and measurement goals.
 
 4. **Take the beam profile:**
 
@@ -545,7 +545,7 @@ print(f"R = {R}")  # Shows value ± uncertainty
 
 ## Fitting Your Beam Profile Data
 
-Now fit your beam profile data to extract the beam size.
+Now fit your beam profile data to extract the beam radius.
 
 ### Step 1: Load and Plot Your Data
 
@@ -611,7 +611,7 @@ perr = np.sqrt(np.diag(pcov))
 V_max, V_min, center, width = popt
 V_max_err, V_min_err, center_err, width_err = perr
 
-print(f"Beam size: w = {width:.4f} ± {width_err:.4f} mm")
+print(f"Beam radius: w = {width:.4f} ± {width_err:.4f} mm")
 print(f"Beam center: x0 = {center:.4f} ± {center_err:.4f} mm")
 ```
 
@@ -642,7 +642,7 @@ plt.show()
 
 **Record in your notebook:**
 
-- Beam size: $w = $ _______ $\pm$ _______ mm
+- Beam radius: $w = $ _______ $\pm$ _______ mm
 - Measurement position: $z = $ _______ m from laser
 
 **Connection to Week 2:** The uncertainty in your fit parameters depends on the noise level in your voltage measurements. Your Week 2 noise characterization tells you what σ_V to expect at your gain setting. Look at the residuals (data minus fit)—does their scatter match your predicted noise level? If the residuals are much larger than expected, you may have additional noise sources (vibration, beam drift) affecting your measurement.
@@ -720,9 +720,9 @@ Fill in this table in your notebook:
 
 ## Comparing Manual vs. Motor-Controlled Measurements
 
-If you took beam size measurements manually in Week 1, compare them to today's motor-controlled measurement:
+If you took beam radius measurements manually in Week 1, compare them to today's motor-controlled measurement:
 
-| Method | Beam size | Uncertainty | Notes |
+| Method | Beam radius | Uncertainty | Notes |
 |--------|-----------|-------------|-------|
 | Week 1 (manual) | _______ mm | ± _______ mm | |
 | Week 3 (motor) | _______ mm | ± _______ mm | |
@@ -757,13 +757,13 @@ Your lab notebook should include the following for this week:
 
 3. **Beam profile fit**:
    - Fit plot showing data and error function model
-   - Extracted beam size: $w = $ _______ $\pm$ _______ mm
+   - Extracted beam radius: $w = $ _______ $\pm$ _______ mm
 4. **Error propagation and predictions**:
    - Estimated beam waist $w_0$
    - Predicted beam radii at 4 positions for Week 4
    - Prediction reflection (what could cause disagreement?)
 5. **Comparison** (if Week 1 data available):
-   - Manual vs. motor-controlled beam size comparison
+   - Manual vs. motor-controlled beam radius comparison
 
 ## Code Deliverables
 
@@ -772,7 +772,7 @@ Your lab notebook should include the following for this week:
 
 ## Reflection Questions
 
-1. What was the dominant source of uncertainty in your beam size measurement? How could you reduce it?
+1. What was the dominant source of uncertainty in your beam radius measurement? How could you reduce it?
 
 2. Based on your motor controller setup experience, what was the most challenging part? How would you help a classmate who encountered the same issue?
 

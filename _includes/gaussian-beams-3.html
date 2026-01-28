@@ -261,7 +261,7 @@
          measurements.</li>
          <li>Take a complete beam profile using motor-controlled
          positioning.</li>
-         <li>Fit beam profile data to extract beam size with
+         <li>Fit beam profile data to extract beam radius with
          uncertainty.</li>
          <li>Propagate uncertainties from measured quantities to derived
          quantities.</li>
@@ -281,7 +281,7 @@
          is your first automated measurement—a trial run before Week 4’s
          systematic data collection.</p>
          <p><strong>Phase 3 - Analysis (Lab, ~60 min):</strong> Apply
-         error propagation to your actual beam size measurement. Fit
+         error propagation to your actual beam radius measurement. Fit
          your data, calculate uncertainties, and make predictions for
          Week 4. This is where theory meets your measurements.</p>
          <p><em>See the detailed deliverables checklist at the end of
@@ -1004,7 +1004,7 @@
          <li>What step size does this imply?</li>
          </ul>
          <p>In Week 4, you will revisit this choice more systematically
-         based on your specific beam size and measurement
+         based on your specific beam radius and measurement
          goals.</p></li>
          <li><p><strong>Take the beam profile:</strong></p>
          <ul>
@@ -1148,7 +1148,8 @@
          <h2 data-number="8.2" id="fitting-your-beam-profile-data"><span
          class="header-section-number">8.2</span> Fitting Your Beam
          Profile Data</h2>
-         <p>Now fit your beam profile data to extract the beam size.</p>
+         <p>Now fit your beam profile data to extract the beam
+         radius.</p>
          <h3 data-number="8.2.1"
          id="step-1-load-and-plot-your-data"><span
          class="header-section-number">8.2.1</span> Step 1: Load and
@@ -1216,7 +1217,7 @@
 <span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>V_max, V_min, center, width <span class="op">=</span> popt</span>
 <span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>V_max_err, V_min_err, center_err, width_err <span class="op">=</span> perr</span>
 <span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam size: w = </span><span class="sc">{</span>width<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>width_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam radius: w = </span><span class="sc">{</span>width<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>width_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span>
 <span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Beam center: x0 = </span><span class="sc">{</span>center<span class="sc">:.4f}</span><span class="ss"> ± </span><span class="sc">{</span>center_err<span class="sc">:.4f}</span><span class="ss"> mm&quot;</span>)</span></code></pre></div>
          <p><strong>Troubleshooting fit issues:</strong></p>
          <ul>
@@ -1251,7 +1252,7 @@
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
          <p><strong>Record in your notebook:</strong></p>
          <ul>
-         <li>Beam size: $w = $ _______ <span
+         <li>Beam radius: $w = $ _______ <span
          class="math inline">\(\pm\)</span> _______ mm</li>
          <li>Measurement position: $z = $ _______ m from laser</li>
          </ul>
@@ -1375,13 +1376,13 @@
          id="comparing-manual-vs.-motor-controlled-measurements"><span
          class="header-section-number">8.4</span> Comparing Manual
          vs. Motor-Controlled Measurements</h2>
-         <p>If you took beam size measurements manually in Week 1,
+         <p>If you took beam radius measurements manually in Week 1,
          compare them to today’s motor-controlled measurement:</p>
          <table>
          <thead>
          <tr class="header">
          <th>Method</th>
-         <th>Beam size</th>
+         <th>Beam radius</th>
          <th>Uncertainty</th>
          <th>Notes</th>
          </tr>
@@ -1451,7 +1452,7 @@
          <li><strong>Beam profile fit</strong>:
          <ul>
          <li>Fit plot showing data and error function model</li>
-         <li>Extracted beam size: $w = $ _______ <span
+         <li>Extracted beam radius: $w = $ _______ <span
          class="math inline">\(\pm\)</span> _______ mm</li>
          </ul></li>
          <li><strong>Error propagation and predictions</strong>:
@@ -1463,7 +1464,7 @@
          </ul></li>
          <li><strong>Comparison</strong> (if Week 1 data available):
          <ul>
-         <li>Manual vs. motor-controlled beam size comparison</li>
+         <li>Manual vs. motor-controlled beam radius comparison</li>
          </ul></li>
          </ol>
          <h2 data-number="9.3" id="code-deliverables"><span
@@ -1477,7 +1478,7 @@
          Questions</h2>
          <ol type="1">
          <li><p>What was the dominant source of uncertainty in your beam
-         size measurement? How could you reduce it?</p></li>
+         radius measurement? How could you reduce it?</p></li>
          <li><p>Based on your motor controller setup experience, what
          was the most challenging part? How would you help a classmate
          who encountered the same issue?</p></li>
