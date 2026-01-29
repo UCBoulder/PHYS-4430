@@ -21,23 +21,11 @@ Purpose: Prepare students for Lab 4 prelab (lens predictions, thin lens equation
 
 ---
 
-## Learning Objectives
-
-By the end of this lecture, you will be able to:
-
-1. Explain how a thin lens transforms a Gaussian beam
-2. Apply the thin lens equation to predict image location
-3. Calculate the new beam waist position and size after a lens
-4. Explain the diffraction limit on focusing
-5. Make quantitative predictions for Week 4's lens experiments
-
----
-
 ## Where We Are
 
 **Weeks 1–3:** Characterized the beam, automated measurements, learned error propagation
 
-**This week (ongoing):** Automated beam profiles at multiple $z$ positions
+**This week (ongoing):** Automated beam profiles at one $z$ position
 
 **Next week (Lab 4):** Test Gaussian beam model AND investigate lens effects
 
@@ -87,8 +75,6 @@ $$\boxed{\frac{1}{S_1} + \frac{1}{S_2} = \frac{1}{f}}$$
 | $S_1$ | Object distance (from lens) |
 | $S_2$ | Image distance (from lens) |
 | $f$ | Focal length |
-
-**Sign convention:** Distances positive when measured in direction light travels.
 
 ---
 
@@ -185,11 +171,13 @@ For He-Ne laser ($\lambda = 633$ nm) and typical lenses ($f \sim 100$ mm):
 
 **Treat the beam waist as the "object":**
 
-If the waist is at distance $S_1$ from the lens, the new waist is at $S_2$:
+If the waist is at distance $S_1$ from the lens, the new waist forms at $S_2$:
 
 $$\frac{1}{S_1} + \frac{1}{S_2} = \frac{1}{f}$$
 
-> Same equation, but now "object" = waist, "image" = new waist
+> "object" = original waist, "image" = new waist
+
+**Important:** This is an approximation for Gaussian beams — it ignores diffraction. We'll discuss when it breaks down shortly.
 
 <!--
 TIMING: ~15 minutes for quantitative predictions
@@ -214,13 +202,13 @@ $$S_2 = \frac{150000}{850} \approx 176 \text{ mm}$$
 
 ---
 
-## What About the New Waist Size?
+## Estimating the New Waist Size
 
-The magnification in geometric optics: $M = -S_2/S_1$
+In geometric optics, the magnification is $M = -S_2/S_1$ (negative sign = image is inverted). For beam waist size we only care about the magnitude:
 
-For Gaussian beams, the new waist size is approximately:
+$$w_0' \approx \left| \frac{S_2}{S_1} \right| w_0 = |M| \cdot w_0$$
 
-$$\boxed{w_0' \approx \left| \frac{S_2}{S_1} \right| w_0 = |M| \cdot w_0}$$
+> We use $|M|$ because beam radius is always positive — the sign of $M$ tells you about image orientation, which doesn't apply to a Gaussian beam profile.
 
 **Continuing the example:**
 
@@ -251,52 +239,25 @@ print(f"Image distance: {S2:.1f} mm")
 
 ---
 
-## Practice Problem
-
-**Setup:** Lens with $f = 100 \pm 2$ mm placed 300 mm from beam waist
-
-**Questions:**
-1. Where is the new waist? ($S_2 = ?$)
-2. What is the uncertainty?
-3. If $w_0 = 0.3$ mm, what is $w_0'$?
-
-<!--
-Give students 2 minutes to work through this.
--->
-
----
-
-## Practice Problem: Answers
-
-1. **Where is the new waist?**
-   $$\frac{1}{300} + \frac{1}{S_2} = \frac{1}{100} \implies S_2 = 150 \text{ mm}$$
-
-2. **Uncertainty:** $\sigma_{S_2} \approx 5$ mm (from error propagation)
-
-3. **New waist size:**
-   $$w_0' \approx \frac{150}{300} \times 0.3 \text{ mm} = 0.15 \text{ mm}$$
-
-The beam focuses to half its original waist size!
-
----
-
 <!-- _class: section -->
 
 # Part 4: Limitations and the Diffraction Limit
 
 ---
 
-## When the Thin Lens Equation Breaks Down
+## When Does the Thin Lens Equation Break Down?
 
-The approximation is less accurate when:
+The thin lens equation is a ray optics result — it ignores diffraction. The approximation is good when $z_R \ll |S_1 - f|$, where $z_R = \pi w_0^2 / \lambda$ is the Rayleigh range.
 
-| Condition | Issue |
-|-----------|-------|
-| $S_1 \approx z_R$ or $S_2 \approx z_R$ | Near-field effects matter |
-| Lens diameter $\approx$ beam width | Clipping, aberrations |
-| Thick lens | Multiple refractions inside lens |
+| Beam / Setup | $z_R$ | Compare to $\|S_1 - f\|$ | Thin lens equation... |
+|-------------|--------|--------------------------|-----------------|
+| Tightly focused ($w_0 \sim 50$ μm) | ~12 mm | $z_R \ll \|S_1 - f\|$ | Works well |
+| Typical He-Ne ($w_0 \sim 0.5$ mm) | ~1.2 m | $z_R \sim \|S_1 - f\|$ | Use with caution |
+| Collimated ($w_0 \sim 2$ mm) | ~20 m | $z_R \gg \|S_1 - f\|$ | Fails badly |
 
-For our experiments, expect ~few percent accuracy.
+**Your beam is in the middle row.** Calculate $z_R$ for your measured $w_0$ and compare it to $|S_1 - f|$ for your setup — this tells you how much to trust your thin lens prediction.
+
+**Your predictions may not agree with your measurements.** That's expected — and the discrepancy is part of what you'll investigate in Week 4.
 
 <!--
 TIMING: ~7 minutes for limitations
@@ -305,17 +266,17 @@ Managing expectations for Week 4.
 
 ---
 
-## Systematic Errors You Might See
+## Other Sources of Discrepancy
 
-When you test the thin lens equation in Week 4:
+Even beyond the thin lens approximation, watch for:
 
 | Observation | Possible Cause |
 |-------------|----------------|
-| $S_2$ smaller than predicted | Lens aberrations, thick lens |
-| $S_2$ larger than predicted | Waist not where you thought |
-| Large scatter in data | Vibrations, alignment drift |
+| $S_2$ offset from prediction | Waist not where you assumed |
+| Beam not Gaussian after lens | Clipping, damaged optics, etc. |
+| Thick lens effects | Principal planes not coincident |
 
-**The goal:** Determine if discrepancies are measurement error or model limitations.
+**The goal in Week 4:** Make predictions, test them, and determine whether discrepancies come from measurement error, the thin lens approximation, or other systematic effects.
 
 ---
 
@@ -345,7 +306,7 @@ $$NA = \frac{25}{2 \times 50} = 0.25$$
 
 $$w_0^{min} = \frac{633 \times 10^{-9}}{\pi \times 0.25} = 0.8 \text{ μm}$$
 
-**In practice:** Your He-Ne will focus to ~50–100 μm, limited by beam size at lens.
+**In practice:** This assumes the beam fills the lens. Your He-Ne beam ($w \sim 1$ mm) uses only a small fraction of the 25 mm aperture, so the effective NA is much smaller ($\text{NA}_{eff} \approx w/f$) and the focused spot is ~50–100 μm.
 
 ---
 
@@ -383,9 +344,10 @@ Choose a lens ($f \approx 100–200$ mm) and predict:
 |----------|--------|--------|
 | New waist position | $S_2$ | Thin lens equation |
 | New waist size | $w_0'$ | Magnification |
+| Rayleigh range | $z_R$ | $\pi w_0^2 / \lambda$ |
 | Uncertainties | $\sigma_{S_2}$, $\sigma_{w_0'}$ | Error propagation |
 
-**Use `uncertainties` to automate the calculation!**
+Also calculate $z_R$ and compare to $|S_1 - f|$ — how reliable do you expect your prediction to be?
 
 ---
 
@@ -418,8 +380,8 @@ print(f"New waist size: {w0_new*1000:.1f} μm")
 
 1. Complete beam waist measurement (finish Week 3 work)
 2. Add lens and measure new waist location and size
-3. Compare to thin lens equation predictions
-4. Investigate discrepancies
+3. Compare to your thin lens equation predictions
+4. Investigate discrepancies — are they measurement error or model limitations?
 
 > Write predictions **before** you measure!
 
@@ -427,27 +389,17 @@ print(f"New waist size: {w0_new*1000:.1f} μm")
 
 ## Summary
 
-1. **Thin lens equation** applies to Gaussian beams:
+1. **Thin lens equation** applies to Gaussian beams (as an approximation):
    $$\frac{1}{S_1} + \frac{1}{S_2} = \frac{1}{f}$$
    where "object" = original waist, "image" = new waist
 
 2. **New waist size** follows magnification: $w_0' \approx |M| \cdot w_0$
 
-3. **Uncertainty propagation** is essential for testable predictions
+3. **This is approximate** — it ignores diffraction. Expect discrepancies when $z_R \gtrsim |S_1 - f|$
 
-4. **Thin lens equation is approximate** — expect few percent discrepancy
+4. **Uncertainty propagation** is essential for testable predictions
 
 5. **Diffraction limit** sets minimum spot size: $w_0^{min} \approx \lambda/(\pi \cdot NA)$
-
----
-
-## For the Prelab
-
-- [ ] Choose a lens (record $f$ and tolerance)
-- [ ] Measure $S_1$ (distance from waist to lens position)
-- [ ] Calculate predicted $S_2$ with uncertainty
-- [ ] Calculate predicted $w_0'$ with uncertainty
-- [ ] Prepare uncertainty budget
 
 ---
 
@@ -456,14 +408,15 @@ print(f"New waist size: {w0_new*1000:.1f} μm")
 
 # Questions?
 
-## Office hours and lab time available for help!
+## We are here to help!
 
 <!--
 COMMON STUDENT QUESTIONS:
 
-Q: Why doesn't the wavelength change the image location?
-A: Once f is fixed, the geometry is wavelength-independent. Wavelength affects
-   f through refractive index, but that's built into the lens spec.
+Q: Why doesn't the wavelength appear in the thin lens equation?
+A: The thin lens equation is pure geometry (rays). Wavelength enters through
+   diffraction effects (the Rayleigh range z_R = π w₀²/λ), which is why the
+   equation is only approximate for Gaussian beams.
 
 Q: What if the beam waist is inside the laser?
 A: S1 might be negative (virtual object) or you need to estimate waist position.

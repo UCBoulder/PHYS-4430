@@ -25,7 +25,7 @@ After completing this week's lab, you will be able to:
 3. Measure beam size $w(z)$ at multiple positions and fit to extract $w_0$ and $z_w$ with uncertainties.
 4. Test the Gaussian beam model by comparing measured $w(z)$ to theoretical predictions.
 5. Explain how a lens modifies a Gaussian beam and compare to geometric optics predictions.
-6. Evaluate whether the thin lens equation accurately predicts image location for Gaussian beams.
+6. Evaluate whether the thin lens equation accurately predicts image location for Gaussian beams, and identify when diffraction corrections are needed.
 7. Identify sources of systematic error when predictions and measurements disagree.
 
 # Overview of Your Work
@@ -71,12 +71,18 @@ Before adding a lens to your beam path, predict what will happen using the thin 
 
 $$\frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}$$
 
-For a lens with focal length $f = $ _______ mm placed at distance $S_1 = $ _______ m from the laser:
+For a lens with focal length $f = $ _______ mm placed at distance $S_1 = $ _______ m from the beam waist:
 
 1. **Predicted image position** $S_2$ = _______ m (from lens)
-2. **Predicted new beam waist** location relative to laser: _______ m
+2. **Predicted new beam waist** $w_0' \approx |S_2/S_1| \cdot w_0$ = _______ μm
+3. **Propagate uncertainties** in $S_1$ and $f$ to get an uncertainty in $S_2$.
 
-Show your calculation. If you need to estimate $S_1$ (the distance from laser to lens), use a reasonable value based on your optical table layout.
+Show your calculation. Use the `uncertainties` library to propagate errors (see the code template from Thursday's lecture).
+
+**Assess the approximation:** The thin lens equation is a ray optics result that ignores diffraction. It is most accurate when the Rayleigh range $z_R = \pi w_0^2/\lambda$ is much smaller than $|S_1 - f|$.
+
+4. **Calculate your Rayleigh range** $z_R$ = _______ m (using your measured $w_0$ from Week 3)
+5. **Compare:** Is $z_R \ll |S_1 - f|$? Based on this, do you expect your thin lens prediction to be accurate, or should you anticipate a discrepancy?
 
 ## Prediction Exercise 3: Uncertainty Budget
 
@@ -351,9 +357,17 @@ $$ \frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}$$
 
    3. **Compare:** Calculate the discrepancy between predicted and measured image positions. Is the discrepancy smaller than the combined uncertainty? If $|S_{2,predicted} - S_{2,measured}| < \sqrt{\sigma_{pred}^2 + \sigma_{meas}^2}$, the agreement is consistent with your uncertainties.
 
-   4. **Interpret:** If they disagree beyond uncertainties, this indicates either underestimated uncertainties or systematic effects. Proceed to question 3.
+   4. **Interpret:** If they disagree beyond uncertainties, this is not necessarily a mistake — the thin lens equation is a ray optics result that ignores diffraction. Proceed to question 3.
 
-3. Systematic errors: Under what conditions should the thin lens equation be most valid? How do these conditions compare to conditions of your actual measurements? Can you get better agreement?
+3. **A better model:** The thin lens equation assumes the beam waist acts like a point source, emitting spherical wavefronts. But a Gaussian beam's wavefronts are *flat* at the waist and only gradually become spherical. The Rayleigh range $z_R = \pi w_0^2/\lambda$ characterizes this transition. When the lens is many Rayleigh ranges from the waist ($z_R \ll |S_1 - f|$), the wavefronts at the lens are nearly spherical and the thin lens equation works. When $z_R \gtrsim |S_1 - f|$, it doesn't.
+
+   A *modified* thin-lens equation accounts for this (Self, "Focusing of spherical Gaussian beams," *Appl. Opt.* **22**, 658, 1983; see also [Thorlabs: Modified Thin-Lens Equation for Laser Light](https://www.thorlabs.com/modified-thin-lens-equation-for-laser-light?tabName=Insights) for an accessible explanation):
+
+   $$ \frac{1}{S_1 + \dfrac{z_R^2}{S_1 - f}}+\frac{1}{S_2}=\frac{1}{f}$$
+
+   The conventional equation is recovered when $z_R \ll |S_1 - f|$. Calculate the predicted $S_2$ using this modified equation. Does it better agree with your measured value? The corresponding magnification is $m = f / \sqrt{(S_1 - f)^2 + z_R^2}$.
+
+4. Systematic errors: Under what conditions should the thin lens equation be most valid? Beyond the diffraction correction, what other effects could cause discrepancies? (Consider: thick lens effects, uncertainty in waist position, beam quality $M^2 \neq 1$, lens aberrations.)
 
 ![Diagram showing the focusing of light by a thin lens in the ray approximation. The diagram identifies the quantities in the thin lens equation: image distance, object distance, and focal length.](../resources/lab-guides/gaussian-laser-beams/ray-diagram.png){#fig:ray-diagram width="15cm"}
 
@@ -466,8 +480,8 @@ Your lab notebook should include the following for this week:
    - New beam waist $w_0$ and position $z_w$
    - Test of whether beam remains Gaussian
 3. **Thin lens equation test**:
-   - Measured vs. predicted image position
-   - Quantitative comparison with uncertainties
+   - Measured vs. predicted image position with uncertainties
+   - Whether the modified thin-lens equation resolves any discrepancy
 4. **Peer comparison** (if completed): other group's results, whether results agreed, and key insight from discussion
 
 ## Key Results Summary
@@ -481,7 +495,7 @@ Your lab notebook should include the following for this week:
 
 ## Reflection Questions
 
-1. Your measured beam waist occurs 5 cm from the position predicted by the thin lens equation. List three possible explanations and describe measurements that would distinguish between them.
+1. Your measured beam waist occurs 5 cm from the position predicted by the thin lens equation. List three possible explanations (including the possibility that the thin lens equation itself is approximate for Gaussian beams) and describe measurements that would distinguish between them.
 
 2. You have 30 minutes remaining and want to improve your measurement of $w_0$. You could either: (a) take more beam profiles at closely spaced $z$ positions, or (b) take fewer profiles but with more averaging per profile. Which would you choose to minimize uncertainty in $w_0$? Justify your answer.
 

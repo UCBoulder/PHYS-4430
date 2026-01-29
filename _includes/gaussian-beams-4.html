@@ -211,7 +211,8 @@
          <li>Explain how a lens modifies a Gaussian beam and compare to
          geometric optics predictions.</li>
          <li>Evaluate whether the thin lens equation accurately predicts
-         image location for Gaussian beams.</li>
+         image location for Gaussian beams, and identify when
+         diffraction corrections are needed.</li>
          <li>Identify sources of systematic error when predictions and
          measurements disagree.</li>
          </ol>
@@ -308,17 +309,37 @@
          <p><span
          class="math display">\[\frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}\]</span></p>
          <p>For a lens with focal length $f = $ _______ mm placed at
-         distance $S_1 = $ _______ m from the laser:</p>
+         distance $S_1 = $ _______ m from the beam waist:</p>
          <ol type="1">
          <li><strong>Predicted image position</strong> <span
          class="math inline">\(S_2\)</span> = _______ m (from lens)</li>
-         <li><strong>Predicted new beam waist</strong> location relative
-         to laser: _______ m</li>
+         <li><strong>Predicted new beam waist</strong> <span
+         class="math inline">\(w_0&#39; \approx |S_2/S_1| \cdot
+         w_0\)</span> = _______ μm</li>
+         <li><strong>Propagate uncertainties</strong> in <span
+         class="math inline">\(S_1\)</span> and <span
+         class="math inline">\(f\)</span> to get an uncertainty in <span
+         class="math inline">\(S_2\)</span>.</li>
          </ol>
-         <p>Show your calculation. If you need to estimate <span
-         class="math inline">\(S_1\)</span> (the distance from laser to
-         lens), use a reasonable value based on your optical table
-         layout.</p>
+         <p>Show your calculation. Use the <code>uncertainties</code>
+         library to propagate errors (see the code template from
+         Thursday’s lecture).</p>
+         <p><strong>Assess the approximation:</strong> The thin lens
+         equation is a ray optics result that ignores diffraction. It is
+         most accurate when the Rayleigh range <span
+         class="math inline">\(z_R = \pi w_0^2/\lambda\)</span> is much
+         smaller than <span class="math inline">\(|S_1 -
+         f|\)</span>.</p>
+         <ol start="4" type="1">
+         <li><strong>Calculate your Rayleigh range</strong> <span
+         class="math inline">\(z_R\)</span> = _______ m (using your
+         measured <span class="math inline">\(w_0\)</span> from Week
+         3)</li>
+         <li><strong>Compare:</strong> Is <span
+         class="math inline">\(z_R \ll |S_1 - f|\)</span>? Based on
+         this, do you expect your thin lens prediction to be accurate,
+         or should you anticipate a discrepancy?</li>
+         </ol>
          <h2 data-number="5.3"
          id="prediction-exercise-3-uncertainty-budget"><span
          class="header-section-number">5.3</span> Prediction Exercise 3:
@@ -832,14 +853,42 @@
          \sqrt{\sigma_{pred}^2 + \sigma_{meas}^2}\)</span>, the
          agreement is consistent with your uncertainties.</p></li>
          <li><p><strong>Interpret:</strong> If they disagree beyond
-         uncertainties, this indicates either underestimated
-         uncertainties or systematic effects. Proceed to question
-         3.</p></li>
+         uncertainties, this is not necessarily a mistake — the thin
+         lens equation is a ray optics result that ignores diffraction.
+         Proceed to question 3.</p></li>
          </ol></li>
+         <li><p><strong>A better model:</strong> The thin lens equation
+         assumes the beam waist acts like a point source, emitting
+         spherical wavefronts. But a Gaussian beam’s wavefronts are
+         <em>flat</em> at the waist and only gradually become spherical.
+         The Rayleigh range <span class="math inline">\(z_R = \pi
+         w_0^2/\lambda\)</span> characterizes this transition. When the
+         lens is many Rayleigh ranges from the waist (<span
+         class="math inline">\(z_R \ll |S_1 - f|\)</span>), the
+         wavefronts at the lens are nearly spherical and the thin lens
+         equation works. When <span class="math inline">\(z_R \gtrsim
+         |S_1 - f|\)</span>, it doesn’t.</p>
+         <p>A <em>modified</em> thin-lens equation accounts for this
+         (Self, “Focusing of spherical Gaussian beams,” <em>Appl.
+         Opt.</em> <strong>22</strong>, 658, 1983; see also <a
+         href="https://www.thorlabs.com/modified-thin-lens-equation-for-laser-light?tabName=Insights">Thorlabs:
+         Modified Thin-Lens Equation for Laser Light</a> for an
+         accessible explanation):</p>
+         <p><span class="math display">\[ \frac{1}{S_1 +
+         \dfrac{z_R^2}{S_1 - f}}+\frac{1}{S_2}=\frac{1}{f}\]</span></p>
+         <p>The conventional equation is recovered when <span
+         class="math inline">\(z_R \ll |S_1 - f|\)</span>. Calculate the
+         predicted <span class="math inline">\(S_2\)</span> using this
+         modified equation. Does it better agree with your measured
+         value? The corresponding magnification is <span
+         class="math inline">\(m = f / \sqrt{(S_1 - f)^2 +
+         z_R^2}\)</span>.</p></li>
          <li><p>Systematic errors: Under what conditions should the thin
-         lens equation be most valid? How do these conditions compare to
-         conditions of your actual measurements? Can you get better
-         agreement?</p></li>
+         lens equation be most valid? Beyond the diffraction correction,
+         what other effects could cause discrepancies? (Consider: thick
+         lens effects, uncertainty in waist position, beam quality <span
+         class="math inline">\(M^2 \neq 1\)</span>, lens
+         aberrations.)</p></li>
          </ol>
          <div id="fig:ray-diagram" class="fignos">
          <figure>
@@ -1052,8 +1101,10 @@
          </ul></li>
          <li><strong>Thin lens equation test</strong>:
          <ul>
-         <li>Measured vs. predicted image position</li>
-         <li>Quantitative comparison with uncertainties</li>
+         <li>Measured vs. predicted image position with
+         uncertainties</li>
+         <li>Whether the modified thin-lens equation resolves any
+         discrepancy</li>
          </ul></li>
          <li><strong>Peer comparison</strong> (if completed): other
          group’s results, whether results agreed, and key insight from
@@ -1104,8 +1155,9 @@
          <ol type="1">
          <li><p>Your measured beam waist occurs 5 cm from the position
          predicted by the thin lens equation. List three possible
-         explanations and describe measurements that would distinguish
-         between them.</p></li>
+         explanations (including the possibility that the thin lens
+         equation itself is approximate for Gaussian beams) and describe
+         measurements that would distinguish between them.</p></li>
          <li><p>You have 30 minutes remaining and want to improve your
          measurement of <span class="math inline">\(w_0\)</span>. You
          could either: (a) take more beam profiles at closely spaced
