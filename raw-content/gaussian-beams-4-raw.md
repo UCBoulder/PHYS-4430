@@ -22,7 +22,7 @@ After completing this week's lab, you will be able to:
 
 1. Run automated beam profile measurements using Python to control the motor and DAQ.
 2. Validate that your automated measurement system produces results consistent with manual methods.
-3. Measure beam size $w(z)$ at multiple positions and fit to extract $w_0$ and $z_w$ with uncertainties.
+3. Measure beam radius $w(z)$ at multiple positions and fit to extract $w_0$ and $z_w$ with uncertainties.
 4. Test the Gaussian beam model by comparing measured $w(z)$ to theoretical predictions.
 5. Explain how a lens modifies a Gaussian beam and compare to geometric optics predictions.
 6. Evaluate whether the thin lens equation accurately predicts image location for Gaussian beams, and identify when diffraction corrections are needed.
@@ -61,9 +61,9 @@ This week you'll test the Gaussian beam model with automated measurements. Befor
 
 *If you did not complete the Week 3 prediction exercise, do so now using the Gaussian beam model:*
 
-$$w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$$
+$$w(z)=w_0\sqrt{1+\left(\frac{\lambda (z - z_w)}{\pi w_0^2}\right)^2}$$
 
-Use your Week 3 beam size measurement and estimated $w_0$ to calculate predictions with propagated uncertainties.
+Here $z$ is the position along the beam path (measured from some reference point, like the laser output), $z_w$ is the waist position in that same coordinate system, and $w_0$ is the beam waist. The key quantity $(z - z_w)$ represents the distance from the measurement position to the waist—this is what determines the beam radius, regardless of where you put your coordinate origin. Use your Week 3 beam radius measurement and estimated $w_0$ and $z_w$ to calculate predictions with propagated uncertainties.
 
 ## Prediction Exercise 2: Lens Effects
 
@@ -140,7 +140,7 @@ Before your first automated scan, verify that your measurement system performs a
 
 Before we begin this week's lab, reflect on your experience from Week 1 (and perhaps refer to your lab notebook entry to help guide your memory).
 
-1. In Week 1, how long did the total process of data taking through analysis take to make a measurement of the beam size $w$?
+1. In Week 1, how long did the total process of data taking through analysis take to make a measurement of the beam radius $w$?
 2. In this lab, you may have to take 10-20 beam profiles in order to measure $w_0$ and $z_w$. How long would this take with your manual method?
 3. What are the most time-consuming portions of the process? Which parts benefit most from automation?
 
@@ -218,7 +218,7 @@ The script automatically generates two files with timestamps:
 
 1. **CSV data file**: `beam_profile_YYYYMMDD_HHMMSS.csv`
    - Two columns: Position (mm), Voltage (V)
-   - Ready for analysis with your fitting code from Week 1
+   - Ready for analysis with your fitting code from Week 2
 
 2. **Plot image**: `beam_profile_YYYYMMDD_HHMMSS.png`
    - Quick visualization of the measured profile
@@ -239,7 +239,7 @@ The script automatically generates two files with timestamps:
 
 4. **If these disagree by more than 2σ:** Stop and troubleshoot before taking more data. Check:
    - Motor position units (does Python position match KST101 display?)
-   - Photodetector gain setting (same as Week 1?)
+   - Photodetector gain setting (same as your Week 2 selection?)
    - Ambient light contamination
    - Whether the knife-edge is at the same z-position
 
@@ -282,12 +282,12 @@ There is a straightforward reason that a He-Ne laser should produce a Gaussian b
 
 1. Considering the Gaussian beam equations from Week 3's prelab (the electric field, beam radius $w(z)$, radius of curvature $R(z)$, and Gouy phase $\zeta(z)$), which aspects of the Gaussian beam model can you test? Are there any parts of the model you cannot test?
 
-2. Measure the beam size $w$ at various distances from the laser.
+2. Measure the beam radius $w$ at various distances from the laser.
 
    **Measurement strategy guidance:**
    - **Number of positions:** Take measurements at 5-10 different $z$ positions. Fewer than 5 makes it difficult to constrain both $w_0$ and $z_w$ in your fit; more than 10 offers diminishing returns.
    - **Position spacing:** Distribute your measurements across your available range. Include positions both near and far from the laser to capture the beam's divergence.
-   - **Rayleigh range consideration:** If you can estimate the Rayleigh range $z_R = \pi w_0^2 / \lambda$ from Week 3's data, try to include positions within $z_R$ of the waist (where width changes slowly) AND well beyond $z_R$ (where width grows linearly). This helps distinguish $w_0$ from $z_w$ in your fit.
+   - **Rayleigh range consideration:** If you can estimate the Rayleigh range $z_R = \pi w_0^2 / \lambda$ from Week 3's data, try to include positions within $z_R$ of the waist (where beam radius changes slowly) AND well beyond $z_R$ (where beam radius grows linearly). This helps distinguish $w_0$ from $z_w$ in your fit.
 
    **Consider carefully:**
    - What distance should be varying: laser to razor, razor to photodetector, or laser to photodetector?
@@ -295,7 +295,18 @@ There is a straightforward reason that a He-Ne laser should produce a Gaussian b
    - Record the distance from the laser (or a fixed reference point) for each measurement.
 
 3. Fit the data to $w(z)$, the predicted expression for a Gaussian beam:
-   $$w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$$
+   $$w(z)=w_0\sqrt{1+\left(\frac{\lambda (z - z_w)}{\pi w_0^2}\right)^2}$$
+
+   **Understanding the parameters:**
+
+   - $z$ is the position along the beam path, measured from a fixed reference point (typically the laser output or a mark on your optical table). This is what you measure with a meter stick.
+   - $z_w$ is the position where the beam waist occurs, using the same coordinate system as $z$. This is a fit parameter—you don't know it ahead of time.
+   - $w_0$ is the beam waist (minimum beam radius). This is also a fit parameter.
+   - The term $(z - z_w)$ is the distance from the measurement position to the waist. The beam radius depends on how far you are from the waist, not on your arbitrary choice of coordinate origin.
+
+   **Why $(z - z_w)$ instead of just $z$?** The simpler form with just $z$ assumes the waist is at $z = 0$. But the waist of your laser is somewhere inside (or near) the laser cavity—not at your coordinate origin. By including $z_w$ as a fit parameter, you let the data tell you where the waist actually is. You worked out this generalized form in Week 3's prelab (questions 3-4 in "Trying out the Gaussian beam model").
+
+   **Example:** If you measure beam radii at $z = 0.5, 1.0, 1.5, 2.0$ m from the laser, and the fit returns $z_w = -0.1$ m, that means the waist is located 0.1 m *behind* your reference point (inside the laser cavity). At your $z = 1.0$ m measurement position, the beam has traveled $(1.0 - (-0.1)) = 1.1$ m from its waist.
 
 4. What is the value of the beam waist $w_0$ (including uncertainty)? Where does the beam waist $z_w$ occur relative to the laser?
 
@@ -316,8 +327,8 @@ After your first few beam profile measurements, assess whether your data quality
 1. **Measure actual noise**: Examine the flat regions of your beam profile data (where the beam is fully blocked or fully unblocked). Calculate the RMS scatter of points in these regions.
 
 2. **Compare to predictions**: How does your measured RMS compare to:
+   - Your Week 2 noise floor measurement (~5 mV RMS for the DAQ)?
    - Your Week 2 SNR predictions?
-   - Your Week 3 noise spectrum prediction for averaged samples?
 
 3. **Evaluate and adjust**:
    - If actual noise is *higher* than predicted: What could cause this? (Vibrations? Ambient light? Insufficient settling time?)
@@ -337,7 +348,7 @@ Design and carry out an experiment to quantitatively answer the questions below.
 3. Does the beam retain a Gaussian profile after the lens?
 4. What is the new beam waist $w_0$ and where does it occur?
 5. What factors affect the beam profile after the lens?
-6. Does the measured $w(z)$ match the Gaussian beam prediction $w(z)=w_0\sqrt{1+\left(\frac{\lambda z}{\pi w_0^2}\right)^2}$?
+6. Does the measured $w(z)$ match the Gaussian beam prediction? (Use the same fitting equation as before, with the new waist position $z_w$ as a fit parameter.)
 
 ![Mounting assemblies for a mirror (left) and a lens (right).](../resources/lab-guides/gaussian-laser-beams/mount-assembly.png){#fig:mount-assembly width="15cm"}
 
@@ -347,13 +358,13 @@ One of the simplest ways to model the effect of a lens is the thin lens equation
 
 $$ \frac{1}{S_1}+\frac{1}{S_2}=\frac{1}{f}$$
 
-1. Redraw Figure @fig:ray-diagram to show how it would change when the light is modeled as a Gaussian beam, rather than rays. In particular, where should the beam waists occur? What determines the relative width of the beam waist?
+1. Redraw Figure @fig:ray-diagram to show how it would change when the light is modeled as a Gaussian beam, rather than rays. In particular, where should the beam waists occur? What determines the relative size of the new beam waist $w_0'$ compared to the original $w_0$?
 
 2. Experimentally test the accuracy of the thin lens equation for the imaging of Gaussian beams. Follow this quantitative procedure:
 
    1. **Predict:** Using the thin lens equation, calculate the predicted image position $S_2$ from your measured object distance $S_1$ and the lens focal length $f$. Propagate the uncertainties in $S_1$ and $f$ to get an uncertainty in $S_2$.
 
-   2. **Measure:** From your beam size data, determine the actual position of the beam waist (image location) after the lens. Include uncertainty from your fit.
+   2. **Measure:** From your beam radius data, determine the actual position of the beam waist (image location) after the lens. Include uncertainty from your fit.
 
    3. **Compare:** Calculate the discrepancy between predicted and measured image positions. Is the discrepancy smaller than the combined uncertainty? If $|S_{2,predicted} - S_{2,measured}| < \sqrt{\sigma_{pred}^2 + \sigma_{meas}^2}$, the agreement is consistent with your uncertainties.
 
@@ -465,7 +476,7 @@ Your lab notebook should include the following for this week:
 
 ## Beam Profile Without Lenses
 
-1. **Automated vs. manual comparison**: beam size from both methods with uncertainties
+1. **Automated vs. manual comparison**: beam radius from both methods with uncertainties
 2. **Multiple position measurements**: table of $z$ positions and corresponding $w$ values
 3. **Gaussian beam fit**:
    - Plot of $w(z)$ data with fit curve

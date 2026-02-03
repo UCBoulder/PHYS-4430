@@ -201,10 +201,11 @@
          control the motor and DAQ.</li>
          <li>Validate that your automated measurement system produces
          results consistent with manual methods.</li>
-         <li>Measure beam size <span class="math inline">\(w(z)\)</span>
-         at multiple positions and fit to extract <span
-         class="math inline">\(w_0\)</span> and <span
-         class="math inline">\(z_w\)</span> with uncertainties.</li>
+         <li>Measure beam radius <span
+         class="math inline">\(w(z)\)</span> at multiple positions and
+         fit to extract <span class="math inline">\(w_0\)</span> and
+         <span class="math inline">\(z_w\)</span> with
+         uncertainties.</li>
          <li>Test the Gaussian beam model by comparing measured <span
          class="math inline">\(w(z)\)</span> to theoretical
          predictions.</li>
@@ -295,10 +296,20 @@
          <p><em>If you did not complete the Week 3 prediction exercise,
          do so now using the Gaussian beam model:</em></p>
          <p><span
-         class="math display">\[w(z)=w_0\sqrt{1+\left(\frac{\lambda
-         z}{\pi w_0^2}\right)^2}\]</span></p>
-         <p>Use your Week 3 beam size measurement and estimated <span
-         class="math inline">\(w_0\)</span> to calculate predictions
+         class="math display">\[w(z)=w_0\sqrt{1+\left(\frac{\lambda (z -
+         z_w)}{\pi w_0^2}\right)^2}\]</span></p>
+         <p>Here <span class="math inline">\(z\)</span> is the position
+         along the beam path (measured from some reference point, like
+         the laser output), <span class="math inline">\(z_w\)</span> is
+         the waist position in that same coordinate system, and <span
+         class="math inline">\(w_0\)</span> is the beam waist. The key
+         quantity <span class="math inline">\((z - z_w)\)</span>
+         represents the distance from the measurement position to the
+         waist—this is what determines the beam radius, regardless of
+         where you put your coordinate origin. Use your Week 3 beam
+         radius measurement and estimated <span
+         class="math inline">\(w_0\)</span> and <span
+         class="math inline">\(z_w\)</span> to calculate predictions
          with propagated uncertainties.</p>
          <h2 data-number="5.2"
          id="prediction-exercise-2-lens-effects"><span
@@ -467,7 +478,7 @@
          help guide your memory).</p>
          <ol type="1">
          <li>In Week 1, how long did the total process of data taking
-         through analysis take to make a measurement of the beam size
+         through analysis take to make a measurement of the beam radius
          <span class="math inline">\(w\)</span>?</li>
          <li>In this lab, you may have to take 10-20 beam profiles in
          order to measure <span class="math inline">\(w_0\)</span> and
@@ -566,7 +577,7 @@
          <code>beam_profile_YYYYMMDD_HHMMSS.csv</code>
          <ul>
          <li>Two columns: Position (mm), Voltage (V)</li>
-         <li>Ready for analysis with your fitting code from Week 1</li>
+         <li>Ready for analysis with your fitting code from Week 2</li>
          </ul></li>
          <li><strong>Plot image</strong>:
          <code>beam_profile_YYYYMMDD_HHMMSS.png</code>
@@ -614,7 +625,8 @@
          <ul>
          <li>Motor position units (does Python position match KST101
          display?)</li>
-         <li>Photodetector gain setting (same as Week 1?)</li>
+         <li>Photodetector gain setting (same as your Week 2
+         selection?)</li>
          <li>Ambient light contamination</li>
          <li>Whether the knife-edge is at the same z-position</li>
          </ul></li>
@@ -674,7 +686,7 @@
          class="math inline">\(\zeta(z)\)</span>), which aspects of the
          Gaussian beam model can you test? Are there any parts of the
          model you cannot test?</p></li>
-         <li><p>Measure the beam size <span
+         <li><p>Measure the beam radius <span
          class="math inline">\(w\)</span> at various distances from the
          laser.</p>
          <p><strong>Measurement strategy guidance:</strong></p>
@@ -693,9 +705,9 @@
          estimate the Rayleigh range <span class="math inline">\(z_R =
          \pi w_0^2 / \lambda\)</span> from Week 3’s data, try to include
          positions within <span class="math inline">\(z_R\)</span> of
-         the waist (where width changes slowly) AND well beyond <span
-         class="math inline">\(z_R\)</span> (where width grows
-         linearly). This helps distinguish <span
+         the waist (where beam radius changes slowly) AND well beyond
+         <span class="math inline">\(z_R\)</span> (where beam radius
+         grows linearly). This helps distinguish <span
          class="math inline">\(w_0\)</span> from <span
          class="math inline">\(z_w\)</span> in your fit.</li>
          </ul>
@@ -711,8 +723,45 @@
          <li><p>Fit the data to <span
          class="math inline">\(w(z)\)</span>, the predicted expression
          for a Gaussian beam: <span
-         class="math display">\[w(z)=w_0\sqrt{1+\left(\frac{\lambda
-         z}{\pi w_0^2}\right)^2}\]</span></p></li>
+         class="math display">\[w(z)=w_0\sqrt{1+\left(\frac{\lambda (z -
+         z_w)}{\pi w_0^2}\right)^2}\]</span></p>
+         <p><strong>Understanding the parameters:</strong></p>
+         <ul>
+         <li><span class="math inline">\(z\)</span> is the position
+         along the beam path, measured from a fixed reference point
+         (typically the laser output or a mark on your optical table).
+         This is what you measure with a meter stick.</li>
+         <li><span class="math inline">\(z_w\)</span> is the position
+         where the beam waist occurs, using the same coordinate system
+         as <span class="math inline">\(z\)</span>. This is a fit
+         parameter—you don’t know it ahead of time.</li>
+         <li><span class="math inline">\(w_0\)</span> is the beam waist
+         (minimum beam radius). This is also a fit parameter.</li>
+         <li>The term <span class="math inline">\((z - z_w)\)</span> is
+         the distance from the measurement position to the waist. The
+         beam radius depends on how far you are from the waist, not on
+         your arbitrary choice of coordinate origin.</li>
+         </ul>
+         <p><strong>Why <span class="math inline">\((z - z_w)\)</span>
+         instead of just <span
+         class="math inline">\(z\)</span>?</strong> The simpler form
+         with just <span class="math inline">\(z\)</span> assumes the
+         waist is at <span class="math inline">\(z = 0\)</span>. But the
+         waist of your laser is somewhere inside (or near) the laser
+         cavity—not at your coordinate origin. By including <span
+         class="math inline">\(z_w\)</span> as a fit parameter, you let
+         the data tell you where the waist actually is. You worked out
+         this generalized form in Week 3’s prelab (questions 3-4 in
+         “Trying out the Gaussian beam model”).</p>
+         <p><strong>Example:</strong> If you measure beam radii at <span
+         class="math inline">\(z = 0.5, 1.0, 1.5, 2.0\)</span> m from
+         the laser, and the fit returns <span class="math inline">\(z_w
+         = -0.1\)</span> m, that means the waist is located 0.1 m
+         <em>behind</em> your reference point (inside the laser cavity).
+         At your <span class="math inline">\(z = 1.0\)</span> m
+         measurement position, the beam has traveled <span
+         class="math inline">\((1.0 - (-0.1)) = 1.1\)</span> m from its
+         waist.</p></li>
          <li><p>What is the value of the beam waist <span
          class="math inline">\(w_0\)</span> (including uncertainty)?
          Where does the beam waist <span
@@ -750,9 +799,9 @@
          <li><p><strong>Compare to predictions</strong>: How does your
          measured RMS compare to:</p>
          <ul>
+         <li>Your Week 2 noise floor measurement (~5 mV RMS for the
+         DAQ)?</li>
          <li>Your Week 2 SNR predictions?</li>
-         <li>Your Week 3 noise spectrum prediction for averaged
-         samples?</li>
          </ul></li>
          <li><p><strong>Evaluate and adjust</strong>:</p>
          <ul>
@@ -800,9 +849,9 @@
          occur?</li>
          <li>What factors affect the beam profile after the lens?</li>
          <li>Does the measured <span class="math inline">\(w(z)\)</span>
-         match the Gaussian beam prediction <span
-         class="math inline">\(w(z)=w_0\sqrt{1+\left(\frac{\lambda
-         z}{\pi w_0^2}\right)^2}\)</span>?</li>
+         match the Gaussian beam prediction? (Use the same fitting
+         equation as before, with the new waist position <span
+         class="math inline">\(z_w\)</span> as a fit parameter.)</li>
          </ol>
          <div id="fig:mount-assembly" class="fignos">
          <figure>
@@ -827,8 +876,9 @@
          <li><p>Redraw Figure <a href="#fig:ray-diagram">2</a> to show
          how it would change when the light is modeled as a Gaussian
          beam, rather than rays. In particular, where should the beam
-         waists occur? What determines the relative width of the beam
-         waist?</p></li>
+         waists occur? What determines the relative size of the new beam
+         waist <span class="math inline">\(w_0&#39;\)</span> compared to
+         the original <span class="math inline">\(w_0\)</span>?</p></li>
          <li><p>Experimentally test the accuracy of the thin lens
          equation for the imaging of Gaussian beams. Follow this
          quantitative procedure:</p>
@@ -842,7 +892,7 @@
          and <span class="math inline">\(f\)</span> to get an
          uncertainty in <span
          class="math inline">\(S_2\)</span>.</p></li>
-         <li><p><strong>Measure:</strong> From your beam size data,
+         <li><p><strong>Measure:</strong> From your beam radius data,
          determine the actual position of the beam waist (image
          location) after the lens. Include uncertainty from your
          fit.</p></li>
@@ -1070,8 +1120,8 @@
          class="header-section-number">10.2</span> Beam Profile Without
          Lenses</h2>
          <ol type="1">
-         <li><strong>Automated vs. manual comparison</strong>: beam size
-         from both methods with uncertainties</li>
+         <li><strong>Automated vs. manual comparison</strong>: beam
+         radius from both methods with uncertainties</li>
          <li><strong>Multiple position measurements</strong>: table of
          <span class="math inline">\(z\)</span> positions and
          corresponding <span class="math inline">\(w\)</span>
