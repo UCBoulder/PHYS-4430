@@ -144,86 +144,50 @@ Before we begin this week's lab, reflect on your experience from Week 1 (and per
 2. In this lab, you may have to take 10-20 beam profiles in order to measure $w_0$ and $z_w$. How long would this take with your manual method?
 3. What are the most time-consuming portions of the process? Which parts benefit most from automation?
 
-## Running the Beam Profiler
+## Taking Beam Profiles with Your Code
 
-The automation script is available at: [`04_beam_profiler.py`](/PHYS-4430/resources/lab-guides/gaussian-laser-beams/python/04_beam_profiler.py)
+In Week 3, you wrote code that moves the motor, reads the photodetector voltage, and records the data. This week, you'll use that code to collect the beam profile measurements needed to test the Gaussian beam model.
 
-### Connection to Your Week 3 Code
+### Before You Start
 
-In Week 3, you wrote code that combined motor positioning with DAQ reading. The beam profiler script does the same thing, with three production enhancements:
+Verify your Week 3 code is ready:
 
-- It saves data to files as it runs (so you don't lose data if something crashes)
-- It shows a real-time plot (so you can see problems early)
-- It handles errors gracefully (so one bad reading doesn't stop the entire scan)
+1. [ ] Your code can move the motor to a specified position
+2. [ ] Your code can read voltage from the DAQ
+3. [ ] Your code saves position and voltage data (to a file, array, or other structure you can analyze)
+4. [ ] You tested it successfully in Week 3
 
-The core loop—move, wait, read, record—is identical to what you wrote. Here's a simplified view of the essential structure (the actual script adds real-time plotting and data management around these steps):
+If any of these aren't working, see the "Reference Implementation" section below before proceeding.
 
-```python
-for step_num in range(max_steps):
-    # 1. Read current position
-    position = self.get_position()
+### Choosing Measurement Parameters
 
-    # 2. Read photodetector voltage
-    voltage = self.read_voltage()
+Before taking data, decide on your scan parameters:
 
-    # 3. Save data point immediately
-    writer.writerow([position, voltage])
+**Step Size**: Smaller step sizes give higher resolution but take longer.
 
-    # 4. Move to next position
-    self.move_to(position + step)
-
-    # 5. Wait for vibrations to settle
-    time.sleep(wait_time_ms / 1000)
-```
-
-### Before You Run: Guided Code Reading
-
-Before running the script, open `04_beam_profiler.py` in a text editor and find:
-
-1. The line where the motor moves to a new position (hint: look in the `run_scan` method)
-2. The line where the photodetector voltage is read
-3. Where the wait time gets used
-
-This exercise takes about 5 minutes and will dramatically improve your ability to troubleshoot if something goes wrong.
-
-### Basic Usage
-
-Navigate to the script directory and run:
-
-```bash
-python 04_beam_profiler.py
-```
-
-The script will prompt you for:
-
-1. **Motor serial number**: Found on the KST101 display (e.g., "26004813")
-2. **Step size (mm)**: How far to move between measurements (recommend 0.05 mm)
-3. **Wait time (ms)**: Delay after each step (recommend 500 ms)
-4. **Direction**: "forward" or "backward"
-
-### Choosing Parameters
-
-**Step Size**: Smaller step sizes give higher resolution but take longer:
 - 0.05 mm is a good starting point for most beams
-- Use smaller steps (0.02-0.03 mm) for tightly focused beams
-- You can use larger steps (0.1 mm) for initial alignment
+- Use smaller steps (0.02–0.03 mm) for tightly focused beams
+- You can use larger steps (0.1 mm) for initial alignment or exploratory scans
 
-**Wait Time**: This ensures measurements are taken after vibrations settle:
-- 500 ms is usually sufficient
+**Wait Time**: After each motor step, wait for vibrations to settle before reading the voltage.
+
+- 100 ms is usually sufficient
 - Increase if you see noisy data
 
-### Output Files
+**Scan Range**: Make sure your scan covers the full transition from beam unblocked to fully blocked, plus some margin on each side. If your beam radius is roughly $w$, the transition spans about $2w$, so plan for a scan range of at least $3w$ to $4w$.
 
-The script automatically generates two files with timestamps:
+### Saving Your Data
 
-1. **CSV data file**: `beam_profile_YYYYMMDD_HHMMSS.csv`
-   - Two columns: Position (mm), Voltage (V)
-   - Ready for analysis with your fitting code from Week 2
+For each beam profile, save your data to a file with a descriptive name that includes:
 
-2. **Plot image**: `beam_profile_YYYYMMDD_HHMMSS.png`
-   - Quick visualization of the measured profile
+- The date
+- The $z$-position (distance from laser or reference point)
 
-### Validating the Automation
+Example: `beam_profile_2026-02-03_z50cm.csv`
+
+This naming convention will help you keep track of which profile corresponds to which position when you take multiple profiles in the next section.
+
+### Validating Your Measurements
 
 **Critical checkpoint:** Before taking production data, validate that your automated system produces results consistent with your manual method.
 
@@ -243,34 +207,27 @@ The script automatically generates two files with timestamps:
    - Ambient light contamination
    - Whether the knife-edge is at the same z-position
 
-5. How long does your new measurement method take? (2-3 minutes per $w$ measurement is very good.)
+5. How long does your measurement take? Record this—it will help you plan your time for the multi-position measurements.
 
-## Customizing the Script (Optional)
+## Reference Implementation (If Needed)
 
-If you need to modify the script behavior:
+If your Week 3 code isn't working reliably and you need to focus on the physics measurements, a reference script is available: [`04_beam_profiler.py`](/PHYS-4430/resources/lab-guides/gaussian-laser-beams/python/04_beam_profiler.py)
 
-### Changing the DAQ Channel
+**Before using it**, try to debug your own code first—this is valuable learning. But if time is limited, the reference implementation will let you proceed with the experiment.
 
-If your photodetector is connected to a different channel (e.g., AI1):
+The reference script:
 
-```python
-profiler = BeamProfiler(serial_number, daq_channel="ai1")
+- Prompts for motor serial number, step size, wait time, and direction
+- Saves data to a timestamped CSV file
+- Shows a real-time plot as data is collected
+
+To run it:
+
+```bash
+python 04_beam_profiler.py
 ```
 
-### Adding Averaging
-
-For noisy signals, you can modify `read_voltage()` to average multiple samples:
-
-```python
-def read_voltage(self, num_samples=10):
-    """Read averaged voltage from DAQ."""
-    with nidaqmx.Task() as task:
-        task.ai_channels.add_ai_voltage_chan(
-            f"{self.daq_device}/{self.daq_channel}"
-        )
-        voltages = task.read(number_of_samples_per_channel=num_samples)
-        return np.mean(voltages)
-```
+If you use the reference implementation, note in your lab notebook what was different from your Week 3 approach and what you would fix in your own code given more time.
 
 # The Experiment
 
@@ -412,11 +369,42 @@ If time permits, investigate the following:
 2. How does this relate to the concept of the "diffraction limit"?
 3. Try using a lens with shorter focal length. Does it produce a smaller spot? What are the tradeoffs?
 
-# Appendix: Beam Profiler Code Reference
+# Appendix: Troubleshooting Motor and DAQ Issues
 
-This appendix provides reference material for troubleshooting and extending the beam profiler script. The core measurement loop is explained in the main text (see "Connection to Your Week 3 Code" above).
+This appendix provides troubleshooting guidance for common issues with motor control and data acquisition. These tips apply whether you're using your own Week 3 code or the reference implementation.
 
-## The `BeamProfiler` Class
+## Motor Issues
+
+### "Device not found" Error
+
+- Check USB connection
+- Verify serial number matches the display on the KST101
+- Make sure no other software (APT User, Kinesis) is using the motor
+
+### Motor Doesn't Move
+
+- Ensure power is connected to the KST101
+- Check that the stage isn't at a travel limit
+- Verify the stage type is configured correctly in Kinesis (ZST225B)
+
+## DAQ Issues
+
+### Voltage Reads Zero
+
+- Check photodetector power
+- Verify BNC cable connections to DAQ
+- Make sure the beam actually hits the photodetector
+
+### Noisy Data
+
+- Increase wait time between steps to let vibrations settle
+- Check for mechanical vibrations in your setup
+- Shield the photodetector from ambient light
+- Average multiple DAQ readings per point
+
+## Reference Script Details
+
+If you are using the reference implementation (`04_beam_profiler.py`), here is its structure:
 
 ```python
 class BeamProfiler:
@@ -439,28 +427,7 @@ class BeamProfiler:
         """Execute the automated scan with real-time plotting."""
 ```
 
-## Troubleshooting
-
-### "Device not found" Error
-- Check USB connection
-- Verify serial number matches the display on the KST101
-- Make sure no other software (APT User, Kinesis) is using the motor
-
-### Motor Doesn't Move
-- Ensure power is connected to the KST101
-- Check that the stage isn't at a travel limit
-- Verify the stage type is configured correctly in Kinesis (ZST225B)
-
-### Voltage Reads Zero
-- Check photodetector power
-- Verify BNC cable connections to DAQ
-- Make sure the beam actually hits the photodetector
-
-### Noisy Data
-- Increase wait time between steps
-- Check for mechanical vibrations in your setup
-- Shield the photodetector from ambient light
-- Average multiple DAQ readings per point (see "Adding Averaging" above)
+The core measurement loop is the same as what you wrote in Week 3: move to position, wait for settling, read voltage, record data, repeat.
 
 # Deliverables and Assessment
 
